@@ -119,15 +119,15 @@ Moreover, we define the *modulus* of $z$ as $r = abs(z) = sqrt(x^2 + y^2)$,
 which is the distance from the origin to the point $z$ in the complex plane.
 Then we can express $z$ in polar form as
 
-$ z = r(cos phi + "i" sin phi) = r e^(i phi), $
+$ z = r(cos phi + "i" sin phi) = r e^("i" phi), $
 
-where $e^(i phi) = cos phi + "i" sin phi$ is known as *Euler's formula*
+where $e^("i" phi) = cos phi + "i" sin phi$ is known as *Euler's formula*
 (refer to @fig:complex_plane).
 
 The polar representation of complex numbers allows us to conveniently perform multiplication and division,
 as they correspond to the product and quotient of moduli and the sum and difference of arguments, respectively:
 
-$ z_1 z_2 = r_1 r_2 e^(i (phi_1 + phi_2)), quad z_1 slash z_2 = r_1 slash r_2 e^(i (phi_1 - phi_2)). $
+$ z_1 z_2 = r_1 r_2 e^("i" (phi_1 + phi_2)), quad z_1 slash z_2 = r_1 slash r_2 e^("i" (phi_1 - phi_2)). $
 
 Thus, we know that multiplying two complex numbers is equivalent to multiplying their moduli and adding their arguments, while dividing two complex numbers is equivalent to dividing their moduli and subtracting their arguments.
 
@@ -136,7 +136,7 @@ Thus, we know that multiplying two complex numbers is equivalent to multiplying 
   such as the double-angle formulas and the sum and difference formulas.
   For example, using Euler's formula, we have
 
-  $ e^(i 2phi) = (e^(i phi))^2 = (cos phi + "i" sin phi)^2 = cos 2phi + "i" sin 2phi, $
+  $ e^("i" 2phi) = (e^("i" phi))^2 = (cos phi + "i" sin phi)^2 = cos 2phi + "i" sin 2phi, $
 
   which gives us the double-angle formulas:
 
@@ -160,10 +160,10 @@ Thus, we know that multiplying two complex numbers is equivalent to multiplying 
 
 == Powers and Roots of Complex Numbers
 
-Let $z = r e^(i phi)$ be a non-zero complex number.
+Let $z = r e^("i" phi)$ be a non-zero complex number.
 For any integer $n$, we have
 $
-  z^n = r^n e^(i n phi) = r^n (cos n phi + "i" sin n phi).
+  z^n = r^n e^("i"n phi) = r^n (cos n phi + "i" sin n phi).
 $
 
 Then it can be derived that
@@ -180,7 +180,7 @@ Find the $n$-th roots of $z$ is equivalent to solving the equation $omega^n = z$
 which has $n$ distinct solutions given by
 
 $
-  omega_k = r^(1/n) e^(i ((phi + 2k pi)/n)) = r^(1/n) [cos ((phi + 2k pi)/n) + "i" sin ((phi + 2k pi)/n)], quad k = 0, 1, ..., n-1.
+  omega_k = r^(1/n) e^("i" ((phi + 2k pi)/n)) = r^(1/n) [cos ((phi + 2k pi)/n) + "i" sin ((phi + 2k pi)/n)], quad k = 0, 1, ..., n-1.
 $
 
 == The Extended Complex Plane
@@ -234,7 +234,7 @@ In the previous chapter we studied the algebraic and topological structure of th
 
 The most fundamental technique in complex analysis is to decompose a complex function into a pair of real-valued functions of two real variables. Write $z = x + y"i"$ with $x, y in bb(R)$. Then every complex function $f$ can be written uniquely as
 #eq[$
-  f(z) = u(x, y) + "i" v(x, y),
+  f(z) = u(x, y) + "i"v(x, y),
 $] <eq:re-im-decomp>
 where $u, v: E subset bb(R)^2 -> bb(R)$ are real-valued functions. We call $u = Re(f)$ the *real part* and $v = Im(f)$ the *imaginary part* of $f$. This decomposition is the primary bridge between complex analysis and multivariable real analysis, and will be used constantly throughout these notes.
 
@@ -364,9 +364,9 @@ Continuous functions on compact sets enjoy particularly strong properties, which
 ]
 
 #example(name: "A Function with No Limit at the Origin")[
-  Define $f: bb(C) backslash {0} -> bb(C)$ by $f(z) = z / (abs(z))$. Restricting to the ray $z = r e^(i theta)$ (with $theta$ fixed and $r -> 0^+$), we get
+  Define $f: bb(C) backslash {0} -> bb(C)$ by $f(z) = z / (abs(z))$. Restricting to the ray $z = r e^("i" theta)$ (with $theta$ fixed and $r -> 0^+$), we get
   $
-    f(r e^(i theta)) = (r e^(i theta)) / r = e^(i theta).
+    f(r e^("i" theta)) = (r e^("i" theta)) / r = e^("i" theta).
   $
   Thus $f$ approaches a different value for each direction $theta$: it tends to $1$ along the positive real axis, $-1$ along the negative real axis, $"i"$ along the positive imaginary axis, and so on. Therefore $lim_(z -> 0) f(z)$ does not exist, even though $abs(f(z)) = 1$ for all $z != 0$.
 ]
@@ -374,7 +374,7 @@ Continuous functions on compact sets enjoy particularly strong properties, which
 #caution(title: "Continuity of $f$ vs. Continuity of $abs(f)$")[
   It follows from the triangle inequality that if $f$ is continuous at $z_0$, then so is the real-valued function $abs(f)$. The converse is false: the function $f(z) = z / (abs(z))$ of the preceding example has $abs(f(z)) = 1$ (hence $abs(f)$ is continuous everywhere on $bb(C) backslash {0}$), but $f$ itself does not have a limit at $0$, so it cannot be extended to a continuous function on $bb(C)$.
 
-  In a different spirit, $f(z) = e^(i / z)$ has $abs(f(z)) = 1$ for all $z != 0$, yet it has no limit as $z -> 0$ along the imaginary axis.
+  In a different spirit, $f(z) = e^("i" / z)$ has $abs(f(z)) = 1$ for all $z != 0$, yet it has no limit as $z -> 0$ along the imaginary axis.
 ]
 
 == Differentiability and Analytic Functions // 可微性与解析函数
@@ -399,7 +399,7 @@ We are now ready to introduce the concept that truly distinguishes complex analy
   For complex functions, _derivability and differentiability are equivalent_, just as in one-variable real calculus. This is in stark contrast to the case of multivariable real functions, where the existence of all partial derivatives does not guarantee (Frechet) differentiability. The reason lies in the rigidity of the difference quotient @eq:complex-derivative, which forces the limit to be independent of the direction from which $z$ approaches $z_0$ — a condition far stronger than mere directional differentiability.
 ]
 
-Geometrically, multiplication by $f'(z_0)$ sends each infinitesimal vector $"d"z$ to $f'(z_0) "d"z$. Writing $f'(z_0) = R e^(i phi)$ in polar form, this operation consists of a *scaling* by $R = abs(f'(z_0))$ followed by a *rotation* by $phi = arg(f'(z_0))$. Thus the differential of a complex-differentiable map is a *conformal* (angle-preserving) infinitesimal transformation: it preserves the angles and the ratio of lengths between any two tangent vectors at $z_0$. This is the geometric source of the theory of conformal mappings, which we study systematically in Part IV.
+Geometrically, multiplication by $f'(z_0)$ sends each infinitesimal vector $"d"z$ to $f'(z_0) "d"z$. Writing $f'(z_0) = R e^("i" phi)$ in polar form, this operation consists of a *scaling* by $R = abs(f'(z_0))$ followed by a *rotation* by $phi = arg(f'(z_0))$. Thus the differential of a complex-differentiable map is a *conformal* (angle-preserving) infinitesimal transformation: it preserves the angles and the ratio of lengths between any two tangent vectors at $z_0$. This is the geometric source of the theory of conformal mappings, which we study systematically in Part IV.
 
 We now derive the celebrated Cauchy-Riemann equations, which provide the algebraic link between complex differentiability and the partial derivatives of $u$ and $v$.
 
@@ -452,7 +452,7 @@ We now derive the celebrated Cauchy-Riemann equations, which provide the algebra
 For problems expressed in polar coordinates it is often more convenient to use the polar form of the Cauchy-Riemann equations.
 
 #proposition(name: "Cauchy-Riemann Equations in Polar Form")[
-  Let $z = r e^(i phi)$ and write $f(z) = u(r, phi) + "i"v(r, phi)$. If $f$ is differentiable at a point with $r != 0$, then
+  Let $z = r e^("i" phi)$ and write $f(z) = u(r, phi) + "i"v(r, phi)$. If $f$ is differentiable at a point with $r != 0$, then
   #eq[$
     partial_r u = frac(1, r) partial_phi v, quad partial_r v = -frac(1, r) partial_phi u.
   $] <eq:CR-polar>
@@ -567,7 +567,7 @@ It is one of the deepest and most remarkable facts of complex analysis — far f
   We verify that several simple functions are _nowhere_ holomorphic, using the Cauchy-Riemann equations.
   - *Complex conjugate.* Let $f(z) = overline(z) = x - "i"y$, so $u = x$, $v = -y$. The partials are $partial_x u = 1$, $partial_y v = -1$. Since $1 != -1$, the first CR equation fails at every point, and therefore $f$ is nowhere complex-differentiable.
   - *Real part.* Let $f(z) = Re(z) = x$. Then $u = x$, $v = 0$, so $partial_x u = 1$ but $partial_y v = 0$. Again the CR equations fail everywhere.
-  - *Modulus.* Let $f(z) = abs(z) = sqrt(x^2 + y^2)$. For $z != 0$, direct computation gives $partial_x u = x/(abs(z))$, $partial_y v = 0$, so the first CR equation fails. At $z = 0$ the difference quotient $(abs(z))/z$ has no limit (it equals $e^(-i theta)$ on the ray $z = r e^(i theta)$), confirming that $f$ is nowhere differentiable.
+  - *Modulus.* Let $f(z) = abs(z) = sqrt(x^2 + y^2)$. For $z != 0$, direct computation gives $partial_x u = x/(abs(z))$, $partial_y v = 0$, so the first CR equation fails. At $z = 0$ the difference quotient $(abs(z))/z$ has no limit (it equals $e^(-"i" theta)$ on the ray $z = r e^("i" theta)$), confirming that $f$ is nowhere differentiable.
   - *Square of modulus.* $f(z) = abs(z)^2$, already treated above: differentiable only at $z = 0$, and not holomorphic there.
 ]
 
@@ -624,7 +624,7 @@ The next theorem explains why harmonic functions are an integral part of complex
 ]
 
 #caution(title: "Conjugate Relation Is Not Symmetric")[
-  If $v$ is a conjugate harmonic of $u$, then $-u$ (not $u$!) is a conjugate harmonic of $v$. Indeed, if $f = u + "i"v$ is holomorphic, then so is $-i f = v - "i"u$; this shows that the conjugate of $v$ is $-u$. Thus the relation "is a conjugate harmonic of" is asymmetric, unlike the statement that $u$ and $v$ are "conjugate harmonic to each other".
+  If $v$ is a conjugate harmonic of $u$, then $-u$ (not $u$!) is a conjugate harmonic of $v$. Indeed, if $f = u + "i"v$ is holomorphic, then so is $-"i"f = v - "i"u$; this shows that the conjugate of $v$ is $-u$. Thus the relation "is a conjugate harmonic of" is asymmetric, unlike the statement that $u$ and $v$ are "conjugate harmonic to each other".
 ]
 
 Given a harmonic function $u$ on a *simply connected* domain $D$, one can always construct a conjugate harmonic $v$ by integrating the Cauchy-Riemann equations along paths. The recipe is: choose a base point $(x_0, y_0) in D$, and for any $(x, y) in D$ define
@@ -720,17 +720,17 @@ The basic law governing $exp$ is the addition theorem.
 ]
 
 #theorem(name: [Euler's Formula for $exp$])[
-  For $z = x + i y$ with $x, y in bb(R)$,
+  For $z = x + "i"y$ with $x, y in bb(R)$,
   $
-    exp(x + i y) = e^x (cos y + i sin y).
+    exp(x + "i"y) = e^x (cos y + "i" sin y).
   $
   In particular, $exp(x) = e^x$ for real $x$, so the complex exponential extends the real exponential function.
 ] <thm:exp-euler-formula>
 
 #proof[
-  The addition theorem gives $exp(x + i y) = exp(x) exp(i y)$, so it remains to compute $exp(i y)$. Splitting the series into even and odd powers of $i$,
+  The addition theorem gives $exp(x + "i"y) = exp(x) exp("i"y)$, so it remains to compute $exp("i"y)$. Splitting the series into even and odd powers of $"i"$,
   $
-    exp(i y) = sum_(k=0)^oo (-1)^k (y^(2 k)) / ((2 k)!) + i sum_(k=0)^oo (-1)^k (y^(2 k + 1)) / ((2 k + 1)!) = cos y + i sin y,
+    exp("i"y) = sum_(k=0)^oo (-1)^k (y^(2 k)) / ((2 k)!) + "i" sum_(k=0)^oo (-1)^k (y^(2 k + 1)) / ((2 k + 1)!) = cos y + "i" sin y,
   $
   where the last equality is Euler's formula established in Chapter 1.
 ]
@@ -739,33 +739,33 @@ The basic law governing $exp$ is the addition theorem.
   The exponential function enjoys the following properties:
   + *Derivative*: $exp'(z) = exp(z)$ for all $z in bb(C)$.
   + *Non-vanishing*: $exp(z) != 0$ for all $z$, and $exp(-z) = 1 / exp(z)$.
-  + *Periodicity*: $exp$ is periodic with period $2 pi i$; more precisely,
+  + *Periodicity*: $exp$ is periodic with period $2 pi"i"$; more precisely,
     $
-      exp(w) = exp(z) <==> w - z in 2 pi i ZZ.
+      exp(w) = exp(z) <==> w - z in 2 pi"i" ZZ.
     $
   + *Unboundedness*: for every $M > 0$ there exists $z$ with $abs(exp(z)) > M$.
 ] <thm:exp-properties>
 
 #proof[
-  *Derivative*: write $exp(z) = u(x, y) + i v(x, y)$ with $u = e^x cos y$ and $v = e^x sin y$. The partial derivatives of $u$ and $v$ are continuous everywhere and
+  *Derivative*: write $exp(z) = u(x, y) + "i"v(x, y)$ with $u = e^x cos y$ and $v = e^x sin y$. The partial derivatives of $u$ and $v$ are continuous everywhere and
   $
     u_x = e^x cos y = v_y, quad u_y = -e^x sin y = -v_x,
   $
   so the Cauchy-Riemann equations of #link(<thm:complex-diff-equiv>)[Theorem] hold on all of $bb(C)$, and $f$ is complex differentiable with
   $
-    exp'(z) = u_x + i v_x = e^x cos y + i e^x sin y = exp(z).
+    exp'(z) = u_x + "i"v_x = e^x cos y + "i"e^x sin y = exp(z).
   $
   This recovers the derivative by the general theory of Section 2.3; it can also be obtained directly by differentiating the power series term by term.
 
   *Non-vanishing*: from the addition theorem, $exp(z) exp(-z) = exp(0) = 1$, hence $exp(z) != 0$ and $exp(-z) = 1 / exp(z)$.
 
-  *Periodicity*: $exp(z + 2 pi i) = exp(z) exp(2 pi i) = exp(z) (cos 2 pi + i sin 2 pi) = exp(z)$. Conversely, if $exp(w) = exp(z)$, then $exp(w - z) = 1$. Writing $w - z = x + i y$ and taking absolute values via #link(<thm:exp-euler-formula>)[Euler's formula] gives $abs(exp(w - z)) = e^x = 1$, hence $x = 0$; then $cos y + i sin y = 1$ forces $y in 2 pi ZZ$. Thus $w - z in 2 pi i ZZ$.
+  *Periodicity*: $exp(z + 2 pi"i") = exp(z) exp(2 pi"i") = exp(z) (cos 2 pi + "i" sin 2 pi) = exp(z)$. Conversely, if $exp(w) = exp(z)$, then $exp(w - z) = 1$. Writing $w - z = x + "i"y$ and taking absolute values via #link(<thm:exp-euler-formula>)[Euler's formula] gives $abs(exp(w - z)) = e^x = 1$, hence $x = 0$; then $cos y + "i" sin y = 1$ forces $y in 2 pi ZZ$. Thus $w - z in 2 pi"i" ZZ$.
 
   *Unboundedness*: $abs(exp(x)) = e^x -> oo$ as $x -> oo$ along the real axis.
 ]
 
 #example(name: "What the Exponential Does to Lines and Strips")[
-  Euler's formula $exp(x + i y) = e^x (cos y + i sin y)$ identifies polar coordinates of $w = exp z$: the modulus is $abs(w) = e^x$ and the argument is $y$ (modulo $2 pi$). Consequently, writing $z = x + i y$:
+  Euler's formula $exp(x + "i"y) = e^x (cos y + "i" sin y)$ identifies polar coordinates of $w = exp z$: the modulus is $abs(w) = e^x$ and the argument is $y$ (modulo $2 pi$). Consequently, writing $z = x + "i"y$:
   - a vertical line ${z : x = c}$ is mapped onto the circle ${w : abs(w) = e^c}$;
   - a horizontal line ${z : y = c}$ is mapped onto the ray ${w : arg w = c}$;
   - the horizontal strip ${z : 0 < y < 2 pi}$ is mapped *bijectively* onto the punctured plane $bb(C) backslash {0}$.
@@ -777,7 +777,7 @@ The basic law governing $exp$ is the addition theorem.
 ) <fig:exp-mapping>
 
 #note[
-  The bijectivity in #link(<ex:exp-geometry>)[the example above] collapses precisely because the strip has height $2 pi$: any two points differing by $2 pi i$ land on the same value. Thus $exp$ is *not injective* on $bb(C)$, and no global inverse exists. The equation $exp(w) = z$ still has solutions — infinitely many, differing by $2 pi i$ — and defining a reasonable "inverse" from this multi-valued solution set is exactly the problem that the branch machinery of Section 3.3 will solve.
+  The bijectivity in #link(<ex:exp-geometry>)[the example above] collapses precisely because the strip has height $2 pi$: any two points differing by $2 pi"i"$ land on the same value. Thus $exp$ is *not injective* on $bb(C)$, and no global inverse exists. The equation $exp(w) = z$ still has solutions — infinitely many, differing by $2 pi"i"$ — and defining a reasonable "inverse" from this multi-valued solution set is exactly the problem that the branch machinery of Section 3.3 will solve.
 ]
 
 == Trigonometric and Hyperbolic Functions // 三角函数与双曲函数
@@ -787,7 +787,7 @@ With the exponential in hand, the trigonometric and hyperbolic functions can be 
 #definition(name: "Complex Trigonometric Functions")[
   The *sine* and *cosine* functions on $bb(C)$ are defined by
   $
-    sin z = (exp(i z) - exp(-i z)) / (2 i), quad cos z = (exp(i z) + exp(-i z)) / 2.
+    sin z = (exp("i"z) - exp(-"i"z)) / (2"i"), quad cos z = (exp("i"z) + exp(-"i"z)) / 2.
   $
   The remaining trigonometric functions are defined by quotients, whenever the denominator is nonzero: $tan z = (sin z) / (cos z)$, $cot z = 1 / (tan z)$, $sec z = 1 / (cos z)$, $csc z = 1 / (sin z)$.
 ] <def:trig-functions>
@@ -795,7 +795,7 @@ With the exponential in hand, the trigonometric and hyperbolic functions can be 
 #property(name: "Properties of $sin$ and $cos$")[
   + *Parity*: $cos(-z) = cos z$ and $sin(-z) = -sin z$.
   + *Periodicity*: $sin$ and $cos$ are $2 pi$-periodic.
-  + *Euler's identity*: $e^(i z) = cos z + i sin z$ for all $z in bb(C)$.
+  + *Euler's identity*: $e^("i"z) = cos z + "i" sin z$ for all $z in bb(C)$.
   + *Derivatives*: $cos' z = -sin z$ and $sin' z = cos z$.
   + *Real agreement*: for $x in bb(R)$, $sin x$ and $cos x$ coincide with the real trigonometric functions.
 ] <prop:trig-properties>
@@ -803,11 +803,11 @@ With the exponential in hand, the trigonometric and hyperbolic functions can be 
 All five properties follow immediately from the exponential definition and the addition theorem #link(<thm:exp-addition>)[Theorem]; we leave the routine verifications to the reader.
 
 #caution[
-  The most striking difference from the real theory: $sin$ and $cos$ are *unbounded* on $bb(C)$. Indeed, writing $z = x + i y$,
+  The most striking difference from the real theory: $sin$ and $cos$ are *unbounded* on $bb(C)$. Indeed, writing $z = x + "i"y$,
   $
     abs(sin z)^2 = sin^2 x cosh^2 y + cos^2 x sinh^2 y = sin^2 x + sinh^2 y,
   $
-  which grows without bound as $abs(y) -> oo$. In particular $cos(i y) = cosh y -> oo$, and the familiar real-variable intuition "cosine never exceeds 1" fails dramatically off the real axis. The reason is structural: the boundedness of real $sin$ and $cos$ relies on cancellation in the real and imaginary parts, and complex arguments destroy this balance.
+  which grows without bound as $abs(y) -> oo$. In particular $cos("i"y) = cosh y -> oo$, and the familiar real-variable intuition "cosine never exceeds 1" fails dramatically off the real axis. The reason is structural: the boundedness of real $sin$ and $cos$ relies on cancellation in the real and imaginary parts, and complex arguments destroy this balance.
 ] <caution:trig-unbounded>
 
 #figure(
@@ -815,7 +815,7 @@ All five properties follow immediately from the exponential definition and the a
   caption: [The modulus surface $abs(sin z) = sqrt(sin^2 x + sinh^2 y)$. Along the real axis the surface coincides with the familiar bounded graph of $abs(sin x)$, while it grows exponentially in the imaginary directions.],
 ) <fig:sin-modulus>
 
-The hyperbolic functions are the "odd partners" obtained by removing the factors of $i$.
+The hyperbolic functions are the "odd partners" obtained by removing the factors of $"i"$.
 
 #definition(name: "Complex Hyperbolic Functions")[
   The *hyperbolic sine* and *hyperbolic cosine* are defined by
@@ -826,7 +826,7 @@ The hyperbolic functions are the "odd partners" obtained by removing the factors
 
 #property(name: "Relations Between Trigonometric and Hyperbolic Functions")[
   For all $z in bb(C)$:
-  + $sin(i z) = i sinh z$ and $cos(i z) = cosh z$; conversely $sinh(i z) = i sin z$ and $cosh(i z) = cos z$.
+  + $sin("i"z) = "i" sinh z$ and $cos("i"z) = cosh z$; conversely $sinh("i"z) = "i" sin z$ and $cosh("i"z) = cos z$.
   + $cosh^2 z - sinh^2 z = 1$ and $sin^2 z + cos^2 z = 1$.
   + $sinh' z = cosh z$ and $cosh' z = sinh z$.
 ] <prop:trig-hyp-relations>
@@ -838,7 +838,7 @@ A useful observation about zeros: although $sin$ and $cos$ are now complex funct
 ] <prop:trig-zeros>
 
 #proof[
-  Write $z = x + i y$. By $sin z = sin x cosh y + i cos x sinh y$, the equation $sin z = 0$ splits into
+  Write $z = x + "i"y$. By $sin z = sin x cosh y + "i" cos x sinh y$, the equation $sin z = 0$ splits into
   $
     sin x cosh y = 0, quad cos x sinh y = 0.
   $
@@ -853,9 +853,9 @@ Section 3.1 left us with a puzzle: the exponential is not injective, so a genuin
 
 Two warm-up observations show what can go wrong.
 
-- *The argument.* Write $z = r e^(i theta)$ with $theta$ chosen continuously. Traversing a circle around the origin once, $theta$ changes continuously from its initial value $theta_0$ to $theta_0 + 2 pi$: upon returning to the starting point, the "value" has increased by $2 pi$. Hence no single-valued continuous function defined on all of $bb(C) backslash {0}$ can represent the argument.
+- *The argument.* Write $z = r e^("i" theta)$ with $theta$ chosen continuously. Traversing a circle around the origin once, $theta$ changes continuously from its initial value $theta_0$ to $theta_0 + 2 pi$: upon returning to the starting point, the "value" has increased by $2 pi$. Hence no single-valued continuous function defined on all of $bb(C) backslash {0}$ can represent the argument.
 
-- *The square root.* For $z = r e^(i theta)$, the two solutions of $w^2 = z$ are $w = sqrt(r) e^(i theta / 2)$ and its negative. Following one branch continuously around a full circle changes $theta / 2$ by $pi$ and thereby interchanges the two roots.
+- *The square root.* For $z = r e^("i" theta)$, the two solutions of $w^2 = z$ are $w = sqrt(r) e^("i" theta / 2)$ and its negative. Following one branch continuously around a full circle changes $theta / 2$ by $pi$ and thereby interchanges the two roots.
 
 In both cases the trouble originates from a single point: loops around $0$ (and, as we will see, around $oo$) change the value. This motivates the following definitions.
 
@@ -873,7 +873,7 @@ In both cases the trouble originates from a single point: loops around $0$ (and,
 
 #figure(
   image("./img/monodromy-loop.svg", width: 55%),
-  caption: [Monodromy around a branch point. Traversing the loop $gamma$ once, the continuously chosen value of the function does not return to its starting value: for $sqrt(z)$ the two branches are interchanged (algebraic, order 2), while for $Ln z$ the value increases by $2 pi i$ with every loop (logarithmic).],
+  caption: [Monodromy around a branch point. Traversing the loop $gamma$ once, the continuously chosen value of the function does not return to its starting value: for $sqrt(z)$ the two branches are interchanged (algebraic, order 2), while for $Ln z$ the value increases by $2 pi"i"$ with every loop (logarithmic).],
 ) <fig:monodromy-loop>
 
 Branch points obstruct single-valuedness only because loops can wind around them. The next device removes this ability.
@@ -904,7 +904,7 @@ Two examples make the machinery concrete.
 #example(name: "Branches of the Square Root")[
   Let $F(z) = sqrt(z)$ denote the two-valued set of solutions of $w^2 = z$. The branch points are $0$ and $oo$: one loop around either point interchanges the two values, and two loops restore them, so both are algebraic branch points of order 2. Cutting along the negative real axis and choosing $theta in (-pi, pi)$, the two analytic branches on $D = bb(C) backslash (-oo, 0]$ are
   $
-    f_+(z) = sqrt(r) e^(i theta \/ 2), quad f_-(z) = -f_+(z), quad z = r e^(i theta).
+    f_+(z) = sqrt(r) e^("i" theta \/ 2), quad f_-(z) = -f_+(z), quad z = r e^("i" theta).
   $
   Both satisfy $(f_+(z))^2 = z$, and they agree with the real square roots on the positive real axis.
 ] <ex:sqrt-branches>
@@ -922,30 +922,30 @@ With this vocabulary in place, we can finally give the logarithm the precise tre
   $
     w = Ln z <==> exp(w) = z.
   $
-  Writing $z = r e^(i theta)$ with $r = abs(z)$, the solutions are exactly
+  Writing $z = r e^("i" theta)$ with $r = abs(z)$, the solutions are exactly
   $
-    Ln z = ln r + i theta = ln abs(z) + i Arg z,
+    Ln z = ln r + "i" theta = ln abs(z) + "i" Arg z,
   $
   where $Arg z$ denotes the multi-valued argument of $z$.
 ] <def:log-function>
 
 #proposition[
-  Every nonzero complex number has infinitely many logarithms, and any two of them differ by an integer multiple of $2 pi i$:
+  Every nonzero complex number has infinitely many logarithms, and any two of them differ by an integer multiple of $2 pi"i"$:
   $
-    Ln z = ln abs(z) + i arg z + 2 k pi i, quad k in ZZ.
+    Ln z = ln abs(z) + "i" arg z + 2 k pi"i", quad k in ZZ.
   $
 ] <prop:log-multi-valued>
 
 #proof[
-  Let $w = a + i b$ satisfy $exp(w) = z != 0$. Taking moduli, $abs(exp(w)) = e^a = abs(z)$, so $a = ln abs(z)$ is uniquely determined. Then $exp(w) = e^a (cos b + i sin b) = z$ forces $cos b = x / abs(z)$ and $sin b = y / abs(z)$, i.e. $b$ is an angle of $z$: $b = theta$ where $theta$ is any choice of $arg z$, and the set of admissible $b$ is $theta + 2 pi ZZ$. Hence the solutions are exactly $ln abs(z) + i (theta + 2 k pi)$, $k in ZZ$.
+  Let $w = a + "i"b$ satisfy $exp(w) = z != 0$. Taking moduli, $abs(exp(w)) = e^a = abs(z)$, so $a = ln abs(z)$ is uniquely determined. Then $exp(w) = e^a (cos b + "i" sin b) = z$ forces $cos b = x / abs(z)$ and $sin b = y / abs(z)$, i.e. $b$ is an angle of $z$: $b = theta$ where $theta$ is any choice of $arg z$, and the set of admissible $b$ is $theta + 2 pi ZZ$. Hence the solutions are exactly $ln abs(z) + "i" (theta + 2 k pi)$, $k in ZZ$.
 ]
 
-The branch points of $Ln$ are $0$ and $oo$, and both are *logarithmic* branch points: every full loop around either point changes the value by $2 pi i$, so the monodromy never returns — even infinitely many loops do not restore the initial value. A standard branch cut is again the negative real axis.
+The branch points of $Ln$ are $0$ and $oo$, and both are *logarithmic* branch points: every full loop around either point changes the value by $2 pi"i"$, so the monodromy never returns — even infinitely many loops do not restore the initial value. A standard branch cut is again the negative real axis.
 
 #theorem(name: "Principal Branch of the Logarithm")[
   On the cut plane $D = bb(C) backslash (-oo, 0]$, the *principal branch of the logarithm*
   $
-    ln z = ln abs(z) + i arg z, quad arg z in (-pi, pi),
+    ln z = ln abs(z) + "i" arg z, quad arg z in (-pi, pi),
   $
   is an analytic branch of $Ln$, and
   $
@@ -955,7 +955,7 @@ The branch points of $Ln$ are $0$ and $oo$, and both are *logarithmic* branch po
 ] <thm:log-principal-branch>
 
 #proof[
-  Write $ln z = u(x, y) + i v(x, y)$ with
+  Write $ln z = u(x, y) + "i"v(x, y)$ with
   $
     u = ln abs(z) = 1 / 2 ln(x^2 + y^2), quad v = arg z.
   $
@@ -969,14 +969,14 @@ The branch points of $Ln$ are $0$ and $oo$, and both are *logarithmic* branch po
   $
   The partial derivatives are continuous on $D$, so $ln$ is analytic there, with
   $
-    (ln z)' = u_x + i v_x = (x - i y) / (x^2 + y^2) = (x + i y)^(-1) = 1 / z.
+    (ln z)' = u_x + "i"v_x = (x - "i"y) / (x^2 + y^2) = (x + "i"y)^(-1) = 1 / z.
   $
   For $x > 0$ we have $arg x = 0$ and $ln abs(x) = ln x$, so the branch extends the real logarithm.
 ]
 
 #figure(
   image("./img/branch-cut-log.svg", width: 55%),
-  caption: [The principal branch of the logarithm. The branch points $0$ and $oo$ are joined by the branch cut along the negative real axis; on the cut plane $D = bb(C) backslash (-oo, 0]$ the angle is confined to $(-pi, pi)$ and $ln z = ln abs(z) + i arg z$ is single-valued and analytic.],
+  caption: [The principal branch of the logarithm. The branch points $0$ and $oo$ are joined by the branch cut along the negative real axis; on the cut plane $D = bb(C) backslash (-oo, 0]$ the angle is confined to $(-pi, pi)$ and $ln z = ln abs(z) + "i" arg z$ is single-valued and analytic.],
 ) <fig:branch-cut-log>
 
 #caution[
@@ -984,7 +984,7 @@ The branch points of $Ln$ are $0$ and $oo$, and both are *logarithmic* branch po
   $
     Ln(z_1 z_2) = Ln z_1 + Ln z_2
   $
-  is valid only *as an equality of sets*: the left side runs over all solutions of $exp(w) = z_1 z_2$, the right side over all sums of the two solution sets, and these coincide. For a fixed branch the identity may fail by a multiple of $2 pi i$. For example, with $z_1 = z_2 = e^(3 pi i \/ 4)$ we have $z_1 z_2 = e^(3 pi i \/ 2)$, so $ln(z_1 z_2) = -pi i \/ 2$ (since $arg in (-pi, pi)$), whereas $ln z_1 + ln z_2 = 3 pi i \/ 2$ — the two differ by $2 pi i$.
+  is valid only *as an equality of sets*: the left side runs over all solutions of $exp(w) = z_1 z_2$, the right side over all sums of the two solution sets, and these coincide. For a fixed branch the identity may fail by a multiple of $2 pi"i"$. For example, with $z_1 = z_2 = e^(3 pi"i" \/ 4)$ we have $z_1 z_2 = e^(3 pi"i" \/ 2)$, so $ln(z_1 z_2) = -pi"i" \/ 2$ (since $arg in (-pi, pi)$), whereas $ln z_1 + ln z_2 = 3 pi"i" \/ 2$ — the two differ by $2 pi"i"$.
 ] <caution:log-set-identity>
 
 #caution[
@@ -1019,21 +1019,21 @@ The multi-valued structure depends sharply on $alpha$.
   + If $alpha = n$ is an integer, $z^alpha$ is single-valued and coincides with the elementary power: $z^n$ for $n >= 0$, and $1 / z^(-n)$ for $n < 0$.
   + If $alpha = p / q$ is a rational number in lowest terms ($q >= 1$), $z^alpha$ takes exactly $q$ distinct values.
   + If $alpha$ is irrational or non-real, $z^alpha$ takes infinitely many values.
-  In every case the values of $z^alpha = exp(alpha (ln abs(z) + i (theta + 2 k pi)))$ are
+  In every case the values of $z^alpha = exp(alpha (ln abs(z) + "i" (theta + 2 k pi)))$ are
   $
-    abs(z)^alpha e^(i alpha theta) dot exp(2 k pi i alpha), quad k in ZZ,
+    abs(z)^alpha e^("i" alpha theta) dot exp(2 k pi"i" alpha), quad k in ZZ,
   $
-  and the cases above classify how the factors $exp(2 k pi i alpha)$ repeat.
+  and the cases above classify how the factors $exp(2 k pi"i" alpha)$ repeat.
 ] <thm:power-branch-structure>
 
 #proof[
-  The key factor is $exp(2 k pi i alpha)$ as $k$ ranges over $ZZ$.
+  The key factor is $exp(2 k pi"i" alpha)$ as $k$ ranges over $ZZ$.
 
-  *Integral $alpha = n$*: $exp(2 k pi i n) = 1$ for every $k$, so $z^n = abs(z)^n e^(i n theta)$ is single-valued, and Euler's formula shows it agrees with the product $z dots.c z$.
+  *Integral $alpha = n$*: $exp(2 k pi"i"n) = 1$ for every $k$, so $z^n = abs(z)^n e^("i"n theta)$ is single-valued, and Euler's formula shows it agrees with the product $z dots.c z$.
 
-  *Rational $alpha = p / q$ in lowest terms*: $exp(2 pi i alpha k) = e^(2 pi i p k \/ q)$ depends only on $k mod q$, giving exactly $q$ distinct values $e^(2 pi i p k \/ q)$ for $k = 0, 1, dots, q - 1$ (distinct because $p k_1 equiv p k_2 mod q$ forces $q | k_1 - k_2$).
+  *Rational $alpha = p / q$ in lowest terms*: $exp(2 pi"i" alpha k) = e^(2 pi"i"p k \/ q)$ depends only on $k mod q$, giving exactly $q$ distinct values $e^(2 pi"i"p k \/ q)$ for $k = 0, 1, dots, q - 1$ (distinct because $p k_1 equiv p k_2 mod q$ forces $q | k_1 - k_2$).
 
-  *Irrational or non-real $alpha$*: if $alpha in bb(R) backslash bb(Q)$, then $e^(2 pi i alpha k_1) = e^(2 pi i alpha k_2)$ would imply $alpha (k_1 - k_2) in ZZ$, impossible unless $k_1 = k_2$. If $alpha = a + i b$ with $b != 0$, the moduli $abs(e^(2 pi i alpha k)) = e^(-2 pi b k)$ are pairwise distinct, so the values are again infinite in number.
+  *Irrational or non-real $alpha$*: if $alpha in bb(R) backslash bb(Q)$, then $e^(2 pi"i" alpha k_1) = e^(2 pi"i" alpha k_2)$ would imply $alpha (k_1 - k_2) in ZZ$, impossible unless $k_1 = k_2$. If $alpha = a + "i"b$ with $b != 0$, the moduli $abs(e^(2 pi"i" alpha k)) = e^(-2 pi b k)$ are pairwise distinct, so the values are again infinite in number.
 ]
 
 #proposition[
@@ -1056,25 +1056,25 @@ The multi-valued structure depends sharply on $alpha$.
   Writing $alpha f(z) / z = alpha exp(alpha ln z) exp(-ln z) = alpha exp((alpha - 1) ln z) = alpha z^(alpha - 1)$ justifies the usual notation.
 ]
 
-#example(name: "The Value of $i^i$")[
-  By definition, $i^i = exp(i Ln i)$. Since $i = e^(pi i \/ 2)$, we have $Ln i = i(pi / 2 + 2 k pi)$, hence
+#example(name: [The Value of $"i"^"i"$])[
+  By definition, $"i"^"i" = exp("i" Ln "i")$. Since $"i" = e^(pi"i" \/ 2)$, we have $Ln "i" = "i"(pi / 2 + 2 k pi)$, hence
   $
-    i^i = exp(-pi / 2 - 2 k pi), quad k in ZZ.
+    "i"^"i" = exp(-pi / 2 - 2 k pi), quad k in ZZ.
   $
-  Although $i$ and the exponent $i$ are both non-real, all values of $i^i$ are *real numbers*; the principal value ($k = 0$) is $e^(-pi \/ 2) approx 0.208$.
+  Although $"i"$ and the exponent $"i"$ are both non-real, all values of $"i"^"i"$ are *real numbers*; the principal value ($k = 0$) is $e^(-pi \/ 2) approx 0.208$.
 ] <ex:i-to-the-i>
 
 #example(name: "Roots as Powers")[
   For a positive integer $n$, the function $z^(1 \/ n) = exp((1 \/ n) Ln z)$ takes exactly $n$ values, recovering the $n$ roots of $z$ studied numerically in Section 1.3. With the principal branch on $D = bb(C) backslash (-oo, 0]$,
   $
-    f_(k)(z) = root(n, r) e^(i (theta + 2 k pi) \/ n), quad k = 0, 1, dots, n - 1,
+    f_(k)(z) = root(n, r) e^("i" (theta + 2 k pi) \/ n), quad k = 0, 1, dots, n - 1,
   $
   are the $n$ analytic branches; the case $n = 2$ reproduces #link(<ex:sqrt-branches>)[the square-root example]. The branch points $0$ and $oo$ are algebraic of order $n$: one loop permutes the $n$ branches cyclically, and $n$ loops restore them.
 ] <ex:roots-as-powers>
 
 #figure(
   image("./img/sqrt-branches.svg", width: 80%),
-  caption: [The two analytic branches of $sqrt(z)$ on $D = bb(C) backslash (-oo, 0]$. Crossing the cut swaps the branches: $f_+$ approaches the value $i sqrt(r)$ from above the negative real axis but $-i sqrt(r)$ from below, reflecting the order-2 algebraic monodromy at $0$ and $oo$.],
+  caption: [The two analytic branches of $sqrt(z)$ on $D = bb(C) backslash (-oo, 0]$. Crossing the cut swaps the branches: $f_+$ approaches the value $"i" sqrt(r)$ from above the negative real axis but $-"i" sqrt(r)$ from below, reflecting the order-2 algebraic monodromy at $0$ and $oo$.],
 ) <fig:sqrt-branches>
 
 #caution[
@@ -1085,30 +1085,30 @@ The multi-valued structure depends sharply on $alpha$.
 
 As a final application, we invert the trigonometric functions. This section is the graduation exam for the branch language: each inverse combines *two* multi-valued sources — the logarithm and the square root — and the formulas below encode their entire multi-valued structure in a single expression.
 
-Since $sin$ is $2 pi$-periodic, the equation $sin w = z$ has infinitely many solutions for suitable $z$; the inverse must be multi-valued. Solving it algebraically, set $u = exp(i w)$. Then
+Since $sin$ is $2 pi$-periodic, the equation $sin w = z$ has infinitely many solutions for suitable $z$; the inverse must be multi-valued. Solving it algebraically, set $u = exp("i"w)$. Then
 $
-  sin w = z <==> u - 1 / u = 2 i z <==> u^2 - 2 i z u - 1 = 0,
+  sin w = z <==> u - 1 / u = 2"i"z <==> u^2 - 2"i"z u - 1 = 0,
 $
-whose two roots $u = i z plus.minus sqrt(1 - z^2)$ are precisely the two values of $i z + sqrt(1 - z^2)$. Taking logarithms and multiplying by $-i$ gives the result.
+whose two roots $u = "i"z plus.minus sqrt(1 - z^2)$ are precisely the two values of $"i"z + sqrt(1 - z^2)$. Taking logarithms and multiplying by $-"i"$ gives the result.
 
 #definition(name: "Inverse Trigonometric Functions")[
   For $z in bb(C)$, the *inverse sine*, *inverse cosine*, and *inverse tangent* are the multi-valued functions
   $
-    arcsin z = -i Ln(i z + sqrt(1 - z^2)),
+    arcsin z = -"i" Ln("i"z + sqrt(1 - z^2)),
   $
   $
-    arccos z = -i Ln(z + sqrt(z^2 - 1)),
+    arccos z = -"i" Ln(z + sqrt(z^2 - 1)),
   $
   $
-    arctan z = 1 / (2 i) Ln((1 + i z) / (1 - i z)).
+    arctan z = 1 / (2"i") Ln((1 + "i"z) / (1 - "i"z)).
   $
-  Each denotes the set of values $w$ satisfying $sin w = z$, $cos w = z$, and $tan w = z$, respectively (with the usual exclusions $z != plus.minus i$ for $tan$).
+  Each denotes the set of values $w$ satisfying $sin w = z$, $cos w = z$, and $tan w = z$, respectively (with the usual exclusions $z != plus.minus "i"$ for $tan$).
 ] <def:inverse-trig>
 
 #proof[
-  The formula for $arcsin$ was derived above. For $arccos$: $cos w = z$ is equivalent to $u + 1 / u = 2 z$ with $u = exp(i w)$, i.e. $u^2 - 2 z u + 1 = 0$, giving $u = z + sqrt(z^2 - 1)$ and $w = -i Ln(z + sqrt(z^2 - 1))$. For $arctan$: $tan w = z$ reads $sin w = z cos w$, which after division by $exp(i w) != 0$ becomes $u - 1 / u = i z (u + 1 / u)$ with $u = exp(i w)$; hence $u^2 (1 - i z) = 1 + i z$, so
+  The formula for $arcsin$ was derived above. For $arccos$: $cos w = z$ is equivalent to $u + 1 / u = 2 z$ with $u = exp("i"w)$, i.e. $u^2 - 2 z u + 1 = 0$, giving $u = z + sqrt(z^2 - 1)$ and $w = -"i" Ln(z + sqrt(z^2 - 1))$. For $arctan$: $tan w = z$ reads $sin w = z cos w$, which after division by $exp("i"w) != 0$ becomes $u - 1 / u = "i"z (u + 1 / u)$ with $u = exp("i"w)$; hence $u^2 (1 - "i"z) = 1 + "i"z$, so
   $
-    exp(2 i w) = (1 + i z) / (1 - i z), quad w = 1 / (2 i) Ln((1 + i z) / (1 - i z)).
+    exp(2"i"w) = (1 + "i"z) / (1 - "i"z), quad w = 1 / (2"i") Ln((1 + "i"z) / (1 - "i"z)).
   $
 ]
 
@@ -1125,9 +1125,9 @@ whose two roots $u = i z plus.minus sqrt(1 - z^2)$ are precisely the two values 
   $
     w' = 1 / (cos w).
   $
-  Since $cos^2 w = 1 - sin^2 w = 1 - z^2$, we have $cos w = plus.minus sqrt(1 - z^2)$, and the sign is fixed once and for all by the chosen branch — for the branch agreeing with the real $arcsin$ near the origin, $cos w = sqrt(1 - z^2)$. This gives $(arcsin z)' = 1 / sqrt(1 - z^2)$. The formula for $arccos$ follows from the branch identity $arccos z = pi / 2 - arcsin z$, and for $arctan$ one differentiates $exp(2 i w) = (1 + i z) / (1 - i z)$: with $g(z) = (1 + i z) / (1 - i z)$,
+  Since $cos^2 w = 1 - sin^2 w = 1 - z^2$, we have $cos w = plus.minus sqrt(1 - z^2)$, and the sign is fixed once and for all by the chosen branch — for the branch agreeing with the real $arcsin$ near the origin, $cos w = sqrt(1 - z^2)$. This gives $(arcsin z)' = 1 / sqrt(1 - z^2)$. The formula for $arccos$ follows from the branch identity $arccos z = pi / 2 - arcsin z$, and for $arctan$ one differentiates $exp(2"i"w) = (1 + "i"z) / (1 - "i"z)$: with $g(z) = (1 + "i"z) / (1 - "i"z)$,
   $
-    2 i w' = g'(z) / g(z) = 2 i / (1 + z^2),
+    2"i"w' = g'(z) / g(z) = 2"i" / (1 + z^2),
   $
   hence $w' = 1 / (1 + z^2)$.
 ]
@@ -1136,7 +1136,7 @@ whose two roots $u = i z plus.minus sqrt(1 - z^2)$ are precisely the two values 
   The multi-valued structure is now completely transparent:
   - the square root contributes two values: replacing $sqrt(1 - z^2)$ by its negative replaces $w$ by $pi - w$, which is again a solution of $sin w = z$;
   - the logarithm contributes infinitely many values, differing by $2 pi$: if $w$ is a solution of $sin w = z$, so is $w + 2 pi$ (and $pi - w$).
-  The branch points are where these sources degenerate: $z = plus.minus 1$ for $arcsin$ and $arccos$ (where $sqrt(1 - z^2)$ or $sqrt(z^2 - 1)$ collapses), and $z = plus.minus i$ for $arctan$ (where $1 - i z$ or $1 + i z$ vanishes). These six points, together with $oo$, are exactly the singularities of the inverse trigonometric functions.
+  The branch points are where these sources degenerate: $z = plus.minus 1$ for $arcsin$ and $arccos$ (where $sqrt(1 - z^2)$ or $sqrt(z^2 - 1)$ collapses), and $z = plus.minus "i"$ for $arctan$ (where $1 - "i"z$ or $1 + "i"z$ vanishes). These six points, together with $oo$, are exactly the singularities of the inverse trigonometric functions.
 ]
 
 This completes our library of elementary functions: the exponential and its descendants, the trigonometric and hyperbolic families, the logarithm, and the powers — together with the branch machinery needed to handle their multi-valued inverses. All of these functions will reappear constantly: as integrands and antiderivatives in the chapters on integration, and as the building blocks of conformal mappings later in the book.
@@ -1196,7 +1196,7 @@ where $L = integral_C abs(dif z)$ is the total arc length of $C$.
 ] <prop:integral-properties>
 
 #theorem[
-  If $f(z) = u(x, y) + "i" v(x, y)$ is continuous on $C$, then $f$ is integrable on $C$ and
+  If $f(z) = u(x, y) + "i"v(x, y)$ is continuous on $C$, then $f$ is integrable on $C$ and
   $
     integral_C f(z) "d"z = integral_C u "d"x - integral_C v "d"y + "i" (integral_C v "d"x + integral_C u "d"y).
   $
@@ -1215,7 +1215,7 @@ where $L = integral_C abs(dif z)$ is the total arc length of $C$.
   $
     integral_C 1/(z-a)^n "d"z = cases(
       0 n != -1,
-      2 pi"i" n = -1
+      2 pi"i"n = -1
     )
   $
 ] <prop:common-integrals>
@@ -1238,29 +1238,29 @@ The complex integral reduces to a real integral via parameterization:
 ] <thm:parametric-integral>
 
 #example(name: "Integral of $z^2$ Along a Semicircle")[
-  Let $C$ be the upper semicircle $z(t) = e^(i t), t in [0, pi]$, from $a = 1$ to $b = -1$. Then $z'(t) = i e^(i t)$, so
+  Let $C$ be the upper semicircle $z(t) = e^("i"t), t in [0, pi]$, from $a = 1$ to $b = -1$. Then $z'(t) = "i"e^("i"t)$, so
   $
-    integral_C z^2 dif z = integral_0^pi e^(2 i t) dot i e^(i t) dif t = i integral_0^pi e^(3 i t) dif t = i [e^(3 i t) / (3 i)]_0^pi = (e^(3 pi i) - 1) / 3.
+    integral_C z^2 dif z = integral_0^pi e^(2"i"t) dot "i"e^("i"t) dif t = "i" integral_0^pi e^(3"i"t) dif t = "i" [e^(3"i"t) / (3"i")]_0^pi = (e^(3 pi"i") - 1) / 3.
   $
-  Since $e^(3 pi i) = e^(pi i) = -1$, this gives $(-1 - 1)/3 = -2/3$. The direct antiderivative $F(z) = z^3 / 3$ yields $F(-1) - F(1) = -1/3 - 1/3 = -2/3$, confirming the result.
+  Since $e^(3 pi"i") = e^(pi"i") = -1$, this gives $(-1 - 1)/3 = -2/3$. The direct antiderivative $F(z) = z^3 / 3$ yields $F(-1) - F(1) = -1/3 - 1/3 = -2/3$, confirming the result.
 ] <ex:semicircle-z-squared>
 
 #example(name: "Integral of $overline(z)$ Along the Unit Circle")[
-  Let $C$ be the unit circle $abs(z) = 1$ traversed counterclockwise, so $z(t) = e^(i t), t in [0, 2 pi]$. Then $overline(z) = e^(-i t)$ and $z'(t) = i e^(i t)$, giving
+  Let $C$ be the unit circle $abs(z) = 1$ traversed counterclockwise, so $z(t) = e^("i"t), t in [0, 2 pi]$. Then $overline(z) = e^(-"i"t)$ and $z'(t) = "i"e^("i"t)$, giving
   $
-    integral_C overline(z) dif z = integral_0^(2 pi) e^(-i t) dot i e^(i t) dif t = i integral_0^(2 pi) 1 dif t = 2 pi i.
+    integral_C overline(z) dif z = integral_0^(2 pi) e^(-"i"t) dot "i"e^("i"t) dif t = "i" integral_0^(2 pi) 1 dif t = 2 pi"i".
   $
-  This is nonzero, reflecting that $overline(z)$ is not analytic (see *#link(<thm:cauchy-goursat>)[Cauchy-Goursat Theorem]* in Chapter 5). Compare with $integral_C z^(-1) dif z = 2 pi i$: the *same* value arises for different reasons.
+  This is nonzero, reflecting that $overline(z)$ is not analytic (see *#link(<thm:cauchy-goursat>)[Cauchy-Goursat Theorem]* in Chapter 5). Compare with $integral_C z^(-1) dif z = 2 pi"i"$: the *same* value arises for different reasons.
 ] <ex:circle-conjugate>
 
 #example(name: "Power Integral $integral (z-a)^n$")[
-  Let $C$ be the circle $abs(z - a) = r$ traversed once counterclockwise, parameterized as $z(t) = a + r e^(i t)$. Then $z'(t) = i r e^(i t)$ and
+  Let $C$ be the circle $abs(z - a) = r$ traversed once counterclockwise, parameterized as $z(t) = a + r e^("i"t)$. Then $z'(t) = "i"r e^("i"t)$ and
   $
-    integral_C (z - a)^n dif z = integral_0^(2 pi) (r e^(i t))^n dot i r e^(i t) dif t = i r^(n+1) integral_0^(2 pi) e^(i (n+1) t) dif t.
+    integral_C (z - a)^n dif z = integral_0^(2 pi) (r e^("i"t))^n dot "i"r e^("i"t) dif t = "i"r^(n+1) integral_0^(2 pi) e^("i" (n+1) t) dif t.
   $
-  For $n != -1$, the integral of $e^(i (n+1) t)$ over a full period vanishes. For $n = -1$, we get $i integral_0^(2 pi) 1 dif t = 2 pi i$. This is the fundamental integral of complex analysis:
+  For $n != -1$, the integral of $e^("i" (n+1) t)$ over a full period vanishes. For $n = -1$, we get $"i" integral_0^(2 pi) 1 dif t = 2 pi"i"$. This is the fundamental integral of complex analysis:
   $
-    integral_(abs(z-a)=r) (dif z)/(z - a) = 2 pi i.
+    integral_(abs(z-a)=r) (dif z)/(z - a) = 2 pi"i".
   $
 ] <ex:power-integral>
 
@@ -1295,12 +1295,12 @@ For a multiply connected domain with holes, the boundary is traversed so that th
 ] <thm:newton-leibniz>
 
 #proof[
-  Write $F = U + i V$ and $f = u + i v$ as in *#link(<thm:continuous-integrable>)[Continuous Integrability]*. Since $F' = f$ and $F$ is analytic, the Cauchy-Riemann equations give $U_x = u, V_x = v$. Then:
+  Write $F = U + "i" V$ and $f = u + "i"v$ as in *#link(<thm:continuous-integrable>)[Continuous Integrability]*. Since $F' = f$ and $F$ is analytic, the Cauchy-Riemann equations give $U_x = u, V_x = v$. Then:
   $
-    integral_C f dif z= integral_C (u dif x - v dif y) + i integral_C (v dif x + u dif y) \
-                      = integral_C (U_x dif x + U_y dif y) + i integral_C (V_x dif x + V_y dif y) \
-                      = integral_C dif U + i integral_C dif V \
-                      = U(b) - U(a) + i(V(b) - V(a)) \
+    integral_C f dif z= integral_C (u dif x - v dif y) + "i" integral_C (v dif x + u dif y) \
+                      = integral_C (U_x dif x + U_y dif y) + "i" integral_C (V_x dif x + V_y dif y) \
+                      = integral_C dif U + "i" integral_C dif V \
+                      = U(b) - U(a) + "i"(V(b) - V(a)) \
                       = F(b) - F(a).
   $
   The last step uses the real fundamental theorem of calculus applied to $U$ and $V$ along the parameterized curve.
@@ -1388,7 +1388,7 @@ The proof rests on two steps: Goursat's lemma for triangles, and a triangulation
 ) <fig:goursat-triangulation>
 
 #note(title: "Goursat's Improvement")[
-  Cauchy originally proved the theorem under the extra assumption that $f'$ is continuous, via Green's theorem. Writing $f = u + i v$, the contour integral splits as in *#link(<thm:continuous-integrable>)[Continuous Integrability]*:
+  Cauchy originally proved the theorem under the extra assumption that $f'$ is continuous, via Green's theorem. Writing $f = u + "i"v$, the contour integral splits as in *#link(<thm:continuous-integrable>)[Continuous Integrability]*:
   $
     integral_C f dif z = integral_(partial Omega) (u dif x - v dif y) + "i" integral_(partial Omega) (v dif x + u dif y),
   $
@@ -1433,9 +1433,9 @@ The proof rests on two steps: Goursat's lemma for triangles, and a triangulation
 #example(name: "Deforming a Contour Around a Pole")[
   Evaluate $integral_(abs(z) = 2) (dif z)/(z - 1)$. The integrand is analytic in the closed region between $abs(z) = 2$ and the small circle $C_r: abs(z - 1) = r$. By *#link(<thm:deformation-invariance>)[Deformation of Contours]*,
   $
-    integral_(abs(z) = 2) (dif z)/(z - 1) = integral_(abs(z - 1) = r) (dif z)/(z - 1) = 2 pi "i",
+    integral_(abs(z) = 2) (dif z)/(z - 1) = integral_(abs(z - 1) = r) (dif z)/(z - 1) = 2 pi"i",
   $
-  where the last equality is the fundamental power integral *#link(<ex:power-integral>)[computed in Chapter 4]*. Note that the answer does not depend on the outer contour: any simple closed contour enclosing $1$ gives $2 pi "i"$.
+  where the last equality is the fundamental power integral *#link(<ex:power-integral>)[computed in Chapter 4]*. Note that the answer does not depend on the outer contour: any simple closed contour enclosing $1$ gives $2 pi"i"$.
 ] <ex:deform-circle>
 
 == Cauchy Integral Formula and Its Derivatives // 柯西积分公式及其导数
@@ -1454,13 +1454,13 @@ The proof rests on two steps: Goursat's lemma for triangles, and a triangulation
   $
   On $C_r$, write $f(z) = f(z_0) + (f(z) - f(z_0))$. The first part integrates to
   $
-    f(z_0) integral_(C_r) (dif z)/(z - z_0) = 2 pi "i" f(z_0)
+    f(z_0) integral_(C_r) (dif z)/(z - z_0) = 2 pi"i"f(z_0)
   $
   by the fundamental power integral, while for the remainder the ML estimate gives
   $
     abs(integral_(C_r) (f(z) - f(z_0))/(z - z_0) dif z) <= M_r / r dot 2 pi r = 2 pi M_r -> 0 quad "as" r -> 0,
   $
-  where $M_r = sup_(abs(z - z_0) = r) abs(f(z) - f(z_0)) -> 0$ by continuity of $f$ at $z_0$. The left-hand side does not depend on $r$, so it equals the limit $2 pi "i" f(z_0)$.
+  where $M_r = sup_(abs(z - z_0) = r) abs(f(z) - f(z_0)) -> 0$ by continuity of $f$ at $z_0$. The left-hand side does not depend on $r$, so it equals the limit $2 pi"i"f(z_0)$.
 ]
 
 The Cauchy integral formula is remarkable: the value of $f$ at an *interior* point is completely determined by its *boundary* values. Differentiating under the integral pushes this determinism to all orders.
@@ -1468,14 +1468,14 @@ The Cauchy integral formula is remarkable: the value of $f$ at an *interior* poi
 #theorem(name: "Derivatives of the Cauchy Integral Formula")[
   Under the hypotheses of *#link(<thm:cauchy-integral-formula>)[Cauchy's Integral Formula]*, $f$ is infinitely differentiable in the interior of $C$, and for every $n >= 0$,
   $
-    f^(n)(z_0) = (n!)/(2 pi "i") integral_C f(z)/(z - z_0)^(n+1) dif z.
+    f^(n)(z_0) = (n!)/(2 pi"i") integral_C f(z)/(z - z_0)^(n+1) dif z.
   $
 ] <thm:cif-derivatives>
 
 #proof[
   It suffices to establish the case $n = 1$; the general case follows by iterating the same argument. For $h != 0$ small, apply *#link(<thm:cauchy-integral-formula>)[Cauchy's Integral Formula]* to both $f(z_0 + h)$ and $f(z_0)$ (the same contour $C$ works for both points) and form the difference quotient:
   $
-    (f(z_0 + h) - f(z_0)) / h = 1/(2 pi "i") integral_C f(z) / ((z - z_0)(z - z_0 - h)) dif z.
+    (f(z_0 + h) - f(z_0)) / h = 1/(2 pi"i") integral_C f(z) / ((z - z_0)(z - z_0 - h)) dif z.
   $
   As $h -> 0$ the integrand converges uniformly on $C$ to $f(z) / (z - z_0)^2$:
   $
@@ -1483,7 +1483,7 @@ The Cauchy integral formula is remarkable: the value of $f$ at an *interior* poi
   $
   With $m = min_(z in C) abs(z - z_0) > 0$ and $abs(h) < m / 2$, the denominators are bounded below by $m^2 dot m / 2$, while $abs(f)$ is bounded on the compact set $C$; the whole expression tends to $0$ uniformly in $z$. Since $C$ has finite length, limit and integral may be interchanged, giving
   $
-    f'(z_0) = 1/(2 pi "i") integral_C f(z) / (z - z_0)^2 dif z.
+    f'(z_0) = 1/(2 pi"i") integral_C f(z) / (z - z_0)^2 dif z.
   $
 ]
 
@@ -1502,7 +1502,7 @@ The Cauchy integral formula is remarkable: the value of $f$ at an *interior* poi
 #note(title: "Toward Taylor Series")[
   The derivative formula hands us the would-be coefficients of the Taylor expansion of $f$ about $z_0$:
   $
-    f^(n)((z_0)/(n!)) = 1/(2 pi "i") integral_C f(z)/(z - z_0)^(n+1) dif z.
+    f^(n)((z_0)/(n!)) = 1/(2 pi"i") integral_C f(z)/(z - z_0)^(n+1) dif z.
   $
   That boundary integrals encode local series data is the engine behind the Taylor series of Chapter 7 and the Laurent series of Chapter 8.
 ]
@@ -1562,7 +1562,7 @@ The derivative formula expresses $f^(n)(z_0)$ through boundary values; combined 
 #proof[
   Apply *#link(<thm:cif-derivatives>)[the derivative formula]* on the circle $C_R: abs(z - z_0) = R$ and use the ML estimate (*#link(<prop:integral-properties>)[Properties of the Complex Integral]*):
   $
-    abs(f^(n)(z_0)) = abs((n!)/(2 pi "i") integral_(C_R) f(z)/(z - z_0)^(n+1) dif z) <= (n!)/(2 pi) dot M / R^(n+1) dot 2 pi R = (n! M) / R^n.
+    abs(f^(n)(z_0)) = abs((n!)/(2 pi"i") integral_(C_R) f(z)/(z - z_0)^(n+1) dif z) <= (n!)/(2 pi) dot M / R^(n+1) dot 2 pi R = (n! M) / R^n.
   $
 ]
 
@@ -1577,7 +1577,7 @@ The estimates quantify the rigidity: higher derivatives at a point are controlle
   $
     abs(f'(z_0)) <= M / R quad "for all" R > 0.
   $
-  Letting $R -> oo$ yields $f'(z_0) = 0$. Since $z_0$ was arbitrary, $f' = 0$ on $bb(C)$. Writing $f = u + i v$, we get $u_x + i v_x = 0$ and the Cauchy-Riemann equations (*#link(<thm:CR-necessary>)[CR Theorem]*) give $u_y = -v_x = 0$ and $v_y = u_x = 0$; all first partials of $u$ and $v$ vanish on the connected plane, so $u$ and $v$ are constant, and so is $f$.
+  Letting $R -> oo$ yields $f'(z_0) = 0$. Since $z_0$ was arbitrary, $f' = 0$ on $bb(C)$. Writing $f = u + "i"v$, we get $u_x + "i"v_x = 0$ and the Cauchy-Riemann equations (*#link(<thm:CR-necessary>)[CR Theorem]*) give $u_y = -v_x = 0$ and $v_y = u_x = 0$; all first partials of $u$ and $v$ vanish on the connected plane, so $u$ and $v$ are constant, and so is $f$.
 ]
 
 #theorem(name: "The Fundamental Theorem of Algebra")[
@@ -1601,7 +1601,7 @@ The estimates quantify the rigidity: higher derivatives at a point are controlle
 ]
 
 #example(name: "Entire but Unbounded")[
-  Liouville's theorem is sharp: boundedness cannot be dropped. The exponential is entire but unbounded, since $abs(e^z) = e^x -> oo$ as $x -> +oo$; likewise $sin z$ grows exponentially along the imaginary axis, $abs(sin(i y)) = sinh abs(y)$, as emphasized in *#link(<caution:trig-unbounded>)[the caution of Chapter 3]*. Neither function contradicts Liouville — precisely because both are unbounded.
+  Liouville's theorem is sharp: boundedness cannot be dropped. The exponential is entire but unbounded, since $abs(e^z) = e^x -> oo$ as $x -> +oo$; likewise $sin z$ grows exponentially along the imaginary axis, $abs(sin("i"y)) = sinh abs(y)$, as emphasized in *#link(<caution:trig-unbounded>)[the caution of Chapter 3]*. Neither function contradicts Liouville — precisely because both are unbounded.
 ] <ex:entire-unbounded>
 
 The Cauchy integral formula is more than a computational device: it encodes the *local* behavior of holomorphic functions through *boundary* data. The next chapter exploits this systematically. Averaging $f$ over circles yields the mean value property and the maximum modulus principle; the Schwarz lemma classifies the self-maps of the disk; and Weierstrass's theorem shows that locally uniform limits of holomorphic functions remain holomorphic — the theory's gateway from finite to infinite-dimensional phenomena.
@@ -1615,18 +1615,18 @@ The Cauchy integral formula admits two readings. Read as "boundary values determ
 #theorem(name: "Mean Value Property")[
   Let $f$ be holomorphic on a domain containing the closed disk $abs(z - z_0) <= r$. Then
   $
-    f(z_0) = 1/(2 pi) integral_0^(2 pi) f(z_0 + r e^(i theta)) dif theta,
+    f(z_0) = 1/(2 pi) integral_0^(2 pi) f(z_0 + r e^("i" theta)) dif theta,
   $
   the value at the center equals the average of the values over the circle. In particular,
   $
-    abs(f(z_0)) <= 1/(2 pi) integral_0^(2 pi) abs(f(z_0 + r e^(i theta))) dif theta.
+    abs(f(z_0)) <= 1/(2 pi) integral_0^(2 pi) abs(f(z_0 + r e^("i" theta))) dif theta.
   $
 ] <thm:mean-value>
 
 #proof[
-  Apply *#link(<thm:cauchy-integral-formula>)[Cauchy's Integral Formula]* on the contour $abs(z - z_0) = r$, where $z = z_0 + r e^(i theta)$ and $dif z = i r e^(i theta) dif theta$:
+  Apply *#link(<thm:cauchy-integral-formula>)[Cauchy's Integral Formula]* on the contour $abs(z - z_0) = r$, where $z = z_0 + r e^("i" theta)$ and $dif z = "i"r e^("i" theta) dif theta$:
   $
-    f(z_0) = 1/(2 pi "i") integral_0^(2 pi) f(z_0 + r e^(i theta)) / (r e^(i theta)) dot i r e^(i theta) dif theta = 1/(2 pi) integral_0^(2 pi) f(z_0 + r e^(i theta)) dif theta.
+    f(z_0) = 1/(2 pi"i") integral_0^(2 pi) f(z_0 + r e^("i" theta)) / (r e^("i" theta)) dot "i"r e^("i" theta) dif theta = 1/(2 pi) integral_0^(2 pi) f(z_0 + r e^("i" theta)) dif theta.
   $
   Taking moduli and using the triangle inequality for integrals yields the second display.
 ]
@@ -1638,7 +1638,7 @@ The Cauchy integral formula admits two readings. Read as "boundary values determ
 #proof[
   Let $M = sup_(z in Omega) abs(g(z))$ and consider the set $E = {z in Omega : abs(g(z)) = M}$ (possibly with no elements). If $z_1 in E$ and the circle $abs(z - z_1) = s$ lies with its interior in $Omega$, the mean value property gives
   $
-    M = abs(g(z_1)) <= 1/(2 pi) integral_0^(2 pi) abs(g(z_1 + s e^(i theta))) dif theta <= M,
+    M = abs(g(z_1)) <= 1/(2 pi) integral_0^(2 pi) abs(g(z_1 + s e^("i" theta))) dif theta <= M,
   $
   since $abs(g) <= M$ everywhere. Equality holds throughout, so $abs(g) = M$ on the entire circle: $E$ is open. $E$ is also closed in $Omega$ by continuity of $abs(g)$, and $Omega$ is connected, so either $E$ is empty — the maximum is attained only on the boundary — or $E = Omega$. In the latter case $abs(g) = M$ everywhere, and each mean value is an average of numbers of modulus $M$ whose modulus is again $M$; by the equality case of the triangle inequality, all values on each circle share a single argument, so $g$ is locally constant, hence constant on the connected set $Omega$.
 ]
@@ -1683,7 +1683,7 @@ With the lemma in hand, the maximum modulus principle is immediate.
 #example(name: "Bounding a Function by Its Boundary Values")[
   Let $f(z) = z^2 + 3$ on the closed unit disk. The boundary values satisfy
   $
-    abs(f(e^(i theta))) = abs(e^(2 i theta) + 3) = sqrt((cos 2 theta + 3)^2 + (sin 2 theta)^2) = sqrt(10 + 6 cos 2 theta) <= 4,
+    abs(f(e^("i" theta))) = abs(e^(2"i" theta) + 3) = sqrt((cos 2 theta + 3)^2 + (sin 2 theta)^2) = sqrt(10 + 6 cos 2 theta) <= 4,
   $
   with equality at $theta = 0$. *#link(<thm:maximum-modulus>)[The maximum modulus principle]* certifies $abs(f(z)) <= 4$ on the *entire* disk without checking any interior point — a first taste of how boundary data controls a holomorphic function globally.
 ] <ex:boundary-max>
@@ -1697,7 +1697,7 @@ The Schwarz lemma is the precise form of a remarkable fact: a holomorphic self-m
   + $abs(f(z)) <= abs(z)$ for all $z in bb(D)$;
   + $abs(f'(0)) <= 1$.
 
-  If moreover $abs(f(z_0)) = abs(z_0)$ for some $z_0 != 0$, or $abs(f'(0)) = 1$, then $f(z) = e^(i theta) z$ for some real constant $theta$: $f$ is a rotation.
+  If moreover $abs(f(z_0)) = abs(z_0)$ for some $z_0 != 0$, or $abs(f'(0)) = 1$, then $f(z) = e^("i" theta) z$ for some real constant $theta$: $f$ is a rotation.
 ] <thm:schwarz-lemma>
 
 #proof[
@@ -1707,19 +1707,19 @@ The Schwarz lemma is the precise form of a remarkable fact: a holomorphic self-m
   $
   Then $g$ is holomorphic on $bb(D) backslash {0}$ and continuous on all of $bb(D)$: differentiability of $f$ at $0$ with $f(0) = 0$ gives $f(z) = f'(0) z + eta(z) z$ with $eta(z) -> 0$, so $g(z) = f'(0) + eta(z) -> f'(0)$ as $z -> 0$.
 
-  *Step 1 ($g$ satisfies the mean value property at $0$).* Fix $0 < r < 1$ and parametrize the circle by $w = r e^(i theta)$, so $dif w = i w dif theta$ and $e^(-i theta) = r / w$. Then
+  *Step 1 ($g$ satisfies the mean value property at $0$).* Fix $0 < r < 1$ and parametrize the circle by $w = r e^("i" theta)$, so $dif w = "i"w dif theta$ and $e^(-"i" theta) = r / w$. Then
   $
-    1/(2 pi) integral_0^(2 pi) g(r e^(i theta)) dif theta
-    = 1/(2 pi r) integral_0^(2 pi) f(r e^(i theta)) e^(-i theta) dif theta
+    1/(2 pi) integral_0^(2 pi) g(r e^("i" theta)) dif theta
+    = 1/(2 pi r) integral_0^(2 pi) f(r e^("i" theta)) e^(-"i" theta) dif theta
     = 1/(2 pi r) dot r/"i" integral_(abs(w) = r) f(w)/w^2 dif w
-    = 1/(2 pi r) dot r/"i" dot 2 pi "i" f'(0)
+    = 1/(2 pi r) dot r/"i" dot 2 pi"i"f'(0)
     = g(0),
   $
   where the third equality is *#link(<thm:cif-derivatives>)[the derivative formula]* applied to $f$ at $0$.
 
   *Step 2 (the bound).* Fix $0 < r < 1$. On the closed disk $abs(z) <= r$, the function $g$ is continuous and satisfies the mean value property at every interior point: holomorphy away from $0$ gives *#link(<thm:mean-value>)[the mean value property]* there, and Step 1 covers the center. On the boundary circle $abs(z) = r$ we have $abs(g(z)) = abs(f(z)) / r <= 1/r$, so *#link(<lem:mmp-mvm>)[the maximum principle]* yields $abs(g(z)) <= 1/r$ throughout the disk. Hence $abs(f(z)) <= abs(z) / r$ for $abs(z) <= r$; fixing $z$ and letting $r -> 1^(-)$ gives $abs(f(z)) <= abs(z)$. Setting $z = 0$ in the bound $abs(g) <= 1/r$ gives $abs(f'(0)) <= 1$.
 
-  *Step 3 (the equality case).* Suppose $abs(f(z_0)) = abs(z_0)$ for some $z_0 != 0$ (the case $abs(f'(0)) = 1$ is analogous, with $z_0$ replaced by $0$). Then $abs(g(z_0)) = 1$. Choosing $r$ with $abs(z_0) < r < 1$, Step 2 gives $abs(g) <= 1/r < 1 = abs(g(z_0))$ on $abs(z) <= r$: the maximum is attained at the interior point $z_0$, so *#link(<lem:mmp-mvm>)[the maximum principle]* forces $g$ to be constant of modulus $1$ on $abs(z) < r$, say $g = e^(i theta)$. Every point $z in bb(D)$ lies in some disk $abs(w) < r$ that also contains $z_0$ (take $r > max(abs(z), abs(z_0))$), and the same argument applies on that disk; hence $g = e^(i theta)$ throughout $bb(D)$, that is, $f(z) = e^(i theta) z$.
+  *Step 3 (the equality case).* Suppose $abs(f(z_0)) = abs(z_0)$ for some $z_0 != 0$ (the case $abs(f'(0)) = 1$ is analogous, with $z_0$ replaced by $0$). Then $abs(g(z_0)) = 1$. Choosing $r$ with $abs(z_0) < r < 1$, Step 2 gives $abs(g) <= 1/r < 1 = abs(g(z_0))$ on $abs(z) <= r$: the maximum is attained at the interior point $z_0$, so *#link(<lem:mmp-mvm>)[the maximum principle]* forces $g$ to be constant of modulus $1$ on $abs(z) < r$, say $g = e^("i" theta)$. Every point $z in bb(D)$ lies in some disk $abs(w) < r$ that also contains $z_0$ (take $r > max(abs(z), abs(z_0))$), and the same argument applies on that disk; hence $g = e^("i" theta)$ throughout $bb(D)$, that is, $f(z) = e^("i" theta) z$.
 ]
 
 #example(name: "Strict Contraction by $z^2$")[
@@ -1772,7 +1772,7 @@ The Cauchy theory of Chapter 5 established what single holomorphic functions can
 
   *Step 2 (convergence of derivatives).* Fix $z_0 in D$ and a circle $C_r: abs(z - z_0) = r$ whose closed disk lies in $D$. Applying *#link(<thm:cif-derivatives>)[the derivative formula]* to $f_n$ and — by Step 1 — to $f$,
   $
-    f_n'(z_0) - f'(z_0) = 1/(2 pi "i") integral_(C_r) (f_(n)(z) - f(z)) / (z - z_0)^2 dif z,
+    f_n'(z_0) - f'(z_0) = 1/(2 pi"i") integral_(C_r) (f_(n)(z) - f(z)) / (z - z_0)^2 dif z,
   $
   so the ML estimate gives
   $
@@ -2029,7 +2029,7 @@ This completes the easy direction of #link(<thm:holo-equiv-analytic>)[the equiva
   $
   where
   $
-    c_n = 1/(2 pi "i") integral_(abs(zeta - z_0) = r) f(zeta)/(zeta - z_0)^(n+1) dif zeta = (f^(n)(z_0)) / (n!),
+    c_n = 1/(2 pi"i") integral_(abs(zeta - z_0) = r) f(zeta)/(zeta - z_0)^(n+1) dif zeta = (f^(n)(z_0)) / (n!),
   $
   and the representation is unique. In particular, the radius of convergence of the series is at least the distance from $z_0$ to the boundary of $D$.
 ] <thm:taylor>
@@ -2037,11 +2037,11 @@ This completes the easy direction of #link(<thm:holo-equiv-analytic>)[the equiva
 #proof[
   Fix $r > 0$ such that the closed disk $abs(z - z_0) <= r$ lies in $D$, and fix $z$ with $abs(z - z_0) < r$. By the Cauchy integral formula,
   $
-    f(z) = 1/(2 pi "i") integral_(abs(zeta - z_0) = r) f(zeta)/(zeta - z) dif zeta.
+    f(z) = 1/(2 pi"i") integral_(abs(zeta - z_0) = r) f(zeta)/(zeta - z) dif zeta.
   $
   With $rho = abs(z - z_0) < r$, #link(<lem:geometric-kernel>)[the kernel expansion] converges uniformly on the circle $abs(zeta - z_0) = r$, so the sum and the integral may be interchanged:
   $
-    f(z) = sum_(n=0)^oo (1/(2 pi "i") integral_(abs(zeta - z_0) = r) f(zeta)/(zeta - z_0)^(n+1) dif zeta) (z - z_0)^n = sum_(n=0)^oo c_n (z - z_0)^n.
+    f(z) = sum_(n=0)^oo (1/(2 pi"i") integral_(abs(zeta - z_0) = r) f(zeta)/(zeta - z_0)^(n+1) dif zeta) (z - z_0)^n = sum_(n=0)^oo c_n (z - z_0)^n.
   $
   Since $z$ was arbitrary, the representation holds on the whole disk $abs(z - z_0) < r$. By #link(<thm:cif-derivatives>)[the derivative formula], $c_n = (f^(n)(z_0)) / (n!)$. The coefficients are thus completely determined by $f$ and $z_0$ — independently of the auxiliary radius $r$ — so the representation is unique; and since it exists for every $r$ smaller than the distance from $z_0$ to $partial D$, the radius of convergence of the series is at least that distance.
 ]
@@ -2261,7 +2261,7 @@ If there exists a non-empty annulus $r < abs(z-z_0) < R$, then the sum of the tw
 
   *Uniqueness.* Suppose $f = sum_(n=-oo)^oo c_n (z - z_0)^n$ converges to $f$ locally uniformly on $H$. For $k in ZZ$, termwise integration over the circle $abs(z - z_0) = rho in (r, R)$ — legitimate by #link(<prop:two-sided-series>)[the two-sided series proposition] — and #link(<prop:common-integrals>)[the common integrals] give
   $
-    integral_(abs(z - z_0) = rho) f(z)/(z - z_0)^(k+1) dif z = sum_(n=-oo)^oo c_n integral_(abs(z - z_0) = rho) (z - z_0)^(n-k-1) dif z = 2 pi"i" c_k,
+    integral_(abs(z - z_0) = rho) f(z)/(z - z_0)^(k+1) dif z = sum_(n=-oo)^oo c_n integral_(abs(z - z_0) = rho) (z - z_0)^(n-k-1) dif z = 2 pi"i"c_k,
   $
   since only the term with $n - k - 1 = -1$ survives. Hence every representation has the coefficients of the displayed formula: the expansion is unique.
 ]
@@ -2581,7 +2581,7 @@ Among the three classes, it is the coefficient $c_(-1)$ — the top term of the 
   $
   On each $C_k$, expanding $f$ into its Laurent series at $z_k$ and integrating termwise — legitimate by #link(<prop:two-sided-series>)[the convergence of two-sided series] —
   $
-    integral_(C_k) f(z) dif z = 2 pi"i" c_(-1)^((k)) = 2 pi"i" "Res"(f, z_k),
+    integral_(C_k) f(z) dif z = 2 pi"i"c_(-1)^((k)) = 2 pi"i" "Res"(f, z_k),
   $
   since all terms $(z - z_k)^n$ with $n != -1$ vanish on integration over a closed curve. Summing over $k$ yields the theorem.
 ]
@@ -2646,7 +2646,7 @@ The extended complex plane $hat(bb(C)) = bb(C) union {oo}$ treats $oo$ as a genu
 #proof[
   On $abs(z) = rho$ the expansion converges uniformly (#link(<prop:two-sided-series>)[the two-sided series proposition]), so termwise integration is legitimate, and #link(<prop:common-integrals>)[the common integrals] leave only the term $c_(-1) z^(-1)$:
   $
-    integral_(abs(z) = rho) f(z) dif z = 2 pi"i" c_(-1) = -2 pi"i" "Res"(f, oo).
+    integral_(abs(z) = rho) f(z) dif z = 2 pi"i"c_(-1) = -2 pi"i" "Res"(f, oo).
   $
   For the second formula, substitute $z = 1/w$, so $dif z = -dif w \/ w^2$: the circle $abs(z) = rho$ counterclockwise maps to the circle $abs(w) = 1/rho$ clockwise, and the minus sign of the orientation cancels the minus sign of $dif z$, giving
   $
@@ -2786,15 +2786,15 @@ A rational function decays at infinity as soon as the degree of its denominator 
 #theorem(name: "Rational Integrals over the Real Line")[
   Let $P, Q$ be polynomials with real coefficients, suppose that $Q$ has no real zero, and that $"deg"(Q) >= "deg"(P) + 2$.
   Then
-  $ integral_(-infinity)^infinity (P(x))/(Q(x)) dif x = 2 pi "i" sum_k "Res"(P/Q, z_k), $
+  $ integral_(-infinity)^infinity (P(x))/(Q(x)) dif x = 2 pi"i" sum_k "Res"(P/Q, z_k), $
   where $z_k$ runs over the zeros of $Q$ in the upper half-plane.
 ] <thm:rational-semicircle>
 
 #proof[
-  Let $Gamma_R$ be the arc $z = R e^(i theta)$, $0 <= theta <= pi$, and $C_R = [-R, R] union Gamma_R$.
+  Let $Gamma_R$ be the arc $z = R e^("i" theta)$, $0 <= theta <= pi$, and $C_R = [-R, R] union Gamma_R$.
   For $R$ so large that every zero of $Q$ in the upper half-plane lies inside $C_R$, #link(<thm:residue-theorem>)[the residue theorem] gives
   $
-    integral_(-R)^R (P(x))/(Q(x)) dif x + integral_(Gamma_R) (P(z))/(Q(z)) dif z = 2 pi "i" sum_k "Res"(P/Q, z_k).
+    integral_(-R)^R (P(x))/(Q(x)) dif x + integral_(Gamma_R) (P(z))/(Q(z)) dif z = 2 pi"i" sum_k "Res"(P/Q, z_k).
   $
   On $Gamma_R$ one has $abs(P(z)/Q(z)) <= C R^("deg"(P) - "deg"(Q)) <= C R^(-2)$ for $R$ large, and the length of the arc is $pi R$, so by the ML estimate
   $
@@ -2804,14 +2804,14 @@ A rational function decays at infinity as soon as the degree of its denominator 
 ]
 
 #example(name: "Integral of $1/(1 + x^4)$")[
-  The zeros of $1 + z^4$ are the fourth roots of $-1$; those in the upper half-plane are $z_1 = e^(i pi/4)$ and $z_2 = e^(3 i pi/4)$.
+  The zeros of $1 + z^4$ are the fourth roots of $-1$; those in the upper half-plane are $z_1 = e^("i" pi/4)$ and $z_2 = e^(3"i" pi/4)$.
   At such a zero $z_k^4 = -1$, so #link(<thm:residue-poles>)[the residue formula for a simple pole] gives
   $
     "Res"(1/(1 + z^4), z_k) = 1/(4 z_k^3) = (z_k)/(4 z_k^4) = -(z_k)/4.
   $
-  Since $z_1 + z_2 = sqrt(2) "i"$, #link(<thm:rational-semicircle>)[the semicircle theorem] yields
+  Since $z_1 + z_2 = sqrt(2)"i"$, #link(<thm:rational-semicircle>)[the semicircle theorem] yields
   $
-    integral_(-infinity)^infinity (dif x)/(1 + x^4) = 2 pi "i" dot (-(sqrt(2) "i"))/4 = (pi)/sqrt(2),
+    integral_(-infinity)^infinity (dif x)/(1 + x^4) = 2 pi"i" dot (-(sqrt(2)"i"))/4 = (pi)/sqrt(2),
   $
   and by evenness $integral_0^infinity (dif x)/(1 + x^4) = (pi)/(2 sqrt(2))$.
 ] <ex:quartic-integral>
@@ -2819,10 +2819,10 @@ A rational function decays at infinity as soon as the degree of its denominator 
 #example(name: "A Pole of Order Two")[
   At $z = "i"$ the function $1/(1 + z^2)^2$ has a pole of order two, and #link(<thm:residue-poles>)[the higher-order residue formula] gives
   $
-    "Res"(1/(1 + z^2)^2, "i") = lim_(z -> "i") (dif)/(dif z) ((z - "i")^2)/((z - "i")^2 (z + "i")^2) = lim_(z -> "i") (-2)/(z + "i")^3 = (-2)/(-8 "i") = 1/(4 "i").
+    "Res"(1/(1 + z^2)^2, "i") = lim_(z -> "i") (dif)/(dif z) ((z - "i")^2)/((z - "i")^2 (z + "i")^2) = lim_(z -> "i") (-2)/(z + "i")^3 = (-2)/(-8"i") = 1/(4"i").
   $
   Hence
-  $ integral_(-infinity)^infinity (dif x)/(1 + x^2)^2 = 2 pi "i" dot 1/(4 "i") = (pi)/2. $
+  $ integral_(-infinity)^infinity (dif x)/(1 + x^2)^2 = 2 pi"i" dot 1/(4"i") = (pi)/2. $
 ] <ex:repeated-pole-integral>
 
 #note(title: "Why a Gap of Two Degrees")[
@@ -2832,19 +2832,19 @@ A rational function decays at infinity as soon as the degree of its denominator 
 
 == Integrals Involving Trigonometric Functions // 含三角函数的积分
 
-On the large semicircle the exponential factor has modulus $abs(e^(i lambda z)) = e^(-lambda Im(z)) = e^(-lambda R sin theta)$.
+On the large semicircle the exponential factor has modulus $abs(e^("i" lambda z)) = e^(-lambda Im(z)) = e^(-lambda R sin theta)$.
 This is close to $1$ near the endpoints $theta = 0$ and $theta = pi$, and small only near the top of the arc, so the decay has to be extracted from the exponential rather than from the modulus of $f$.
 
 #lemma(name: "Jordan's Lemma")[
-  Let $f$ be continuous on the arc $Gamma_R: z = R e^(i theta)$, $0 <= theta <= pi$, and suppose that $abs(f(z)) <= M_R$ on $Gamma_R$, where $M_R -> 0$ as $R -> infinity$.
+  Let $f$ be continuous on the arc $Gamma_R: z = R e^("i" theta)$, $0 <= theta <= pi$, and suppose that $abs(f(z)) <= M_R$ on $Gamma_R$, where $M_R -> 0$ as $R -> infinity$.
   Then for every $lambda > 0$,
-  $ integral_(Gamma_R) f(z) e^(i lambda z) dif z -> 0 quad (R -> infinity). $
+  $ integral_(Gamma_R) f(z) e^("i" lambda z) dif z -> 0 quad (R -> infinity). $
 ] <lem:jordan>
 
 #proof[
   On $Gamma_R$,
   $
-    abs(integral_(Gamma_R) f(z) e^(i lambda z) dif z) <= M_R R integral_0^pi e^(-lambda R sin theta) dif theta.
+    abs(integral_(Gamma_R) f(z) e^("i" lambda z) dif z) <= M_R R integral_0^pi e^(-lambda R sin theta) dif theta.
   $
   The integrand is symmetric about $theta = pi/2$, and $sin theta >= 2 theta/pi$ on $[0, pi/2]$, hence
   $
@@ -2857,16 +2857,16 @@ This is close to $1$ near the endpoints $theta = 0$ and $theta = pi$, and small 
   Let $P, Q$ be polynomials with real coefficients, $Q$ without real zeros, $"deg"(Q) >= "deg"(P) + 1$, and let $lambda > 0$.
   Then
   $
-    integral_(-infinity)^infinity (P(x))/(Q(x)) e^(i lambda x) dif x = 2 pi "i" sum_k "Res"((P(z))/(Q(z)) e^(i lambda z), z_k),
+    integral_(-infinity)^infinity (P(x))/(Q(x)) e^("i" lambda x) dif x = 2 pi"i" sum_k "Res"((P(z))/(Q(z)) e^("i" lambda z), z_k),
   $
   where $z_k$ runs over the zeros of $Q$ in the upper half-plane.
 ] <thm:fourier-semicircle>
 
 #proof[
-  Integrate $g(z) = (P(z))/(Q(z)) e^(i lambda z)$ over $C_R = [-R, R] union Gamma_R$, with $R$ large enough to enclose every upper zero of $Q$.
+  Integrate $g(z) = (P(z))/(Q(z)) e^("i" lambda z)$ over $C_R = [-R, R] union Gamma_R$, with $R$ large enough to enclose every upper zero of $Q$.
   Then
   $
-    integral_(-R)^R g(x) dif x + integral_(Gamma_R) g(z) dif z = 2 pi "i" sum_k "Res"(g, z_k).
+    integral_(-R)^R g(x) dif x + integral_(Gamma_R) g(z) dif z = 2 pi"i" sum_k "Res"(g, z_k).
   $
   On $Gamma_R$ the factor $abs(P/Q)$ is bounded by $C R^(-1)$, which tends to $0$, so #link(<lem:jordan>)[Jordan's lemma] makes the arc contribution vanish.
   Letting $R -> infinity$ gives the formula.
@@ -2874,15 +2874,15 @@ This is close to $1$ near the endpoints $theta = 0$ and $theta = pi$, and small 
 
 #example(name: "Laplace-Type Integrals")[
   Let $a > 0$ and $b >= 0$.
-  The only pole in the upper half-plane of $e^(i b z)/(z^2 + a^2)$ is $z = a "i"$, whose residue is $e^(-a b)/(2 a "i")$.
+  The only pole in the upper half-plane of $e^("i"b z)/(z^2 + a^2)$ is $z = a"i"$, whose residue is $e^(-a b)/(2 a"i")$.
   Hence
-  $ integral_(-infinity)^infinity (e^(i b x))/(x^2 + a^2) dif x = 2 pi "i" dot (e^(-a b))/(2 a "i") = (pi)/a e^(-a b), $
+  $ integral_(-infinity)^infinity (e^("i"b x))/(x^2 + a^2) dif x = 2 pi"i" dot (e^(-a b))/(2 a"i") = (pi)/a e^(-a b), $
   and separating real and imaginary parts,
   $
     integral_(-infinity)^infinity (cos(b x))/(x^2 + a^2) dif x = (pi)/a e^(-a b), quad
     integral_(-infinity)^infinity (sin(b x))/(x^2 + a^2) dif x = 0.
   $
-  Replacing the numerator by $z e^(i b z)$ produces the residue $e^(-a b)/2$ at the same point, whence
+  Replacing the numerator by $z e^("i"b z)$ produces the residue $e^(-a b)/2$ at the same point, whence
   $
     integral_(-infinity)^infinity (x sin(b x))/(x^2 + a^2) dif x = pi e^(-a b), quad
     integral_(-infinity)^infinity (x cos(b x))/(x^2 + a^2) dif x = 0.
@@ -2897,7 +2897,7 @@ This is close to $1$ near the endpoints $theta = 0$ and $theta = pi$, and small 
     integral_0^infinity (x sin(b x))/(x^2 + a^2) dif x = (pi)/2 e^(-a b),
   $
   which is the form in which Laplace integrals usually appear.
-  The factor $e^(-a b)$ is invisible from the real variable: it is the value of $e^(i b z)$ at the pole $a "i"$, so the imaginary part of the pole has been converted into an exponential decay.
+  The factor $e^(-a b)$ is invisible from the real variable: it is the value of $e^("i"b z)$ at the pole $a"i"$, so the imaginary part of the pole has been converted into an exponential decay.
 ]
 
 #example(name: "An Integral over the Unit Circle")[
@@ -2905,12 +2905,12 @@ This is close to $1$ near the endpoints $theta = 0$ and $theta = pi$, and small 
   Show that
   $ integral_0^(2 pi) (dif theta)/(a + b cos theta) = (2 pi)/(sqrt(a^2 - b^2)). $
 
-  Put $z = e^(i theta)$; then $cos theta = (z + z^(-1))/2$ and $dif theta = (dif z)/(i z)$, so the integral becomes the contour integral over $abs(z) = 1$
-  $ (2)/i integral_(abs(z) = 1) (dif z)/(b z^2 + 2 a z + b). $
+  Put $z = e^("i" theta)$; then $cos theta = (z + z^(-1))/2$ and $dif theta = (dif z)/("i"z)$, so the integral becomes the contour integral over $abs(z) = 1$
+  $ (2)/"i" integral_(abs(z) = 1) (dif z)/(b z^2 + 2 a z + b). $
   The denominator has the zeros $z_plus.minus = (-a plus.minus sqrt(a^2 - b^2))/b$, whose product is $1$; since $a > abs(b)$, exactly one of them, namely $z_plus$ with $abs(z_plus) < 1$, lies inside the circle.
   There the residue is $1/(2 b z_plus + 2 a) = 1/(2 sqrt(a^2 - b^2))$, so
   $
-    integral_0^(2 pi) (dif theta)/(a + b cos theta) = 2/i dot 2 pi "i" dot 1/(2 sqrt(a^2 - b^2)) = (2 pi)/(sqrt(a^2 - b^2)).
+    integral_0^(2 pi) (dif theta)/(a + b cos theta) = 2/"i" dot 2 pi"i" dot 1/(2 sqrt(a^2 - b^2)) = (2 pi)/(sqrt(a^2 - b^2)).
   $
 ] <ex:trig-rational-circle>
 
@@ -2919,7 +2919,7 @@ This is close to $1$ near the endpoints $theta = 0$ and $theta = pi$, and small 
 When a singularity of the integrand lies on the real axis, the contour may not pass through it; it is deformed into a small semicircle around the singularity, and the contribution of that semicircle is then computed separately.
 
 #lemma(name: "The Small Arc Lemma")[
-  Let $f$ have a simple pole at $z_0$ with residue $c$, and let $gamma_epsilon$ be the arc $z = z_0 + epsilon e^(i theta)$, $alpha <= theta <= beta$.
+  Let $f$ have a simple pole at $z_0$ with residue $c$, and let $gamma_epsilon$ be the arc $z = z_0 + epsilon e^("i" theta)$, $alpha <= theta <= beta$.
   Then
   $ lim_(epsilon -> 0^+) integral_(gamma_epsilon) f(z) dif z = "i" (beta - alpha) c. $
 ] <lem:small-arc>
@@ -2938,8 +2938,8 @@ When a singularity of the integrand lies on the real axis, the contour may not p
   Show that
   $ integral_0^infinity (sin x)/x dif x = (pi)/2. $
 
-  The function $g(z) = e^(i z)/z$ has a single simple pole, at $z = 0$, with residue $1$.
-  Let $C$ be the positively oriented contour made of the segment $[-R, -epsilon]$, the small upper semicircle $gamma_epsilon: z = epsilon e^(i theta)$ from $theta = pi$ down to $theta = 0$, the segment $[epsilon, R]$, and the large arc $Gamma_R$.
+  The function $g(z) = e^("i"z)/z$ has a single simple pole, at $z = 0$, with residue $1$.
+  Let $C$ be the positively oriented contour made of the segment $[-R, -epsilon]$, the small upper semicircle $gamma_epsilon: z = epsilon e^("i" theta)$ from $theta = pi$ down to $theta = 0$, the segment $[epsilon, R]$, and the large arc $Gamma_R$.
   No singularity lies inside $C$, so
   $
     integral_(-R)^(-epsilon) g(x) dif x + integral_(gamma_epsilon) g(z) dif z + integral_epsilon^R g(x) dif x + integral_(Gamma_R) g(z) dif z = 0.
@@ -2948,7 +2948,7 @@ When a singularity of the integrand lies on the real axis, the contour may not p
   As $R -> infinity$ the arc term vanishes by #link(<lem:jordan>)[Jordan's lemma], since $abs(1/z) = 1/R -> 0$.
   As $epsilon -> 0^+$ #link(<lem:small-arc>)[the small arc lemma] gives $integral_(gamma_epsilon) g -> "i" (0 - pi) dot 1 = -"i" pi$.
   Passing to the limits,
-  $ "PV" integral_(-infinity)^infinity (e^(i x))/x dif x = "i" pi. $
+  $ "PV" integral_(-infinity)^infinity (e^("i"x))/x dif x = "i" pi. $
 
   Taking imaginary parts,
   $ "PV" integral_(-infinity)^infinity (sin x)/x dif x = pi, $
@@ -2958,7 +2958,7 @@ When a singularity of the integrand lies on the real axis, the contour may not p
 
 #note(title: "Two Routes to the Dirichlet Integral")[
   The same value is obtained in *Analyse Mathématique* without complex analysis, by comparing $1/x$ with the Dirichlet kernel and applying the Riemann-Lebesgue lemma.
-  The contour proof replaces that Fourier-analytic input by two geometric estimates — Jordan's lemma on the large arc and the small arc lemma at the indentation — and it also yields the principal value of $e^(i x)/x$ in one stroke.
+  The contour proof replaces that Fourier-analytic input by two geometric estimates — Jordan's lemma on the large arc and the small arc lemma at the indentation — and it also yields the principal value of $e^("i"x)/x$ in one stroke.
 ]
 
 == Integrals with Branch Cuts // 含割线的积分
@@ -2971,18 +2971,18 @@ The two banks then contribute two copies of the wanted integral, related by the 
   $ integral_0^infinity (x^(a-1))/(1 + x) dif x = (pi)/(sin(a pi)). $
 
   Use the branch $z^(a-1) = e^((a-1) log z)$ of the logarithm with argument in $(0, 2 pi)$, whose cut is the positive real axis, and put $f(z) = z^(a-1)/(1 + z)$.
-  On the upper bank $f$ equals $x^(a-1)/(1 + x)$, while on the lower bank the argument has increased by $2 pi$, so there $f$ equals $e^(2 pi "i" (a-1)) x^(a-1)/(1 + x)$; the lower bank is traversed in the opposite direction, so the two banks contribute
-  $ (1 - e^(2 pi "i" (a-1))) I, $
+  On the upper bank $f$ equals $x^(a-1)/(1 + x)$, while on the lower bank the argument has increased by $2 pi$, so there $f$ equals $e^(2 pi"i" (a-1)) x^(a-1)/(1 + x)$; the lower bank is traversed in the opposite direction, so the two banks contribute
+  $ (1 - e^(2 pi"i" (a-1))) I, $
   where $I$ is the wanted integral.
 
-  The only singularity enclosed is the simple pole at $z = -1$, whose argument is $pi$, so its residue is $e^(i pi (a-1))$.
+  The only singularity enclosed is the simple pole at $z = -1$, whose argument is $pi$, so its residue is $e^("i" pi (a-1))$.
   The large circle contributes $O(R^(a-1)) dot 2 pi R = O(R^a) -> 0$ because $a < 1$, and the small circle contributes $O(epsilon^(a-1)) dot 2 pi epsilon = O(epsilon^a) -> 0$; hence
   $
-    (1 - e^(2 pi "i" (a-1))) I = 2 pi "i" e^(i pi (a-1)).
+    (1 - e^(2 pi"i" (a-1))) I = 2 pi"i"e^("i" pi (a-1)).
   $
-  Since $e^(2 pi "i" (a-1)) = e^(2 pi "i" a)$ and $1 - e^(2 pi "i" a) = -2 "i" e^(i pi a) sin(a pi)$, while $e^(i pi (a-1)) = -e^(i pi a)$, the quotient simplifies to
+  Since $e^(2 pi"i" (a-1)) = e^(2 pi"i"a)$ and $1 - e^(2 pi"i"a) = -2"i"e^("i" pi a) sin(a pi)$, while $e^("i" pi (a-1)) = -e^("i" pi a)$, the quotient simplifies to
   $
-    I = (2 pi "i" e^(i pi (a-1)))/(1 - e^(2 pi "i" (a-1))) = (pi)/(sin(a pi)).
+    I = (2 pi"i"e^("i" pi (a-1)))/(1 - e^(2 pi"i" (a-1))) = (pi)/(sin(a pi)).
   $
 ] <ex:keyhole-basic>
 
@@ -2993,11 +2993,11 @@ The two banks then contribute two copies of the wanted integral, related by the 
   Take the branch $z^(1/2) = e^((1/2) log z)$ with argument in $(0, 2 pi)$ and $f(z) = z^(1/2)/(1 + z^2)$.
   Both poles $z = "i"$ (argument $pi/2$) and $z = -"i"$ (argument $3 pi/2$) lie inside a keyhole contour $C$ for the cut, with residues
   $
-    (e^(i pi/4))/(2 "i") quad "and" quad (e^(3 i pi/4))/(-2 "i").
+    (e^("i" pi/4))/(2"i") quad "and" quad (e^(3"i" pi/4))/(-2"i").
   $
-  Their sum is $(1)/(2 "i")(e^(i pi/4) - e^(3 i pi/4)) = (sqrt(2))/(2 "i")$, so
+  Their sum is $(1)/(2"i")(e^("i" pi/4) - e^(3"i" pi/4)) = (sqrt(2))/(2"i")$, so
   $
-    integral_C f(z) dif z = 2 pi "i" dot (sqrt(2))/(2 "i") = pi sqrt(2).
+    integral_C f(z) dif z = 2 pi"i" dot (sqrt(2))/(2"i") = pi sqrt(2).
   $
 
   On the two banks the branch takes the values $sqrt(x)$ and $-sqrt(x)$, and the integral over the large circle is $O(R^(1/2)) dot 2 pi R = O(R^(3/2))$ against a denominator of size $R^2$, hence tends to $0$; the small circle contributes $O(epsilon^(3/2)) -> 0$.
@@ -3030,7 +3030,7 @@ The residue theorem also sums series: a kernel whose residues at the integers ar
 
   By #link(<thm:residue-theorem>)[the residue theorem], the residues of $pi cot(pi z) f(z)$ inside $C_N$ are the values $f(n)$ for $abs(n) <= N$, coming from the simple poles of the cotangent with residue $1$, together with the residues at the poles $z_k$ of $f$:
   $
-    integral_(C_N) pi cot(pi z) f(z) dif z = 2 pi "i" (sum_(abs(n) <= N) f(n) + sum_k "Res"(pi cot(pi z) f(z), z_k)).
+    integral_(C_N) pi cot(pi z) f(z) dif z = 2 pi"i" (sum_(abs(n) <= N) f(n) + sum_k "Res"(pi cot(pi z) f(z), z_k)).
   $
   On $C_N$ the estimate $abs(pi cot(pi z) f(z)) <= C' (N + 1/2)^(-2)$ holds and the perimeter is $8 (N + 1/2)$, so the left-hand side is $O(N^(-1))$ and tends to $0$.
   Letting $N -> infinity$ gives the first identity.
@@ -3053,12 +3053,12 @@ The residue theorem also sums series: a kernel whose residues at the integers ar
 ] <ex:basel-problem>
 
 #example(name: "An Alternating Sum")[
-  Let $a > 0$ and $f(z) = 1/(z^2 + a^2)$, with simple poles at $plus.minus a "i"$.
-  At $a "i"$, where $sin(pi a "i") = "i" sinh(pi a)$,
+  Let $a > 0$ and $f(z) = 1/(z^2 + a^2)$, with simple poles at $plus.minus a"i"$.
+  At $a"i"$, where $sin(pi a"i") = "i" sinh(pi a)$,
   $
-    "Res"((pi)/(sin(pi z)) 1/(z^2 + a^2), a "i") = (pi)/(("i" sinh(pi a))(2 a "i")) = -(pi)/(2 a sinh(pi a)),
+    "Res"((pi)/(sin(pi z)) 1/(z^2 + a^2), a"i") = (pi)/(("i" sinh(pi a))(2 a"i")) = -(pi)/(2 a sinh(pi a)),
   $
-  and the residue at $-a "i"$ takes the same value; their sum is $-pi/(a sinh(pi a))$.
+  and the residue at $-a"i"$ takes the same value; their sum is $-pi/(a sinh(pi a))$.
   Hence
   $
     sum_(n = -infinity)^infinity ((-1)^n)/(n^2 + a^2) = (pi)/(a sinh(pi a)),
