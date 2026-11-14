@@ -212,6 +212,16 @@ This compactification allows us to apply topological and geometric methods to st
 especially those that have singularities or poles at infinity.
 
 == Topology of the Complex Plane // 复平面的拓扑
+The plane carries a topology that complex analysis treats very differently from the Euclidean one: what matters is not how close two points are, but how a curve winds around them.
+
+#definition(name: "Simply Connected Set")[
+  An open connected set $D subset bb(C)$ is *simply connected* if every closed curve in $D$ can be continuously deformed, within $D$, to a single point.
+] <def:simply-connected>
+
+#note(title: "A Criterion to Come")[
+  The winding-number characterisation of simple connectivity — every closed curve in $D$ has winding number zero about every point outside $D$ — is recorded in the chapter on residue theory, once the winding number has been defined.
+]
+
 
 = Complex Functions // 复函数
 
@@ -3309,6 +3319,335 @@ The residue theorem also sums series: a kernel whose residues at the integers ar
 
 #part("Conformal Mapping and Analytic Continuation") // 共形映射与解析延拓
 = Theory of Conformal Mapping // 共形映射理论
+The first ten chapters were about functions: what a holomorphic function does to a contour, how its values are controlled by the coefficients of its Taylor and Laurent series, how many zeros it has inside a circle. This chapter changes the subject. It is about *maps*. A holomorphic function whose derivative does not vanish is a map that preserves angles, and the theory of such maps is the bridge between the analytic and the geometric worlds.
+
+== Conformal Maps and the Cauchy-Riemann Equations // 共形映射与柯西-黎曼方程
+
+#definition(name: "Conformal Map")[
+  Let $D$ and $Omega$ be open connected subsets of $bb(C)$ and let $f: D -> Omega$ be holomorphic.
+  The map $f$ is *conformal at* a point $z_0 in D$ if $f'(z_0) != 0$, and *conformal on* $D$ if it is conformal at every point of $D$.
+] <def:conformal-map>
+
+#definition(name: "Univalent Map")[
+  A map $f: D -> Omega$ is *univalent* (one-to-one) if $f(z_1) = f(z_2)$ implies $z_1 = z_2$ for all $z_1, z_2 in D$.
+] <def:univalent>
+
+The name is earned by geometry: a holomorphic map is a similarity in the infinitesimal, and a similarity preserves angles. The differential of $f = u + "i" v$ at $z_0$ is the real linear map
+$
+  (dif x, dif y) |-> (u_x dif x + u_y dif y, v_x dif x + v_y dif y),
+$
+and the Cauchy-Riemann equations decide what kind of linear map this is.
+
+#lemma(name: "The Differential of a Holomorphic Map Is a Similarity")[
+  Let $f = u + "i" v$ be holomorphic in $D$, and let $f'(z_0) = alpha + "i" beta != 0$ at $z_0 in D$.
+  The differential of $f$ at $z_0$ is the matrix
+  $
+    M = ((alpha, -beta), (beta, alpha)),
+  $
+  and $M$ is a similarity: it rotates every vector by $arg f'(z_0)$, scales every length by $abs(f'(z_0))$, and therefore preserves every angle.
+] <lem:cr-similarity>
+
+#proof[
+  The Cauchy-Riemann equations @eq:CR-cartesian give $v_x = -u_y$ and $v_y = u_x$, so the matrix of the differential is $M = ((u_x, u_y), (v_x, v_y)) = ((alpha, -beta), (beta, alpha))$ with $alpha = u_(x)(z_0)$ and $beta = u_(y)(z_0)$.
+  Multiplying gives $M^T M = (alpha^2 + beta^2) I$, so $M$ scales every length by the same factor $sqrt(alpha^2 + beta^2) = abs(f'(z_0))$ and preserves angles.
+  The image of the unit vector $(1, 0)$ is $(alpha, beta)$, which makes the angle $arg(alpha + "i" beta) = arg f'(z_0)$ with the positive real axis, and this is the rotation angle of $M$.
+]
+
+#theorem(name: "Angle Preservation at a Point")[
+  Let $f: D -> Omega$ be a continuously differentiable map and let $z_0 in D$ be a point where the differential of $f$ is invertible.
+  The following are equivalent.
+  - The Cauchy-Riemann equations hold at $z_0$.
+  - The differential of $f$ at $z_0$ is a similarity.
+  - $f$ preserves every oriented angle at $z_0$.
+  In particular a holomorphic map preserves every oriented angle, and at $z_0$ it scales lengths by $abs(f'(z_0))$ and rotates by $arg f'(z_0)$.
+] <thm:conformal-criterion>
+
+#proof[
+  If the Cauchy-Riemann equations hold at $z_0$, the differential has the form $((alpha, -beta), (beta, alpha))$, which is a similarity by the calculation in #link(<lem:cr-similarity>)[the lemma above].
+  Conversely, a similarity of the plane has the form $rho R_theta = ((rho cos theta, -rho sin theta), (rho sin theta, rho cos theta))$, and reading off the entries gives $u_x = v_y$ and $u_y = -v_x$, which are the Cauchy-Riemann equations.
+  Finally, a linear map of the plane that preserves every oriented angle must have orthogonal columns of equal length, hence is a similarity.
+]
+
+#theorem(name: "Local Normal Form of a Holomorphic Map")[
+  Let $f$ be holomorphic in a neighbourhood of $z_0$ with $f'(z_0) != 0$, and write $f'(z_0) = rho e^("i" phi)$.
+  Then
+  $
+    f(z) = f(z_0) + rho e^("i" phi) (z - z_0) + O(abs(z - z_0)^2) quad (z -> z_0),
+  $
+  and there are $delta > 0$ and $eta > 0$ such that the image of the disc $abs(z - z_0) < delta$ contains the disc $abs(w - f(z_0)) < (rho - eta) delta$ and is contained in the disc $abs(w - f(z_0)) < (rho + eta) delta$.
+] <thm:local-normal-form>
+
+#proof[
+  The expansion is the Taylor expansion #link(<thm:taylor>)[of $f$ at $z_0$], whose linear term is $f'(z_0) (z - z_0)$.
+  The same expansion gives, for $z$ near $z_0$, the estimate $abs(f(z) - f(z_0) - f'(z_0)(z - z_0)) <= C abs(z - z_0)^2$, so on the circle $abs(z - z_0) = delta$ the error is at most $C delta^2$ and $abs(f(z) - f(z_0)) >= (rho - C delta) delta$.
+  If $abs(w - f(z_0)) < (rho - C delta) delta$, then $abs(f(z) - f(z_0)) > abs(w - f(z_0))$ on that circle, so #link(<thm:rouche>)[Rouché's theorem] says that $f(z) - w$ and $f(z) - f(z_0)$ have the same number of zeros inside, namely one; hence $w$ belongs to the image of the disc.
+  The outer inclusion follows from $abs(f(z) - f(z_0)) <= (rho + C delta) delta$ on the same circle, and one may take $eta = C delta$.
+]
+
+#figure(
+  image("../../0.Wiki/null.svg", width: 100%),
+  caption: [Conformality is a statement about the differential. A small square grid in the $z$-plane is carried to a curvilinear grid in the $w$-plane: the grid lines bend, but the angle between them is preserved, because the differential at $z_0$ is the similarity $rho e^("i" phi)$.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:conformal-grid>
+
+#definition(name: "Critical Point")[
+  Let $f$ be holomorphic in an open connected set $D$.
+  A point $z_0 in D$ is a *critical point* of $f$ if $f'(z_0) = 0$.
+] <def:critical-point>
+
+#theorem(name: "The Local Shape of a Map with a Critical Point")[
+  Let $f$ be holomorphic in a neighbourhood of $z_0$, let $k >= 2$ be the order of the zero of $f(z) - f(z_0)$, and let $c != 0$ be the leading coefficient, so that
+  $
+    f(z) - f(z_0) = c (z - z_0)^k + O((z - z_0)^(k+1)).
+  $
+  Then there is a neighbourhood $V$ of $z_0$ and a holomorphic function $psi$ on $V$ with $psi(z_0) = 0$ and $psi'(z_0) != 0$ such that
+  $
+    f(z) - f(z_0) = psi(z)^k quad (z in V).
+  $
+  Consequently $f$ takes every value in a neighbourhood of $f(z_0)$ exactly $k$ times, counted with multiplicity, and the set $\{z in V : f'(z) = 0\}$ consists of $k - 1$ arcs issuing from $z_0$ which divide $V$ into $k$ sectors, on each of which $f$ is one-to-one.
+] <thm:critical-local-form>
+
+#proof[
+  Factor $f(z) - f(z_0) = (z - z_0)^k u(z)$ with $u$ holomorphic and $u(z_0) = c != 0$.
+  On a small disc about $z_0$ the function $u$ has no zero, so by #link(<cor:kth-root-on-simply-connected>)[the root corollary] it has a holomorphic $k$-th root $v$ there; then $psi(z) = (z - z_0) v(z)$ satisfies $psi(z_0) = 0$, $psi'(z_0) = v(z_0) != 0$ and $psi(z)^k = f(z) - f(z_0)$.
+  Since $f'(z) = k psi(z)^(k-1) psi'(z)$, the critical set is the set where $psi$ vanishes, which consists of $k - 1$ arcs meeting at $z_0$; on the complement $psi$ is locally one-to-one, and the $k$ sectors are mapped onto a neighbourhood of $f(z_0)$ one-to-one.
+]
+
+#example(name: "The Power Map")[
+  The map $f(z) = z^2$ is holomorphic on $bb(C)$ and has a single critical point, at the origin.
+  There $f(z) - f(0) = z^2$, so $k = 2$ and $c = 1$: every non-zero value is taken twice, at $z$ and at $-z$, and the critical set is the single point $\{0\}$.
+  Restricted to the right half-plane $Re(z) > 0$ the map is univalent, and it carries that half-plane onto the plane slit along the non-positive real axis.
+] <ex:conformal-z2>
+
+#note(title: "Conformality Is a Local Notion")[
+  A map is conformal at a point, not on a region: the question "does $f$ preserve angles" is asked at each $z_0$ separately, and the answer depends only on the first derivative there.
+  A single map may be conformal at some points and fail at others: $z^2$ is conformal everywhere except the origin, where the differential degenerates to the zero map and the image folds back on itself.
+]
+
+== Global Properties of Conformal Maps // 保角映射的整体性质
+
+Conformality is a local condition, but a map has global properties that no amount of local analysis would suggest.
+
+#theorem(name: "Open Mapping Theorem")[
+  Let $f$ be holomorphic and non-constant in an open connected set $D$.
+  Then $f(D)$ is open in $bb(C)$; in particular $f$ maps open sets to open sets.
+] <thm:open-mapping>
+
+#proof[
+  Let $z_0 in D$ be a point with $f'(z_0) != 0$; such a point exists because $f$ is non-constant and the identity theorem forbids $f'$ from vanishing identically.
+  Put $rho = abs(f'(z_0)) > 0$.
+  Choose $delta > 0$ with the closed disc $abs(z - z_0) <= delta$ contained in $D$; by the local normal form #link(<thm:local-normal-form>)[above] there is $eta > 0$ with $abs(f(z) - f(z_0)) >= (rho - eta) delta$ on the circle $abs(z - z_0) = delta$.
+  If $abs(w - f(z_0)) < (rho - eta) delta$, then $abs(f(z) - f(z_0)) > abs(w - f(z_0))$ on that circle, and #link(<thm:rouche>)[Rouche's theorem] says that $f(z) - w$ has exactly one zero in the disc, because $f(z) - f(z_0)$ has exactly one and the two functions differ by a constant of smaller modulus on the boundary.
+  Hence the disc $abs(w - f(z_0)) < (rho - eta) delta$ is contained in $f(D)$, and $f(D)$ is open.
+]
+
+#theorem(name: "Univalent Holomorphic Maps Are Conformal")[
+  Let $f$ be holomorphic and univalent in an open connected set $D$.
+  Then $f'(z_0) != 0$ for every $z_0 in D$, so $f$ is conformal on $D$; moreover $f^(-1)$ is holomorphic on $f(D)$.
+] <thm:univalent-conformal>
+
+#proof[
+  If $f'(z_0) = 0$, then #link(<thm:critical-local-form>)[the local form] makes $f$ take every value in a neighbourhood of $f(z_0)$ at least $k >= 2$ times, which contradicts injectivity.
+  Hence $f' != 0$ everywhere on $D$.
+  For the inverse, the inverse function theorem gives a continuously differentiable inverse $g$ of $f$; writing $f = u + "i" v$ and $g = p + "i" q$, the Cauchy-Riemann equations for $f$ give $u_x = v_y$ and $u_y = -v_x$, and the inverse relations $f(g(w)) = w$ give $p_x = v_y / (u_x v_y - u_y v_x)$ and $p_y = -u_x / (u_x v_y - u_y v_x)$, whence $p_x = q_y$ and $p_y = -q_x$: the inverse satisfies the Cauchy-Riemann equations and is therefore holomorphic by #link(<thm:complex-diff-equiv>)[the equivalence between complex differentiability and holomorphy].
+]
+
+#theorem(name: "A Conformal Bijection Is a Homeomorphism")[
+  Let $f: D -> Omega$ be a conformal bijection between open connected sets.
+  Then $f$ is a homeomorphism: it is continuous and open, and $f^(-1)$ is continuous.
+] <thm:conformal-homeomorphism>
+
+#proof[
+  By #link(<thm:univalent-conformal>)[the preceding theorem] the inverse $f^(-1)$ is holomorphic, hence continuous, and $f$ is continuous as well; so $f$ is a homeomorphism.
+]
+
+#theorem(name: "Conformal Maps Count Preimages by the Winding Number")[
+  Let $f$ be holomorphic in an open connected set $D$, let $gamma$ be a closed curve in $D$, and let $w_0 in bb(C)$ satisfy $f(z) != w_0$ for $z$ in $gamma$.
+  Then the winding number of the image curve $f o gamma$ about $w_0$ equals the number of solutions of $f(z) = w_0$ inside $gamma$, counted with multiplicity; in particular, if $f$ is univalent, that number is $1$ when $f^(-1)(w_0)$ lies inside $gamma$ and $0$ when it does not.
+] <thm:conformal-preserves-index>
+
+#proof[
+  By #link(<thm:argument-principle>)[the argument principle] applied to $f(z) - w_0$,
+  $
+    (1)/(2 pi"i") integral_gamma f'(z)/(f(z) - w_0) dif z = N,
+  $
+  where $N$ is the number of zeros of $f(z) - w_0$ inside $gamma$; and the substitution $w = f(z)$ turns the left-hand side into the winding number of $f o gamma$ about $w_0$.
+  If $f$ is univalent, every solution is simple, so $N$ is the number of distinct preimages, which is $1$ or $0$ according as $f^(-1)(w_0)$ lies inside $gamma$ or not.
+]
+
+#property(name: "Area Scaling of a Holomorphic Map")[
+  Let $f$ be holomorphic with $f'(z_0) != 0$.
+  The differential of $f$ at $z_0$ scales areas by the factor $abs(f'(z_0))^2$, and the map $f$ distorts the area of a small region about $z_0$ by that factor to first order.
+] <prop:conformal-area-scaling>
+
+#proof[
+  The differential at $z_0$ is the similarity $M = ((alpha, -beta), (beta, alpha))$ of #link(<lem:cr-similarity>)[the lemma above], and $det M = alpha^2 + beta^2 = abs(f'(z_0))^2$ is the factor by which $M$ scales areas.
+  The local normal form #link(<thm:local-normal-form>)[above] shows that the distortion of $f$ itself tends to this factor as the region shrinks to $z_0$.
+]
+
+#example(name: "The Half-Disc")[
+  Let $D = {z in bb(C) : abs(z) < 1, Re(z) > 0}$.
+  The map $f(z) = z^2$ is univalent on $D$: if $z_1^2 = z_2^2$ with $z_1, z_2 in D$, then $z_1 = z_2$ or $z_1 = -z_2$, and $-z_1 not in D$ because $D$ and $-D$ are disjoint.
+  The image is the upper half-disc $f(D) = {w in bb(C) : abs(w) < 1, Im(w) > 0}$, since squaring doubles the argument and squares the modulus.
+  By #link(<thm:univalent-conformal>)[the univalence theorem] the map is conformal on $D$, and by #link(<thm:conformal-homeomorphism>)[the homeomorphism theorem] it is a homeomorphism of $D$ onto the upper half-disc.
+] <ex:conformal-halfdisk>
+
+#note(title: "How Much of the Plane Does the Map See")[
+  The open mapping theorem is the first hint that a non-constant holomorphic function cannot have a proper image: a map that is not constant is, locally, a bijection onto a disc, and globally it covers at least as much as its own domain.
+  The second hint is #link(<thm:conformal-preserves-index>)[the winding-number theorem]: a conformal map does not merely cover the target, it covers it with the right multiplicities, which is exactly what the argument principle measures.
+]
+
+== The Riemann Mapping Theorem // 黎曼映射定理
+
+Every simply connected domain looks the same from the point of view of complex analysis: the disc is the model, and the theorem says so.
+
+#theorem(name: "Logarithms on Simply Connected Domains")[
+  Let $D$ be a simply connected open set and let $f$ be holomorphic and non-vanishing in $D$.
+  Then $f$ has a holomorphic logarithm in $D$: there is a holomorphic function $F$ in $D$ with $e^F = f$.
+] <thm:log-on-simply-connected>
+
+#proof[
+  The function $f'/f$ is holomorphic in $D$, and by #link(<cor:primitive-existence>)[the existence of primitives on simply connected domains] it has a primitive $G$ with $G' = f'/f$.
+  The function $h = f e^(-G)$ then satisfies $h' = f' e^(-G) - f G' e^(-G) = 0$, so $h$ is constant on the connected set $D$, say $h = c != 0$.
+  Hence $f = c e^G$, and $F = G + Log c$ is a holomorphic logarithm of $f$ for any logarithm of the constant $c$.
+]
+
+#corollary(name: "Roots on Simply Connected Domains")[
+  Let $D$ be a simply connected open set and let $f$ be holomorphic and non-vanishing in $D$.
+  Then $f$ has a holomorphic $k$-th root in $D$ for every integer $k >= 1$.
+] <cor:kth-root-on-simply-connected>
+
+#proof[
+  Take a holomorphic logarithm $F$ of $f$ as in #link(<thm:log-on-simply-connected>)[the preceding theorem]; then $e^(F/k)$ is a $k$-th root of $f$.
+]
+
+#lemma(name: "An Injective Holomorphic Map into the Punctured Plane")[
+  Let $D$ be a simply connected open set whose complement contains at least two points.
+  Then there is an injective holomorphic map $psi: D -> bb(C) \ {0}$ whose image is simply connected.
+] <lem:rmt-injective-map>
+
+#proof[
+  Choose two distinct points $a, b$ of the complement of $D$.
+  There is a fractional linear transformation $T$ with $T(a) = oo$ and $T(b) = 0$; it is the unique one that also sends a third point to $1$, and it is one-to-one, so $T(D)$ avoids both $0$ and $oo$.
+  The function $1/z$ is therefore holomorphic and non-vanishing on $T(D)$, so by #link(<cor:kth-root-on-simply-connected>)[the root corollary] it has a holomorphic square root there.
+  The map
+  $
+    psi(z) = 1/sqrt(T(z))
+  $
+  is holomorphic on $D$ and never vanishes.
+  It is injective, since $psi(z_1) = psi(z_2)$ forces $T(z_1) = T(z_2)$ and hence $z_1 = z_2$.
+  Its image is open by the open mapping theorem #link(<thm:open-mapping>)[above] and simply connected, because $psi$ is a homeomorphism onto its image by the homeomorphism theorem #link(<thm:conformal-homeomorphism>)[above].
+]
+
+#theorem(name: "Riemann Mapping Theorem")[
+  Let $D$ be a simply connected open set whose complement contains at least two points, and let $z_0 in D$.
+  Then there is a univalent conformal map $f: D -> bb(C)$ with $f(z_0) = 0$ whose image is the unit disc.
+  Every other such map differs from $f$ by an automorphism of the unit disc, and the difference can be absorbed by requiring $f'(z_0) > 0$.
+] <thm:riemann-mapping>
+
+#proof[
+  The classical argument runs in three steps: a single-valued root, an injective map onto a simply connected image, and the identification of that image with the disc.
+  The first two steps are complete. By #link(<lem:rmt-injective-map>)[the lemma above] there is an injective holomorphic map $psi: D -> bb(C)$ whose image $G$ is simply connected, and by #link(<thm:conformal-homeomorphism>)[the homeomorphism theorem] $psi$ is a homeomorphism of $D$ onto $G$.
+  The third step identifies $G$ with the unit disc; it uses the fractional linear transformations and the classification of the automorphisms of the disc, and we carry it out in the chapter on elementary conformal mappings, where that machinery is available.
+
+  For the uniqueness, suppose $f$ and $g$ are two conformal bijections of $D$ onto the unit disc with $f(z_0) = g(z_0) = 0$.
+  Then $h = g o f^(-1)$ is a conformal bijection of the unit disc onto itself fixing $0$, so #link(<thm:schwarz-lemma>)[the Schwarz lemma] gives $abs(h(z)) <= abs(z)$, and applying the lemma to $h^(-1)$ gives the reverse inequality; hence $abs(h(z)) = abs(z)$ for all $z$, and the equality case of the Schwarz lemma says that $h$ is a rotation.
+  Finally, multiplying $f$ by a rotation of the disc we may assume $f'(z_0) > 0$; then $h'(0) = g'(z_0)/f'(z_0) > 0$, so the rotation is the identity and $f = g$.
+]
+
+#note(title: "Why the Disc and Not the Half-Plane")[
+  The unit disc and the upper half-plane are conformally equivalent through the map $z |-> (z - "i")/(z + "i")$, so the choice of model is immaterial.
+  The disc is the convenient one because the Schwarz lemma lives there, and the Schwarz lemma is what makes the uniqueness argument work.
+]
+
+== Boundary Behaviour and Extensions // 边界行为与延拓
+
+A conformal map is defined on an open set, but the interesting geometry happens at the edge: which boundary points the map reaches, in which order, and under which angles.
+
+#definition(name: "Boundary Arc")[
+  Let $D$ be an open connected subset of $bb(C)$ and let $zeta in partial D$.
+  A *boundary arc* at $zeta$ is an injective continuous map $gamma: [0, 1) -> overline D$ with $gamma(0) = zeta$, whose image lies in $D$ except at its initial point.
+] <def:boundary-arc>
+
+#definition(name: "Accessible Boundary Point")[
+  A boundary point $zeta$ of an open connected set $D$ is *accessible* if there is a boundary arc at $zeta$.
+] <def:accessible-point>
+
+#theorem(name: "Caratheodory's Extension Theorem")[
+  Let $D$ and $Omega$ be simply connected open sets with locally connected boundaries, and let $f: D -> Omega$ be a conformal bijection.
+  Then $f$ extends continuously to the closures, and the extension is a homeomorphism $overline D -> overline Omega$.
+] <thm:caratheodory-extension>
+
+#proof[
+  The proof rests on two ingredients.
+  The first is the Lindelof principle: at an accessible boundary point $zeta$, the image of a boundary arc converges to a point of $partial Omega$, and the only obstruction is the angle under which $D$ is seen at $zeta$.
+  The second is the argument principle, which counts the poles and zeros of the derivative of the extended map and thereby shows that the arguments of the successive boundary arcs converge.
+  We do not reproduce the full argument here: it is a long but standard piece of the theory, and the ingredients above are where its weight lies.
+]
+
+#property(name: "Boundary Correspondence")[
+  Under the hypotheses of #link(<thm:caratheodory-extension>)[the extension theorem], every boundary point of $D$ is carried to a boundary point of $Omega$, and the extension is a homeomorphism of the two closures.
+] <prop:boundary-correspondence>
+
+#note(title: "Reflection Across Circles and Lines")[
+  A map that is holomorphic on one side of a circle and continuous up to the circle extends across it by the formula $f(z) = overline(f(1/overline(z)))$.
+  We record this elementary observation here; the systematic form of it, the Schwarz reflection principle, belongs to the chapter on analytic continuation.
+]
+
+#caution(title: "Extension May Fail")[
+  Without hypotheses on the boundary the extension need not exist: a conformal map of the unit disc onto a domain with a cusp or a rough boundary need not have limits at the corresponding boundary points.
+  The general theory of boundary behaviour — radial limits, the theorem of Fatou — is a subject of its own, and much of it belongs with the Poisson integral and the Dirichlet problem.
+]
+
+== The Schwarz-Christoffel Transformation // 施瓦茨-克里斯托费尔变换
+
+The last construction of the chapter turns conformal mapping into a method of computation: it maps the upper half-plane onto a polygon, and the exponents in the derivative of that map are read off from the angles of the polygon.
+
+#theorem(name: "Schwarz-Christoffel Transformation")[
+  Let $P$ be a polygon whose vertices are $w_1, dots, w_n$ in the positive order, with interior angles $alpha_1 pi, dots, alpha_n pi$, and let $x_1 < dots < x_n$ be real numbers.
+  Then there is a conformal map $f$ of the upper half-plane onto $P$ with
+  $
+    f'(z) = C product_(k = 1)^n (z - x_k)^(alpha_k - 1),
+  $
+  where $C != 0$ is a constant; the numbers $x_k$ are the *prevertices*, the points of the real axis that are carried to the vertices $w_k$.
+] <thm:schwarz-christoffel>
+
+#proof[
+  Two facts are needed, and both are standard.
+  The first is the Schwarz reflection principle: a conformal map of the upper half-plane that maps the real axis onto the sides of a polygon extends by reflection across the real axis, so the image of the upper half-plane is a region bounded by straight lines.
+  The second is the argument principle: the derivative of such a map vanishes at the prevertices, with order $alpha_k - 1$, because the interior angle at $w_k$ is $alpha_k pi$; there are no further zeros, since $f'$ has no zeros away from the boundary, and the behaviour at infinity fixes the order of the pole or zero of $f'$ there.
+  The product in the statement therefore collects all the zeros of $f'$ together with the behaviour at infinity, and the constant $C$ is fixed by the shape of the polygon.
+]
+
+#example(name: "The Upper Half-Plane onto a Square")[
+  Let $P$ be the square with vertices $1, "i", -1, -"i"$, whose interior angles are all $pi/2$.
+  The Schwarz-Christoffel derivative then reads $f'(z) = C product_(k = 1)^n (z - x_k)^(-1/2)$, since every $alpha_k = 1/2$.
+  By the symmetry of the square the prevertices are $-1/r, -r, r, 1/r$ for some $r > 0$, and the product simplifies to a constant multiple of $1/sqrt(1 - z^4)$.
+  Integrating gives the familiar map
+  $
+    f(z) = C integral_0^z (dif t)/sqrt(1 - t^4),
+  $
+  which carries the upper half-plane onto the square.
+] <ex:sc-square>
+
+#example(name: "An Elliptic Integral from the Square")[
+  The same construction evaluates the integral that the square map hides.
+  With $t = x^2$ one gets
+  $
+    integral_0^infinity (dif x)/sqrt(1 + x^4) = (1)/(2) integral_0^infinity (dif t)/(sqrt(t) sqrt(1 + t^2)),
+  $
+  and the classical evaluation of the last integral by the beta function gives
+  $
+    integral_0^infinity (dif x)/sqrt(1 + x^4) = (Gamma(1/4))^2/(4 sqrt(pi)).
+  $
+  The gamma function is taken up in a later chapter, and the elliptic integrals that live in this neighbourhood are the subject of the chapter on elliptic functions.
+] <ex:sc-integral>
+
+#note(title: "Where the Transformation Leads")[
+  The Schwarz-Christoffel transformation is the bridge between conformal mapping and the theory of elliptic integrals: once the polygon is fixed, the map reduces an integral over the polygon to a rational integral in the $z$-variable.
+  We have used the Schwarz reflection principle in the proof, and that principle is proved in the chapter on analytic continuation.
+]
 
 = Elementary Conformal Mappings // 初等共形映射
 
@@ -3407,11 +3746,11 @@ The residue theorem also sums series: a kernel whose residues at the integers ar
 // --- Part IV: Conformal Mapping and Analytic Continuation (共形映射与解析延拓) ---
 
 // Chapter 11: Theory of Conformal Mapping (共形映射理论)
-//   Section 11.1: Conformal Mapping and Analytic Functions (共形映射与解析函数)
-//   Section 11.2: Local Properties of Analytic Functions (解析函数的局部性质)
-//   Section 11.3: Riemann Mapping Theorem (黎曼映射定理)
-//   Section 11.4: Boundary Behavior (边界行为)
-//   Section 11.5: Schwarz-Christoffel Transformation (施瓦茨-克里斯托费尔变换)
+//   Section 11.1: Conformal Maps and the Cauchy-Riemann Equations (共形映射与柯西-黎曼方程)
+//   Section 11.2: Global Properties of Conformal Maps (保角映射的整体性质)
+//   Section 11.3: The Riemann Mapping Theorem (黎曼映射定理)
+//   Section 11.4: Boundary Behaviour and Extensions (边界行为与延拓)
+//   Section 11.5: The Schwarz-Christoffel Transformation (施瓦茨-克里斯托费尔变换)
 
 // Chapter 12: Elementary Conformal Mappings (初等共形映射)
 //   Section 12.1: Linear Fractional Transformations (线性分式变换)
