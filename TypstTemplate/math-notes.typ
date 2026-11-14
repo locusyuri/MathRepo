@@ -234,6 +234,27 @@
   if elems.len() > 0 { elems.last().body } else { none }
 }
 
+/// 获取某一级标题在指定位置之前出现的最后一个标题编号
+///
+/// 编号规则与 heading show 规则中的 chapter-counter / section-counter 一致：
+/// - level 1 → "3"（第几个章）
+/// - level 2 → "3.2"（章号.章内第几节）
+#let last-heading-number-before(level, location) = {
+  let chapters = query(heading.where(level: 1).before(location))
+  let chapter-num = chapters.len()
+  if chapter-num == 0 {
+    none
+  } else if level == 1 {
+    str(chapter-num)
+  } else {
+    let chapter-loc = chapters.last().location()
+    let sections = query(
+      heading.where(level: 2).after(chapter-loc).before(location),
+    )
+    if sections.len() == 0 { none } else { str(chapter-num) + "." + str(sections.len()) }
+  }
+}
+
 /// 判断当前页是否正好是一级标题所在页
 #let page-has-level-1-heading(page-number) = {
   let found = false
@@ -359,10 +380,23 @@
   } else {
     let chapter-title = last-heading-before(1, here())
     let section-title = last-heading-before(2, here())
-    let header-title = if is-even-page {
-      chapter-title
+
+    // 奇数页优先显示节标题，没有节时退回章标题
+    let use-section = not is-even-page and section-title != none
+    let header-title = if use-section { section-title } else { chapter-title }
+    let header-num = if use-section {
+      last-heading-number-before(2, here())
     } else {
-      if section-title != none { section-title } else { chapter-title }
+      last-heading-number-before(1, here())
+    }
+
+    // 标题前缀：Chapter 3. / Section 3.2.
+    let header-prefix = if header-num == none {
+      ""
+    } else if use-section {
+      "Section " + header-num + ". "
+    } else {
+      "Chapter " + header-num + ". "
     }
 
     if header-title == none {
@@ -370,10 +404,10 @@
     } else {
       [
         #if is-even-page [
-          #text(size: font-header-size, font: font-latin-main, fill: color-structure)[#header-title]
+          #text(size: font-header-size, font: font-latin-main, fill: color-structure)[#header-prefix#header-title]
         ] else [
           #align(right)[
-            #text(size: font-header-size, font: font-latin-main, fill: color-structure)[#header-title]
+            #text(size: font-header-size, font: font-latin-main, fill: color-structure)[#header-prefix#header-title]
           ]
         ]
         #v(-5pt)
