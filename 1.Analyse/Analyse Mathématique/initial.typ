@@ -8775,7 +8775,7 @@ is called the *Hessian matrix* of the function $f$.
 // 注：tex 该式偏导记号为 F_x，结合 i = 1, ..., n 的遍历语境统一为 F_(x_i)。
 
 #figure(
-  image("img/ImplicitFunction.png", width: 50%),
+  image("img/implicit-function.svg", width: 75%),
   caption: [Implicit function.],
 ) <fig:implicit-function>
 
