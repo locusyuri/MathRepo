@@ -3664,7 +3664,6 @@ The last construction of the chapter turns conformal mapping into a method of co
 ]
 
 = Elementary Conformal Mappings // 初等共形映射
-= Elementary Conformal Mappings // 初等共形映射
 
 The maps of this chapter are the ones one writes down explicitly. They are built from the fractional linear transformations, and they are what one reaches for when a region has to be straightened.
 
@@ -3769,8 +3768,274 @@ The maps of this chapter are the ones one writes down explicitly. They are built
 ]
 
 
+
+== Mappings to Canonical Domains // 到标准区域的映射
+
+Once the machinery is in place, the question "what is the conformal type of this region?" has a short answer, and the maps that realise it are often elementary.
+
+#definition(name: "Canonical Domain")[
+  Three domains play the role of models: the unit disc $abs(z) < 1$, the upper half-plane $Im(z) > 0$, and the plane $bb(C)$ itself.
+  They are called the *canonical domains* of conformal mapping.
+] <def:canonical-domain>
+
+#theorem(name: "The Classification of Simply Connected Domains")[
+  Let $D$ be a simply connected open set.
+  - If $D = bb(C)$, then $D$ is conformally equivalent to the plane.
+  - If $D != bb(C)$, then $bb(C) backslash D$ contains at least two points, and $D$ is conformally equivalent to the unit disc.
+  - Two simply connected domains are conformally equivalent if and only if their unit discs are.
+] <thm:canonical-domains>
+
+#proof[
+  A simply connected proper domain cannot have a one-point complement: the complement of $bb(C) backslash {p}$ is not connected, and a domain is simply connected only if its complement in the extended plane is connected.
+  So the complement has at least two points, and the Riemann mapping theorem of the previous chapter applies.
+  For the last statement, compose two equivalences to obtain an automorphism of the disc; by the classification of the automorphisms, composing the second equivalence with the inverse of that automorphism produces two maps of $D$ into the disc that agree on a non-empty open set, and the identity theorem makes them equal.
+]
+
+The standard maps between the models and their relatives are worth collecting.
+
+#tex-table(
+  ("Source", "Map", "Image", "Inverse"),
+  ([the unit disc], [$T(z) = "i" (1 + z)/(1 - z)$], [the upper half-plane], [$T^(-1)(w) = (w - "i")/(w + "i")$]),
+  ([the upper half-plane], [$C(z) = (z - "i")/(z + "i")$], [the unit disc], [$C^(-1)(w) = "i" (1 + w)/(1 - w)$]),
+  ([the strip $0 < Im(z) < pi$], [$exp(z)$], [the upper half-plane], [$Ln(w)$]),
+  ([the quadrant $Re(z) > 0, Im(z) > 0$], [$z^2$], [the upper half-plane], [$sqrt(w)$]),
+  ([the unit disc], [$e^(("i" theta)) (z - a)/(1 - overline(a) z)$], [the unit disc], [the same family with $a, theta$ replaced]),
+)
+
+#example(name: "A Half-Disc onto the Unit Disc")[
+  Let $D = {z : abs(z) < 1, Im(z) > 0}$.
+  The map $f(z) = z^2$ is univalent on $D$ and carries it onto the right half-disc $f(D) = {w : abs(w) < 1, Re(w) > 0}$, as we saw in Chapter 11.
+  Composing with the maps of the table, the half-disc is conformally equivalent to the unit disc; an explicit composite is $z |-> (z^2 - "i")/(z^2 + "i")$.
+] <ex:halfdisc-to-disc>
+
+#note(title: "How Much Does the Region Matter?")[
+  The classification above is the reason conformal mapping is so effective: once a region is recognised as simply connected, its geometry up to a conformal map is irrelevant, and the problem can be transported to the disc or to the half-plane, where the Schwarz lemma and the Poisson integral are available.
+  What is *not* transported is the boundary condition, and that is where the remaining difficulty of the Dirichlet problem lives; we return to it in the chapter on harmonic functions.
+]
+
+
+== Mappings of the Unit Disk // 单位圆盘的映射
+
+The disc is the model in which the Schwarz lemma lives, so it is worth knowing how it sits inside the other configurations and how its automorphisms behave.
+
+#theorem(name: "The Disc and the Half-Plane")[
+  The map $T(w) = "i" (1 + w)/(1 - w)$ is a conformal bijection of the unit disc onto the upper half-plane, and its inverse is $T^(-1)(w) = (w - "i")/(w + "i")$.
+] <thm:disc-half-plane>
+
+#proof[
+  The denominator does not vanish in the disc, and the map is a fractional linear transformation followed by a rotation, so it is holomorphic and injective there.
+  Writing $w = x + "i" y$ and clearing denominators gives
+  $
+    T(w) = "i" (1 - abs(w)^2)/(abs(1 - w)^2) - 2 y/(abs(1 - w)^2),
+  $
+  so the imaginary part of $T(w)$ is $(1 - abs(w)^2)/(abs(1 - w)^2)$, which is positive for $abs(w) < 1$.
+  The map therefore carries the disc into the upper half-plane; being fractional linear it carries the boundary circle onto the real axis, and the displayed formula for the inverse shows that it is a bijection.
+]
+
+#property(name: "The Automorphisms Act Transitively")[
+  The automorphisms of the unit disc act transitively on the disc and transitively on triples of distinct points of its boundary circle.
+] <prop:automorphisms-transitive>
+
+#proof[
+  The map $phi_(a)(z) = (z - a)/(1 - overline(a) z)$ is an automorphism of the disc by the computation of the previous section, and it carries $a$ to $0$, so any interior point can be moved to any other.
+  On the boundary, three distinct points determine a fractional linear transformation, and a fractional linear transformation carrying the circle onto itself carries the interior onto the interior, so any triple of boundary points can be carried to any other.
+]
+
+#example(name: "Moving a Boundary Point")[
+  The automorphism $phi_(a)(z) = (z - a)/(1 - overline(a) z)$ carries the interior point $a$ to the origin, and the same formula carries the boundary point $1$ to $(1 - a)/(1 - overline(a))$.
+  Composing it with a rotation of the target therefore moves a chosen boundary point to any other, which is the practical form of the transitivity statement.
+] <ex:disc-automorphism-action>
+
+#note(title: "What the Disc Knows and What It Does Not")[
+  A conformal map of the disc onto a region with a well-behaved boundary extends to a homeomorphism of the two closures, by the Caratheodory theorem of Chapter 11; the disc thus knows the boundary as well as the interior.
+  It does not know the metric: the disc carries a distinguished hyperbolic metric, in which all automorphisms are isometries, and that metric is the reason the Schwarz lemma holds in the form it does.
+]
+
+== Mappings of the Upper Half-Plane // 上半平面的映射
+
+#theorem(name: "The Strip and the Half-Plane")[
+  The map $exp(z)$ is a conformal bijection of the strip $0 < Im(z) < pi$ onto the upper half-plane, and its inverse is $Ln(w)$.
+] <thm:strip-half-plane>
+
+#proof[
+  For $z = x + "i" y$ with $0 < y < pi$ one has $exp(z) = e^x (cos y + "i" sin y)$, so the modulus is $e^x > 0$ and the argument is $y in (0, pi)$: the image lies in the upper half-plane.
+  Conversely, every number of the upper half-plane has a unique such representation, with $x = ln(abs(w))$ and $y = arg(w) in (0, pi)$, so the map is a bijection; and $exp'(z) = exp(z) != 0$, so it is conformal.
+]
+
+#theorem(name: "The Quadrant and the Half-Plane")[
+  The map $z^2$ is a conformal bijection of the quadrant $Re(z) > 0, Im(z) > 0$ onto the upper half-plane, and its inverse is the branch of $sqrt(w)$ with $0 < arg(w) < pi$.
+] <thm:quadrant-half-plane>
+
+#proof[
+  Squaring doubles the argument: if $0 < arg(z) < pi/2$ then $0 < 2 arg(z) < pi$, so the image lies in the upper half-plane.
+  Every $w$ in the upper half-plane has exactly one square root with argument in $(0, pi/2)$, so the map is a bijection; and the derivative $2 z$ does not vanish in the quadrant, so it is conformal.
+]
+
+#example(name: "A Half-Strip onto the Disc")[
+  Let $D = {z : 0 < Im(z) < pi, Re(z) > 0}$, a half-strip.
+  The map $exp(z)$ carries it onto the upper half-plane — the restriction of the strip map of the previous theorem — and the Cayley map carries the upper half-plane onto the unit disc, so $z |-> (exp(z) - "i")/(exp(z) + "i")$ maps $D$ conformally onto the disc.
+] <ex:half-strip-disc>
+
+#note(title: "Why the Half-Plane Is the Natural Model for Potential Theory")[
+  The upper half-plane is the model in which the Poisson kernel and the Dirichlet problem take their simplest form, and the maps above are the standard way of transporting a region to it.
+  We defer the analytic side of that story to the chapter on harmonic functions; what is needed here is only the maps themselves.
+]
+
+== Applications to Potential Theory // 在势论中的应用
+
+A conformal map transports harmonic functions, and harmonic functions are the mathematical form of a potential; this is the bridge from the geometry of the previous sections to the physics of the later chapters.
+
+#theorem(name: "Conformal Maps Transport Harmonic Functions")[
+  Let $f: D -> Omega$ be a conformal bijection and let $u$ be harmonic in $Omega$.
+  Then $u o f$ is harmonic in $D$; conversely, if $u o f$ is harmonic in $D$, then $u$ is harmonic in $Omega$.
+] <thm:conformal-harmonic>
+
+#proof[
+  Since $u$ is harmonic in $Omega$, it admits a harmonic conjugate locally, so on a small disc $u = Re(H)$ for a holomorphic function $H$.
+  Then $u o f = Re(H o f)$, and a composition of holomorphic functions is holomorphic, so $u o f$ is the real part of a holomorphic function and therefore harmonic by #link(<thm:analytic-harmonic>)[the theorem on real and imaginary parts].
+  The converse follows from the same argument applied to $f^(-1)$.
+]
+
+#example(name: "A Potential in the Upper Half-Plane")[
+  Find a harmonic function $u$ in the upper half-plane with $u = 0$ on the negative real axis and $u = 1$ on the positive real axis.
+  The logarithm $Ln z$ is holomorphic in the half-plane, so its imaginary part $arg(z) in (0, pi)$ is harmonic there; and $arg(z) = 0$ on the negative axis while $arg(z) = pi$ on the positive axis.
+  Hence $u(z) = arg(z)/pi$ is the required function, and it takes the values between $0$ and $1$ in the interior.
+] <ex:potential-half-plane>
+
+#example(name: "A Potential in a Quadrant")[
+  The same construction works in the quadrant $Re(z) > 0, Im(z) > 0$: the function $arg(z)/pi$ is harmonic there, vanishes on the positive real axis, and equals $1/2$ on the positive imaginary axis.
+] <ex:potential-quadrant>
+
+#note(title: "The General Problem")[
+  Finding a harmonic function with prescribed values on the boundary is the *Dirichlet problem*, and for an arbitrary region it is not solved by a map alone: the map says which harmonic function to look for, but the boundary values still have to be pulled back and the resulting Poisson integral analysed.
+  That is the subject of the chapter on harmonic functions and the Dirichlet problem, where the half-plane and the disc reappear as the models in which the answers are explicit.
+]
+
 = Analytic Continuation // 解析延拓
-= Analytic Continuation // 解析延拓
+
+
+== Direct Analytic Continuation and Continuation along a Curve // 直接解析延拓与沿曲线的解析延拓
+
+A holomorphic function is defined on a domain, but the formula that defines it often makes sense far beyond it. Analytic continuation is the procedure that takes a function beyond its original domain, one piece at a time, and the theory says how much freedom is left in the process.
+
+#definition(name: "Direct Analytic Continuation")[
+  Let $f_1$ be holomorphic on a domain $D_1$ and $f_2$ holomorphic on a domain $D_2$, and suppose that $D_1 inter D_2$ is not empty.
+  If $f_1 = f_2$ on $D_1 inter D_2$, the two functions have the same *direct analytic continuation* to $D_1 union D_2$, and that continuation is holomorphic on the union.
+] <def:direct-continuation>
+
+The union of two overlapping domains is again a domain, and the piecewise function is holomorphic, because near every point of the union it agrees with one of the two functions.
+
+#definition(name: "Analytic Continuation along a Curve")[
+  Let $f$ be holomorphic on a domain $D$ and let $gamma$ be a continuous curve in $D$ starting at $z_0 in D$.
+  An *analytic continuation of $f$ along $gamma$* is obtained by passing through a finite chain of domains $D_0 = D, D_1, dots, D_n$, each meeting the next, with $gamma(1) in D_n$, and at each step taking the direct analytic continuation of the previous function to the next domain.
+] <def:continuation-along-curve>
+
+#theorem(name: "The Continuation along a Curve Is Unique")[
+  Let $f$ be holomorphic on a domain $D$ and let $gamma$ be a curve in $D$ starting at $z_0 in D$.
+  If $F$ and $G$ are two analytic continuations of $f$ along $gamma$, then they agree on the domain covered by the chain, and in particular they take the same value at the end of the curve.
+] <thm:continuation-unique>
+
+#proof[
+  Proceed along the chain. On the first domain the two continuations agree with $f$.
+  Suppose they agree on $D_i$; then they are both direct continuations of the same function from $D_i$ to $D_(i+1)$, and two holomorphic functions on a domain that agree on a non-empty open set agree everywhere by the identity theorem.
+  Induction along the chain finishes the proof.
+]
+
+#theorem(name: "The Continuation along a Curve Is Holomorphic")[
+  In the situation of the definition, the analytic continuation of $f$ along $gamma$ is a holomorphic function on $D_0 union dots union D_n$, and it agrees with $f$ on $D_0$.
+] <thm:continuation-holomorphic>
+
+#proof[
+  Each step of the chain produces a holomorphic function on the union of the domains visited so far, by the definition of the direct continuation, and the pieces glue because they agree on the overlaps.
+]
+
+#note(title: "The Engine of the Whole Subject")[
+  Uniqueness along a curve is the engine of analytic continuation, and it rests on nothing more than the identity theorem: a function germ can have at most one continuation along a given path.
+  The remaining question — whether the continuation depends on the path — is exactly what the monodromy theorem answers.
+]
+
+== The Monodromy Theorem // 单值性定理
+
+Continuing a function around a closed curve may bring it back to a different value; that is the monodromy, and it is the obstruction to single-valuedness.
+
+#definition(name: "Monodromy Around a Closed Curve")[
+  Let $f$ be holomorphic on a domain $D$, let $z_0 in D$, and let $gamma$ be a closed curve in $D$ based at $z_0$.
+  The *monodromy of $f$ around $gamma$* is the analytic continuation of $f$ along $gamma$, read at the point where the curve ends; it is a holomorphic function on the domain covered by the chain.
+] <def:monodromy>
+
+#theorem(name: "Monodromy Theorem")[
+  Let $D$ be a simply connected domain and let $f$ be holomorphic on $D$.
+  If $f$ can be continued along every curve in $D$, then the continuation is single-valued: the analytic continuation of $f$ along a curve from $z_0$ to $z_1$ depends only on the endpoints.
+] <thm:monodromy>
+
+#proof[
+  The monodromies form a group under composition, by the uniqueness of the continuation along a curve, and every element of this group is a holomorphic self-map of $D$ fixing $z_0$.
+  The group is discrete: if the monodromy around a closed curve is the identity on a neighbourhood of $z_0$, then the continuation along that curve agrees with the identity near $z_0$, and by the local stability of the continuation the curve may be shortened to a small loop, whose monodromy is the identity of the group.
+  The classical argument then finishes the proof: a discrete group of holomorphic self-maps of a simply connected domain, all fixing $z_0$, is trivial. This last step is Hurwitz's lemma, the standard tool behind the theorem, and we do not reproduce it here.
+  With the group trivial, every closed curve has trivial monodromy, and the continuation from $z_0$ to $z_1$ is therefore the same along every curve.
+]
+
+#note(title: "What the Theorem Gives")[
+  Applied to a local branch of a multi-valued function, the monodromy theorem says that a branch extends single-valuedly to every simply connected domain that avoids the branch points — exactly the statement promised in Chapter 3, and the reason a cut plane suffices to make a branch single-valued.
+  In particular, on a simply connected domain avoiding the zeros, a non-vanishing function has a holomorphic logarithm (the theorem of Chapter 11), and hence holomorphic roots of every order.
+]
+
+== Branch Points and Monodromy // 支点与单值性
+
+Chapter 3 defined the branch points of a multi-valued function and computed their monodromy for the elementary examples. The theory of this section explains what that monodromy can be.
+
+#definition(name: "The Monodromy Transformation at a Branch Point")[
+  Let $z_0$ be a branch point of a multi-valued function $F$, let $I$ be a small disc about $z_0$ free of other branch points, and let $f$ be a branch on $I \ {z_0}$.
+  The *monodromy transformation* at $z_0$ is the analytic continuation of $f$ around a small circle about $z_0$, continued back to the point where the branch started.
+] <def:monodromy-transformation>
+
+#property(name: "The Monodromy of an Algebraic Branch Point")[
+  If $z_0$ is an algebraic branch point of order $m$, the monodromy transformation $M$ at $z_0$ satisfies $M^m = id$ and $M^k != id$ for $0 < k < m$; locally, $M$ is a rotation of the disc about $z_0$ by an angle $2 pi j/m$ with $j$ coprime to $m$.
+] <prop:monodromy-algebraic>
+
+#example(name: "The Monodromy of the Square Root")[
+  For $F(z) = sqrt(z)$ the monodromy at $0$ interchanges the two branches: the local branches are $sqrt(z)$ and $-sqrt(z)$, and a circuit about $0$ carries one into the other.
+  The monodromy is therefore the map $w |-> -w$, of order $2$, and locally it is the rotation of the disc about $0$ by $pi$.
+] <ex:monodromy-sqrt>
+
+#example(name: "The Monodromy of the Logarithm")[
+  For $F(z) = Ln(z)$ the monodromy at $0$ is the translation $w |-> w + 2 pi"i"$, which has infinite order — this is the logarithmic branch point of Chapter 3.
+  Around $0$ the branches of the logarithm differ by $2 pi"i"$, and no number of circuits restores the initial value.
+] <ex:monodromy-log>
+
+#note(title: "The Obstruction, Located")[
+  A branch of a multi-valued function extends single-valuedly to a domain $D$ if and only if the monodromy around every closed curve in $D$ is trivial; for a domain with finitely many branch points this amounts to the monodromy around each of them being trivial.
+  Cutting the plane along arcs joining the branch points destroys the closed curves that detect them, which is exactly the construction of Chapter 3.
+]
+
+== Riemann Surfaces // 黎曼曲面
+
+The cleanest way to think about a multi-valued function is to stop trying to make it single-valued and instead spread its values over a new surface.
+
+#definition(name: "Riemann Surface of a Multi-Valued Function")[
+  Let $F$ be a multi-valued function on a domain $E$.
+  The *Riemann surface* of $F$ is the set of all germs of single-valued branches of $F$: the pairs $(z_0, f)$ where $f$ is holomorphic on a neighbourhood of $z_0$ and $f$ is a branch of $F$ at $z_0$.
+  Two germs are identified when they are analytic continuations of one another.
+] <def:riemann-surface>
+
+#property(name: "The Riemann Surface Covers Its Domain")[
+  The projection of the Riemann surface of $F$ onto the domain of $F$ is a covering map, and the fibres over a point are the branches of $F$ at that point.
+] <prop:riemann-surface-covering>
+
+#example(name: "The Surface of the Logarithm")[
+  The Riemann surface of $Ln(z)$ is the plane: the germs of the logarithm are indexed by the value of the logarithm at their centre, and continuing around $0$ changes that value by $2 pi"i"$ without leaving the surface.
+  The projection is then $w |-> e^w$, a bijection of the surface onto the punctured plane, and the monodromy around $0$ is the translation $w |-> w + 2 pi"i"$ of the surface — the picture drawn in Chapter 3.
+] <ex:riemann-surface-log>
+
+#example(name: "Tori and Elliptic Functions")[
+  The Riemann surface of the inverse of the Weierstrass function is a torus, and the holomorphic functions on it are exactly the doubly periodic functions.
+  This is the point where the theory of analytic continuation meets the theory of special functions, and it is why the chapter on elliptic functions belongs after this one.
+] <ex:riemann-surface-torus>
+
+#note(title: "What the Surface Buys")[
+  On the surface the multi-valued function becomes an ordinary single-valued holomorphic function, and the obstruction that was a branch cut becomes a topology: the cuts are the seams along which the sheets are glued.
+  The monodromy group of the original function becomes the group of deck transformations of the covering, which is the bridge to the uniformisation theory that the later chapters of this part develop.
+]
 
 == The Schwarz Reflection Principle // 施瓦茨反射原理
 
@@ -3925,8 +4190,8 @@ A holomorphic function that takes real values on a piece of the real axis can be
 
 // Chapter 13: Analytic Continuation (解析延拓)
 //   Section 13.1: Direct Analytic Continuation and Continuation along a Curve (直接解析延拓与沿曲线的解析延拓)
-//   Section 13.2: Monodromy Theorem (单值性定理)
-//   Section 13.3: Branch Points and Branch Cuts (支点与割线)
+//   Section 13.2: The Monodromy Theorem (单值性定理)
+//   Section 13.3: Branch Points and Monodromy (支点与单值性)
 //   Section 13.4: Riemann Surfaces (黎曼曲面)
 //   Section 13.5: The Schwarz Reflection Principle (施瓦茨反射原理)
 
