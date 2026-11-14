@@ -865,7 +865,7 @@ $
 (see @fig:Ellipsoids).
 
 #figure(
-  image("img/ellipse.png", width: 60%),
+  image("img/ellipse.svg", width: 85%),
   caption: [Ellipsoids.],
   placement: auto,
   supplement: [Fig.],
@@ -886,7 +886,7 @@ $
 (see @fig:Hyperboloids).
 
 #figure(
-  image("img/hyperbola.png", width: 60%),
+  image("img/hyperbola.svg", width: 85%),
   caption: [Hyperboloids.],
   placement: auto,
   supplement: [Fig.],
@@ -903,7 +903,7 @@ around $z$-axis (axis of symmetry): $x^2 + y^2 = 2 p z$ (paraboloid)
 (see @fig:paraboloid).
 
 #figure(
-  image("img/parabola.png", width: 20%),
+  image("img/parabola.svg", width: 52%),
   caption: [Paraboloid.],
   placement: auto,
   supplement: [Fig.],
@@ -920,7 +920,7 @@ around $z$-axis: $(x^2 + y^2 + z^2 + b^2 - a^2)^2 = 4 b^2 (x^2 + y^2)$ (torus)
 (see @fig:torus).
 
 #figure(
-  image("img/circle.png", width: 50%),
+  image("img/circle.svg", width: 90%),
   caption: [Torus.],
   placement: auto,
   supplement: [Fig.],
@@ -1212,7 +1212,7 @@ $
 ]
 
 #figure(
-  image("img/ConicRelation.png", width: 80%),
+  image("img/conic-relation.svg", width: 88%),
   caption: [Five types of conic sections: circle, ellipse, parabola, hyperbola, and degenerate cases.],
   placement: auto,
   supplement: [Fig.],
