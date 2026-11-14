@@ -9233,7 +9233,7 @@ On the basis of the above theorem, we can extend it to the case of a bounded reg
 ] <thm:reduction-double-iterated-bounded-set>
 
 #figure(
-  image("img/IntegralImg.png", width: 50%),
+  image("img/integral-img.svg", width: 95%),
   caption: [Double integral on a bounded set.],
 ) <fig:double-integral-bounded-set>
 // 注：tex 图片标签 "fig:Double Integral on a Bounded Set" 含空格不合法，迁移后改为 <fig:double-integral-bounded-set>。
