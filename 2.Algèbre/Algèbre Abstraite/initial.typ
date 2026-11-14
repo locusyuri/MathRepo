@@ -18,7 +18,7 @@
   subtitle: "A notebook for abstract algebra",
   institute: "Notiz Mathematiques",
   date: datetime.today().display(),
-  version: "v0.2.0",
+  version: "v1.0",
   extra-info: "This is a notebook for abstract algebra.",
 )
 
