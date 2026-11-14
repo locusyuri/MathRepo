@@ -525,7 +525,7 @@ The distance is given below.
 ]
 
 #figure(
-  image("img/deviation.png", width: 80%),
+  image("img/deviation.svg", width: 100%),
   caption: [Deviation of a Point from a Plane.],
   placement: auto,
   supplement: [Fig.],
@@ -563,7 +563,7 @@ Relative positions can be classified into four cases:
 ]
 
 #figure(
-  image("img/CommonPerp.png", width: 60%),
+  image("img/common-perp.svg", width: 78%),
   caption: [Common Perpendicular of Two Skew Lines.],
   placement: auto,
   supplement: [Fig.],
