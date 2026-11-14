@@ -394,9 +394,9 @@
     let header-prefix = if header-num == none {
       ""
     } else if use-section {
-      "Section " + header-num + ". "
+      "Sec. " + header-num + ". "
     } else {
-      "Chapter " + header-num + ". "
+      "Ch. " + header-num + ". "
     }
 
     if header-title == none {
