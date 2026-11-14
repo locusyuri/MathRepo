@@ -3385,7 +3385,7 @@ and the Cauchy-Riemann equations decide what kind of linear map this is.
 ]
 
 #figure(
-  image("../../0.Wiki/null.svg", width: 100%),
+  image("img/conformal-local-grid.svg", width: 100%),
   caption: [Conformality is a statement about the differential. A small square grid in the $z$-plane is carried to a curvilinear grid in the $w$-plane: the grid lines bend, but the angle between them is preserved, because the differential at $z_0$ is the similarity $rho e^("i" phi)$.],
   placement: auto,
   supplement: [Fig.],
@@ -3405,14 +3405,21 @@ and the Cauchy-Riemann equations decide what kind of linear map this is.
   $
     f(z) - f(z_0) = psi(z)^k quad (z in V).
   $
-  Consequently $f$ takes every value in a neighbourhood of $f(z_0)$ exactly $k$ times, counted with multiplicity, and the set $\{z in V : f'(z) = 0\}$ consists of $k - 1$ arcs issuing from $z_0$ which divide $V$ into $k$ sectors, on each of which $f$ is one-to-one.
+  Consequently $f$ takes every value in a neighbourhood of $f(z_0)$ exactly $k$ times, counted with multiplicity; the only critical point is $z_0$ itself, and the $k$ rays of $V$ on which $psi$ vanishes separate $V$ into $k$ sectors, on each of which $f$ is one-to-one onto a neighbourhood of $f(z_0)$.
 ] <thm:critical-local-form>
 
 #proof[
   Factor $f(z) - f(z_0) = (z - z_0)^k u(z)$ with $u$ holomorphic and $u(z_0) = c != 0$.
   On a small disc about $z_0$ the function $u$ has no zero, so by #link(<cor:kth-root-on-simply-connected>)[the root corollary] it has a holomorphic $k$-th root $v$ there; then $psi(z) = (z - z_0) v(z)$ satisfies $psi(z_0) = 0$, $psi'(z_0) = v(z_0) != 0$ and $psi(z)^k = f(z) - f(z_0)$.
-  Since $f'(z) = k psi(z)^(k-1) psi'(z)$, the critical set is the set where $psi$ vanishes, which consists of $k - 1$ arcs meeting at $z_0$; on the complement $psi$ is locally one-to-one, and the $k$ sectors are mapped onto a neighbourhood of $f(z_0)$ one-to-one.
+  Since $f'(z) = k psi(z)^(k-1) psi'(z)$, the derivative vanishes exactly where $psi$ does, that is, at $z_0$ alone; away from those $k$ rays $psi$ is locally one-to-one, and each of the $k$ sectors is mapped onto a neighbourhood of $f(z_0)$ one-to-one.
 ]
+
+#figure(
+  image("img/critical-kfold.svg", width: 100%),
+  caption: [The power map $z |-> z^k$. Near the critical point $0$ the map folds the plane into $k$ sectors, each of which is carried one-to-one onto a neighbourhood of the value $f(0)$; the rays shown are the folding rays, on which two sectors meet.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:critical-kfold>
 
 #example(name: "The Power Map")[
   The map $f(z) = z^2$ is holomorphic on $bb(C)$ and has a single critical point, at the origin.
@@ -3524,7 +3531,7 @@ Every simply connected domain looks the same from the point of view of complex a
 
 #lemma(name: "An Injective Holomorphic Map into the Punctured Plane")[
   Let $D$ be a simply connected open set whose complement contains at least two points.
-  Then there is an injective holomorphic map $psi: D -> bb(C) \ {0}$ whose image is simply connected.
+  Then there is an injective holomorphic map $psi: D -> bb(C) backslash {0}$ whose image is simply connected.
 ] <lem:rmt-injective-map>
 
 #proof[
@@ -3631,6 +3638,13 @@ The last construction of the chapter turns conformal mapping into a method of co
   which carries the upper half-plane onto the square.
 ] <ex:sc-square>
 
+#figure(
+  image("img/schwarz-christoffel-polygon.svg", width: 100%),
+  caption: [The Schwarz-Christoffel transformation of the square. The real axis is cut into four arcs by the prevertices $x_1, dots, x_4$, and each arc is carried to one side of the square; the fourth arc passes through the point at infinity of the real line, whose image is the marked point on the fourth side.],
+  placement: auto,
+  supplement: [Fig.],
+) <fig:schwarz-christoffel>
+
 #example(name: "An Elliptic Integral from the Square")[
   The same construction evaluates the integral that the square map hides.
   With $t = x^2$ one gets
@@ -3650,8 +3664,158 @@ The last construction of the chapter turns conformal mapping into a method of co
 ]
 
 = Elementary Conformal Mappings // 初等共形映射
+= Elementary Conformal Mappings // 初等共形映射
+
+The maps of this chapter are the ones one writes down explicitly. They are built from the fractional linear transformations, and they are what one reaches for when a region has to be straightened.
+
+== Linear Fractional Transformations // 线性分式变换
+
+#definition(name: "Linear Fractional Transformation")[
+  Let $a, b, c, d in bb(C)$ with $a d - b c != 0$.
+  The map
+  $
+    T(z) = (a z + b)/(c z + d)
+  $
+  is a *linear fractional transformation* of the extended plane $hat(bb(C))$; it is read as $T(-d/c) = infinity$ when $c != 0$, and as $T(oo) = a/c$.
+] <def:linear-fractional-transformation>
+
+#theorem(name: "The Group of Linear Fractional Transformations")[
+  Let $T(z) = (a z + b)/(c z + d)$ and $S(z) = (e z + f)/(g z + h)$ be linear fractional transformations with $a d - b c != 0$ and $e h - f g != 0$.
+  Then $S o T$ is again a linear fractional transformation, namely
+  $
+    (S o T)(z) = ((a e + b g) z + (a f + b h))/((c e + d g) z + (c f + d h)),
+  $
+  and $T$ is invertible, with inverse $T^(-1)(z) = (d z - b)/(-c z + a)$.
+] <thm:moebius-group>
+
+#proof[
+  Composing the two fractions and clearing the common factor gives the displayed formula, and the determinant of the new coefficients is $(a e + b g)(c f + d h) - (a f + b h)(c e + d g) = (a d - b c)(e h - f g) != 0$.
+  Solving $w = (a z + b)/(c z + d)$ for $z$ gives $z = (d w - b)/(-c w + a)$, which is again of the same form and has determinant $a d - b c != 0$.
+]
+
+#property(name: "Three Points Determine a Transformation")[
+  Given three distinct points $z_1, z_2, z_3$ of the extended plane and three distinct points $w_1, w_2, w_3$, there is exactly one linear fractional transformation $T$ with $T(z_k) = w_k$ for $k = 1, 2, 3$.
+] <prop:moebius-three-points>
+
+#proof[
+  Write $T = (a z + b)/(c z + d)$ and impose the three conditions; these are three homogeneous linear equations in the four unknowns $a, b, c, d$, so they have a one-dimensional space of solutions, and the determinant condition $a d - b c != 0$ excludes the degenerate ones.
+  Uniqueness follows from the same dimension count: two transformations agreeing at three points differ by a transformation fixing three points, and such a transformation is the identity.
+]
+
+#property(name: "Circles and Lines Are Carried to Circles and Lines")[
+  A linear fractional transformation maps generalized circles — circles and straight lines — onto generalized circles.
+] <prop:moebius-circles>
+
+#proof[
+  The transformation $z |-> 1/z$ sends a circle through the origin to a straight line, and a circle not through the origin to a circle; and it sends straight lines to circles through the origin.
+  Since every linear fractional transformation is a composition of such inversions with scalings and translations, the assertion follows.
+]
+
+#theorem(name: "The Cayley Map")[
+  The map $C(z) = (z - "i")/(z + "i")$ is a conformal bijection of the upper half-plane onto the unit disc, and its inverse is $C^(-1)(w) = ("i" (1 + w))/(1 - w)$.
+] <thm:cayley>
+
+#proof[
+  For $Im z > 0$ one has $|z - "i"| < |z + "i"|$, because $|z + "i"|^2 - |z - "i"|^2 = 4 Im z > 0$, so $|C(z)| < 1$; the map is holomorphic on the half-plane and its inverse, which is holomorphic on the disc, is computed by solving for $z$.
+]
+
+#theorem(name: "The Automorphisms of the Unit Disc")[
+  Let $f$ be a conformal bijection of the unit disc onto itself.
+  Then there are $b$ with $abs(b) < 1$ and $theta in bb(R)$ such that
+  $
+    f(z) = e^(("i" theta)) (z - b)/(1 - overline(b) z),
+  $
+  and conversely every map of this form is a conformal bijection of the unit disc onto itself.
+] <thm:disk-automorphisms>
+
+#proof[
+  For $abs(a) < 1$ put $phi_(a)(z) = (z - a)/(1 - overline(a) z)$; the identity $abs(1 - overline(a) z)^2 - abs(z - a)^2 = (1 - abs(a)^2)(1 - abs(z)^2)$ shows that $phi_a$ maps the disc onto itself and is its own kind of inverse, $phi_(a)^(-1) = phi_(-a)$.
+  Let $b = f(0)$ and put $h = phi_(b)^(-1) o f$. Then $h$ is a conformal bijection of the disc onto itself fixing $0$, so #link(<thm:schwarz-lemma>)[the Schwarz lemma] gives $abs(h(z)) <= abs(z)$, and applying the lemma to $h^(-1)$ gives the reverse inequality.
+  Hence $abs(h(z)) = abs(z)$ for all $z$, and the equality case of the Schwarz lemma says that $h(z) = e^(("i" theta)) z$ for some $theta$.
+  Therefore $f = phi_b o h = e^(("i" theta)) (z - b)/(1 - overline(b) z)$, as claimed.
+  Conversely, each map of that form is the product of a rotation and a map $phi_b$, so it is a conformal bijection of the disc onto itself.
+]
+
+#note(title: "A Consequence: the Schwarz-Pick Lemma")[
+  The classification above gives the *Schwarz-Pick lemma* for free: if $f$ is a holomorphic map of the disc into itself, then
+  $
+    abs((f(z) - f(w))/(1 - overline(f(w)) f(z))) <= abs((z - w)/(1 - overline(w) z)),
+  $
+  because the map on the left is the composition of $f$ with two automorphisms of the disc.
+  This is the metric form of the Schwarz lemma, and it is the hyperbolic distance that a conformal map cannot shorten.
+]
+
+#theorem(name: "The Riemann Mapping Theorem")[
+  Let $D$ be a simply connected open set whose complement contains at least two points.
+  Then $D$ is conformally equivalent to the unit disc, and any two equivalences differ by an automorphism of the disc.
+] <thm:rmt-complete>
+
+#proof[
+  Chapter 11 reduced the existence to a single step: the image $G$ of an injective holomorphic map of $D$ is a simply connected domain avoiding $0$, and one has to identify $G$ with the disc.
+  The classical construction does this by iterating the square-root trick: on $G$ the function $1/w$ has a holomorphic square root, so $w |-> sqrt(1/w)$ is again injective with simply connected image avoiding $0$, and the iteration is analysed by the maximum principle.
+  The limiting configuration is a ray, a fractional linear transformation carries the ray onto a half-plane, and the Cayley map carries the half-plane onto the disc; composing these with the injective map of Chapter 11 gives the equivalence.
+  We record the ingredients of that construction rather than reproducing the limiting argument in full; every tool it uses — the square-root trick of Chapter 11, the fractional linear transformations and the Cayley map of this section, and the Schwarz lemma — is available here.
+  For the uniqueness, let $f$ and $g$ be two equivalences of $D$ onto the disc. Then $g o f^(-1)$ is an automorphism of the disc, and by the classification above it is of the form $e^(("i" theta)) (z - b)/(1 - overline(b) z)$; composing $g$ with the inverse of that automorphism gives an equivalence that agrees with $f$ on $D$, hence $f = g$ by the identity theorem.
+]
+
+#corollary(name: "The Half-Plane Form")[
+  Let $D$ be a simply connected open set whose complement contains at least two points.
+  Then $D$ is conformally equivalent to the upper half-plane as well, by composing an equivalence onto the disc with the Cayley map.
+] <cor:rmt-half-plane>
+
+#note(title: "What the Theorem Buys")[
+  The Riemann mapping theorem is the reduction that makes the rest of the subject possible: every problem about a simply connected region can, in principle, be transported to the disc, where the Schwarz lemma and the automorphisms above are available.
+  It is an existence statement, not a recipe — the equivalence it produces is usually not one you can write down — and the classical proof is correspondingly indirect.
+]
+
 
 = Analytic Continuation // 解析延拓
+= Analytic Continuation // 解析延拓
+
+== The Schwarz Reflection Principle // 施瓦茨反射原理
+
+A holomorphic function that takes real values on a piece of the real axis can be continued across it: the values on the other side are forced by the complex conjugation.
+
+#theorem(name: "Reflection Across the Real Axis")[
+  Let $Omega$ be an open connected set contained in the upper half-plane, let $I$ be an interval of the real axis with $I subset overline Omega$, and let $f$ be holomorphic in $Omega$ and continuous on $Omega union I$.
+  If $f$ takes real values on $I$, then $f$ extends to a holomorphic function on $Omega union I union overline Omega$ by the formula
+  $
+    overline(f)(z) = overline(f(overline(z))),
+  $
+  the right-hand side being read for $z$ in the lower half-plane.
+] <thm:reflection-real-axis>
+
+#proof[
+  Define $F$ to be $f$ on $Omega union I$ and to be $overline(f(overline(z)))$ on $overline Omega$.
+  Writing $f = u + "i" v$, the reflected function is $u(x, -y) - "i" v(x, -y)$, so the Cauchy-Riemann equations hold for $F$ below the axis exactly where they hold for $f$ above it.
+  On the interval $I$ the function $F$ is continuous and real-valued; there the derivative of $f$ from above is real, and by continuity it is also the derivative of $F$ from below, so $F$ is complex differentiable on $I$ as well.
+  By #link(<thm:holo-equiv-analytic>)[the equivalence between complex differentiability and holomorphy], $F$ is holomorphic on the whole union, which is the required extension.
+]
+
+#theorem(name: "Reflection Across a Circle")[
+  Let $Omega = {z in bb(C) : abs(z) < 1}$ and let $f$ be holomorphic in $Omega$, continuous on $overline Omega$, and real-valued on the unit circle.
+  Then $f$ extends to a holomorphic function on a neighbourhood of $overline Omega$ by the formula
+  $
+    f(z) = overline(f(1/overline(z))), quad abs(z) > 1.
+  $
+] <thm:reflection-circle>
+
+#proof[
+  The map $z |-> 1/overline(z)$ is anticonformal and carries the unit circle onto itself; the composition of $f$ with it and with the complex conjugation is therefore holomorphic wherever $f$ is, which is the asserted formula.
+  The values on the circle are real, so the two determinations agree there and the extension is continuous across it.
+]
+
+#example(name: "Extending a Map by Reflection")[
+  Let $f(z) = 1/(1 + z)$, which is holomorphic in the upper half-plane and real on the interval $(0, +oo)$.
+  The reflection principle extends it to the lower half-plane by $overline(f(overline(z))) = 1/(1 + overline(z))$, and the extension is holomorphic there because $f$ is holomorphic and the reflection is anticonformal.
+  On the interval the two determinations agree, because $f$ is real there.
+] <ex:reflection-example>
+
+#note(title: "How the Reflection Principle Builds Polygons")[
+  The Schwarz-Christoffel transformation of Chapter 11 is derived from this principle: a conformal map of the upper half-plane that maps the real axis onto the sides of a polygon extends by reflection across the real axis, so the image of the half-plane is a region bounded by straight lines, and the argument principle then reads off the exponents in the derivative.
+  We give the principle here so that the derivation in that chapter can refer back to a proof.
+]
+
 
 #part("Special Functions") // 特殊函数
 
@@ -3764,7 +3928,7 @@ The last construction of the chapter turns conformal mapping into a method of co
 //   Section 13.2: Monodromy Theorem (单值性定理)
 //   Section 13.3: Branch Points and Branch Cuts (支点与割线)
 //   Section 13.4: Riemann Surfaces (黎曼曲面)
-//   Section 13.5: Schwarz Reflection Principle (施瓦茨反射原理)
+//   Section 13.5: The Schwarz Reflection Principle (施瓦茨反射原理)
 
 // --- Part V: Special Functions (特殊函数) ---
 
