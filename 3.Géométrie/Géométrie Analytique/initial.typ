@@ -965,7 +965,7 @@ when $abs(h) < c$, the section is an ellipse.
 The other two methods of sectioning are similar.
 
 #figure(
-  image("img/Ellipsoid.png", width: 50%),
+  image("img/ellipsoid.svg", width: 60%),
   caption: [Ellipsoid.],
   placement: auto,
   supplement: [Fig.],
@@ -987,7 +987,7 @@ is called a one-sheet hyperboloid.
   The section is always an ellipse.
 
   #figure(
-    image("img/one-sheet-hyperboloid1.png", width: 20%),
+    image("img/one-sheet-hyperboloid1.svg", width: 55%),
     caption: [One-sheet hyperboloid.],
     placement: auto,
     supplement: [Fig.],
@@ -1019,7 +1019,7 @@ is called a one-sheet hyperboloid.
   when $abs(h) > b$, the section is a hyperbola.
 
   #figure(
-    image("img/one-sheet-hyperboloid2.png", width: 50%),
+    image("img/one-sheet-hyperboloid2.svg", width: 100%),
     caption: [One-sheet hyperboloid.],
     placement: auto,
     supplement: [Fig.],
@@ -1045,7 +1045,7 @@ When $abs(h) > c$, the section is an ellipse; \
 when $abs(h) = c$, the section is a point.
 
 #figure(
-  image("img/two-sheet-hyperbloid.png", width: 20%),
+  image("img/two-sheet-hyperboloid.svg", width: 55%),
   caption: [Two-sheet hyperboloid.],
   placement: auto,
   supplement: [Fig.],
@@ -1072,7 +1072,7 @@ is called an elliptic paraboloid.
   $
 
   #figure(
-    image("img/elliptic-paraboloid.png", width: 30%),
+    image("img/elliptic-paraboloid.svg", width: 62%),
     caption: [Elliptic paraboloid.],
     placement: auto,
     supplement: [Fig.],
@@ -1105,7 +1105,7 @@ is called a hyperbolic paraboloid, or a saddle surface.
   $
 
   #figure(
-    image("img/hyperbolic-paraboloid1.png", width: 30%),
+    image("img/hyperbolic-paraboloid1.svg", width: 65%),
     caption: [Hyperbolic paraboloid.],
     placement: auto,
     supplement: [Fig.],
@@ -1121,7 +1121,7 @@ is called a hyperbolic paraboloid, or a saddle surface.
   $
 
   #figure(
-    image("img/hyperbolic-paraboloid2.png", width: 30%),
+    image("img/hyperbolic-paraboloid2.svg", width: 65%),
     caption: [Hyperbolic paraboloid section.],
     placement: auto,
     supplement: [Fig.],
