@@ -63,7 +63,7 @@ user_invocable: false
 
 | 你想写的符号 | 加载文件 |
 |-------------|---------|
-| 下标、多字母变量、分数、`abs()`、`root()`、`cases()`、`±`/`·`/`∘`、字体（`bb`/`cal`/`text`） | [fields/general.md](fields/general.md) |
+| 下标、多字母变量、分数、`abs()`、`root()`、`cases()`、`±`/`·`/`∘`、字体（`bb`/`cal`/`text`）、虚数单位 `"i"` 及其间距 | [fields/general.md](fields/general.md) |
 | `∈` `⊂` `≠` `≤` `≥` `~` `≈` `≡` `∝` `<<` `>>` | [fields/relations.md](fields/relations.md) |
 | `->` `=>` `<=>` `\|->` `↝` `xarrow` | [fields/arrows.md](fields/arrows.md) |
 | `union` `inter` `emptyset` `forall` `exists` `and` `or`、集合描述 | [fields/sets-logic.md](fields/sets-logic.md) |
@@ -83,6 +83,7 @@ user_invocable: false
 9. **`\left(`/`\right)` 不存在**；Typst 自动缩放，长竖线用 `lr(...)`。
 10. **不保留 LaTeX 宏**：`int`→`integral`、`cdot`→`dot`、`times`→`times`、`sim`→`~`，`pm`→`±`。
 11. **导数记号两模式**（2026-10-19 用户定稿）：行内一律下标形式（`u_t`，禁止 `partial_t u`），行间一律分式形式（`(partial u)/(partial t)`，禁止 `partial_t (...)`）；裸算子（`partial_t - Delta_x` 类）保留例外（详见 calculus.md §9）。
+12. **虚数单位**：数学模式中一律写正体 `"i"`，且与相邻操作数**紧贴不留空格**——`2 pi"i"`、`1/(2 pi"i")`、`"i"v`、`e^("i"t)` 对；斜体 `i`、`2 pi "i"` 错（详见 general.md §5.5）。
 
 ### 3.3 LaTeX 宏残留扫描
 
@@ -575,3 +576,4 @@ typst compile "1.Analyse/Analyse Complexe/initial.typ" "1.Analyse/Analyse Comple
 13. **章节引用禁止 `§x.y`**：一律写 `==` 标题名（带链接时用标签所在节的标题），提交前 `rg "§" <file>` 必须为 0
 14. **`#note` / `#caution` 的首句加粗小标签必须用 `title:`**，`#proof` / `#solution` 用 `name:` 说明对象
 15. **分页交给 Typst**：禁止 `#pagebreak()`、`#block(breakable: false)`、调节 `#v(...)` 等手动干预分页；表格或 note 跨页属于正常排版
+16. **虚数单位写正体 `"i"` 且紧贴相邻操作数**：`2 pi"i"`、`"i"v`、`e^("i"t)`；斜体 `i` 与带空格的 `2 pi "i"` 均为错误（详见 general.md §5.5）

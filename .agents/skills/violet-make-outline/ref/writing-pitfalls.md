@@ -173,10 +173,10 @@ some text
 
 ```typst
 // 错误：z 同时是积分变量和自由变量
-$f(z) = 1/(2 pi i) oint_(C) f(z) / (z - z_0) dz$
+$f(z) = 1/(2 pi"i") integral_C f(z) / (z - z_0) dif z$
 
 // 正确：用 ζ 区分积分变量
-$f(z) = 1/(2 pi i) oint_(C) f(zeta) / (zeta - z) d zeta$
+$f(z) = 1/(2 pi"i") integral_C f(zeta) / (zeta - z) dif zeta$
 ```
 
 ---
