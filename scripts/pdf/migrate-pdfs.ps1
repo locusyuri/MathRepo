@@ -22,10 +22,10 @@
     目标文件夹路径，默认为 WPS 云盘 NewMath 目录
 
 .EXAMPLE
-    .\migrate-pdfs.ps1                # 交互式模式
-    .\migrate-pdfs.ps1 -Yes           # 直接复制差异文件
-    .\migrate-pdfs.ps1 -ListOnly      # 仅查看映射列表
-    .\migrate-pdfs.ps1 -Target "D:\PDF\Math"   # 自定义目标目录
+    .\scripts\pdf\migrate-pdfs.ps1                # 交互式模式
+    .\scripts\pdf\migrate-pdfs.ps1 -Yes           # 直接复制差异文件
+    .\scripts\pdf\migrate-pdfs.ps1 -ListOnly      # 仅查看映射列表
+    .\scripts\pdf\migrate-pdfs.ps1 -Target "D:\PDF\Math"   # 自定义目标目录
 #>
 
 [CmdletBinding()]
@@ -40,7 +40,7 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-$RepoRoot = Split-Path -Parent $PSScriptRoot
+$RepoRoot = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 
 # ── helpers ─────────────────────────────────────────────────────────────────
 

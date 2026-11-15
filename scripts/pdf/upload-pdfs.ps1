@@ -20,9 +20,9 @@
     仅列出映射关系，不执行上传
 
 .EXAMPLE
-    .\upload-pdfs.ps1                # 交互式模式
-    .\upload-pdfs.ps1 -Yes           # 直接上传差异文件
-    .\upload-pdfs.ps1 -ListOnly      # 仅查看映射列表
+    .\scripts\pdf\upload-pdfs.ps1                # 交互式模式
+    .\scripts\pdf\upload-pdfs.ps1 -Yes           # 直接上传差异文件
+    .\scripts\pdf\upload-pdfs.ps1 -ListOnly      # 仅查看映射列表
 #>
 
 [CmdletBinding()]
@@ -35,7 +35,7 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
-$RepoRoot  = Split-Path -Parent $PSScriptRoot
+$RepoRoot  = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
 $OssPrefix = 'oss://math-repo/math/main/'
 
 # ── helpers ─────────────────────────────────────────────────────────────────

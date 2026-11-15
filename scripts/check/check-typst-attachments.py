@@ -21,12 +21,12 @@
 
 用法（在仓库根执行）：
 
-    uv run scripts/check-typst-attachments.py                    # 全仓库只检查
-    uv run scripts/check-typst-attachments.py 1.Analyse          # 只扫指定目录
-    uv run scripts/check-typst-attachments.py --check paren      # 只跑一项
-    uv run scripts/check-typst-attachments.py --summary          # 只看每文件条数
-    uv run scripts/check-typst-attachments.py --include-comments # 连注释一起报
-    uv run scripts/check-typst-attachments.py --fix              # 确认后写回
+    uv run scripts/check/check-typst-attachments.py                    # 全仓库只检查
+    uv run scripts/check/check-typst-attachments.py 1.Analyse          # 只扫指定目录
+    uv run scripts/check/check-typst-attachments.py --check paren      # 只跑一项
+    uv run scripts/check/check-typst-attachments.py --summary          # 只看每文件条数
+    uv run scripts/check/check-typst-attachments.py --include-comments # 连注释一起报
+    uv run scripts/check/check-typst-attachments.py --fix              # 确认后写回
 
 退出码：检查模式有命中为 1，无命中为 0；修复模式恒为 0（须用检查模式复核）。
 """
@@ -36,7 +36,7 @@ import re
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 
 SKIP_DIRS = {".git", ".venv", "node_modules", "__pycache__", "tmp"}
 

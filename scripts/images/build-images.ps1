@@ -23,16 +23,16 @@
     List every image together with the script that produces it.
 
 .EXAMPLE
-    .\scripts\build-images.ps1
+    .\scripts\images\build-images.ps1
 
 .EXAMPLE
-    .\scripts\build-images.ps1 -DryRun
+    .\scripts\images\build-images.ps1 -DryRun
 
 .EXAMPLE
-    .\scripts\build-images.ps1 -Overwrite
+    .\scripts\images\build-images.ps1 -Overwrite
 
 .EXAMPLE
-    .\scripts\build-images.ps1 -Note "3.Géométrie/Géométrie Analytique" -SkipExisting
+    .\scripts\images\build-images.ps1 -Note "3.Géométrie/Géométrie Analytique" -SkipExisting
 #>
 param(
     [string]$Note,
@@ -52,8 +52,8 @@ if (-not (Get-Command uv -ErrorAction SilentlyContinue)) {
     throw 'uv was not found in PATH; install it from https://docs.astral.sh/uv/ first.'
 }
 
-$repo = Split-Path -Parent $PSScriptRoot
-$cli = @('run', 'scripts/build-images.py')
+$repo = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
+$cli = @('run', 'scripts/images/build-images.py')
 if ($DryRun)       { $cli += '--dry-run' }
 if ($Overwrite)    { $cli += '--overwrite' }
 if ($SkipExisting) { $cli += '--skip-existing' }

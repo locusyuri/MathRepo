@@ -7,11 +7,11 @@ then runs the scripts.
 
 Modes
 -----
-    uv run scripts/build-images.py                  interactive
-    uv run scripts/build-images.py --dry-run        preview only
-    uv run scripts/build-images.py --overwrite      rebuild everything
-    uv run scripts/build-images.py --skip-existing  only fill in what is missing
-    uv run scripts/build-images.py --note "<subject>/<note>" [--overwrite]
+    uv run scripts/images/build-images.py                  interactive
+    uv run scripts/images/build-images.py --dry-run        preview only
+    uv run scripts/images/build-images.py --overwrite      rebuild everything
+    uv run scripts/images/build-images.py --skip-existing  only fill in what is missing
+    uv run scripts/images/build-images.py --note "<subject>/<note>" [--overwrite]
 
 Options
 -------
@@ -28,7 +28,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent.parent
 IMAGE_RE = re.compile(r'image\(\s*"([^"]+)"')
 IMAGE_EXT = (".svg", ".png", ".pdf", ".jpg", ".jpeg")
 
