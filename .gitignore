@@ -38,6 +38,9 @@
 __pycache__/
 *.py[cod]
 
+# Script logs
+logs/
+
 # Other
 temp/
 tmp/

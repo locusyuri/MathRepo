@@ -7,6 +7,10 @@ description: 编译、插图生成、静态校验、PDF 分发的权威命令；
 
 所有命令在仓库根目录执行。依赖：`typst`、`uv`（Python 依赖见根 `pyproject.toml`）；PDF 分发另需 `ossutil`（`ossutil config` 配置完成）。
 
+## 一键任务
+
+`scripts/no-pwsh.ps1` 聚合了下列动作：无参出菜单，或 `-Task build|images|check|migrate|upload|publish|status`。日志写 `logs/`（已 gitignore）。
+
 ## 编译
 
 ```powershell

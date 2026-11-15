@@ -6,9 +6,25 @@
 
 | 目录 | 放什么 | 什么时候用 |
 |---|---|---|
+| （根） | `no-pwsh.ps1` 任务聚合入口 | 不想记具体脚本，只想"编译 / 出图 / 校验 / 发布" |
 | `images/` | 插图渲染 | 新增/修改绘图脚本后重建 `img/` |
 | `check/` | 静态校验 | 提交前检查 Typst 语法、交叉引用 |
 | `pdf/` | 产物分发 | 编译完 PDF 后本地归类或上传 OSS |
+
+## no-pwsh.ps1（任务聚合）
+
+无参出交互菜单（有 fzf 用 fzf，否则数字菜单），带 `-Task` 直接执行；日志写 `logs/`（已 gitignore）。
+
+```powershell
+.\scripts\no-pwsh.ps1                                    # 菜单
+.\scripts\no-pwsh.ps1 -Task status                       # 笔记数 / 已编译数 / git 状态
+.\scripts\no-pwsh.ps1 -Task build -Note "1.Analyse/Analyse Complexe"
+.\scripts\no-pwsh.ps1 -Task images -Overwrite
+.\scripts\no-pwsh.ps1 -Task check -Fix
+.\scripts\no-pwsh.ps1 -Task publish -Yes                 # 编译 → 归类 → 上传
+```
+
+任务：`build` / `images` / `check` / `migrate` / `upload` / `publish` / `status`。扩展方式是写一个 `Invoke-Xxx` 函数并在 `$Tasks` 里加一行。
 
 ## images/
 
