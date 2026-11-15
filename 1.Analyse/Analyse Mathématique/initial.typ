@@ -6827,12 +6827,23 @@ infinity. For the convergent integral
 $ integral_0^(+oo) (dif x) / (1 + x^6 sin^2 x) $
 whose integrand is depicted in
 #link(<fig:special-integral-graph>)[the figure of the previous section], the
-integrand satisfies $f(k pi) = 1$ for every $k in bb(N)$, so $f(+oo)$ does
-not exist — in particular it is not $0$. Even unbounded oscillation is
-possible: the integrand $f(x) = x / (1 + x^6 sin^2 x)$ again yields a
-convergent integral (one estimates the contribution of the $k$-th period as
-$O(1/k^2)$), yet $f(k pi) = k pi -> +oo$, so
-$limsup_(x -> +oo) f(x) = +oo$.
+integrand satisfies
+$
+  f(k pi) = 1, quad
+  f(k pi + pi/2) = 1 / (1 + (k pi + pi/2)^6) -> 0
+  quad (k -> +oo),
+$
+so $lim_(x -> +oo) f(x)$ does not exist — in particular it does not tend to
+$0$. Even unbounded oscillation is possible: the integrand
+$f(x) = x / (1 + x^6 sin^2 x)$ again yields a convergent integral, since on
+the $k$-th period
+$
+  integral_(k pi)^((k+1) pi) x / (1 + x^6 sin^2 x) dif x
+  & <= (k+1) pi integral_0^pi (dif u) / (1 + (k pi)^6 sin^2 u) \
+  & = ((k+1) pi^2) / sqrt(1 + (k pi)^6) = O(k^(-2)),
+$
+yet $f(k pi) = k pi -> +oo$ while $f(k pi + pi/2) -> 0$, so
+$limsup_(x -> +oo) f(x) = +oo$ and $liminf_(x -> +oo) f(x) = 0$.
 
 #proposition(name: "Vanishing at Infinity")[
   Let $integral_a^(+oo) f(x) dif x$ converge. If $lim_(x -> +oo) f(x)$ exists
