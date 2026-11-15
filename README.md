@@ -71,26 +71,28 @@ typst compile "<subject>/<note>/initial.typ" "<subject>/<note>/initial.pdf" --ro
 
 本仓库的 PDF 不纳入 Git 版本控制，通过阿里云 OSS 存储。插图同样不入库，但**无需下载**——直接由各笔记 `scripts/*.py` 中的 matplotlib 脚本重新生成即可。
 
-## 生成插图 (`scripts/build-images.py`)
+## 生成插图 (`scripts/build-images.ps1`)
 
 插图脚本位于 `<subject>/<note>/scripts/`，输出到同笔记的 `img/`。一条命令递归处理全仓库：
 
-```bash
+```powershell
 # 交互式：先预览「已存在 / 待生成」的图片，再选择覆盖或跳过
-uv run scripts/build-images.py
+.\scripts\build-images.ps1
 
 # 只预览，不执行
-uv run scripts/build-images.py --dry-run
+.\scripts\build-images.ps1 -DryRun
 
 # 参数式：覆盖已有图片 / 跳过已有图片
-uv run scripts/build-images.py --overwrite
-uv run scripts/build-images.py --skip-existing
+.\scripts\build-images.ps1 -Overwrite
+.\scripts\build-images.ps1 -SkipExisting
 
-# 只处理某一本笔记
-uv run scripts/build-images.py --note "3.Géométrie/Géométrie Analytique" --overwrite
+# 只处理某一本笔记（可与上面的开关叠加）
+.\scripts\build-images.ps1 -Note "3.Géométrie/Géométrie Analytique" -Overwrite
 ```
 
-预览按笔记列出「脚本数 / 插图数 / 已存在 / 缺失」；加 `--verbose` 可逐张列出文件名与对应脚本。脚本会自动切换工作目录（部分脚本用 `../img` 相对路径），因此无需手动 `cd`。执行结束会汇总成功、跳过与失败的脚本，并打印失败原因。
+预览按笔记列出「脚本数 / 插图数 / 已存在 / 缺失」；加 `-Verbose` 可逐张列出文件名与对应脚本。执行结束会汇总成功、跳过与失败的脚本，并打印失败原因。
+
+脚本会自动切换工作目录（部分绘图脚本用 `../img` 相对路径），因此无需手动 `cd`。底层实现为 `scripts/build-images.py`，需要时也可直接用 `uv run scripts/build-images.py` 调用。
 
 ## 前置要求
 
