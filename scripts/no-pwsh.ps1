@@ -269,6 +269,22 @@ function Invoke-Publish {
     Write-Ok '发布完成'
 }
 
+function Get-ImageSummary {
+    # 复用 build-images.py 的 --dry-run：它会解析 .typ 引用与脚本输出声明，
+    # 统计口径只有一处实现，避免这里再写一遍正则。
+    $out = & uv run scripts/images/build-images.py --dry-run 2>&1
+    $lines = @($out | Where-Object { $_ -match '张插图；已存在' })
+    if ($lines.Count -eq 0) { return $null }
+    if ($lines[-1] -match '(\d+)\s*张插图；已存在\s*(\d+)，缺失\s*(\d+)') {
+        return [PSCustomObject]@{
+            Total   = [int]$Matches[1]
+            Present = [int]$Matches[2]
+            Missing = [int]$Matches[3]
+        }
+    }
+    return $null
+}
+
 function Invoke-Status {
     Write-Section '仓库状态'
 
@@ -285,7 +301,19 @@ function Invoke-Status {
         Write-Note ('分支 {0}，未提交改动 {1} 项' -f $branch, $dirty)
     }
 
-    Write-Note '插图缺失数：.\scripts\images\build-images.ps1 -DryRun'
+    if (Get-Command uv -ErrorAction SilentlyContinue) {
+        Write-Step '统计插图…'
+        $images = Get-ImageSummary
+        if ($null -eq $images) {
+            Write-Bad '插图统计失败，可单独运行 .\scripts\images\build-images.ps1 -DryRun 查看'
+        } elseif ($images.Missing -eq 0) {
+            Write-Ok ('插图 {0} 张，全部就绪' -f $images.Total)
+        } else {
+            Write-Note ('插图 {0} 张，缺失 {1} 张（已存在 {2}）' -f $images.Total, $images.Missing, $images.Present)
+        }
+    } else {
+        Write-Bad '未找到 uv，跳过插图统计'
+    }
 }
 
 # ── 入口 ────────────────────────────────────────────────────────────────────

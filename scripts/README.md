@@ -17,7 +17,7 @@
 
 ```powershell
 .\scripts\no-pwsh.ps1                                    # 菜单
-.\scripts\no-pwsh.ps1 -Task status                       # 笔记数 / 已编译数 / git 状态
+.\scripts\no-pwsh.ps1 -Task status                       # 笔记数 / 已编译数 / 插图缺失 / git 状态
 .\scripts\no-pwsh.ps1 -Task build -Note "1.Analyse/Analyse Complexe"
 .\scripts\no-pwsh.ps1 -Task images -Overwrite
 .\scripts\no-pwsh.ps1 -Task check -Fix
