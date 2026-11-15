@@ -132,17 +132,21 @@
 #let font-latin-main = ("Alegreya", "Book Antiqua", "Times New Roman")
 
 /// 参考文献中文字体回退链（与正文的思源宋体区分，改用 GenSekiGothic 黑体）
+/// 参考文献中文字体回退链（正文用思源宋体，参考文献改用 GenSekiGothic 黑体）
 #let font-cjk-bib = ("GenSekiGothic TW TTF", "Source Han Serif SC", "STSong", "SimSun")
+
+/// 参考文献中文字重：GenSekiGothic 默认 Medium 偏粗，改用 Light(300)
+#let weight-cjk-bib = "light"
 
 /// 内置 bibliography 的原始引用（供下方包装函数转发，避免自递归）
 #let native-bibliography = bibliography
 
-/// 参考文献：中文条目使用 font-cjk-bib，拉丁条目仍走 font-latin-main
+/// 参考文献：中文条目使用 font-cjk-bib + Light 字重，拉丁条目仍走 font-latin-main
 ///
 /// 遮蔽内置 bibliography 后，笔记中的 `#bibliography(...)` 会解析到此函数；
 /// 函数体内的 set text 会作用于返回的 bibliography 元素所生成的条目。
 #let bibliography(..args) = {
-  set text(font: (..font-latin-main, ..font-cjk-bib))
+  set text(font: (..font-latin-main, ..font-cjk-bib), weight: weight-cjk-bib)
   native-bibliography(..args)
 }
 
