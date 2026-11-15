@@ -128,8 +128,8 @@ $
 $
 
 #figure(
-  image("img/triangle.png", width: 40%),
-  caption: [The gray triangle of trigonometric functions.],
+  image("img/trig-magic-hexagon.svg", width: 52%),
+  caption: [The three gray triangles of trigonometric functions.],
 ) <fig:trig-triangle>
 
 #property(name: "Geometric Remarks")[
@@ -6524,7 +6524,7 @@ They are grouped by the device that evaluates them rather than by the interval o
 ]
 
 #figure(
-  image("img/xsinx.png", width: 80%),
+  image("img/oscillatory-integral-graph.svg", width: 95%),
   caption: [Graph of $y = 1 / (1 + x^6 sin^2 x)$.],
 ) <fig:special-integral-graph>
 
