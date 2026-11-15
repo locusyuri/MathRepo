@@ -6838,17 +6838,27 @@ $0$. Even unbounded oscillation is possible: the integrand
 $f(x) = x / (1 + x^6 sin^2 x)$ again yields a convergent integral, since on
 the $k$-th period
 $
-  integral_(k pi)^((k+1) pi) x / (1 + x^6 sin^2 x) dif x
-  & <= (k+1) pi integral_0^pi (dif u) / (1 + (k pi)^6 sin^2 u) \
-  & = ((k+1) pi^2) / sqrt(1 + (k pi)^6) = O(k^(-2)),
+  integral_(k pi)^((k+1) pi) x / (1 + x^6 sin^2 x) dif x & <= (k+1) pi integral_0^pi (dif u) / (1 + (k pi)^6 sin^2 u) \
+                                                         & = ((k+1) pi^2) / sqrt(1 + (k pi)^6) = O(k^(-2)),
 $
 yet $f(k pi) = k pi -> +oo$ while $f(k pi + pi/2) -> 0$, so
 $limsup_(x -> +oo) f(x) = +oo$ and $liminf_(x -> +oo) f(x) = 0$.
 
-#proposition(name: "Vanishing at Infinity")[
+In the first example $f$ stays bounded; the second one shows that even
+unbounded oscillation is compatible with convergence. In both cases the limit at infinity fails to exist. The next statement shows that this is the only obstruction: whenever the limit does exist, its value is forced.
+
+#proposition(name: "Limit at Infinity of a Convergent Integral")[
   Let $integral_a^(+oo) f(x) dif x$ converge. If $lim_(x -> +oo) f(x)$ exists
   (as a finite number), then it must be equal to $0$.
 ] <prop:vanishing-at-infinity>
+
+The proof is immediate: if $lim_(x -> +oo) f(x) = L != 0$, then
+$abs(f(x)) >= abs(L)/2$ for all sufficiently large $x$, so the comparison test
+makes $integral_a^(+oo) f(x) dif x$ diverge.
+
+The proposition only excludes a non-zero limit, and by itself says nothing
+about existence. Adding a mild regularity assumption removes the oscillations
+of the examples above and makes the limit exist.
 
 #theorem(name: "Uniform Continuity Criterion")[
   Let $integral_a^(+oo) f(x) dif x$ converge, and let $f(x)$ be uniformly
