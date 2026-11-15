@@ -3,7 +3,7 @@
     Regenerate the figures of every note from the matplotlib scripts.
 
 .DESCRIPTION
-    Thin wrapper around scripts/build-images.py.  Without switches it runs in
+    Thin wrapper around scripts/images/build-images.py.  Without switches it runs in
     interactive mode: it previews which images already exist and which will be
     produced, then asks whether to overwrite them or to skip them.
 
