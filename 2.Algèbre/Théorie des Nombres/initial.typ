@@ -99,7 +99,7 @@
 //     - 例 <ex:gcd-product-identity>（18 与 30 闭环验证）
 //     - 章末 #note：Bézout → Ch10 一次不定方程通解（兑现蓝图伏笔）
 //   图片：fig:euclid-rectangle（img/euclid-rectangle.svg，24×9 矩形切 9²,9²,6²,3²,3²
-//     → gcd 3；A 级核心图；占位先复制 0.Wiki/null.svg）
+//     → gcd 3；A 级核心图；占位先复制 wiki/assets/null.svg）
 //   写作顺序：§1.2 定义+带余除法 → §1.1 良序/取整 → §1.4 → §1.5 → §1.3 → 章首串联；
 //     每 1-2 节编译一次，编译检查点：§1.2 后、§1.5 后、全章终检
 
@@ -128,7 +128,7 @@
 //     - 筛法正确性 #proposition <prop:sieve-correctness>（cor:composite-sqrt-bound 反命题）
 //     - 算法：编号步骤 1-4（从 p² 开始划，p² > N 停）
 //     - 图：fig:sieve-grid（img/eratosthenes-sieve.svg，1-100 筛去 2,3,5,7 倍数后余 25 素数；
-//       B 级核心图；占位已复制 0.Wiki/null.svg）
+//       B 级核心图；占位已复制 wiki/assets/null.svg）
 //     - 例 <ex:sieve-example>（≤100 逐素数划去；@fig:sieve-grid 验证 25 个素数）
 //     - #note 筛法是列示非测试；素性判定/π(x) → Ch8 §8.1/§8.4（前瞻）
 //   Section 2.4: Applications of Unique Factorization（唯一分解的应用）
@@ -406,7 +406,7 @@
 //     - #note Jacobi 的意义限于计算捷径（真二次剩余判定仍须分母素数）；
 //       Solovay–Strassen 素性判定一句前瞻（不展开）
 //   图片：fig:reciprocity-rectangle（img/reciprocity-rectangle.svg，1 张；占位先
-//     复制 0.Wiki/null.svg，正文写作阶段按蓝图补绘；§6.1 QR 集/§6.2 补充律以
+//     复制 wiki/assets/null.svg，正文写作阶段按蓝图补绘；§6.1 QR 集/§6.2 补充律以
 //     文字与表格呈现，不另配图）
 //   写作顺序：§6.1 → §6.2 → §6.3（引理 → 定理 → 图 → 应用）→ §6.4 逐节写入，
 //     每节编译一次；编译检查点：§6.1 后、§6.2 后、§6.3 后、全章终检

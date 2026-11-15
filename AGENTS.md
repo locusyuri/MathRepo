@@ -11,6 +11,8 @@ typst compile "<subject>/initial.typ" "<subject>/initial.pdf" --root .
 ```
 只编译入口 `initial.typ`，工作目录为仓库根，以退出码 0 为成功标准。
 
+项目文档（结构规范、构建命令、写作进度、踩坑解法）见 `wiki/OVERVIEW.md`；工程脚本索引见 `scripts/README.md`。
+
 ## 特殊要求
 - 修改完一部分内容后请自行提交（中文，合规范 Conventional Commits，只提交自己修改的，只提交不推送）
 

@@ -210,7 +210,7 @@ $f(z) = 1/(2 pi"i") integral_C f(zeta) / (zeta - z) dif zeta$
 ### 3.4 图片占位工作流
 
 1. 规划阶段确定图片清单
-2. 写作时用 `0.Wiki/null.svg` 复制到 `img/xxx.svg` 占位
+2. 写作时用 `wiki/assets/null.svg` 复制到 `img/xxx.svg` 占位
 3. 编译通过后，在主题目录 `scripts/<图片名>.py` 编写 matplotlib 脚本，仓库根 `uv run` 生成 SVG 到 `img/`
 4. PNG 预览核验（无重叠、无越界、标注可读）后替换占位文件并编译验证
 

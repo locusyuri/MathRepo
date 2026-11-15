@@ -1,3 +1,8 @@
+---
+name: 笔记结构规范
+description: Part / Chapter / Section 层级与注释目录约定；新建或重构笔记时读
+---
+
 # Typst 笔记结构规范
 
 本文档记录 `Mécanique Analytique` 笔记的完整代码结构，作为 Typst 长文档的目录结构样板。

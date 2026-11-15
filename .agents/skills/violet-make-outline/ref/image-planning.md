@@ -60,7 +60,7 @@
 1. **脚本位置**：对应主题目录下的 `scripts/<图片名>.py`，一图一脚本，文件名与规划清单及 `<fig:xxx>` 标签一致
 2. **输出位置**：脚本将 SVG 写到主题目录的 `img/<图片名>.svg`（用 `Path(__file__).resolve().parent.parent / "img"` 定位，输出前确保目录存在）
 3. **运行方式**：在仓库根目录执行 `uv run "<subject>/scripts/<图片名>.py"`（依赖由仓库根 `pyproject.toml` 统一管理，已含 matplotlib/numpy）
-4. **人工核验**：生成 PNG 预览检查无重叠、无越界、标注可读，再替换 `0.Wiki/null.svg` 占位文件
+4. **人工核验**：生成 PNG 预览检查无重叠、无越界、标注可读，再替换 `wiki/assets/null.svg` 占位文件
 5. **提交约定**：`img/` 已被 .gitignore 忽略，提交只含脚本与 `.typ`；`scripts/` 目录需要提交
 
 ### 2.2 脚本结构模板

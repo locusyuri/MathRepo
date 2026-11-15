@@ -196,7 +196,7 @@ Later, we refer to *#link(<def:continuous>)[Continuous Function]*.
 **严禁使用内联脚本绘图**（临时脚本、`python -c`、shell heredoc、notebook 单元格等一律禁止）：所有绘图代码必须落盘为主题目录下的 `scripts/<图片名>.py`（一图一脚本），保证图片可随时重复生成与修改。
 
 1. **先写引用**：在 `.typ` 中直接写好 `#figure(image("./img/xxx.svg", ...))` 与 `<fig:xxx>` 标签，保持文档结构完整
-2. **创建占位文件**：将仓库根目录的 `0.Wiki/null.svg`（空白占位图）复制到目标 `img/` 目录，并改名为实际图片名（如 `img/xxx.svg`）。占位图是有效 SVG，期间 `typst compile` 仍可通过
+2. **创建占位文件**：将仓库根目录的 `wiki/assets/null.svg`（空白占位图）复制到目标 `img/` 目录，并改名为实际图片名（如 `img/xxx.svg`）。占位图是有效 SVG，期间 `typst compile` 仍可通过
 3. **写 Python 脚本**：在对应主题目录下新建 `scripts/<图片名>.py`（matplotlib，一图一脚本），脚本将 SVG 输出到主题目录的 `img/<图片名>.svg`，文件名与 `<fig:xxx>` 标签对应。结构与规范见 violet-make-outline 技能的 `ref/image-planning.md` §2
 4. **生成图片**：在仓库根目录执行 `uv run "<subject>/scripts/<图片名>.py"`（依赖由仓库根 `pyproject.toml` 统一管理，已含 matplotlib）。生成 PNG 预览人工核验无重叠/越界后替换占位文件
 5. **编译验证**：全部真实图片就位后，重新 `typst compile` 确认通过。注意 `img/` 已被 .gitignore 忽略，提交时只含脚本与 `.typ`，不含生成的图片
