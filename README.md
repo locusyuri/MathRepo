@@ -69,28 +69,35 @@ typst compile "<subject>/<note>/initial.typ" "<subject>/<note>/initial.pdf" --ro
 ---
 # Asset Sync | 资源同步
 
-本仓库的图片和 PDF 文件不纳入 Git 版本控制，而是通过阿里云 OSS 存储。
-clone 仓库后需要手动下载图片才能正常编译 PDF。
+本仓库的 PDF 不纳入 Git 版本控制，通过阿里云 OSS 存储。插图同样不入库，但**无需下载**——直接由各笔记 `scripts/*.py` 中的 matplotlib 脚本重新生成即可。
+
+## 生成插图 (`scripts/build-images.py`)
+
+插图脚本位于 `<subject>/<note>/scripts/`，输出到同笔记的 `img/`。一条命令递归处理全仓库：
+
+```bash
+# 交互式：先预览「已存在 / 待生成」的图片，再选择覆盖或跳过
+uv run scripts/build-images.py
+
+# 只预览，不执行
+uv run scripts/build-images.py --dry-run
+
+# 参数式：覆盖已有图片 / 跳过已有图片
+uv run scripts/build-images.py --overwrite
+uv run scripts/build-images.py --skip-existing
+
+# 只处理某一本笔记
+uv run scripts/build-images.py --note "3.Géométrie/Géométrie Analytique" --overwrite
+```
+
+预览按笔记列出「脚本数 / 插图数 / 已存在 / 缺失」；加 `--verbose` 可逐张列出文件名与对应脚本。脚本会自动切换工作目录（部分脚本用 `../img` 相对路径），因此无需手动 `cd`。执行结束会汇总成功、跳过与失败的脚本，并打印失败原因。
 
 ## 前置要求
 
+以下仅 **PDF 同步** 需要：
+
 - [ossutil](https://help.aliyun.com/document_detail/120075.html) 已安装并配置（`ossutil config`）
 - PowerShell 5.1+ / PowerShell Core
-
-## 图片同步 (`scripts/sync-images.ps1`)
-
-图片存储在 `oss://math-repo/imgs/`，保持与本地相同的目录结构。
-
-```powershell
-# 下行同步：从 OSS 下载所有图片到本地
-.\scripts\sync-images.ps1 -Direction down -Yes
-
-# 上行同步：将本地图片上传到 OSS
-.\scripts\sync-images.ps1 -Direction up -Yes
-
-# 交互式模式（带文件预览和确认）
-.\scripts\sync-images.ps1
-```
 
 ## PDF 上传 (`scripts/upload-pdfs.ps1`)
 
