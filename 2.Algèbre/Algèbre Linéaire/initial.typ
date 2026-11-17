@@ -3901,7 +3901,26 @@ and $F = bb(C)$, with the standard absolute value and the complex modulus respec
   over $F$ and a #link(<def:norm>)[norm] $||·||$ on $V$.
 ] <def:normed-linear-space>
 
-The primary example of a norm comes from an inner product.
+Norms need not come from inner products; the standard examples on $bb(R)^n$ are the following.
+
+#example(name: "Common Norms on $bb(R)^n$")[
+  For $alpha = (a_1, ..., a_n) in bb(R)^n$:
+  - the *$1$-norm* (or taxicab norm):
+    $||alpha||_1 = sum_(i=1)^n abs(a_i)$;
+  - the *$2$-norm*: $||alpha||_2 = (sum_(i=1)^n a_i^2)^(1/2)$, which is the Euclidean norm
+    studied below;
+  - the *$p$-norm*, for $p >= 1$:
+    $||alpha||_p = (sum_(i=1)^n abs(a_i)^p)^(1/p)$;
+  - the *infinity norm* (or maximum norm):
+    $||alpha||_oo = max_(1 <= i <= n) abs(a_i)$.
+
+  Each $p$-norm is a norm by Minkowski's inequality, and
+  $||alpha||_oo = lim_(p -> oo) ||alpha||_p$.
+  Among these norms only the $2$-norm is induced by an inner product, being the only one that
+  satisfies the parallelogram law.
+]
+
+The most important norm comes from an inner product.
 
 #property(name: "Norm Induced by an Inner Product")[
   In a real inner product space,
