@@ -310,18 +310,26 @@ $
   The boundedness hypothesis is essential: for an unbounded $E$ the two collections above are empty, so $m_*(E) = m^*(E) = +oo$ and the criterion would declare *every* unbounded set measurable. Unbounded sets are handled with the Lebesgue outer measure defined above, which is available for all subsets of $bb(R)$; a set $E$ is Lebesgue measurable exactly when $E inter [-n, n]$ is measurable for every $n$.
 ]
 
-=== $G_delta$ and $F_sigma$ Definition // G_δ 集和 F_σ 集
+=== Definition of Measure via $G_delta$ and $F_sigma$ Sets // 用 G_δ 集与 F_σ 集定义测度
 
-#definition(name: "$G_delta$ and $F_sigma$ Sets")[
-  A set $G subset bb(R)$ is called a *$G_delta$ set* if it is a countable intersection of open sets:
+The definitions of $G_delta$ and $F_sigma$ sets are given in the *Théorie des Ensembles* note; here we only record how they yield an alternative description of Lebesgue measure.
+
+By *Lebesgue Measurable Sets*, a set $E subset bb(R)$ is Lebesgue measurable if and only if it is trapped between an $F_sigma$ set and a $G_delta$ set differing by a null set:
 $
-    G = inter.big_(n=1)^oo G_n quad "with" quad G_n "open for all" n.
+    K subset.eq E subset.eq H, quad K "is" F_sigma, quad H "is" G_delta, quad m^*(H backslash K) = 0.
 $
-  A set $F subset bb(R)$ is called an *$F_sigma$ set* if it is a countable union of closed sets:
+For such a pair the measure is unambiguously
 $
-    F = union.big_(n=1)^oo F_n quad "with" quad F_n "closed for all" n.
+    m(E) = m(H) = m(K).
 $
-]
+The corollary *Existence of Equal-Measure Envelope* shows that the outer measure is obtained from $G_delta$ envelopes,
+$
+    m^*(E) = inf { m(G) : G supset E, G "is a" G_delta "set" },
+$
+and, for a bounded measurable $E$, the inner measure is obtained from $F_sigma$ kernels,
+$
+    m_*(E) = sup { m(F) : F subset E, F "is an" F_sigma "set" } = m(E).
+$
 
 == Non-Measurable Sets // 非可测集
 === Vitali Set // 维塔利集
