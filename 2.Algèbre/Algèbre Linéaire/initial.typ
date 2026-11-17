@@ -3814,6 +3814,9 @@ unitary spaces, normal transformations and symplectic spaces.
     is a linear function on $V$.
 ] <def:bilinear-form>
 
+Every bilinear form is determined by its values on a basis, which leads to the following
+matrix representation.
+
 #definition(name: "Matrix of a Bilinear Form")[
   Let ${epsilon_1, ..., epsilon_n}$ be a basis of $V$.
   The matrix $B = (f(epsilon_i, epsilon_j))_(n times n)$ is called the *matrix* of the
@@ -3831,6 +3834,8 @@ $
   f(alpha, beta) = 1/2 (q(alpha + beta) - q(alpha) - q(beta)).
 $
 
+Three elementary forms on the plane show how the matrix records symmetry and alternation.
+
 #example(name: "Bilinear Forms on $bb(R)^2$")[
   - The standard inner product $f(x, y) = x_1 y_1 + x_2 y_2$ has matrix $mat(1, 0; 0, 1)$;
   - The form $f(x, y) = x_1 y_2 - x_2 y_1$ has matrix $mat(0, 1; -1, 0)$ and is alternating;
@@ -3839,6 +3844,8 @@ $
 ]
 
 == Real Inner Product Spaces // 实内积空间
+
+The real case, together with positive definiteness, is the setting for everything that follows.
 
 #definition(name: "Real Inner Product Space")[
   A *real inner product space* is a real linear space $V$ equipped with a function
@@ -3862,17 +3869,22 @@ bilinear forms above.
   - On $bb(R)^(m times n)$: $(A, B) = "tr"(A^"T" B) = sum_(i=1)^m sum_(j=1)^n a_(i j) b_(i j)$.
 ]
 
+Inner products are not the only source of length: norms can be defined axiomatically on any
+linear space.
+
 #definition(name: "Seminorm")[
-  Let $V$ be a real linear space. A function $p: V -> bb(R)$ is a *seminorm* on $V$ if for
-  all $alpha, beta in V$ and $k in bb(R)$:
+  Let $V$ be a linear space over a field $F$ carrying an absolute value.
+  A function $p: V -> bb(R)$ is a *seminorm* on $V$ if for all $alpha, beta in V$ and
+  $k in F$:
   - $p(alpha) >= 0$ (non-negativity);
   - $p(k alpha) = abs(k) p(alpha)$ (absolute homogeneity);
   - $p(alpha + beta) <= p(alpha) + p(beta)$ (triangle inequality).
 ] <def:seminorm>
 
 #definition(name: "Norm")[
-  Let $V$ be a real linear space. A function $||·||: V -> bb(R)$ is a *norm* on $V$ if for
-  all $alpha, beta in V$ and $k in bb(R)$:
+  Let $V$ be a linear space over a field $F$ carrying an absolute value.
+  A function $||·||: V -> bb(R)$ is a *norm* on $V$ if for all $alpha, beta in V$ and
+  $k in F$:
   - $||alpha|| >= 0$, with equality if and only if $alpha = 0$ (positive definiteness);
   - $||k alpha|| = abs(k) ||alpha||$ (absolute homogeneity);
   - $||alpha + beta|| <= ||alpha|| + ||beta||$ (triangle inequality).
@@ -3880,19 +3892,25 @@ bilinear forms above.
 
 A norm is exactly a #link(<def:seminorm>)[seminorm] that is positive definite, so the two
 notions differ only in whether non-zero vectors may have length $0$.
+The absolute value is needed to give $abs(k)$ a meaning; the usual choices are $F = bb(R)$
+and $F = bb(C)$, with the standard absolute value and the complex modulus respectively.
 
 #definition(name: "Normed Linear Space")[
-  A *normed linear space* is a pair $(V, ||·||)$ consisting of a real linear space $V$ and a
-  #link(<def:norm>)[norm] $||·||$ on $V$.
+  Let $F$ be a field carrying an absolute value.
+  A *normed linear space* over $F$ is a pair $(V, ||·||)$ consisting of a linear space $V$
+  over $F$ and a #link(<def:norm>)[norm] $||·||$ on $V$.
 ] <def:normed-linear-space>
+
+The primary example of a norm comes from an inner product.
 
 #property(name: "Norm Induced by an Inner Product")[
   In a real inner product space,
   $
     ||alpha|| = (alpha, alpha)^(1/2)
   $
-  is a norm, called the
-  *Euclidean norm*. Its triangle inequality follows from the
+  is a norm, the *Euclidean norm*, so $V$ becomes a
+  #link(<def:normed-linear-space>)[normed linear space].
+  Its triangle inequality follows from the
   #link(<thm:cauchy-schwarz>)[Cauchy-Bunyakovsky-Schwarz inequality].
 ] <prop:norm-from-inner-product>
 
@@ -3922,6 +3940,8 @@ notions differ only in whether non-zero vectors may have length $0$.
   $
   Thus the inner product and the norm it induces carry the same information.
 ]
+
+The central inequality relating an inner product to its norm is the following.
 
 #theorem(name: "Cauchy-Bunyakovsky-Schwarz Inequality")[
   For any vectors $alpha, beta$ in an inner product space,
@@ -3956,6 +3976,8 @@ notions differ only in whether non-zero vectors may have length $0$.
   covers $beta = 0$.
 ]
 
+Once length is available, the usual Euclidean notions follow.
+
 #definition(name: "Distance, Angle and Orthogonality")[
   Let $V$ be a real inner product space and let $alpha, beta in V$.
   - The *distance* between $alpha$ and $beta$ is $d(alpha, beta) = ||alpha - beta||$;
@@ -3981,6 +4003,9 @@ notions differ only in whether non-zero vectors may have length $0$.
 
 == Metric Matrices and Orthonormal Bases // 度量矩阵与标准正交基
 
+The Gram matrix collects all inner products of a basis, so it encodes the inner product
+completely.
+
 #definition(name: "Gram Matrix")[
   Let ${epsilon_1, ..., epsilon_n}$ be a basis of an $n$-dimensional Euclidean space $V$.
   The matrix
@@ -3988,9 +4013,10 @@ notions differ only in whether non-zero vectors may have length $0$.
     G = ((epsilon_i, epsilon_j))_(n times n)
   $
   is called the *Gram matrix* (or metric matrix) of the inner product under this basis.
-
-  Then $(alpha, beta) = X^"T" G Y$ for coordinate vectors $X, Y$.
 ] <def:gram-matrix>
+
+For coordinate vectors $X, Y$ one then has $(alpha, beta) = X^"T" G Y$, so the inner product is
+recovered from $G$ alone.
 
 #property(name: "Properties of Gram Matrix")[
   - $G$ is symmetric;
@@ -4006,16 +4032,18 @@ notions differ only in whether non-zero vectors may have length $0$.
   In this wider sense $G$ is only positive semi-definite, and
   $("det"(G) > 0) <=> alpha_1, ..., alpha_n$ are linearly independent.
 
-  Indeed, take an orthonormal basis and let $P$ be the $n times n$ matrix whose $i$-th column
-  holds the coordinates of $alpha_i$.
+  Indeed, assume the ambient space has dimension at least $n$, take an orthonormal basis and
+  let $P$ be the $n times n$ matrix whose $i$-th column holds the coordinates of $alpha_i$.
   Then $G = P^"T" P$, so $"det"(G) = ("det"(P))^2 >= 0$, and $"det"(P) != 0$ is precisely
   the linear independence of the $alpha_i$.
   For an actual basis $P$ is invertible and $"det"(G) > 0$, as stated above.
 ]
 
+The most convenient bases are those whose Gram matrix is the identity.
+
 #definition(name: "Orthonormal Basis")[
-  A set ${epsilon_1, ..., epsilon_n}$ of non-zero vectors is an *orthonormal basis*
-  if they are pairwise orthogonal and each has unit length.
+  A basis ${epsilon_1, ..., epsilon_n}$ of a Euclidean space $V$ is an *orthonormal basis*
+  if its vectors are pairwise orthogonal and each has unit length.
 ] <def:orthonormal-basis>
 
 #lemma(name: "Linear Independence of an Orthogonal Set")[
@@ -4036,9 +4064,12 @@ notions differ only in whether non-zero vectors may have length $0$.
 #property(name: "Properties of Orthonormal Bases")[
   - An orthonormal vector set is linearly independent;
   - A basis is orthonormal iff its Gram matrix is the identity;
-  - A standard orthonormal basis always exists;
+  - An orthonormal basis always exists (see
+    #link(<thm:gram-schmidt>)[Gram-Schmidt orthogonalization]);
   - Any orthonormal vector set can be extended to an orthonormal basis.
 ] <prop:orthonormal-basis-properties>
+
+With an orthonormal basis, coordinates are given by inner products alone.
 
 #theorem(name: "Expansion in an Orthonormal Basis")[
   Let ${epsilon_1, ..., epsilon_n}$ be an orthonormal basis of a Euclidean space $V$.
@@ -4056,6 +4087,8 @@ notions differ only in whether non-zero vectors may have length $0$.
   Applying it to $beta$ as well and using orthonormality once more gives
   $(alpha, beta) = sum_(i=1)^n x_i y_i = sum_(i=1)^n (alpha, epsilon_i)(beta, epsilon_i)$.
 ]
+
+Transition matrices between orthonormal bases form the class studied next.
 
 #definition(name: "Orthogonal Matrix")[
   A square matrix $T in bb(R)^(n times n)$ is an *orthogonal matrix* if
@@ -4111,6 +4144,8 @@ notions differ only in whether non-zero vectors may have length $0$.
 
 === Gram-Schmidt Process // Gram-Schmidt 正交化
 
+The existence of orthonormal bases can be made constructive.
+
 #theorem(name: "Gram-Schmidt Orthogonalization")[
   For any basis ${epsilon_1, ..., epsilon_n}$ of an $n$-dimensional Euclidean space $V$,
   there exists an orthonormal basis ${eta_1, ..., eta_n}$ such that
@@ -4150,8 +4185,8 @@ notions differ only in whether non-zero vectors may have length $0$.
 
   *Spans.*
   Each $beta_k$ lies in $chevron.l epsilon_1, ..., epsilon_k chevron.r$, while
-  $epsilon_k = beta_k + sum_(i=1)^(k-1) c_i beta_i$ lies in
-  $chevron.l beta_1, ..., beta_k chevron.r$, so the two spans coincide.
+  $epsilon_k = beta_k + sum_(i=1)^(k-1) c_i beta_i$ for suitable coefficients $c_i$, so
+  $epsilon_k$ lies in $chevron.l beta_1, ..., beta_k chevron.r$ and the two spans coincide.
 
   Finally set $eta_k = beta_k / (||beta_k||)$.
   Each $eta_k$ is a unit vector, orthogonality survives the scaling, and the spans are
@@ -4173,6 +4208,9 @@ notions differ only in whether non-zero vectors may have length $0$.
 ]
 
 == Isomorphism of Real Inner Product Spaces // 实内积空间的同构
+
+Having fixed the notion of inner product space, we compare such spaces up to
+structure-preserving bijections.
 
 #definition(name: "Isomorphism of Inner Product Spaces")[
   Let $V$ and $V'$ be real inner product spaces. A bijection
@@ -4197,7 +4235,7 @@ notions differ only in whether non-zero vectors may have length $0$.
 ] <thm:isometry-theorem>
 
 #proof[
-  If $dim V = dim V' = n$, let ${epsilon_1, ..., epsilon_n}$ and
+  If $"dim" V = "dim" V' = n$, let ${epsilon_1, ..., epsilon_n}$ and
   ${epsilon'_1, ..., epsilon'_n}$ be orthonormal bases of $V$ and $V'$ respectively.
   Define $sigma(sum_(i=1)^n x_i epsilon_i) = sum_(i=1)^n x_i epsilon'_i$.
   This is a bijection preserving linear operations and inner products.
@@ -4216,6 +4254,9 @@ notions differ only in whether non-zero vectors may have length $0$.
 
 == Orthogonal Completion and Orthogonal Projection // 正交补与正交投影
 
+A subspace splits the ambient space into two orthogonal parts, and this splitting defines
+projection.
+
 #definition(name: "Orthogonal Complement")[
   Let $W$ be a subspace of a real inner product space $V$. The set
 
@@ -4229,7 +4270,8 @@ notions differ only in whether non-zero vectors may have length $0$.
 #property(name: "Properties of Orthogonal Complement")[
   - An equivalent definition: $W_2$ is an orthogonal complement of $W_1$ if
     $W_1 ⊥ W_2$ and $W_1 + W_2 = V$;
-  - The orthogonal complement $W^⊥$ of $W$ exists and is unique in Euclidean space $V$;
+  - The orthogonal complement is unique: if $V = W_1 ⊕ W$ with $W_1 ⊥ W$, then
+    $W_1 = W^⊥$;
   - $W ⊕ W^⊥ = V$; in particular $"dim" W + "dim" W^⊥ = "dim" V$, by
     #link(<thm:dimension-formula>)[the dimension formula];
   - $(W^⊥)^⊥ = W$;
@@ -4237,7 +4279,10 @@ notions differ only in whether non-zero vectors may have length $0$.
   - If $W_1 subset W_2$, then $W_1^⊥ supset W_2^⊥$.
 ] <prop:orthogonal-complement-properties>
 
+With this splitting available, projection is defined by orthogonality.
+
 #definition(name: "Orthogonal Projection")[
+  Let $W$ be a subspace of a real inner product space $V$.
   For any $alpha in V$, if there exists $beta in W$ such that
   $alpha - beta in W^⊥$, then $beta$ is the *orthogonal projection* of $alpha$
   onto $W$, denoted $beta = "proj"_(W)(alpha)$.
@@ -4288,6 +4333,8 @@ notions differ only in whether non-zero vectors may have length $0$.
     $
 ] <prop:orthogonal-projection-properties>
 
+A useful consequence of projection is the following inequality for orthonormal sets.
+
 #property(name: "Bessel Inequality")[
   For an orthonormal set ${epsilon_1, ..., epsilon_m}$ in a real inner product space and
   any vector $alpha$,
@@ -4334,22 +4381,38 @@ notions differ only in whether non-zero vectors may have length $0$.
 
 === Least Squares Method // 最小二乘法
 
+Orthogonal projection answers the geometric best-approximation problem; least squares is its
+matrix form.
+
 #theorem(name: "Shortest Distance Theorem")[
   Let $U$ be a subspace of a real inner product space $V$ with $V = U ⊕ U^⊥$.
   For $alpha in V$ and $alpha_1 in U$, $alpha_1$ is the orthogonal projection of $alpha$
-  onto $U$ if and only if $d(alpha, alpha_1) <= d(alpha, gamma)$ for all $gamma in U$.
+  onto $U$ if and only if its
+  #link(<def:distance-and-angle>)[distance] from $alpha$ is minimal:
+  $d(alpha, alpha_1) <= d(alpha, gamma)$ for all $gamma in U$.
 ] <thm:shortest-distance>
 
-#note[
-  The *least squares problem* asks: given a linear system $A x = beta$ with more equations
-  than unknowns (which may be inconsistent), find $c_1, ..., c_n$ minimizing
-  $sum_(i=1)^s (sum_(j=1)^n a_(i j) c_j - beta_i)^2$.
+#proof[
+  If $alpha_1$ is the projection, then $gamma - alpha_1 in U$ and $alpha - alpha_1 ⊥ U$, so
+  Pythagoras' theorem gives
+  $
+    d(alpha, gamma)^2 = d(alpha, alpha_1)^2 + d(alpha_1, gamma)^2
+    >= d(alpha, alpha_1)^2.
+  $
+
+  Conversely, suppose $alpha_1$ minimizes the distance and let $beta$ be the orthogonal
+  projection of $alpha$ onto $U$.
+  If $beta != alpha_1$, the same computation with $gamma = beta$ gives
+  $d(alpha, alpha_1)^2 = d(alpha, beta)^2 + d(beta, alpha_1)^2 > d(alpha, beta)^2$,
+  contradicting minimality.
+  Hence $alpha_1 = beta$ is the projection.
 ]
 
-#note[
-  The least squares solution of $A x = beta$ is equivalent to solving the *normal equations*
-  $(A^"T" A) x = A^"T" beta$.
-]
+The least squares problem asks: given a linear system $A x = beta$ with more equations than
+unknowns (which may be inconsistent), find $c_1, ..., c_n$ minimizing
+$sum_(i=1)^s (sum_(j=1)^n a_(i j) c_j - beta_i)^2$.
+
+Its solution is characterized by the normal equations, to which we now turn.
 
 #theorem(name: "Existence and Uniqueness of the Least Squares Solution")[
   Let $A in bb(R)^(s times n)$ and $beta in bb(R)^s$. The normal equations
@@ -4401,15 +4464,19 @@ notions differ only in whether non-zero vectors may have length $0$.
 ]
 
 == Orthogonal and Symmetric Transformations // 正交变换
+
+We now study the linear maps that interact with the inner product.
+
 === Orthogonal Transformations // 正交变换
 
 #definition(name: "Orthogonal Transformation")[
   A map $A: V -> V$ on a real inner product space $V$ is *orthogonal* (or an *orthogonal
   transformation*) if it preserves the inner product:
   $(A alpha, A beta) = (alpha, beta)$ for all $alpha, beta in V$.
-  Such a map turns out to be linear and injective, hence bijective in finite dimension
-  (see the lemma below).
 ] <def:orthogonal-transformation>
+
+Such a map is automatically linear and injective, hence bijective in finite dimension; this is
+the content of the lemma below.
 
 #lemma(name: "Properties of Orthogonal Transformations")[
   - An orthogonal map is linear and injective, hence bijective when $V$ is
@@ -4472,6 +4539,35 @@ notions differ only in whether non-zero vectors may have length $0$.
   this block form is the best possible.
 ] <thm:orthogonal-diagonalization>
 
+#proof[
+  Induct on $n = "dim" V$, the case $n = 1$ being immediate because then $A = ±1$.
+  Take an eigenvalue $lambda$ of $A$ over $bb(C)$; since $A$ is orthogonal, $abs(lambda) = 1$.
+
+  If $lambda = ±1$ is real, choose a real eigenvector $e_1$ and set
+  $W = chevron.l e_1 chevron.r$.
+  If $lambda = cos theta + "i" sin theta$ with $0 < theta < pi$, take a complex eigenvector
+  $z = u + "i" v$.
+  Comparing real and imaginary parts in $A z = lambda z$, and writing $c = cos theta$ and
+  $s = sin theta != 0$, gives
+  $A u = c u - s v$ and $A v = s u + c v$.
+  From $||A u|| = ||u||$ and $||A v|| = ||v||$ one obtains
+  $
+    s^2 (||v||^2 - ||u||^2) = 2 c s (u, v), quad
+    s^2 (||u||^2 - ||v||^2) = 2 c s (u, v),
+  $
+  hence $c s (u, v) = 0$.
+  If $c != 0$, then $(u, v) = 0$ and the first relation gives $||u|| = ||v||$; if $c = 0$, then
+  $theta = pi/2$ and $(A u, A v) = (-v, u) = -(u, v)$ equals $(u, v)$, so again $(u, v) = 0$,
+  while the first relation gives $||u|| = ||v||$.
+  In this case set $W = chevron.l u, v chevron.r$, a two-dimensional invariant subspace on which
+  $A$ acts as the rotation $R(theta)$.
+
+  In both cases $W^⊥$ is invariant under $A$, and the restriction of $A$ to $W^⊥$ is again
+  orthogonal.
+  By induction $W^⊥$ has an orthonormal basis in which this restriction has the stated block
+  form; adjoining an orthonormal basis of $W$ gives the required basis of $V$.
+]
+
 #note[
   The eigenvalues of a real orthogonal matrix are $±1$ or $cos(theta) ± "i" sin(theta)$
   with $0 < theta < pi$. When $A$ happens to be symmetric, all rotation blocks disappear
@@ -4479,6 +4575,8 @@ notions differ only in whether non-zero vectors may have length $0$.
 ]
 
 === Symmetric Transformations // 对称变换
+
+Orthogonal maps preserve the inner product; symmetric maps are defined by moving $A$ across it.
 
 #definition(name: "Symmetric Transformation")[
   A linear transformation $A$ on a real inner product space $V$ is *symmetric* if
@@ -4493,6 +4591,32 @@ notions differ only in whether non-zero vectors may have length $0$.
   - If $W$ is an invariant subspace of $A$, then $W^⊥$ is also invariant;
   - Eigenvectors corresponding to distinct eigenvalues of $A$ are orthogonal.
 ] <lem:symmetric-properties>
+
+#proof[
+  *Real eigenvalues.*
+  Let $A xi = lambda xi$ with $xi != 0$ over $bb(C)$.
+  Then
+  $
+    lambda (xi, xi) = (A xi, xi) = (xi, A xi) = bar(lambda) (xi, xi),
+  $
+  so $lambda = bar(lambda)$.
+
+  *Matrix representation.*
+  Under an orthonormal basis the entries satisfy
+  $(A epsilon_i, epsilon_j) = (epsilon_i, A epsilon_j)$, which says exactly that the matrix
+  equals its transpose.
+
+  *Invariant complements.*
+  If $W$ is invariant and $gamma in W^⊥$, then for every $w in W$,
+  $(A gamma, w) = (gamma, A w) = 0$ because $A w in W$; hence $A gamma in W^⊥$.
+
+  *Distinct eigenvalues.*
+  If $A xi = lambda xi$ and $A eta = mu eta$ with $lambda != mu$, then
+  $
+    lambda (xi, eta) = (A xi, eta) = (xi, A eta) = mu (xi, eta),
+  $
+  hence $(xi, eta) = 0$.
+]
 
 #theorem(name: "Orthogonal Diagonalization of Symmetric Transformations")[
   Let $V$ be an $n$-dimensional Euclidean space and $A$ a symmetric transformation.
@@ -4515,6 +4639,8 @@ notions differ only in whether non-zero vectors may have length $0$.
   Adjoining $xi / (||xi||)$ gives the required orthonormal basis of $V$.
 ]
 
+A concrete instance illustrates the diagonalization procedure.
+
 #example(name: "Orthogonal Diagonalization of a Symmetric Matrix")[
   Let $A = mat(2, 1; 1, 2)$.
   Its eigenvalues are $3$ and $1$, with orthonormal eigenvectors
@@ -4536,6 +4662,8 @@ notions differ only in whether non-zero vectors may have length $0$.
 
 === Skew-Symmetric Transformations // 反对称变换
 
+Replacing symmetry by antisymmetry leads to the third classical family.
+
 #definition(name: "Skew-Symmetric Transformation")[
   A linear transformation $A$ on a real inner product space $V$ is *skew-symmetric*
   (or *antisymmetric*) if
@@ -4543,7 +4671,6 @@ notions differ only in whether non-zero vectors may have length $0$.
 ] <def:skew-symmetric-transformation>
 
 #lemma(name: "Properties of Skew-Symmetric Transformations")[
-  - A skew-symmetric transformation is linear;
   - $(A alpha, alpha) = 0$ for all $alpha in V$;
   - Both $A - E$ and $A + E$ are invertible;
   - $(A + E)(A - E)^(-1)$ is an orthogonal transformation.
@@ -4584,14 +4711,40 @@ notions differ only in whether non-zero vectors may have length $0$.
   diagonalizable over $bb(R)$ only when $A = 0$.
 ] <thm:skew-symmetric-diagonalization>
 
+#proof[
+  Induct on $n = "dim" V$, the case $n = 0$ being trivial.
+  Let $lambda$ be an eigenvalue of $A$ over $bb(C)$.
+  Applying the defining relation to an eigenvector $z$ gives
+  $lambda (z, z) = (A z, z) = -(z, A z) = -bar(lambda) (z, z)$, so $lambda$ is purely
+  imaginary.
+
+  If $lambda = 0$, choose a real eigenvector $e_1$.
+  For $gamma in chevron.l e_1 chevron.r^⊥$ one has
+  $(A gamma, e_1) = -(gamma, A e_1) = 0$, so the complement is invariant and induction applies.
+
+  If $lambda = "i" a$ with $a != 0$, take a complex eigenvector $z = u + "i" v$.
+  Comparing real and imaginary parts in $A z = "i" a z$ gives
+  $A u = -a v$ and $A v = a u$.
+  Then $u ⊥ v$ and $||u|| = ||v||$: indeed $(A v, v) = a (u, v)$ while
+  $(A v, v) = -(v, A v) = -a (v, u) = -a (u, v)$, so $(u, v) = 0$; and
+  $(A u, v) = -a ||v||^2$ while $(A u, v) = -(u, A v) = -a ||u||^2$, so $||u|| = ||v||$.
+  Hence $W = chevron.l u, v chevron.r$ is a two-dimensional invariant subspace on which $A$ has
+  the matrix $mat(0, a; -a, 0)$ in an orthonormal basis.
+  Its orthogonal complement is invariant and again skew-symmetric, so induction completes the
+  basis.
+]
+
 == Unitary Spaces and Normal Transformations // 酉空间与正规变换
+
+Passing from $bb(R)$ to $bb(C)$ replaces symmetry by conjugate symmetry, and the theory carries
+over almost verbatim.
 
 === Unitary Spaces // 酉空间
 
 #definition(name: "Complex Inner Product Space")[
   A *complex inner product space* is a complex linear space $V$ equipped with
   $(·, ·): V times V -> bb(C)$ satisfying:
-  - *Positivity*: $(alpha, alpha) >= 0$, equality iff $alpha = 0$;
+  - *Positivity*: $(alpha, alpha) in bb(R)$ and $(alpha, alpha) > 0$ for $alpha != 0$;
   - *"conjugate" symmetry (Hermitian)*: $(alpha, beta) = "conjugate"((beta, alpha))$;
   - *Linearity in the first argument*:
     $(k_1 alpha_1 + k_2 alpha_2, beta) = k_1 (alpha_1, beta) + k_2 (alpha_2, beta)$.
@@ -4608,6 +4761,9 @@ notions differ only in whether non-zero vectors may have length $0$.
 
 === Normal Transformation and Diagonalization // 正规变换与对角化
 
+Orthogonal, symmetric and unitary transformations all satisfy $A A^† = A^† A$; normality
+isolates this common mechanism.
+
 #definition(name: "Normal Transformation and Normal Matrix")[
   A linear transformation $A$ on a complex inner product space $V$ is *normal* if
   $A A^† = A^† A$. A square matrix $A$ is *normal* if $A A^† = A^† A$.
@@ -4620,13 +4776,29 @@ notions differ only in whether non-zero vectors may have length $0$.
   such that $U^(-1) A U = U^† A U = Lambda$ (diagonal with eigenvalues).
 ] <thm:normal-diagonalization>
 
-#note[
-  Every complex linear transformation admits an eigenvector, so induction on the dimension
-  applies: the orthogonal complement of an invariant subspace of a normal transformation is
-  again invariant, and a normal triangular matrix is necessarily diagonal.
+#proof[
+  Every complex linear transformation admits an eigenvector, so choose $xi != 0$ with
+  $A xi = lambda xi$ and set $W = chevron.l xi chevron.r$.
+
+  Normality gives $A^† xi = bar(lambda) xi$: indeed
+  $
+    ||A^† xi - bar(lambda) xi||^2
+    = (A^† xi, A^† xi) - lambda (A^† xi, xi) - bar(lambda) (xi, A^† xi)
+      + abs(lambda)^2 (xi, xi) = 0,
+  $
+  because $(A^† xi, A^† xi) = (A xi, A xi) = abs(lambda)^2 (xi, xi)$,
+  $(A^† xi, xi) = bar(lambda) (xi, xi)$ and $(xi, A^† xi) = lambda (xi, xi)$.
+
+  Hence $W^⊥$ is invariant under both $A$ and $A^†$: for $gamma in W^⊥$,
+  $(A gamma, xi) = (gamma, A^† xi) = bar(lambda) (gamma, xi) = 0$.
+  The restriction of $A$ to $W^⊥$ is again normal, so induction on the dimension gives an
+  orthonormal basis of $W^⊥$ consisting of eigenvectors.
+  Adjoining $xi / (||xi||)$ completes the required basis.
 ]
 
 === Special Normal Transformations // 特殊正规变换
+
+Two special classes deserve separate names.
 
 #definition(name: "Unitary Transformation and Unitary Matrix")[
   $A$ is a *unitary transformation* if $A^† = A^(-1)$, or equivalently
@@ -4644,6 +4816,8 @@ notions differ only in whether non-zero vectors may have length $0$.
   Unitary transformations generalize orthogonal transformations.
   Hermitian transformations generalize symmetric transformations.
 ]
+
+The spectral behaviour of these two classes is equally clean.
 
 #theorem(name: "Eigenvalues of Hermitian and Unitary Transformations")[
   Let $V$ be a finite-dimensional unitary space.
@@ -4684,6 +4858,9 @@ notions differ only in whether non-zero vectors may have length $0$.
 
 == Symplectic Spaces // 辛空间
 
+Keeping bilinearity and non-degeneracy but dropping symmetry and positive definiteness produces
+a different geometry.
+
 #definition(name: "Non-Degenerate Bilinear Form")[
   A #link(<def:bilinear-form>)[bilinear form] $f$ on $V$ is *non-degenerate* if
   $f(alpha, beta) = 0$ for all $beta in V$ forces $alpha = 0$; equivalently, if its matrix
@@ -4697,6 +4874,8 @@ notions differ only in whether non-zero vectors may have length $0$.
   #link(<def:nondegenerate-bilinear-form>)[non-degenerate] alternating bilinear form is
   called a *symplectic inner product*.
 ] <def:symplectic-inner-product>
+
+The structure of such a form is governed by the following facts.
 
 #property(name: "Properties of Symplectic Spaces")[
   - An alternating bilinear form satisfies $f(alpha, beta) = -f(beta, alpha)$;
@@ -4713,7 +4892,7 @@ notions differ only in whether non-zero vectors may have length $0$.
   $f(alpha, beta) + f(beta, alpha) = 0$.
 
   *Normal form.*
-  Induct on $"dim" V$, the case $f = 0$ being trivial.
+  Induct on $"dim" V$, the case $"dim" V = 0$ being trivial.
   Otherwise non-degeneracy supplies $e_1, f_1$ with $f(e_1, f_1) != 0$, and rescaling gives
   $f(e_1, f_1) = 1$.
   These two vectors are independent, because $f_1 = c e_1$ would force
@@ -4730,8 +4909,9 @@ notions differ only in whether non-zero vectors may have length $0$.
 
 #note[
   A symplectic space carries no analogue of length or angle: every vector is isotropic,
-  $f(alpha, alpha) = 0$, so no non-zero vector can be orthogonal to itself in the Euclidean
-  sense.
+  $f(alpha, alpha) = 0$.
+  In contrast with the Euclidean case, where only the zero vector is orthogonal to itself,
+  self-orthogonality here is universal.
 ]
 
 // ==========================================================================
