@@ -8088,19 +8088,19 @@ $
 $
 where $E_(2n)$ denote the Euler numbers and $B_(2n)$ the Bernoulli numbers.
 
-== Smooth Approximation of Functions
+== Smooth Approximation of Functions // 平滑函数的近似
 
 We first approximate Riemann integrable functions by continuous functions, and continuous functions by smooth functions, respectively.
 
-#theorem[
+#theorem(name: "Approximation of Riemann Integrable Functions by Continuous Functions")[
   Let $f(x) in R[a, b]$. For any $epsilon > 0$, there exists a function $g(x) in C[a, b]$ such that
   $
     integral_a^b abs(f(x) - g(x)) dif x < epsilon.
   $
 ] <thm:continuous-approximates-integrable>
 
-#theorem[
-  Let $f(x) in C[a, b]$. For any $epsilon > 0$, there exists a function $g(x) in C^oo[a, b]$ such that
+#theorem(name: "Approximation of Continuous Functions by Smooth Functions")[
+  Let $f(x) in C[a, b]$. For any $epsilon > 0$, there exists a function $g(x) in C^oo [a, b]$ such that
   $
     abs(f(x) - g(x)) < epsilon, quad quad forall x in [a, b].
   $
@@ -8114,6 +8114,94 @@ On this basis, the Weierstrass approximation theorems are stated as follows:
     abs(f(x) - P(x)) < epsilon, quad quad forall x in [a, b].
   $
 ] <thm:weierstrass-first-approximation>
+
+#proof(name: "via Bernstein polynomials")[
+  It suffices to prove the statement on $[0, 1]$: the affine change of variable
+  $x = a + (b - a) t$ carries a polynomial in $t$ into a polynomial in $x$ with the same uniform error.
+
+  For $n in bb(N)$ and $k = 0, 1, dots.c, n$, set
+  $
+    b_(n,k)(x) = binom(n, k) x^k (1 - x)^(n-k), quad quad B_(n) f(x) = sum_(k=0)^n f(k/n) b_(n,k)(x).
+  $
+  Each $B_(n) f$ is a polynomial of degree at most $n$.
+
+  *Moment identities.* Differentiating the binomial theorem
+  $
+    sum_(k=0)^n binom(n, k) u^k v^(n-k) = (u + v)^n
+  $
+  once and twice with respect to $u$, then putting $u = x$, $v = 1 - x$ and dividing by $n$ and $n^2$, gives
+  $
+    sum_(k=0)^n b_(n,k)(x) & = 1, \
+    sum_(k=0)^n (k/n - x) b_(n,k)(x) & = 0, \
+    sum_(k=0)^n (k/n - x)^2 b_(n,k)(x) & = (x (1 - x)) / n <= 1 / (4 n),
+  $
+  where the last identity uses $sum_(k=0)^n k^2 b_(n,k)(x) = n (n - 1) x^2 + n x$.
+
+  *Estimate.* Let $epsilon > 0$. By uniform continuity there is $delta > 0$ such that $abs(x - y) < delta$ implies $abs(f(x) - f(y)) < epsilon / 2$, and $M = sup_(x in [0, 1]) abs(f(x))$ is finite.
+  Splitting the indices according to whether $abs(k/n - x) < delta$ or not,
+  $
+    abs(f(x) - B_(n) f(x))
+    & <= sum_(k=0)^n b_(n,k)(x) abs(f(x) - f(k/n)) \
+    & <= epsilon / 2 + 2 M sum_(abs(k/n - x) >= delta) b_(n,k)(x) \
+    & <= epsilon / 2 + (2 M) / delta^2 sum_(k=0)^n (k/n - x)^2 b_(n,k)(x) \
+    & <= epsilon / 2 + M / (2 n delta^2).
+  $
+  The last term is $< epsilon / 2$ once $n > M / (epsilon delta^2)$, hence $abs(f(x) - B_(n) f(x)) < epsilon$ for all $x in [0, 1]$ and all sufficiently large $n$.
+]
+
+#proof(name: "via Landau kernels")[
+  It suffices to prove the statement on $[0, 1]$. Extend $f$ continuously to $[-1, 2]$ (for instance, constantly), keeping the same notation, and for $n in bb(N)$ set
+  $
+    P_(n)(x) = c_(n) integral_0^1 f(t) (1 - (x - t)^2)^n dif t, quad quad c_(n)^(-1) = integral_(-1)^1 (1 - s^2)^n dif s.
+  $
+
+  *$P_(n)$ is a polynomial.* For $x, t in [0, 1]$ one has $abs(x - t) <= 1$, so the kernel is nonnegative on the range of integration.
+  Expanding $(1 - (x - t)^2)^n = sum_(j=0)^(2 n) q_(j)(t) x^j$ with $q_(j)$ polynomials gives
+  $
+    P_(n)(x) = sum_(j=0)^(2 n) lr(c_(n) integral_0^1 f(t) q_(j)(t) dif t) x^j,
+  $
+  a polynomial of degree at most $2 n$.
+
+  *Uniform convergence.* Let $epsilon > 0$ and choose $delta in (0, 1)$ such that $abs(s) < delta$ implies $abs(f(x + s) - f(x)) < epsilon / 2$ for all $x in [0, 1]$.
+  Substituting $s = t - x$ and using $c_(n) integral_(-1)^1 (1 - s^2)^n dif s = 1$,
+  $
+    P_(n)(x) - f(x) = c_(n) integral_(-x)^(1-x) [f(x + s) - f(x)] (1 - s^2)^n dif s.
+  $
+  Splitting at $abs(s) = delta$ and using $(1 - s^2)^n <= (1 - delta^2)^n$ for $delta <= abs(s) <= 1$,
+  $
+    abs(P_(n)(x) - f(x)) <= epsilon / 2 + 2 M (1 - delta^2)^n,
+  $
+  where $M = sup_(x in [0, 1]) abs(f(x))$.
+  Since $(1 - delta^2)^n -> 0$, the right-hand side is $< epsilon$ for all sufficiently large $n$, uniformly in $x$.
+]
+
+#proof(name: "from the second approximation theorem")[
+  Assume the #link(<thm:weierstrass-second-approximation>)[second approximation theorem].
+  It suffices to prove the statement on $[-1, 1]$.
+
+  Given $f in C[-1, 1]$, set $g(theta) = f(cos theta)$.
+  Then $g$ is continuous, $2 pi$-periodic and even.
+  By the second theorem, for every $epsilon > 0$ there exists a trigonometric polynomial
+  $
+    T(theta) = A_0 / 2 + sum_(k=1)^n (A_k cos k theta + B_k sin k theta)
+  $
+  with $abs(g(theta) - T(theta)) < epsilon$ for all $theta$.
+
+  Replace $T$ by its even part
+  $
+    S(theta) = (T(theta) + T(-theta)) / 2 = A_0 / 2 + sum_(k=1)^n A_k cos k theta.
+  $
+  Since $g$ is even, $abs(g(theta) - S(theta)) = abs((g(theta) - T(theta) + g(-theta) - T(-theta)) / 2) < epsilon$.
+
+  Let $T_(k)$ be the Chebyshev polynomials, defined by $T_(0) = 1$, $T_(1)(x) = x$ and $T_(k+1)(x) = 2 x T_(k)(x) - T_(k-1)(x)$.
+  The addition formula $cos(k theta + theta) + cos(k theta - theta) = 2 cos theta cos k theta$ shows by induction that $cos k theta = T_(k)(cos theta)$.
+
+  Hence $P(x) = A_0 / 2 + sum_(k=1)^n A_k T_(k)(x)$ is a polynomial, and for every $x in [-1, 1]$, taking $theta in [0, pi]$ with $x = cos theta$,
+  $
+    abs(f(x) - P(x)) = abs(g(theta) - S(theta)) < epsilon.
+  $
+  An affine change of variable carries the result to $[a, b]$.
+]
 
 #theorem(name: "Weierstrass Second Approximation Theorem")[
   Let $f(x)$ be a continuous function with period $2 pi$. For any $epsilon > 0$, there exists a trigonometric polynomial
