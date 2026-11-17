@@ -75,11 +75,23 @@ This is an important property of simply connected spaces.
 #part("Appendix")
 = Glossary
 
-== J
+#{
+  set heading(numbering: none)
+  show heading.where(level: 2): it => {
+    set par(first-line-indent: 0em)
+    v(1.2em)
+    text(size: 18pt, font: font-latin-title, weight: "bold", fill: color-title)[#it.body]
+    v(0.5em)
+  }
+
+  [
+  == J
 - *#link(<def:jordan_curve>)[Jordan Curve and Simple Closed Curve]*
 
 == S
 - *#link(<def:jordan_curve>)[Jordan Curve and Simple Closed Curve]*
 - *#link(<def:simply_connected_space>)[Simply Connected Space]*
+  ]
+}
 
 // #bibliography("references.bib")

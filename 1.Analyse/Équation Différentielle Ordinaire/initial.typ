@@ -2670,7 +2670,17 @@ The node structure of the first eigenfunctions is illustrated in @fig:sl-eigenfu
 
 = Glossary // 术语表
 
-== B
+#{
+  set heading(numbering: none)
+  show heading.where(level: 2): it => {
+    set par(first-line-indent: 0em)
+    v(1.2em)
+    text(size: 18pt, font: font-latin-title, weight: "bold", fill: color-title)[#it.body]
+    v(0.5em)
+  }
+
+  [
+  == B
 - *#link(<thm:bellman-gronwall>)[Bellman Gronwall]*
 - *#link(<def:bernoulli-equation>)[Bernoulli Equation]*
 - *#link(<def:bifurcation-value>)[Bifurcation Value]*
@@ -2820,5 +2830,7 @@ The node structure of the first eigenfunctions is illustrated in @fig:sl-eigenfu
 - *#link(<def:wronskian>)[Wronskian]*
 - *#link(<thm:wronskian-criterion>)[Wronskian Criterion]*
 - *#link(<def:wronskian-higher-order>)[Wronskian Higher Order]*
+  ]
+}
 
 #bibliography("references.bib", title: "References", full: true)

@@ -1507,7 +1507,17 @@ The number of these endpoints is countable, but there are many other non-endpoin
 #part("Appendix")
 = Glossary
 
-== C
+#{
+  set heading(numbering: none)
+  show heading.where(level: 2): it => {
+    set par(first-line-indent: 0em)
+    v(1.2em)
+    text(size: 18pt, font: font-latin-title, weight: "bold", fill: color-title)[#it.body]
+    v(0.5em)
+  }
+
+  [
+  == C
 - *#link(<def:cardinal-arithmetic>)[Cardinal Arithmetic]*
 - *#link(<def:cardinal-comparison>)[Cardinal Comparison]*
 - *#link(<thm:cantor-bernstein>)[Cantor-Bernstein-Schröder Theorem]*
@@ -1546,6 +1556,8 @@ The number of these endpoints is countable, but there are many other non-endpoin
 
 == Z
 - *#link(<thm:zorn>)[Zorn's Lemma]*
+  ]
+}
 
 #bibliography("references.bib", title: "References", full: true)
 

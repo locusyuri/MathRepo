@@ -4941,7 +4941,17 @@ The structure of such a form is governed by the following facts.
 
 = Glossary // 术语表
 
-== A
+#{
+  set heading(numbering: none)
+  show heading.where(level: 2): it => {
+    set par(first-line-indent: 0em)
+    v(1.2em)
+    text(size: 18pt, font: font-latin-title, weight: "bold", fill: color-title)[#it.body]
+    v(0.5em)
+  }
+
+  [
+  == A
 - *#link(<def:adjugate-matrix>)[Adjugate Matrix]*
 - *#link(<def:algebra-over-field>)[Algebra Over Field]*
 - *#link(<def:annihilating-transformations>)[Annihilating Transformations]*
@@ -5214,6 +5224,8 @@ The structure of such a form is governed by the following facts.
 
 == W
 - *#link(<thm:woodbury-identity>)[Woodbury Identity]*
+  ]
+}
 
 #pagebreak()
 

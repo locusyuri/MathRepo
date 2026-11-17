@@ -4573,7 +4573,17 @@ one flat world but admits a third value — "undefined", "unknown",
 
 = Glossary
 
-== A
+#{
+  set heading(numbering: none)
+  show heading.where(level: 2): it => {
+    set par(first-line-indent: 0em)
+    v(1.2em)
+    text(size: 18pt, font: font-latin-title, weight: "bold", fill: color-title)[#it.body]
+    v(0.5em)
+  }
+
+  [
+  == A
 - *#link(<def:alpha-equivalent>)[Alpha-Equivalence]*
 - *#link(<def:lukasiewicz-system>)[Axiom Schema]*
 
@@ -4701,6 +4711,8 @@ one flat world but admits a third value — "undefined", "unknown",
 
 == W
 - *#link(<def:wff>)[Well-Formed Formula (WFF)]*
+  ]
+}
 
 = References
 

@@ -12171,7 +12171,17 @@ Next, we give three important formulas about the Gamma function, which can be ex
 
 = Glossary // 术语表
 
-== A
+#{
+  set heading(numbering: none)
+  show heading.where(level: 2): it => {
+    set par(first-line-indent: 0em)
+    v(1.2em)
+    text(size: 18pt, font: font-latin-title, weight: "bold", fill: color-title)[#it.body]
+    v(0.5em)
+  }
+
+  [
+  == A
 - *#link(<thm:abel-dirichlet-defective-integral>)[Abel Dirichlet Defective Integral]*
 - *#link(<thm:abel-dirichlet-infinite-integral>)[Abel Dirichlet Infinite Integral]*
 - *#link(<thm:abel-dirichlet-series>)[Abel Dirichlet Series]*
@@ -12669,5 +12679,7 @@ Next, we give three important formulas about the Gamma function, which can be ex
 - *#link(<def:zero-area-null-set>)[Zero Area Null Set]*
 - *#link(<thm:zero-point-existence>)[Zero Point Existence]*
 - *#link(<ex:zeta-integral-form>)[Zeta Integral Form]*
+  ]
+}
 
 #bibliography("references.bib", title: "References", full: true)
