@@ -2665,6 +2665,57 @@ $
   The chapters planned for this part are listed in the table of contents at the end of this note. Until they are written, the three results above may only be used as stated facts, never as established ones.
 ]
 
+// --- Appendix ---
+#part("Appendix") // 附录
+
+= Glossary // 术语表
+
+== B
+- *#link(<def:banach-space>)[Banach Space]*
+- *#link(<def:bounded-variation>)[Bounded Variation]*
+
+== C
+- *#link(<thm:cc-dense-lp>)[$C_(c)(bb(R)^n)$ is Dense in $L^p(bb(R)^n)$]*
+- *#link(<def:conjugate-exponent>)[Conjugate Exponents]*
+
+== E
+- *#link(<thm:egorov>)[Его́ров's Theorem]*
+- *#link(<ex:elementary-lp-spaces>)[Elementary $L^p$ Spaces]*
+
+== H
+- *#link(<thm:holder-inequality>)[Hölder's Inequality]*
+
+== J
+- *#link(<thm:jordan-decomposition>)[Jordan Decomposition Theorem]*
+
+== L
+- *#link(<cor:lp-inclusion-finite-measure>)[$L^p$ Inclusion on Finite Measure Spaces]*
+- *#link(<prop:lp-vector-space>)[$L^p$ is a Vector Space]*
+- *#link(<cor:lp-norm-axioms>)[$L^p$ Norm Axioms]*
+- *#link(<def:lp-space>)[$L^p$ Space]*
+- *#link(<thm:linfty-not-separable>)[$L^oo$ is NOT Separable]*
+- *#link(<def:linfty-space>)[$L^oo$ Space]*
+
+== M
+- *#link(<thm:minkowski-inequality>)[Minkowski's Inequality]*
+- *#link(<prop:lp-norm-monotonicity>)[Monotonicity of $L^p$ Norms on Finite Measure]*
+
+== P
+- *#link(<prop:bv-properties>)[Properties of Functions of Bounded Variation]*
+
+== R
+- *#link(<thm:riesz-fischer>)[Riesz-Fischer Theorem]*
+
+== S
+- *#link(<thm:lp-separable>)[Separability of $L^p$]*
+- *#link(<def:separable-space>)[Separable Space]*
+- *#link(<thm:simple-dense-lp>)[Simple Functions are Dense in $L^p$]*
+- *#link(<cor:step-dense-lp>)[Step Functions are Dense in $L^p$]*
+- *#link(<ex:lp-inclusion-strictness>)[Strictness and Non-Comparability]*
+
+== Y
+- *#link(<lem:young-inequality>)[Young's Inequality]*
+
 // 只有被引用的章节才会被编译和显示在目录中，因此如果你想要显示某个章节，请确保在主文件中正确引用了它。
 // refer to @zhou2016
 
