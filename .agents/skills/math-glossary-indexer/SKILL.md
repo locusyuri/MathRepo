@@ -52,19 +52,36 @@ Generate the following structure at the end of the file:
 #part("Appendix")
 = Glossary
 
-== A
-- *#link(<def:...>)[Display Name]*
-- *#link(<thm:...>)[Display Name]*
+#{
+  set heading(numbering: none)
+  show heading.where(level: 2): it => {
+    set par(first-line-indent: 0em)
+    v(1.2em)
+    text(size: 18pt, font: font-latin-title, weight: "bold", fill: color-title)[#it.body]
+    v(0.5em)
+  }
 
-== B
-- ...
+  [
+  == A
+  - *#link(<def:...>)[Display Name]*
+  - *#link(<thm:...>)[Display Name]*
+
+  == B
+  - ...
+  ]
+}
 ```
 
 Rules:
-- Use `== <Letter>` for each letter heading
-- Use `- *#link(<tag>)[Display Name]*` for each entry (bullet + link)
-- Skip letters that have no entries
-- Delete any existing glossary content between `#part("Appendix")` and the end of file before inserting the new one
+- Use `== <Letter>` for each letter heading, but keep all letter headings **inside the scoped `#{}` block** so they are not numbered.
+- Use `- *#link(<tag>)[Display Name]*` for each entry (bullet + link).
+- Skip letters that have no entries.
+- Delete any existing glossary content between `#part("Appendix")` and the end of file before inserting the new one.
+- Close the content block (`]` + `}`) before `#bibliography`, `= References`, the next Part, or any other content outside the glossary.
+
+**Why the scoped block is required:** the shared template's level-2 heading show rule prints `chapter.section` unconditionally. A bare `set heading(numbering: none)` does not suppress that printed prefix, and `== A` would render as `7.1 A`. The local `show heading.where(level: 2)` rule above replaces the template's numbering display for the glossary only. `set heading(numbering: none)` additionally removes numbering from the outline entries.
+
+**Header caveat:** the template's running header counts every level-2 heading, including these unnumbered letters, so its `Sec. x.y.` prefix may still appear. Hiding that prefix requires a template-level change and is outside this skill's local scope.
 
 ### Step 5: Verify
 
