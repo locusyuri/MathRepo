@@ -6580,13 +6580,16 @@ The definition takes the kernel of a homomorphism as its model, because that is 
   Let $R$ be a ring and $I subset.eq R$ an additive subgroup.
   - $I$ is a *left ideal* if $r a in I$ for all $r in R$ and $a in I$;
   - $I$ is a *right ideal* if $a r in I$ for all $r in R$ and $a in I$;
-  - $I$ is a *two-sided ideal*, or simply an *ideal*, if it is both.
+  - $I$ is a *two-sided ideal*, or simply an *ideal*, if it is both; one writes $I lt.closed.eq R$, and $I lt.closed R$ when $I != R$.
 ] <def:ideal>
 
 In a commutative ring the three notions coincide, and "ideal" then always means a two-sided one.
 In a non-commutative ring they do not, and the matrix ring supplies the standard witness (#link(<caution:one-sided-ideals>)[below]).
 Every ideal is a subring, but a proper ideal is never a unital subring: $1_R in I$ would force $I = R$ (#link(<caution:proper-ideal>)[below]).
 The trivial ideals are $(0)$ and $R$ itself, and they are the two ideals every ring has.
+
+The symbol $lt.closed.eq$ is the one used for a normal subgroup (#link(<def:normal-subgroup>)[§4.1]), and the echo is deliberate: in both cases the substructure marked this way is exactly one that survives quotienting, and exactly one that occurs as a kernel.
+#link(<note:ideal-vs-normal>)[The note below] states that correspondence, and the subsections that follow measure how far it is allowed to go.
 
 #note(title: "The ring analogue of a normal subgroup")[
   Normal subgroups and ideals answer the same question in two categories.
@@ -6616,6 +6619,62 @@ Keeping only the left absorption condition characterizes left ideals, and keepin
   More generally, if $u in I$ is a unit, then $1_R = u^(-1) u in I$ and again $I = R$.
   So a proper ideal consists of non-units, and a field has exactly two ideals: $(0)$ and the field itself.
 ] <caution:proper-ideal>
+
+The next observation is what makes ideals usable at all: they are subrings, so every theorem about subrings applies, and only the extra absorption has to be checked by hand.
+
+#proposition(name: "Ideals Are Subrings")[
+  Every left ideal, every right ideal and every two-sided ideal of a ring $R$ is a subring of $R$.
+] <prop:ideal-subring>
+
+#proof[
+  An ideal is an additive subgroup by definition, so only closure under multiplication needs proof.
+  But for $a, b in I$ the product $a b$ lies in $I$ by the absorption axiom, the second factor being an element of $R$ as well; the subring criterion (#link(<thm:subring-criteria>)[§8.2]) then applies.
+]
+
+The converse fails, and it fails for a structural reason rather than by accident.
+
+#caution(title: "Not every subring is an ideal")[
+  $bb(Z)$ is a subring of $bb(Q)$, and it is not an ideal: $1\/2 in bb(Q)$ sends $1 in bb(Z)$ to $1\/2 in.not bb(Z)$.
+  #link(<note:kernel-ideal-preview>)[The note on kernels] shows that no homomorphism with domain $bb(Q)$ can have $bb(Z)$ as kernel, so the failure is not an accident of this example.
+
+  The distinction is one of scope: a subring is closed under multiplication *inside itself*, an ideal under multiplication *by everything outside it*.
+  What survives of the comparison is closure under intersection: an intersection of ideals is an ideal (#link(<prop:ideal-operations>)[the proposition on operations]), exactly as an intersection of subrings is a subring (#link(<prop:subring-intersection>)[§8.2]).
+]
+
+Ideals and subrings part company most sharply in the cyclic rings of #link(<def:cyclic-ring>)[§8.1], where the additive group leaves no room for a choice.
+
+#proposition(name: "Ideals in a Cyclic Ring")[
+  Let $R$ be a cyclic ring.
+  Then every additive subgroup of $R$ is a two-sided ideal, so the ideals of $R$ are exactly the subgroups of $(R, +)$.
+] <prop:ideals-cyclic-ring>
+
+#proof[
+  Let $a$ generate $(R, +)$, so that $R = {k a : k in bb(Z)}$ and $a^2 = m a$ for some integer $m$.
+  An additive subgroup $I$ of $R$ is cyclic (#link(<thm:cyclic-subgroups>)[§3.2]), say $I = {k n a : k in bb(Z)}$ for some $n >= 0$.
+
+  For $r = s a in R$ and $x = k n a in I$ one has
+  $
+    r x = s k n a^2 = s k n m a = (s k m)(n a) in I,
+  $
+  and the same computation with the factors exchanged gives $x r in I$.
+  Hence $I$ is a two-sided ideal, and the converse is the definition.
+]
+
+So in a cyclic ring the ideal theory collapses into the subgroup theory of Chapter 3: the ideals of $bb(Z)$ are the sets $n bb(Z)$ (#link(<ex:ideals-in-z>)[below]), and those of $bb(Z)_m$ the sets $k bb(Z)_m$.
+In particular the ideals of $bb(Z)_n$ can be counted: by #link(<thm:cyclic-subgroups>)[the subgroup structure of cyclic groups] there is exactly one for each divisor of $n$.
+
+Being an ideal, like being normal, is a relative property, and relative properties rarely compose.
+
+#caution(title: "Being an ideal is not transitive")[
+  $I lt.closed.eq J$ together with $J lt.closed.eq R$ does *not* force $I lt.closed.eq R$, exactly as normality is not transitive in groups (#link(<caution:normality-not-transitive>)[§4.1]).
+
+  In $R = bb(Z)_4 times bb(Z)_4$ let $J = 2 bb(Z)_4 times 2 bb(Z)_4$ and $I = {(0, 0), (2, 2)}$.
+  Then $J lt.closed.eq R$, being a product of ideals, and $J^2 = {0}$; hence $J I = I J = {0} subset.eq I$, and $I$ is an ideal of the ring $J$.
+  But $I$ is not an ideal of $R$: the element $(0, 1)$ of $R$ sends $(2, 2) in I$ to $(0, 2) in.not I$.
+
+  What does survive is the relative statement: if $I lt.closed.eq R$ and $J subset.eq R$ is a subring, then $I inter J lt.closed.eq J$.
+  Indeed $J (I inter J) subset.eq J I subset.eq I$ and $J (I inter J) subset.eq J J subset.eq J$, and the same holds on the right.
+]
 
 === Principal and Generated Ideals
 
@@ -6650,6 +6709,26 @@ with the empty sum read as $0$; for $S = {a_1, dots, a_m}$ one writes $(a_1, dot
   $(m) + (n) = (gcd(m, n))$, while $(m) inter (n) = ("lcm"(m, n))$.
 ] <ex:ideals-in-z>
 
+The ideals of a domain are therefore a measure of how far it is from a field, and the measure is decisive as soon as it is finite.
+
+#theorem(name: "A Domain With Finitely Many Ideals Is a Field")[
+  Let $R$ be an integral domain with only finitely many ideals.
+  Then $R$ is a field.
+] <thm:finite-ideals-domain>
+
+#proof[
+  Let $a != 0$ and suppose that $a$ is not a unit.
+  Then the principal ideals
+  $
+    (a) supset (a^2) supset (a^3) supset dots.c
+  $
+  are pairwise distinct: $(a^n) = (a^(n+1))$ would give $a^n = a^(n+1) b$ for some $b$, hence $1 = a b$ after cancelling $a^n$, and $a$ would be a unit.
+  So $R$ has infinitely many ideals, contradicting the hypothesis; every nonzero element is therefore a unit and $R$ is a field.
+]
+
+Read contrapositively, the theorem says that a domain which is not a field carries infinitely many ideals, and $bb(Z)$ shows the phenomenon in its simplest form: the ideals $n bb(Z)$ are pairwise distinct for $n >= 1$.
+What the theorem does not say is that finitely many ideals force finiteness of the ring — $bb(Q)$ is a field with exactly two ideals, and every field is one.
+
 #caution(title: "One-sided ideals exist")[
   In $M_2(bb(R))$ let $L$ be the set of matrices whose second column vanishes.
   Then $L$ is a left ideal, since the second column of $B A$ is $B$ applied to the second column of $A$, hence zero.
@@ -6659,7 +6738,7 @@ with the empty sum read as $0$; for $S = {a_1, dots, a_m}$ one writes $(a_1, dot
 === Operations on Ideals
 
 #proposition(name: "Intersections, Sums and Products of Ideals")[
-  Let $I$ and $J$ be ideals of a ring $R$.
+  Let $R$ be a ring and $I, J lt.closed.eq R$.
   - $I inter J$ is an ideal;
   - $I + J = {i + j : i in I, quad j in J}$ is an ideal, and it is the smallest ideal containing $I union J$;
   - $I J$, the set of finite sums $sum_k i_k j_k$ with $i_k in I$ and $j_k in J$, is an ideal contained in $I inter J$.
@@ -6677,6 +6756,91 @@ with the empty sum read as $0$; for $S = {a_1, dots, a_m}$ one writes $(a_1, dot
 
 The same argument shows that the intersection of any family of ideals is an ideal, which is what makes #link(<def:generated-ideal>)[the ideal generated by a set] well defined.
 It also shows that the ideals of $R$ form a lattice under inclusion, with meet $I inter J$ and join $I + J$.
+
+=== Simple Rings // 单环
+
+The rings seen so far carry as many ideals as their arithmetic allows; at the opposite extreme sit the rings that carry none, and they are the subject of this subsection.
+The classical notion is too weak to classify, while its one-sided strengthening turns out to be exactly strong enough.
+
+#definition(name: "Simple Ring")[
+  A ring $R$ is *simple* if $R^2 != {0}$ and its only two-sided ideals are $(0)$ and $R$.
+] <def:simple-ring>
+
+The hypothesis $R^2 != {0}$ removes the rings in which every product vanishes.
+In such a ring every additive subgroup is an ideal, so there is no proper ideal at all, and a definition that admitted them would need an exception in every statement below.
+What the definition says is that $(0)$ is as large a two-sided ideal as the ring allows, that is, that it is maximal; the notion is made precise in *Prime and Maximal Ideals*.
+
+A division ring is the first example, and the matrix ring is the one that shows how far a one-sided ideal can stray from an ideal.
+
+#example(name: "$M_(n)(D)$ is simple.")[
+  Let $D$ be a division ring, $n >= 1$ and $I != (0)$ a two-sided ideal of $M_(n)(D)$.
+  Take $0 != A in I$ and an entry $a_(i j)$ of $A$ that is nonzero.
+  Then $E_(i i) A E_(j j) = a_(i j) E_(i j)$ lies in $I$, and $a_(i j)$ is a unit of $D$, so $E_(i j) in I$.
+  Every matrix unit factors as $E_(k l) = E_(k i) E_(i j) E_(j l)$, so all of them lie in $I$, and they generate $M_(n)(D)$ as an additive group.
+  Hence $I = M_(n)(D)$.
+] <ex:matrix-ring-simple>
+
+For $n >= 2$ this ring is full of left ideals — the matrices with vanishing second column form one (#link(<caution:one-sided-ideals>)[above]) — so simplicity constrains only the two-sided lattice.
+The parallel with simple groups stops at that point, and one note has to record why.
+
+#note(title: "There is no classification of simple rings")[
+  Finite simple groups are classified (#link(<note:classification-finite-simple>)[§4.5]); simple rings are not, and the difference is not one of effort.
+
+  + *With a chain condition the answer is complete.*
+    A simple ring that is left Artinian is a full matrix ring $M_(n)(D)$ over a division ring — the Artin–Wedderburn theorem — and #link(<thm:wedderburn>)[Wedderburn's little theorem] then makes every finite simple ring isomorphic to $M_(n)(bb(F)_q)$ for a unique pair $(n, q)$.
+    This is the exact analogue of the classification of simple groups, and it belongs to a course on modules.
+  + *Without one the class is unmanageable.*
+    The first Weyl algebra, generated over a field of characteristic $0$ by an element $x$ and an element $partial$ with $partial x - x partial = 1$, is simple and infinite-dimensional and has no finite-dimensional module at all; the Cuntz algebras of operator theory are simple for a different reason again; and nothing suggests a list.
+
+  So simplicity is too weak a notion to classify, and the theorems that exist add a finiteness condition.
+  The rest of this subsection adds the strongest one available: that there be no one-sided ideal either.
+] <note:simple-ring-classification>
+
+#definition(name: "Strongly Simple Ring")[
+  A ring $R$ with $abs(R) > 1$ is *strongly simple* if its only left ideals are $(0)$ and $R$ and its only right ideals are $(0)$ and $R$.
+] <def:strongly-simple-ring>
+
+The adjective is local to this book; the condition is the strongest restriction one can place on the one-sided ideals, and unlike simplicity it admits a complete description.
+
+#theorem(name: "Strongly Simple Rings")[
+  A ring $R$ with $abs(R) > 1$ is strongly simple if and only if it is a division ring or a ring of zero multiplication of prime order.
+] <thm:strongly-simple-classification>
+
+#proof[
+  *(arrow.l.double)* Let $R$ be a division ring.
+  For $a != 0$ the left ideal $R a$ contains $a$, hence is nonzero, hence equals $R$, and $a R = R$ likewise; a nonzero left ideal contains some $a != 0$, so it coincides with $R$.
+  Let $R$ now have zero multiplication of prime order.
+  Every additive subgroup is then an ideal, and a group of prime order has no subgroup other than $(0)$ and $R$ itself (#link(<cor:prime-order-cyclic>)[§3.3] with Lagrange).
+
+  *(arrow.r.double)* Assume $R$ strongly simple, and suppose first that $R^2 = 0$.
+  Then every product vanishes, so every additive subgroup is closed under multiplication by $R$ and is an ideal, and by the hypothesis $(R, +)$ has no subgroup other than $(0)$ and $R$.
+  Such a group is cyclic of prime order: any $a != 0$ generates it, and if $abs(R)$ were infinite or composite, #link(<thm:cyclic-subgroups>)[the subgroup structure of cyclic groups] would produce a subgroup strictly between $(0)$ and $R$.
+
+  Suppose finally that $R^2 != {0}$, and choose $a, b$ with $a b != 0$.
+  The left ideal $R b$ contains $a b$, so $R b = R$, and there is $e$ with $e b = b$.
+  The set $K = {x in R : x b = 0}$ is a left ideal, because $(r x) b = r (x b)$; it is proper, since $e b = b != 0$, hence $K = (0)$.
+
+  Now $(e^2 - e) b = e (e b) - e b = 0$, so $e^2 = e$: the element $e$ is idempotent.
+  Since $b = e b$ is nonzero, the right ideal $e R$ is nonzero, hence $e R = R$; and $e = e^2$ is a nonzero element of the left ideal $R e$, so $R e = R$.
+
+  Every $x in R$ is therefore both $e s$ and $t e$ for suitable $s, t$, and then $e x = e^2 s = x$ and $x e = t e^2 = x$.
+  So $e$ is a two-sided identity and $R$ is unital.
+
+  For $a != 0$ the left ideal $R a$ is nonzero, hence $R$, so some $b$ satisfies $b a = 1$; the kernel of right multiplication by $a$ is a left ideal different from $R$, since $1 dot a = a != 0$, so $(a b - 1) a = 0$ forces $a b = 1$.
+  Every nonzero element is a unit, and $R$ is a division ring.
+]
+
+#caution(title: "Simplicity and strong simplicity are not nested")[
+  $M_(n)(D)$ with $n >= 2$ is simple but not strongly simple, since its columns are left ideals.
+  The ring of zero multiplication of prime order is strongly simple but not simple, since its square is zero — the degenerate case that #link(<def:simple-ring>)[the definition of simplicity] excludes on purpose.
+
+  What the two conditions share is the two-sided lattice: a two-sided ideal is in particular a left ideal, so a strongly simple ring has no proper nonzero two-sided ideal either, and it is simple exactly when its square is nonzero.
+]
+
+#note(title: "The group analogue is a single family")[
+  For groups the corresponding class is tiny: a group whose only subgroups are ${e}$ and $G$ is cyclic of prime order, so there is exactly one such group for each prime (#link(<thm:cyclic-subgroups>)[§3.2] with #link(<thm:lagrange>)[Lagrange]).
+  For rings the class is larger but still describes itself: the unital members are the division rings, so #link(<thm:strongly-simple-classification>)[the theorem above] answers the ring question by reducing it to the classification of division rings, and stops there.
+] <note:strongly-simple-vs-groups>
 
 === A Running Example
 
@@ -9025,9 +9189,13 @@ Both agree when $R$ is commutative, which covers the case $R = F$ of #link(<ex:e
 // --- Chapter 9: 理想与商环 (Ideals and Quotient Rings) ---
 
 //   Section 9.1: 理想 (Ideals)
-//     - 左/右/双边理想的定义与判定；真理想不含单位
-//     - 主理想与生成理想（含生成元的有限和标准形）
+//     - 左/右/双边理想的定义与判定；记号 $I \normal R$；真理想不含单位
+//     - 理想是子环（反之不真：$\bb(Z) \subset \bb(Q)$）；理想无传递律
+//     - 循环环：理想 ⟺ 子加群（回收 §8.1 的循环环）
+//     - 主理想与生成理想（含生成元的有限和标准形）；有限个理想的整环是域
 //     - 理想的交、和、积；$\bb(Z)$ 的理想全为主理想
+//     - 单环：定义、$M_(n)(D)$ 的例子、无分类的全景 note
+//     - 强单环（左右理想均平凡）：分类 = 除环 或 素数阶零乘环
 //     - 高斯整数 $\bb(Z)[i]$ 作为贯穿全章的例子
 
 //   Section 9.2: 商环 (Quotient Rings)
