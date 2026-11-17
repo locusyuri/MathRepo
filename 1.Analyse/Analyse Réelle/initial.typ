@@ -2233,7 +2233,7 @@ $
 $
   Two functions $f, g in cal(L)^(p)(X, mu)$ are said to be *equivalent*, written $f tilde g$, if $f = g$ almost everywhere. The *$L^p$ space* is the quotient
 $
-    L^(p)(X, mu) = cal(L)^(p)(X, mu) / tilde.
+    L^(p)(X, mu) = cal(L)^(p)(X, mu) \/ tilde.
 $
   For $f in L^(p)(X, mu)$, the *$L^p$ norm* is defined by
 $
@@ -2400,6 +2400,10 @@ $
 
 // Riesz-Fischer 定理：L^p 是完备的（Banach 空间）
 // 证明核心：从 Cauchy 列中提取快速收敛子列，利用级数和 Fatou 引理
+
+#definition(name: "Banach Space")[
+  A normed linear space $(V, ||dot||)$ is a *Banach space* if it is complete: every Cauchy sequence in $V$ converges to an element of $V$.
+]
 
 #theorem(name: "Riesz-Fischer Theorem")[
   For $1 <= p <= oo$, the space $L^(p)(X, mu)$ is complete: every Cauchy sequence in $L^p$ converges to an element of $L^p$. Therefore $(L^(p)(X, mu), ||dot||_p)$ is a Banach space.
