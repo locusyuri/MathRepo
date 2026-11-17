@@ -2218,13 +2218,14 @@ $
 
 #part("Function Spaces") // 函数空间
 = $L^p$ Spaces // $L^p$ 空间
-== $L^p$ Spaces and Completeness // L^p空间与完备性
 
-// 本节正式定义 L^p 空间，验证范数公理（Hölder + Minkowski），证明完备性（Riesz-Fischer）
+Throughout the preceding chapters, the expression $(integral_X abs(f)^p dif mu)^(1/p)$ appeared repeatedly — in the definition of convergence in $L^p$ norm (*Convergence of Measurable Functions*), in the hypotheses of the Dominated Convergence Theorem (*Limit of Integral Sequences*), and in the comparison of function classes (*Absolute Continuity and the Newton-Leibniz Formula*). We now formalize the space of functions for which this quantity is finite, establish its fundamental inequalities, and prove that it is a complete normed space.
 
-Throughout the preceding chapters, the expression $(integral_X abs(f)^p dif mu)^(1/p)$ appeared repeatedly — in the definition of convergence in $L^p$ norm (*Convergence of Measurable Functions*), in the hypotheses of the Dominated Convergence Theorem (*Limit of Integral Sequences*), and in the comparison of function classes (*Functions of Bounded Variation and Absolute Continuity*). We now formalize the space of functions for which this quantity is finite, establish its fundamental inequalities, and prove that it is a complete normed space.
+== Definitions and Elementary Properties // 定义与基本性质
 
-=== Definition of $L^p$ Spaces // L^p空间的定义
+// 本节只负责把对象定义清楚：L^p / L^∞、商空间、范数与向量空间结构
+
+=== Definition of $L^p$ and $L^oo$ Spaces // $L^p$ 与 $L^oo$ 空间的定义
 
 #definition(name: "$L^p$ Space, $1 <= p < oo$")[
   Let $(X, cal(S), mu)$ be a measure space and let $1 <= p < oo$. Define
@@ -2239,7 +2240,7 @@ $
 $
     ||f||_p = (integral_X abs(f)^p dif mu)^(1/p).
 $
-]
+] <def:lp-space>
 
 #definition(name: "$L^oo$ Space")[
   A measurable function $f: X -> overline(bb(R))$ is *essentially bounded* if there exists $M >= 0$ such that $mu({x in X : abs(f(x)) > M}) = 0$. The *essential supremum* is
@@ -2247,25 +2248,42 @@ $
     ||f||_oo = "ess sup"_(x in X) abs(f(x)) = inf {M >= 0 : mu({x : abs(f(x)) > M}) = 0}.
 $
   The space $L^(oo)(X, mu)$ consists of equivalence classes (modulo a.e. equality) of essentially bounded measurable functions, equipped with the norm $||dot||_oo$.
-]
+] <def:linfty-space>
 
 #note[
-  The quotient by a.e. equivalence is essential: without it, $||f||_p = 0$ would only imply $f = 0$ a.e., not $f = 0$ everywhere, so the norm axioms would fail. By identifying functions that agree a.e., we ensure that $||f||_p = 0 => f = 0$ in $L^p$. In practice, we write "$f in L^p$" and work with representatives freely, keeping in mind that equalities hold a.e.
+  The quotient by a.e. equivalence is essential: without it, $||f||_p = 0$ would only imply $f = 0$ a.e., not $f = 0$ everywhere, so the norm axioms would fail. By identifying functions that agree a.e., we ensure that $||f||_p = 0 => f = 0$ in $L^p$.
+
+  The norm descends to the quotient: if $f = g$ a.e., then $integral_X abs(f)^p dif mu = integral_X abs(g)^p dif mu$, so $||[f]||_p := ||f||_p$ is independent of the chosen representative.
+
+  In practice, we write "$f in L^p$" and work with representatives freely, keeping in mind that equalities hold a.e.
 ]
+
+=== Vector Space Structure // 向量空间结构
 
 #proposition(name: "$L^p$ is a Vector Space")[
   For $1 <= p <= oo$, $L^(p)(X, mu)$ is a vector space over $bb(R)$.
-]
+] <prop:lp-vector-space>
 
 #proof[
   Let $f, g in L^p$. For $1 <= p < oo$, the elementary inequality $abs(a + b)^p <= 2^p max(abs(a)^p, abs(b)^p) <= 2^(p)(abs(a)^p + abs(b)^p)$ gives
 $
     integral_X abs(f + g)^p dif mu <= 2^p (integral_X abs(f)^p dif mu + integral_X abs(g)^p dif mu) < oo,
 $
-  so $f + g in L^p$. Scalar closure is immediate: $||alpha f||_p = abs(alpha) ||f||_p$. For $p = oo$, both properties follow directly from the definition of essential supremum.
+  so $f + g in L^p$. For scalar closure, $integral_X abs(alpha f)^p dif mu = abs(alpha)^p integral_X abs(f)^p dif mu < oo$, and homogeneity $||alpha f||_p = abs(alpha) ||f||_p$ follows at once. For $p = oo$, both properties follow directly from the definition of essential supremum.
 ]
 
-=== Hölder's Inequality // Hölder不等式
+=== Elementary Examples // 基本例子
+
+#example(name: "Elementary $L^p$ Spaces")[
+  - *Counting measure.* For $1 <= p < oo$, on $bb(N)$ with counting measure, $L^p$ is the sequence space $ell^p$, with $||(a_n)||_p = (sum_(n=1)^oo abs(a_n)^p)^(1/p)$.
+  - *Finite measure.* On $([0, 1], cal(L), m)$, every bounded measurable function lies in $L^p$ for all $1 <= p <= oo$, and $||f||_p <= ||f||_oo$.
+] <ex:elementary-lp-spaces>
+
+== Fundamental Inequalities // 基本不等式
+
+// 本节建立使 $L^p$ 范数成立的两条基本不等式：Hölder 与 Minkowski
+
+=== Conjugate Exponents and Young's Inequality // 共轭指数与 Young 不等式
 
 #definition(name: "Conjugate Exponents")[
   Let $1 < p < oo$. The *conjugate exponent* $q$ is defined by
@@ -2273,7 +2291,7 @@ $
     1/p + 1/q = 1, quad "equivalently" quad q = p / (p - 1).
 $
   We also adopt the convention that $p = 1$ and $q = oo$ (or vice versa) are conjugate pairs.
-]
+] <def:conjugate-exponent>
 
 #lemma(name: "Young's Inequality")[
   Let $a, b >= 0$ and let $p, q$ be conjugate exponents with $1 < p < oo$. Then
@@ -2281,7 +2299,7 @@ $
     a b <= a^p / p + b^q / q.
 $
   Equality holds if and only if $a^p = b^q$.
-]
+] <lem:young-inequality>
 
 #proof[
   If $a = 0$ or $b = 0$, the inequality is trivial. Assume $a, b > 0$. Since the logarithm is strictly concave on $(0, oo)$, for any $t in (0, 1)$ and $u, v > 0$:
@@ -2295,12 +2313,14 @@ $
   The left side equals $log(a b)$, so exponentiating gives $a b <= a^p / p + b^q / q$. Equality holds iff $a^p = b^q$.
 ]
 
+=== Hölder's Inequality // Hölder 不等式
+
 #theorem(name: "Hölder's Inequality")[
   Let $1 <= p <= oo$ with conjugate exponent $q$. If $f in L^(p)(X, mu)$ and $g in L^(q)(X, mu)$, then $f g in L^1(X, mu)$ and
 $
     integral_X abs(f g) dif mu <= ||f||_p ||g||_q.
 $
-]
+] <thm:holder-inequality>
 
 #proof[
   _Step 1: Trivial cases._ If $||f||_p = 0$, then $f = 0$ a.e., so $f g = 0$ a.e. and the inequality holds. Assume $||f||_p, ||g||_q > 0$.
@@ -2324,32 +2344,14 @@ $
   Substituting back $F = f / ||f||_p$ and $G = g / ||g||_q$ yields the result.
 ]
 
-#corollary(name: "$L^p$ Inclusion on Finite Measure Spaces")[
-  Let $mu(X) < oo$ and $1 <= p_1 < p_2 <= oo$. Then $L^(p_2)(X, mu) subset.eq L^(p_1)(X, mu)$.
-]
-
-#proof[
-  Let $f in L^(p_2)$. Apply Hölder's inequality to $abs(f)^(p_1)$ and $g = 1$ with exponents $r = p_2 / p_1 > 1$ and its conjugate $r' = r / (r - 1)$:
-$
-    integral_X abs(f)^(p_1) dif mu <= (integral_X abs(f)^(p_1 dot r) dif mu)^(1/r) (integral_X 1 dif mu)^(1/r') = ||f||_(p_2)^(p_1) mu(X)^(1/r') < oo.
-$
-  Hence $f in L^(p_1)$.
-]
-
-#example[
-  The inclusion $L^(p_2) subset.eq L^(p_1)$ on finite measure spaces is *strict*: on $([0, 1], m)$, the function $f(x) = x^(-alpha)$ with $1/p_2 < alpha < 1/p_1$ belongs to $L^(p_1)$ but not $L^(p_2)$.
-
-  On $(bb(R), m)$, the spaces $L^1$ and $L^2$ are *not* comparable: $f(x) = 1/(1 + abs(x)) in L^2 backslash L^1$ (decays too slowly for $L^1$), while $g = chi_([0,1]) / sqrt(x) in L^1 backslash L^2$ (singular at $0$, too strong for $L^2$).
-]
-
-=== Minkowski's Inequality // Minkowski不等式
+=== Minkowski's Inequality and the Norm Axioms // Minkowski 不等式与范数公理
 
 #theorem(name: "Minkowski's Inequality")[
   Let $1 <= p <= oo$. For all $f, g in L^(p)(X, mu)$,
 $
     ||f + g||_p <= ||f||_p + ||g||_p.
 $
-]
+] <thm:minkowski-inequality>
 
 #proof[
   _Step 1: The cases $p = 1$ and $p = oo$._ For $p = 1$, the inequality follows from $abs(f + g) <= abs(f) + abs(g)$ and linearity of the integral. For $p = oo$, $abs(f(x) + g(x)) <= ||f||_oo + ||g||_oo$ a.e., so $||f + g||_oo <= ||f||_oo + ||g||_oo$.
@@ -2386,31 +2388,97 @@ $
   + *Triangle inequality*: $||f + g||_p <= ||f||_p + ||g||_p$ (Minkowski's inequality).
 
   Therefore $(L^(p)(X, mu), ||dot||_p)$ is a normed vector space.
-]
+] <cor:lp-norm-axioms>
 
 #note[
   The first two axioms are immediate and the triangle inequality is Minkowski's inequality, proved above; no separate proof is given here.
 ]
 
+=== The Case $0 < p < 1$ // $0 < p < 1$ 的情形
+
 #note[
-  When $0 < p < 1$, Minkowski's inequality *reverses*: $||f + g||_p >= ||f||_p + ||g||_p$ for non-negative $f, g$. Consequently, $||dot||_p$ is *not* a norm. One can still define $L^p$ for $0 < p < 1$ as a metric space with $d(f, g) = integral abs(f - g)^p dif mu$, but it is not locally convex and has trivial dual space.
+  When $0 < p < 1$, Minkowski's inequality *reverses*: $||f + g||_p >= ||f||_p + ||g||_p$ for non-negative $f, g$. Consequently, $||dot||_p$ is *not* a norm. One can still define $L^p$ for $0 < p < 1$ as a metric space with $d(f, g) = integral abs(f - g)^p dif mu$, but it is not locally convex, and on non-atomic measure spaces it has trivial dual space.
 ]
 
-=== Completeness of $L^p$ Spaces // L^p空间的完备性
+== Inclusions and Comparisons // 包含关系与比较
+
+// 本节回答：不同 L^p 之间何时有包含关系，范数如何随 p 变化
+
+=== Inclusions on Finite Measure Spaces // 有限测度空间上的包含关系
+
+#corollary(name: "$L^p$ Inclusion on Finite Measure Spaces")[
+  Let $mu(X) < oo$ and $1 <= p_1 < p_2 <= oo$. Then $L^(p_2)(X, mu) subset.eq L^(p_1)(X, mu)$.
+] <cor:lp-inclusion-finite-measure>
+
+#proof[
+  If $p_2 = oo$, then $integral_X abs(f)^(p_1) dif mu <= ||f||_oo^(p_1) mu(X) < oo$ for $f in L^(oo)$, so $f in L^(p_1)$.
+
+  Assume $p_2 < oo$. Let $f in L^(p_2)$. Apply Hölder's inequality to $abs(f)^(p_1)$ and $g = 1$ with exponents $r = p_2 / p_1 > 1$ and its conjugate $r' = r / (r - 1)$:
+$
+    integral_X abs(f)^(p_1) dif mu <= (integral_X abs(f)^(p_1 dot r) dif mu)^(1/r) (integral_X 1 dif mu)^(1/r') = ||f||_(p_2)^(p_1) mu(X)^(1/r') < oo.
+$
+  Hence $f in L^(p_1)$.
+]
+
+#example(name: "Strictness and Non-Comparability")[
+  The inclusion $L^(p_2) subset.eq L^(p_1)$ on finite measure spaces is *strict*: on $([0, 1], m)$, the function $f(x) = x^(-alpha)$ with $1/p_2 < alpha < 1/p_1$ belongs to $L^(p_1)$ but not $L^(p_2)$.
+
+  On $(bb(R), m)$, the spaces $L^1$ and $L^2$ are *not* comparable: $f(x) = 1/(1 + abs(x)) in L^2 backslash L^1$ (decays too slowly for $L^1$), while $g = chi_([0,1]) / sqrt(x) in L^1 backslash L^2$ (singular at $0$, too strong for $L^2$).
+] <ex:lp-inclusion-strictness>
+
+=== Monotonicity of $L^p$ Norms // $L^p$ 范数的单调性
+
+#proposition(name: "Monotonicity of $L^p$ Norms on Finite Measure")[
+  Let $mu(X) < oo$ and $1 <= p <= q <= oo$. For any $f in L^(q)(X, mu)$:
+$
+    ||f||_p <= mu(X)^(1/p - 1/q) ||f||_q.
+$
+] <prop:lp-norm-monotonicity>
+
+#proof[
+  For $q = oo$: $abs(f(x)) <= ||f||_oo$ a.e., so $integral abs(f)^p <= ||f||_oo^p mu(X)$, giving $||f||_p <= mu(X)^(1/p) ||f||_oo$.
+
+  For $p = q$ the claim is trivial, so assume $p < q < oo$: apply Hölder's inequality to $abs(f)^p$ with exponent $r = q/p > 1$ and conjugate $r' = r/(r-1) = q/(q-p)$:
+$
+    integral_X abs(f)^p dif mu <= (integral_X abs(f)^(p dot r) dif mu)^(1/r) (integral_X 1 dif mu)^(1/r') = ||f||_q^p mu(X)^((q-p)/q).
+$
+  Taking the $1/p$-th power: $||f||_p <= ||f||_q mu(X)^((q-p)/(p q)) = mu(X)^(1/p - 1/q) ||f||_q$.
+]
+
+=== Comparison Table // 对照表
+
+The following table summarizes how the inclusion between different $L^p$ spaces depends on the underlying measure.
+
+#tex-table(
+  ("Setting", "Inclusion", "Reason"),
+  ([$mu(X) < oo$], [$L^q subset.eq L^p$ for $q > p$], "Hölder + finite measure"),
+  (
+    [$mu$ = counting measure on $bb(N)$],
+    [$ell^p subset.eq ell^q$ for $p < q$],
+    [$abs(a_n)^q <= abs(a_n)^p$ when $abs(a_n) <= 1$],
+  ),
+  ([General $(X, mu)$], "No inclusion", [Both $L^p backslash L^q$ and $L^q backslash L^p$ may be non-empty]),
+)
+
+== Completeness: Riesz–Fischer // 完备性：Riesz–Fischer
 
 // Riesz-Fischer 定理：L^p 是完备的（Banach 空间）
 // 证明核心：从 Cauchy 列中提取快速收敛子列，利用级数和 Fatou 引理
 
+=== Banach Spaces // Banach 空间
+
 #definition(name: "Banach Space")[
   A normed linear space $(V, ||dot||)$ is a *Banach space* if it is complete: every Cauchy sequence in $V$ converges to an element of $V$.
-]
+] <def:banach-space>
+
+=== The Riesz–Fischer Theorem // Riesz–Fischer 定理
 
 #theorem(name: "Riesz-Fischer Theorem")[
   For $1 <= p <= oo$, the space $L^(p)(X, mu)$ is complete: every Cauchy sequence in $L^p$ converges to an element of $L^p$. Therefore $(L^(p)(X, mu), ||dot||_p)$ is a Banach space.
-]
+] <thm:riesz-fischer>
 
 #proof[
-  We prove the case $1 <= p < oo$; the case $p = oo$ is similar but simpler.
+  We first prove the case $1 <= p < oo$; the case $p = oo$ is treated in Step 8.
 
   _Step 1: Extract a fast-converging subsequence._ Let $(f_n)$ be a Cauchy sequence in $L^p$. Choose a subsequence $(f_(n_k))$ such that
 $
@@ -2450,41 +2518,24 @@ $
 $
     ||f_n - f||_p <= ||f_n - f_(n_k)||_p + ||f_(n_k) - f||_p -> 0.
 $
+
+  _Step 8: The case $p = oo$._
+  Let $(f_n)$ be a Cauchy sequence in $L^(oo)$.
+  Replacing each $f_n$ by a bounded representative if necessary, we may assume that all $f_n$ are bounded everywhere.
+  For each $k in bb(N)$, choose $N_k$ such that $||f_m - f_n||_oo < 1/k$ whenever $m, n >= N_k$.
+  For such a pair, the set $E_(m,n,k) = {x in X : abs(f_m(x) - f_n(x)) >= 1/k}$ is null.
+  The union $E$ of all these sets over $k, m, n$ is a countable union of null sets, hence null.
+  On $X backslash E$ the sequence $(f_n)$ is uniformly Cauchy, so it converges uniformly to a bounded measurable function $f$.
+  Extending $f$ by $0$ on $E$ gives $f in L^(oo)$ and $||f_n - f||_oo -> 0$.
 ]
+
+=== The Riesz Trick // Riesz 技巧
 
 #note[
   The key idea — sometimes called the *Riesz trick* — is that a Cauchy sequence in $L^p$ need not converge pointwise, but a subsequence always converges pointwise a.e. This subsequence provides a concrete limit candidate $f$, and Fatou's Lemma (or LDCT) transfers the pointwise information back into $L^p$ convergence.
 ]
 
-#proposition(name: "Monotonicity of $L^p$ Norms on Finite Measure")[
-  Let $mu(X) < oo$ and $1 <= p <= q <= oo$. For any $f in L^(q)(X, mu)$:
-$
-    ||f||_p <= mu(X)^(1/p - 1/q) ||f||_q.
-$
-]
-
-#proof[
-  For $q = oo$: $abs(f(x)) <= ||f||_oo$ a.e., so $integral abs(f)^p <= ||f||_oo^p mu(X)$, giving $||f||_p <= mu(X)^(1/p) ||f||_oo$.
-
-  For $q < oo$: apply Hölder's inequality to $abs(f)^p$ with exponent $r = q/p > 1$ and conjugate $r' = r/(r-1) = q/(q-p)$:
-$
-    integral_X abs(f)^p dif mu <= (integral_X abs(f)^(p dot r) dif mu)^(1/r) (integral_X 1 dif mu)^(1/r') = ||f||_q^p mu(X)^((q-p)/q).
-$
-  Taking the $1/p$-th power: $||f||_p <= ||f||_q mu(X)^((q-p)/(p q)) = mu(X)^(1/p - 1/q) ||f||_q$.
-]
-
-#tex-table(
-  ("Setting", "Inclusion", "Reason"),
-  ("$mu(X) < oo$", "$L^q subset.eq L^p$ for $q > p$", "Hölder + finite measure"),
-  (
-    "$mu$ = counting measure on $bb(N)$",
-    "$ell^p subset.eq ell^q$ for $p < q$",
-    "$abs(a_n)^q <= abs(a_n)^p$ when $abs(a_n) <= 1$",
-  ),
-  ("General $(X, mu)$", "No inclusion", "Both $L^p backslash L^q$ and $L^q backslash L^p$ may be non-empty"),
-)
-
-== Separability of $L^p$ Spaces // L^p空间的可分性
+== Density and Separability // 稠密性与可分性
 
 // 本节研究 L^p 空间的拓扑结构：哪些子空间是稠密的，L^p 是否可分
 
@@ -2494,7 +2545,7 @@ Knowing that $L^p$ is a Banach space, we now study its topological structure. Wh
 
 #theorem(name: "Simple Functions are Dense in $L^p$")[
   Let $1 <= p < oo$. For every $f in L^(p)(X, mu)$ and every $epsilon > 0$, there exists a simple function $s in L^(p)(X, mu)$ such that $||f - s||_p < epsilon$.
-]
+] <thm:simple-dense-lp>
 
 #proof[
   _Step 1: Truncate to bounded functions._ Define
@@ -2508,7 +2559,7 @@ $
 
 #theorem(name: "$C_(c)(bb(R)^n)$ is Dense in $L^(p)(bb(R)^n)$")[
   For $1 <= p < oo$, the space $C_(c)(bb(R)^n)$ of continuous functions with compact support is dense in $L^(p)(bb(R)^n, m)$.
-]
+] <thm:cc-dense-lp>
 
 #proof[
   _Step 1: Reduce to indicator functions._ By the previous theorem, simple functions are dense in $L^p$. Since every simple function is a finite linear combination of indicator functions $chi_E$ with $m(E) < oo$, it suffices to approximate $chi_E$ for measurable $E$ with $m(E) < oo$.
@@ -2526,7 +2577,7 @@ $
 
 #corollary[
   Step functions (finite linear combinations of indicator functions of intervals) are dense in $L^(p)(bb(R), m)$ for $1 <= p < oo$.
-]
+] <cor:step-dense-lp>
 
 #note[
   This is stated without proof; it is a consequence of the density of simple functions in $L^(p)$.
@@ -2536,11 +2587,11 @@ $
 
 #definition(name: "Separable Space")[
   A metric space $(M, d)$ is *separable* if it contains a countable dense subset.
-]
+] <def:separable-space>
 
 #theorem(name: "Separability of $L^p$")[
   For $1 <= p < oo$, $L^(p)(bb(R)^n, m)$ is separable.
-]
+] <thm:lp-separable>
 
 #proof[
   _Step 1: A countable family._ Let $cal(D)$ be the set of step functions of the form
@@ -2558,7 +2609,7 @@ $
 
 #theorem(name: [$L^oo$ is NOT Separable])[
   $L^(oo)(bb(R), m)$ is not separable.
-]
+] <thm:linfty-not-separable>
 
 #proof[
   Consider the uncountable family ${chi_([0, t]) : t in (0, 1)}$. For $s != t$ in $(0, 1)$:
@@ -2576,14 +2627,14 @@ $
   The same argument shows that $L^(oo)(X, mu)$ is not separable whenever the measure space has uncountably many disjoint sets of positive measure. This is one reason $L^oo$ has a fundamentally different character from the other $L^p$ spaces.
 ]
 
-=== Summary and Outlook // 总结与展望
+== Summary and Outlook // 总结与展望
 
 #tex-table(
-  ("Property", "$1 <= p < oo$", "$p = oo$"),
+  ("Property", [$1 <= p < oo$], [$p = oo$]),
   ("Normed space", "Yes (Minkowski)", "Yes"),
   ("Complete (Banach)", "Yes (Riesz-Fischer)", "Yes"),
-  ("Separable (on $bb(R)^n$)", "Yes", "No"),
-  ("Dense subspace", "Simple functions, $C_(c)(bb(R)^n)$", "No countable dense subset"),
+  ([Separable (on $bb(R)^n$)], "Yes", "No"),
+  ("Dense subspace", [Simple functions, $C_(c)(bb(R)^n)$], "Simple functions"),
 )
 
 #note(title: "Outlook")[
@@ -2649,8 +2700,12 @@ $
 // --- Part III: Function Spaces (函数空间) ---
 //
 // Chapter 5: $L^p$ Spaces (L^p 空间)
-//   Section 5.1: $L^p$ Spaces and Completeness (L^p 空间与完备性)
-//   Section 5.2: Separability of $L^p$ Spaces (L^p 空间的可分性)
+//   Section 5.1: Definitions and Elementary Properties (定义与基本性质)
+//   Section 5.2: Fundamental Inequalities (基本不等式)
+//   Section 5.3: Inclusions and Comparisons (包含关系与比较)
+//   Section 5.4: Completeness: Riesz–Fischer (完备性：Riesz–Fischer)
+//   Section 5.5: Density and Separability (稠密性与可分性)
+//   Section 5.6: Summary and Outlook (总结与展望)
 //
 // --- Part IV: Differentiation Theory (微分理论) ---
 //
@@ -2670,6 +2725,7 @@ $
 // 已写成的部分共三部分五章。Part I 建立测度论基础，从 σ-代数与测度出发，引入勒贝格测度、
 // 非可测集与可测函数；Part II 系统阐述积分理论，包括勒贝格积分、收敛定理、与黎曼积分的关系、
 // 乘积测度与 Fubini 定理，最后是微分与积分（跳跃函数、Dini 导数、Vitali 引理、单调函数、
-// 有界变差与绝对连续）；Part III 研究 L^p 函数空间的完备性与可分性。
+// 有界变差与绝对连续）；Part III 研究 L^p 函数空间：从定义与基本不等式出发，
+// 讨论包含关系、Riesz–Fischer 完备性、稠密子空间与可分性。
 // Part IV 微分理论目前只有规划说明：勒贝格密度定理、勒贝格微分定理与 BV 函数的勒贝格分解
 // 三处正文承诺都指向它，编写前这些结果只能作为已陈述的事实引用。
