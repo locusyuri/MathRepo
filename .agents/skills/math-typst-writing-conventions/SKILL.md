@@ -1,5 +1,5 @@
 ---
-name: violet-typst-writing-conventions
+name: math-typst-writing-conventions
 description: 当编辑/创建 .typ 文件时，必须使用本技能以确保符合 Typst 语法规范（如 subset→subset.eq, \sigma→sigma, integral→integral 等）、符号映射规则、文档层级结构和写作风格约定。尤其适用于新增数学公式较多的笔记时。
 user_invocable: false
 ---
@@ -72,7 +72,7 @@ user_invocable: false
 
 ### 3.2 通用硬规则（主文件内摘要，详见 general.md）
 
-1. **下标或上标后紧接括号，必须把上下标用 `()` 包裹**：`mu_(X)(B)`、`L^(oo)(Omega)`，**绝对禁止** `mu_X(B)`、`L^oo(Omega)`——否则括号连同内容会被吞进下标/上标，渲染成叠字（数字上下标如 `u_1(x,t)` 不受影响，字母/`oo` 会）。写完带上下标+括号的公式必须用正则 `[_\^]([a-zA-Z]+)\(` 自查，命中数为 0 前不得提交。这是全仓库最高频错误（详见 general.md §3）。
+1. **下标或上标后紧接括号，必须把上下标用 `()` 包裹**：`mu_(X)(B)`、`L^(oo)(Omega)`，**绝对禁止** `mu_X(B)`、`L^oo(Omega)`——否则括号连同内容会被吞进下标/上标，渲染成叠字（数字上下标如 `u_1(x,t)` 不受影响，字母/`oo` 会）。写完带上下标+括号的公式必须用正则 `[_\^]([a-zA-Z]+)\(` 自查，命中数为 0 前不得提交；也可直接运行 §3.4 的检查脚本。这是全仓库最高频错误（详见 general.md §3）。
 2. **多字母变量**：正体用引号 `"ext"`，斜体用空格 `e x t`；相邻单字母间留空格 `$x y$`。
 3. **分数/分子非单因子加括号**：`$(x + y) / 2$`；`abs(...)` 可作为整体因子。
 4. **绝对值用 `abs(xxx)`**，不用 `|xxx|`；**行列式绝不能用 `abs()`**（用 `"det"(A)` 或 `mat(delim: "|", ...)`，见 linear-algebra.md）。
@@ -90,6 +90,21 @@ user_invocable: false
 编辑/迁移后扫描以下残留（详见 general.md §13）：`\$\`、`\bmod/\pmod/\mod`、`\pm`（应改 `±`）、`\cdot`、`\times`、`\circ`、`\int`。遇到 `unknown variable` 优先查多字母连写（`xy`）与宏残留（`cdot`/`int`/`infty`）。
 
 > 行列式、矩阵、范数、`†⊕⊗⊥` 等写法**必须**查 linear-algebra.md，不要臆测。
+
+### 3.4 交付前静态检查
+
+仓库根目录提供 `scripts/check/check-typst-attachments.py`，用于机械检查本技能规定的高频错误：
+
+```bash
+uv run scripts/check/check-typst-attachments.py "<subject>/initial.typ"
+```
+
+- `paren`：下/上标后紧跟括号（如 `f_m(x)` 会渲染成 $f_{m(x)}$）；
+- `brace`：LaTeX 花括号残留；
+- `macro`：LaTeX 宏残留（只报告，需人工改写）；
+- `space`：上标后紧跟括号，建议用空格分隔（默认不启用，用 `--check space` 显式运行）。
+
+**正式交付前必须运行一次检查模式**，命中数为 0 才能声明完成。确认报告无误后可用 `--fix` 自动修复 `paren`/`brace`，再重新编译并复核。
 
 ---
 
@@ -197,7 +212,7 @@ Later, we refer to *#link(<def:continuous>)[Continuous Function]*.
 
 1. **先写引用**：在 `.typ` 中直接写好 `#figure(image("./img/xxx.svg", ...))` 与 `<fig:xxx>` 标签，保持文档结构完整
 2. **创建占位文件**：将仓库根目录的 `wiki/assets/null.svg`（空白占位图）复制到目标 `img/` 目录，并改名为实际图片名（如 `img/xxx.svg`）。占位图是有效 SVG，期间 `typst compile` 仍可通过
-3. **写 Python 脚本**：在对应主题目录下新建 `scripts/<图片名>.py`（matplotlib，一图一脚本），脚本将 SVG 输出到主题目录的 `img/<图片名>.svg`，文件名与 `<fig:xxx>` 标签对应。结构与规范见 violet-make-outline 技能的 `ref/image-planning.md` §2
+3. **写 Python 脚本**：在对应主题目录下新建 `scripts/<图片名>.py`（matplotlib，一图一脚本），脚本将 SVG 输出到主题目录的 `img/<图片名>.svg`，文件名与 `<fig:xxx>` 标签对应。结构与规范见 math-make-outline 技能的 `ref/image-planning.md` §2
 4. **生成图片**：在仓库根目录执行 `uv run "<subject>/scripts/<图片名>.py"`（依赖由仓库根 `pyproject.toml` 统一管理，已含 matplotlib）。生成 PNG 预览人工核验无重叠/越界后替换占位文件
 5. **编译验证**：全部真实图片就位后，重新 `typst compile` 确认通过。注意 `img/` 已被 .gitignore 忽略，提交时只含脚本与 `.typ`，不含生成的图片
 
@@ -251,7 +266,7 @@ Later, we refer to *#link(<def:continuous>)[Continuous Function]*.
 $] <eq:mass-energy>
 ```
 
-编号格式为 `(章号.公式序号)`，如 `(1.1)`；标签写在闭合 `$]` 之后。**需要被引用的方程（尤其是定义块中作为陈述核心的方程）必须用 `#eq` 编号，正文中用 `#link(<eq:...>)[Eq.]` 或 `@eq:...` 引用，禁止把已编号方程在定理陈述中原样再抄一遍**（详见 violet-template-usage SKILL.md §10）。
+编号格式为 `(章号.公式序号)`，如 `(1.1)`；标签写在闭合 `$]` 之后。**需要被引用的方程（尤其是定义块中作为陈述核心的方程）必须用 `#eq` 编号，正文中用 `#link(<eq:...>)[Eq.]` 或 `@eq:...` 引用，禁止把已编号方程在定理陈述中原样再抄一遍**（详见 math-template-usage SKILL.md §10）。
 
 > 收敛箭头（xarrow 包）、积分记号惯例等记号写法已移至 [fields/arrows.md](fields/arrows.md) §3 与 [fields/calculus.md](fields/calculus.md) §3.2。
 
@@ -404,7 +419,7 @@ properties of an invertible matrix ...（理由、例子、非可交换说明等
 
 ### 组件选择指南
 
-> 组件的 API、参数（`name:`/`body`）与编号规则见 `violet-template-usage` §6–§7；本节只规定**何时用/不用**与内容约束。
+> 组件的 API、参数（`name:`/`body`）与编号规则见 `math-template-usage` §6–§7；本节只规定**何时用/不用**与内容约束。
 
 组件不能滥用。参考项目现有内容的分工：
 
@@ -551,6 +566,17 @@ typst compile "1.Analyse/Analyse Complexe/initial.typ" "1.Analyse/Analyse Comple
 | `file not found` | `#import` 路径错误 | 检查相对路径层级 |
 | `failed to write PDF file` | 输出目录不存在 | 确保输出路径的目录已创建 |
 
+### 交付前检查（强制）
+
+在声明任务完成或提交前，先运行静态检查，再编译：
+
+```bash
+uv run scripts/check/check-typst-attachments.py "<subject>/initial.typ"
+typst compile "<subject>/initial.typ" "<subject>/initial.pdf" --root .
+```
+
+检查有命中时先判断类型：`paren`/`brace` 可加 `--fix` 后复核；`macro` 与 `space` 需人工改写。**检查 0 命中且编译 exit code 0，才算正式交付。**
+
 ### 编译验证流程
 
 1. 修改 `.typ` 文件 → 2. 执行 `typst compile` → 3. exit code 0 即通过 → 4. 失败则按错误信息修复后重编
@@ -577,3 +603,4 @@ typst compile "1.Analyse/Analyse Complexe/initial.typ" "1.Analyse/Analyse Comple
 14. **`#note` / `#caution` 的首句加粗小标签必须用 `title:`**，`#proof` / `#solution` 用 `name:` 说明对象
 15. **分页交给 Typst**：禁止 `#pagebreak()`、`#block(breakable: false)`、调节 `#v(...)` 等手动干预分页；表格或 note 跨页属于正常排版
 16. **虚数单位写正体 `"i"` 且紧贴相邻操作数**：`2 pi"i"`、`"i"v`、`e^("i"t)`；斜体 `i` 与带空格的 `2 pi "i"` 均为错误（详见 general.md §5.5）
+17. **正式交付前必须通过静态检查**：`uv run scripts/check/check-typst-attachments.py "<subject>/initial.typ"` 必须 0 命中，且 `typst compile` exit code 为 0；检查未通过不得声明完成或提交

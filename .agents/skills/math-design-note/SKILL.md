@@ -1,5 +1,5 @@
 ---
-name: violet-design-note
+name: math-design-note
 description: 为 MathRepo 中的新笔记设计完整的 Part-Chapter-Section 目录结构。涵盖教材基线分析、职责边界划定、逻辑链路设计、内容丰富度把控、注释蓝图写入和覆盖度验证。适用于从零规划一份新笔记的宏观骨架。
 user_invocable: false
 ---
@@ -10,16 +10,16 @@ user_invocable: false
 
 当需要为 MathRepo 中**尚未有目录蓝图的新笔记**设计完整的 Part → Chapter → Section 层级结构时激活。本技能在**写作之前**运行，产出一份带设计思路注释的目录蓝图（commented blueprint），供用户确认后写入 `initial.typ`。
 
-### 1.1 与 violet-make-outline 的区别
+### 1.1 与 math-make-outline 的区别
 
-| 维度 | violet-design-note（本技能） | violet-make-outline |
+| 维度 | math-design-note（本技能） | math-make-outline |
 |------|----------------------|--------------|
 | **粒度** | 整本笔记的宏观骨架 | 单章/单节的微观大纲 |
 | **产出** | Part-Chapter-Section 层级 + 设计注释 | 知识点表、组件规划、标签系统、图片规划 |
 | **关注点** | 主题划分、逻辑链路、职责边界、覆盖度 | 定义/定理/例题的编排、交叉引用、标签命名 |
 | **运行时机** | 笔记创建前（从零设计） | 章节写作前（已有骨架，细化内容） |
 
-**协作流程**：先用本技能设计整本笔记的目录蓝图 → 确认后写入 `initial.typ` → 逐章用 `violet-make-outline` 细化 → 逐节写作。
+**协作流程**：先用本技能设计整本笔记的目录蓝图 → 确认后写入 `initial.typ` → 逐章用 `math-make-outline` 细化 → 逐节写作。
 
 ## 2. 设计原则
 
@@ -189,7 +189,7 @@ Step 8: 写入注释蓝图到 initial.typ
 // 目录
 ```
 
-> `#bibliography` 必须写全 `title` 与 `full: true` 参数，否则正文未 `@citation` 时整节不渲染。理由见 `violet-typst-writing-conventions` §7。
+> `#bibliography` 必须写全 `title` 与 `full: true` 参数，否则正文未 `@citation` 时整节不渲染。理由见 `math-typst-writing-conventions` §7。
 
 ### 4.2 注释层级
 
@@ -360,7 +360,7 @@ Part III:   导论与展望（为后续笔记铺垫）
 
 目录蓝图确认后，进入逐章写作阶段时：
 
-1. 按 `violet-make-outline` 技能逐章细化大纲
-2. 按 `violet-typst-writing-conventions` 技能执行写入
+1. 按 `math-make-outline` 技能逐章细化大纲
+2. 按 `math-typst-writing-conventions` 技能执行写入
 3. 写作过程中如发现目录需要微调（新增/合并/拆分章节），应在注释蓝图中同步更新，保持蓝图与实际内容一致
 4. 每完成一个 Part，编译验证一次（`typst compile "<subject>/initial.typ" "<subject>/initial.pdf" --root .`）

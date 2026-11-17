@@ -1,5 +1,5 @@
 ---
-name: violet-make-outline
+name: math-make-outline
 description: 为 Typst 数学笔记的某一章/某一节规划详细大纲，包括知识点、逻辑链路、组件规划、标签系统、交叉引用和图片规划。适用于开始撰写新章节前的结构设计阶段，也适用于已有章节的补全/重构规划。
 user_invocable: false
 ---
@@ -99,7 +99,7 @@ user_invocable: false
 |------|-----------|------|
 | 知识点描述 | `#definition` `<def:xxx>` | 定义/定理/性质/例/注等；回链 `@label` |
 
-组件选择遵循 `violet-typst-writing-conventions` SKILL.md §9 的组件选择指南。
+组件选择遵循 `math-typst-writing-conventions` SKILL.md §9 的组件选择指南。
 
 **备注列应包含**：
 - 回链：该知识点引用了哪些前章标签
@@ -148,7 +148,7 @@ user_invocable: false
 
 ### 4.9 图片规划
 
-按 `violet-typst-writing-conventions` SKILL.md §5 的图片工作流。图片必要性判断标准和绘图脚本编写规范见 `ref/image-planning.md`。
+按 `math-typst-writing-conventions` SKILL.md §5 的图片工作流。图片必要性判断标准和绘图脚本编写规范见 `ref/image-planning.md`。
 
 **必要性判断**（每章 1-3 张为宜，拒绝硬凑）：
 
@@ -237,7 +237,7 @@ Step 5: 用户确认后进入写入阶段
 ## 8. 写作阶段衔接
 
 大纲确认后，进入写入阶段时：
-1. 按 `violet-typst-writing-conventions` SKILL.md 的所有规范执行
+1. 按 `math-typst-writing-conventions` SKILL.md 的所有规范执行
 2. 按大纲建议的写作顺序（§4.11）逐节写入，每节一个 Edit
 3. **分批编译**：每 1-2 节编译一次，比全文一次性编译更容易定位错误
 4. 每节写完后立即检查 Typst 语法陷阱（见 `ref/writing-pitfalls.md`）

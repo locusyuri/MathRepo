@@ -1,5 +1,5 @@
 ---
-name: violet-template-usage
+name: math-template-usage
 description: 本技能文件规定了 `TypstTemplate/math-notes.typ` 模板的使用方式和所有可用组件。
 user_invocable: false
 ---
@@ -81,7 +81,7 @@ user_invocable: false
 
 ## 6. 定理类组件（Major Components）
 
-> 组件 API、参数与编号规则以本技能为准；**何时用/不用哪个组件、组件块内容约束（定义块只放定义等）、写作风格**见 `violet-typst-writing-conventions` §9。
+> 组件 API、参数与编号规则以本技能为准；**何时用/不用哪个组件、组件块内容约束（定义块只放定义等）、写作风格**见 `math-typst-writing-conventions` §9。
 
 所有定理类组件自动编号，格式为 `章号.序号`（如 `1.3`）。每个 Chapter 开始时计数器重置。
 
@@ -101,7 +101,7 @@ user_invocable: false
 #lemma(name: "...")[...]
 ```
 
-> 物理笔记中基本规律（定律/原理/表述）优先用 `#law`；`#theorem` 仅用于经推导得到的命题。判定标准见 `violet-typst-writing-conventions` §9 组件选择指南。
+> 物理笔记中基本规律（定律/原理/表述）优先用 `#law`；`#theorem` 仅用于经推导得到的命题。判定标准见 `math-typst-writing-conventions` §9 组件选择指南。
 
 ### 定义族（绿色系 ♣）
 
@@ -356,5 +356,5 @@ Subject/
 5. **不要** 使用 `#outline()` 内置目录（使用 `#make-outline()` 代替）
 6. **不要** 在 `initial.typ` 中重复章节文件已有的内容
 7. **不要** 手动干预分页：禁止 `#pagebreak()`、`#block(breakable: false)`、为排版目的调整 `#v(...)`；表格、`#note` 跨页交给 Typst（唯一例外是模板函数处理的封面/目录/Part 页）
-8. **不要** 用 `§x.y` 引用章节（编号会漂移且常指错节），一律写 `==` 标题名；标题过长时用约定简称（如 *D'Alembert's Formula*），带链接时以标签所在节的标题为准（详见 `violet-typst-writing-conventions` §4）
+8. **不要** 用 `§x.y` 引用章节（编号会漂移且常指错节），一律写 `==` 标题名；标题过长时用约定简称（如 *D'Alembert's Formula*），带链接时以标签所在节的标题为准（详见 `math-typst-writing-conventions` §4）
 9. **不要** 用裸 `#table()` / `#grid()` 排版表格，统一 `#tex-table`（三线表）或 `#plain-table`（网格表）

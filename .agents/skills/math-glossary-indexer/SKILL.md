@@ -1,5 +1,5 @@
 ---
-name: violet-glossary-indexer
+name: math-glossary-indexer
 description: 扫描 Typst 文件中的标签（如 <def:limit-of-sequence-of-sets>），在 Appendix 的 Glossary 节中生成字母索引。
 user_invocable: true
 ---
@@ -9,7 +9,7 @@ user_invocable: true
 ## Usage
 
 ```
-/violet-glossary-indexer <subject-initial.typ>
+/math-glossary-indexer <subject-initial.typ>
 ```
 
 ## Workflow
