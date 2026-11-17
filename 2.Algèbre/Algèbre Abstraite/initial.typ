@@ -6145,10 +6145,34 @@ Its image is $⟨1_R⟩$, the prime subring defined below.
   The divisibility criterion is #link(<prop:order-properties>)[the standard property of the order of an element], and Lagrange's theorem (#link(<thm:lagrange>)[§3.3]) gives $"char" R | abs(R)$ in the finite case.
 ]
 
+The same number admits two further descriptions, and the descriptions are not interchangeable once the ring has no identity.
+
+#proposition(name: "Characteristic as an Exponent")[
+  Let $R$ be a unital ring and $chi_R$ the canonical map.
+  Then $"char" R$ is the least integer $n >= 1$ with $n a = 0_R$ for every $a in R$, and it is the least positive integer lying in $"Ker" chi_R$.
+] <prop:char-exponent>
+
+#proof[
+  For every $a in R$ one has $n a = (n dot 1_R) a$ (#link(<prop:ring-arithmetic>)[§8.1]), so $n dot 1_R = 0_R$ makes $n$ annihilate every element, while taking $a = 1_R$ turns the implication around.
+
+  The kernel of $chi_R$ consists of the integers $n$ with $n dot 1_R = 0_R$, by #link(<eq:characteristic-map>)[the definition of $chi_R$]; its least positive element is therefore $"char" R$, and the kernel is ${0}$ exactly when $"char" R = 0$.
+]
+
+#note(title: "Three descriptions of one number")[
+  + *Through the identity*: the least $n >= 1$ with $n dot 1_R = 0_R$; this is #link(<def:ring-characteristic>)[the definition] and, by #link(<prop:char-as-order>)[the proposition above], the order of $1_R$ in $(R, +)$.
+  + *Through every element*: the least $n >= 1$ with $n a = 0_R$ for all $a in R$; this is the exponent of the additive group $(R, +)$ (#link(<prop:exponent-characterisation>)[§7.3]).
+  + *Through the kernel*: the least positive integer in $"Ker" chi_R$, so that $"Ker" chi_R = "char" R dot bb(Z)$.
+
+  For a unital ring the three numbers coincide by #link(<prop:char-exponent>)[the proposition above], and the choice between the descriptions is a matter of convenience.
+
+  Without an identity only the second survives, and it is what one means by the characteristic of a ring without $1$.
+  For $R = 2 bb(Z)_4 = {0, 2}$ the multiplication vanishes identically, there is no identity, and the additive group $bb(Z)_2$ has exponent $2$: the surviving description gives $2$, while the other two have nothing to refer to.
+] <note:char-descriptions>
+
 By #link(<prop:ring-mono-kernel>)[the injectivity criterion of §8.2], $chi_R$ is injective exactly when $"char" R = 0$: a ring of characteristic $0$ contains a copy of $bb(Z)$, and a ring of characteristic $n > 0$ a copy of $bb(Z)_n$.
 Which of the two copies it contains turns out to control most of its arithmetic.
 
-The characteristic was defined for unital rings only, but the phenomenon it measures — a common additive order — exists without an identity.
+The note above records which of the three descriptions survives without an identity; how much of the rigidity of the characteristic survives with it is the subject of the next proposition.
 
 #proposition(name: "Common Additive Order in a Ring Without Zero Divisors")[
   Let $R$ be a ring with $abs(R) > 1$ and no zero divisors.
@@ -6583,6 +6607,10 @@ The definition takes the kernel of a homomorphism as its model, because that is 
   - $I$ is a *two-sided ideal*, or simply an *ideal*, if it is both; one writes $I lt.closed.eq R$, and $I lt.closed R$ when $I != R$.
 ] <def:ideal>
 
+Closure under multiplication by the whole ring has a name: *absorption*.
+In set notation the two requirements of the third clause read $R I subset.eq I$ and $I R subset.eq I$, and they are the *absorption laws*; together with "additive subgroup" they constitute the entire definition.
+It is the only clause in which addition and multiplication interact, and that interaction is the one requirement a subring does not have to meet (#link(<caution:subring-not-ideal>)[below]).
+
 In a commutative ring the three notions coincide, and "ideal" then always means a two-sided one.
 In a non-commutative ring they do not, and the matrix ring supplies the standard witness (#link(<caution:one-sided-ideals>)[below]).
 Every ideal is a subring, but a proper ideal is never a unital subring: $1_R in I$ would force $I = R$ (#link(<caution:proper-ideal>)[below]).
@@ -6593,7 +6621,9 @@ The symbol $lt.closed.eq$ is the one used for a normal subgroup (#link(<def:norm
 
 #note(title: "The ring analogue of a normal subgroup")[
   Normal subgroups and ideals answer the same question in two categories.
+
   A subgroup $N <= G$ survives quotienting exactly when $g N g^(-1) = N$ for all $g in G$ (#link(<def:normal-subgroup>)[§4.1]); an additive subgroup $I <= R$ survives exactly when $r a in I$ and $a r in I$ for all $r in R$.
+
   In both cases the condition says that the substructure is stable under the ambient action — conjugation in a group, left and right multiplication in a ring.
   In both cases the admissible substructures are exactly the kernels, and in both cases the quotient is the image.
 ] <note:ideal-vs-normal>
@@ -6605,7 +6635,7 @@ The symbol $lt.closed.eq$ is the one used for a normal subgroup (#link(<def:norm
 ] <prop:ideal-criterion>
 
 #proof[
-  If $I$ is an ideal, the first condition holds because $I$ is an additive subgroup, and the second is the absorption axiom.
+  If $I$ is an ideal, the first condition holds because $I$ is an additive subgroup, and the second is the pair of absorption laws.
 
   Conversely, $a - b in I$ for all $a, b in I$ is the subgroup criterion (#link(<thm:subgroup-criteria>)[§3.1]), so $(I, +)$ is a subgroup of the abelian group $(R, +)$.
   The two absorption conditions are exactly the left and right ideal axioms, so $I$ is a two-sided ideal.
@@ -6628,7 +6658,7 @@ The next observation is what makes ideals usable at all: they are subrings, so e
 
 #proof[
   An ideal is an additive subgroup by definition, so only closure under multiplication needs proof.
-  But for $a, b in I$ the product $a b$ lies in $I$ by the absorption axiom, the second factor being an element of $R$ as well; the subring criterion (#link(<thm:subring-criteria>)[§8.2]) then applies.
+  But for $a, b in I$ the product $a b$ lies in $I$ by absorption, the second factor being an element of $R$ as well; the subring criterion (#link(<thm:subring-criteria>)[§8.2]) then applies.
 ]
 
 The converse fails, and it fails for a structural reason rather than by accident.
@@ -6639,7 +6669,7 @@ The converse fails, and it fails for a structural reason rather than by accident
 
   The distinction is one of scope: a subring is closed under multiplication *inside itself*, an ideal under multiplication *by everything outside it*.
   What survives of the comparison is closure under intersection: an intersection of ideals is an ideal (#link(<prop:ideal-operations>)[the proposition on operations]), exactly as an intersection of subrings is a subring (#link(<prop:subring-intersection>)[§8.2]).
-]
+] <caution:subring-not-ideal>
 
 Ideals and subrings part company most sharply in the cyclic rings of #link(<def:cyclic-ring>)[§8.1], where the additive group leaves no room for a choice.
 
@@ -6807,12 +6837,12 @@ The adjective is local to this book; the condition is the strongest restriction 
 ] <thm:strongly-simple-classification>
 
 #proof[
-  *(arrow.l.double)* Let $R$ be a division ring.
+  *($arrow.l.double$)* Let $R$ be a division ring.
   For $a != 0$ the left ideal $R a$ contains $a$, hence is nonzero, hence equals $R$, and $a R = R$ likewise; a nonzero left ideal contains some $a != 0$, so it coincides with $R$.
   Let $R$ now have zero multiplication of prime order.
   Every additive subgroup is then an ideal, and a group of prime order has no subgroup other than $(0)$ and $R$ itself (#link(<cor:prime-order-cyclic>)[§3.3] with Lagrange).
 
-  *(arrow.r.double)* Assume $R$ strongly simple, and suppose first that $R^2 = 0$.
+  *($arrow.r.double$)* Assume $R$ strongly simple, and suppose first that $R^2 = 0$.
   Then every product vanishes, so every additive subgroup is closed under multiplication by $R$ and is an ideal, and by the hypothesis $(R, +)$ has no subgroup other than $(0)$ and $R$.
   Such a group is cyclic of prime order: any $a != 0$ generates it, and if $abs(R)$ were infinite or composite, #link(<thm:cyclic-subgroups>)[the subgroup structure of cyclic groups] would produce a subgroup strictly between $(0)$ and $R$.
 
@@ -9169,6 +9199,7 @@ Both agree when $R$ is commutative, which covers the case $R = F$ of #link(<ex:e
 
 //   Section 8.4: 环的特征与素域 (Characteristic and Prime Fields)
 //     - 典范同态 $\chi_R: \bb(Z) -> R$ 与特征的定义
+//     - 特征的三种等价说法（$1_R$、任意元素/加法群指数、$\ker\chi_R$）；非幺环只剩指数
 //     - 无零因子环的公共加法阶（非幺环版本）
 //     - 整环的特征为 0 或素数；除环（故域）特征为 0 或素数
 //     - 素子环与素域（特征 p 情形）；特征 0 情形留给 §8.6
@@ -9189,7 +9220,7 @@ Both agree when $R$ is commutative, which covers the case $R = F$ of #link(<ex:e
 // --- Chapter 9: 理想与商环 (Ideals and Quotient Rings) ---
 
 //   Section 9.1: 理想 (Ideals)
-//     - 左/右/双边理想的定义与判定；记号 $I \normal R$；真理想不含单位
+//     - 左/右/双边理想的定义与判定；吸收律 $RI \subseteq I$、$IR \subseteq I$；记号 $I \normal R$；真理想不含单位
 //     - 理想是子环（反之不真：$\bb(Z) \subset \bb(Q)$）；理想无传递律
 //     - 循环环：理想 ⟺ 子加群（回收 §8.1 的循环环）
 //     - 主理想与生成理想（含生成元的有限和标准形）；有限个理想的整环是域
