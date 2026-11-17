@@ -2531,7 +2531,7 @@ $
   Let $(f_n)$ be a Cauchy sequence in $L^(oo)$.
   Replacing each $f_n$ by a bounded representative if necessary, we may assume that all $f_n$ are bounded everywhere.
   For each $k in bb(N)$, choose $N_k$ such that $||f_m - f_n||_oo < 1/k$ whenever $m, n >= N_k$.
-  For such a pair, the set $E_(m,n,k) = {x in X : abs(f_m(x) - f_n(x)) >= 1/k}$ is null.
+  For such a pair, the set $E_(m,n,k) = {x in X : abs(f_(m)(x) - f_(n)(x)) >= 1/k}$ is null.
   The union $E$ of all these sets over $k, m, n$ is a countable union of null sets, hence null.
   On $X backslash E$ the sequence $(f_n)$ is uniformly Cauchy, so it converges uniformly to a bounded measurable function $f$.
   Extending $f$ by $0$ on $E$ gives $f in L^(oo)$ and $||f_n - f||_oo -> 0$.
@@ -2675,7 +2675,7 @@ $
 - *#link(<def:bounded-variation>)[Bounded Variation]*
 
 == C
-- *#link(<thm:cc-dense-lp>)[$C_(c)(bb(R)^n)$ is Dense in $L^p(bb(R)^n)$]*
+- *#link(<thm:cc-dense-lp>)[$C_(c)(bb(R)^n)$ is Dense in $L^p (bb(R)^n)$]*
 - *#link(<def:conjugate-exponent>)[Conjugate Exponents]*
 
 == E
