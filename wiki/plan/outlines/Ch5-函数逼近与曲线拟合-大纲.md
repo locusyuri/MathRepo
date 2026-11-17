@@ -1,6 +1,7 @@
 # 第 5 章「Function Approximation and Curve Fitting // 函数逼近与曲线拟合」写作大纲
 
-> 状态：规划完成，待确认后写入 `6.Mathématiques appliquées/Analyse Numérique/initial.typ`。
+> 状态：正文已按本大纲写入 `6.Mathématiques appliquées/Analyse Numérique/initial.typ`。
+> 三张配图已由同目录 `scripts/` 下的脚本生成（`chebyshev-extrema-zeros.svg`、`least-squares-fit.svg`、`aliasing.svg`）。
 > 任务类型：**A 类新章规划**（该章目前仅有蓝图注释，L164–L183）。
 > 已确认决策：§5.6 聚焦三角插值与混叠；保持「一致逼近 → Chebyshev」节序；配 3 张图。
 

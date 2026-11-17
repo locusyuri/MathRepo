@@ -2006,4 +2006,690 @@ The chapter closes the first of the two cures announced in *Interpolation Error 
 Piecewise interpolation keeps the Lebesgue constant bounded and reaches any prescribed accuracy by refining the grid, and the cubic spline does so while remaining twice differentiable.
 The remaining question, namely what happens when the data are noisy and cannot be interpolated at all, is taken up in *Function Approximation and Curve Fitting*.
 
+= Function Approximation and Curve Fitting // 函数逼近与曲线拟合
+
+#counter(math.equation).update(0)
+
+The two previous chapters constructed a polynomial that reproduces the data exactly.
+Exact reproduction is the right goal only when the data are exact: a table of measured values is better represented by a curve that passes near the points than by one that passes through them.
+
+Replacing the interpolation conditions by an error criterion turns the problem into a minimization.
+The criterion is a norm, and the choice of norm organizes the chapter.
+
+- *Uniform norm.* Minimizing the largest deviation gives the best uniform approximation, characterized by the equioscillation of the error.
+- *Weighted square norm.* Minimizing an integral of the squared deviation gives continuous least squares, whose normal equations are diagonalized by orthogonal polynomials.
+- *Discrete square norm.* Minimizing a weighted sum of squared residuals gives curve fitting, the version used for noisy data.
+- *Periodic data.* When the function is periodic, the natural space is spanned by trigonometric polynomials, and the coefficients are computed by the discrete Fourier transform.
+
+One algebraic structure underlies all four: the minimizer is the orthogonal projection of $f$ onto a finite-dimensional subspace.
+Only the inner product changes, and with it the computational difficulty.
+Existence is not the issue — the Weierstrass theorems of *Analyse Mathématique* guarantee arbitrarily accurate polynomial approximation, and linear algebra guarantees a least-squares solution.
+The numerical questions are which element attains the minimum, how sensitive it is to perturbations, and which basis makes the computation stable.
+
+== Best Uniform Approximation // 最佳一致逼近
+
+The first criterion is the worst case: a polynomial is good if its largest deviation from $f$ on the whole interval is small.
+This is the natural criterion when a guaranteed tolerance is required, for instance when the polynomial replaces $f$ inside a device.
+
+#definition(name: "Best Uniform Approximation")[
+  Let $f in C[a, b]$ and $n >= 0$.
+  The *best uniform approximation error* of $f$ by polynomials of degree at most $n$ is
+  #eq[$
+    E_n^* (f) = min_(p in Pi_n) ||f - p||_oo, quad ||g||_oo = max_(x in [a, b]) abs(g(x)).
+  $] <eq:best-uniform-error>
+  A polynomial $p^* in Pi_n$ attaining the minimum is called a *best uniform approximation* of $f$, or a *minimax approximation*.
+] <def:best-uniform-approximation>
+
+The notation $E_n^* (f)$ is the one used, without a name, in the interpolation bound of *Interpolation Error and Runge Phenomenon*.
+There it measured how well any interpolant could possibly do; here it becomes the object of study.
+
+The minimum is taken over the finite-dimensional space $Pi_n$, and finite dimension makes it attained.
+
+#lemma(name: "Existence of a Best Uniform Approximation")[
+  For every $f in C[a, b]$ and every $n >= 0$ there exists $p^* in Pi_n$ with $||f - p^*||_oo = E_n^* (f)$.
+] <lem:best-approximation-exists>
+
+#proof[
+  Choose $p_k in Pi_n$ with $||f - p_k||_oo -> E_n^* (f)$.
+  Then $||p_k||_oo <= ||f||_oo + ||f - p_k||_oo$ is bounded, so the values of $p_k$ at any fixed $n + 1$ distinct points of $[a, b]$ are bounded.
+  The map from the coefficients of a polynomial to its values at these points is invertible, being a Vandermonde system, so the coefficients of $p_k$ are bounded as well.
+  By the Bolzano–Weierstrass theorem a subsequence of coefficient vectors converges to some vector $c^*$.
+  The corresponding polynomials converge uniformly to their limit $p^*$, and continuity of the maximum norm gives $||f - p^*||_oo = E_n^* (f)$.
+]
+
+The lemma produces a minimizer but says nothing about its accuracy: $E_n^* (f)$ could stay away from zero.
+That it tends to zero is the content of the Weierstrass theorem.
+
+#note(title: "The Weierstrass theorems")[
+  The *first Weierstrass approximation theorem*, proved in *Analyse Mathématique*, states that every $f in C[a, b]$ is the uniform limit of polynomials on $[a, b]$, hence $E_n^* (f) -> 0$.
+  The second theorem gives the periodic counterpart: every continuous $2 pi$-periodic function is the uniform limit of trigonometric polynomials.
+  Both are existence statements; neither produces the approximant, and neither quantifies the rate.
+  This section answers the first question, and the last section of the chapter answers the second.
+]
+
+Among all polynomials of degree at most $n$, the best one is characterized by the way its error oscillates.
+
+#theorem(name: "Chebyshev Alternation Theorem")[
+  Let $f in C[a, b]$ and $p in Pi_n$, and assume that $f - p$ is not identically zero.
+  Then $p$ is a best uniform approximation of $f$ if and only if there exist $n + 2$ points
+  $
+    a <= x_0 < x_1 < dots.c < x_(n+1) <= b
+  $
+  such that
+  $
+    abs(f(x_i) - p(x_i)) = ||f - p||_oo, quad "sign"(f(x_(i+1)) - p(x_(i+1))) = -"sign"(f(x_i) - p(x_i))
+  $
+  for $i = 0, dots, n$.
+  In that case the best uniform approximation is unique.
+] <thm:chebyshev-alternation>
+
+#proof[
+  *Sufficiency.*
+  Suppose such points exist and let $q in Pi_n$ satisfy $||f - q||_oo < ||f - p||_oo$.
+  At each $x_i$ we have $abs(f(x_i) - q(x_i)) < abs(f(x_i) - p(x_i))$, so $q(x_i) - p(x_i)$ has the sign of $f(x_i) - p(x_i)$.
+  These signs alternate with $i$, so $q - p$ has at least $n + 1$ zeros in $[a, b]$.
+  But $q - p$ has degree at most $n$ and is not zero, a contradiction.
+  Hence no competitor is strictly better.
+
+  *Uniqueness.*
+  If $p$ and $q != p$ are both best, the same counting applies to $q - p$ and gives $n + 1$ zeros, which is impossible for a nonzero polynomial of degree at most $n$.
+
+  *Necessity.*
+  Let $E = ||f - p||_oo > 0$ and let $X = {x in [a, b] : abs(f(x) - p(x)) = E}$ be the set of extremal points.
+  Assume that $X$ contains no $n + 2$ points at which $f - p$ alternates in sign.
+  Then $X$ splits into at most $n + 1$ blocks on which $f - p$ has constant sign, and consecutive blocks have opposite signs.
+  Place one point $eta_j$ between consecutive blocks and let $h$ be the product of the factors $x - eta_j$.
+  There are at most $n$ factors, so $h in Pi_n$, and $h$ has constant sign on each block, with the sign alternating between blocks.
+  After multiplying $h$ by $-1$ if necessary, $h$ has the sign of $f - p$ on every block, so $(f - p) h > 0$ on $X$.
+  By compactness there is $delta > 0$ with $(f - p) h >= delta$ on $X$.
+
+  For $epsilon > 0$ consider $p_epsilon = p + epsilon h$.
+  On $X$,
+  $
+    abs(f - p_epsilon)^2 = (f - p)^2 - 2 epsilon (f - p) h + epsilon^2 h^2 <= E^2 - 2 epsilon delta + epsilon^2 ||h||_oo^2.
+  $
+  The right-hand side is strictly smaller than $E^2$ for small $epsilon$.
+  Outside a neighbourhood of $X$ the error $abs(f - p)$ is bounded by $E - eta$ for some $eta > 0$, and the perturbation $epsilon h$ is smaller than $eta slash 2$ there, while in the remaining neighbourhood the quadratic estimate applies.
+  Hence $||f - p_epsilon||_oo < E$, contradicting the optimality of $p$.
+]
+
+The sufficiency argument is quantitative, and it yields a lower bound that is useful even when the best approximation is unknown.
+
+#proposition(name: "de la Vallée Poussin Lower Bound")[
+  Let $f in C[a, b]$, $p in Pi_n$, and let $x_0 < dots.c < x_(n+1)$ be points at which $f - p$ alternates in sign.
+  Then
+  $
+    E_n^* (f) >= min_(0 <= i <= n+1) abs(f(x_i) - p(x_i)).
+  $
+] <prop:de-la-vallee-poussin>
+
+#proof[
+  Let $m = min_i abs(f(x_i) - p(x_i))$ and suppose $q in Pi_n$ satisfies $||f - q||_oo < m$.
+  Then $q - p$ has the sign of $f - p$ at every $x_i$, hence alternates in sign at $n + 2$ points and has at least $n + 1$ zeros, which is impossible for a nonzero polynomial of degree at most $n$.
+]
+
+The alternation theorem is constructive when read backwards.
+If $n + 2$ reference points are chosen, the conditions
+$
+  f(x_i) - p(x_i) = (-1)^i E, quad i = 0, dots, n + 1,
+$
+are $n + 2$ linear equations for the $n + 1$ coefficients of $p$ and the number $E$.
+The Remez algorithm solves this system, moves the reference to the extrema of the new error, and repeats.
+
+1. Choose $n + 2$ points $x_0 < dots.c < x_(n+1)$ in $[a, b]$.
+2. Solve the linear system above for $p$ and $E$; the system is nonsingular for distinct reference points.
+3. Compute the local extrema of $f - p$ on $[a, b]$ and replace the reference by $n + 2$ of them at which the error alternates and is largest in absolute value.
+4. Stop when $max abs(f - p) - abs(E)$ is below the tolerance; otherwise return to step 2.
+
+Convergence of the exchange is not proved here; in practice it is fast.
+#link(<prop:de-la-vallee-poussin>)[*The lower bound*] supplies the certificate: when it coincides with $max abs(f - p)$, the current polynomial is optimal.
+
+#example(name: "Best linear approximation of $x^2$")[
+  Let $f(x) = x^2$ on $[0, 1]$ and $n = 1$.
+  The polynomial $p^* (x) = x - 1 slash 8$ satisfies
+  $
+    f(x) - p^* (x) = (x - 1 slash 2)^2 - 1 slash 8,
+  $
+  so its error is $1 slash 8$ at $x = 0$, $-1 slash 8$ at $x = 1 slash 2$, and $1 slash 8$ at $x = 1$.
+  These are $n + 2$ alternating points, so #link(<thm:chebyshev-alternation>)[the alternation theorem] proves that $p^*$ is optimal and that $E_1^* (x^2) = 1 slash 8$.
+] <ex:best-linear-approximation>
+
+The gain over the elementary constructions is substantial.
+The Taylor polynomial of degree one at the origin is $0$ and has error $1$, and the interpolant at the endpoints is $x$ and has error $1 slash 4$ at $x = 1 slash 2$.
+The best approximation halves the interpolation error and removes the Taylor error entirely, at the price of an error that vanishes nowhere.
+
+#note(title: "Rational approximation")[
+  Replacing polynomials by quotients $r = p slash q$ of degrees $(m, n)$ enlarges the class of approximants and can improve the error by orders of magnitude when $f$ has poles close to the interval.
+  The alternation principle survives: a best rational approximation is characterized by $m + n + 2$ alternating extrema, and a Remez-type exchange converges under mild assumptions.
+  Rational approximation is not developed in this notebook; the polynomial theory below is the model on which it is built.
+]
+
+== Chebyshev Polynomials and Economization // Chebyshev 多项式与多项式压缩
+
+The alternation theorem characterizes the best approximation but does not exhibit it.
+One family of polynomials makes the construction explicit, and the same family settles the node question left open in the interpolation chapter.
+
+The polynomials are defined by a trigonometric identity.
+
+#definition(name: "Chebyshev Polynomials")[
+  For $n >= 0$ and $x in [-1, 1]$, the *Chebyshev polynomial of the first kind* is
+  $
+    T_n (x) = cos(n arccos x).
+  $
+  Equivalently, the sequence is defined by $T_0 = 1$, $T_1 = x$ and the recurrence
+  #eq[$
+    T_(n+1) (x) = 2 x T_n (x) - T_(n-1) (x), quad n >= 1.
+  $] <eq:chebyshev-recurrence>
+] <def:chebyshev-polynomial>
+
+The right-hand side of the definition is not visibly a polynomial.
+That it is one follows from the recurrence by induction, since $cos((n + 1) theta) + cos((n - 1) theta) = 2 cos theta cos(n theta)$; the recurrence then defines $T_n$ for every real $x$.
+
+#proposition(name: "Properties of the Chebyshev Polynomials")[
+  For $n >= 1$:
+  + $T_n$ has degree $n$, with leading coefficient $2^(n-1)$ for $n >= 1$;
+  + $abs(T_n (x)) <= 1$ on $[-1, 1]$, and $T_n$ attains $plus.minus 1$ alternately at the $n + 1$ points $x_k = cos(k pi slash n)$, where $T_n (x_k) = (-1)^k$;
+  + $T_n$ has the $n$ simple zeros $x_k = cos((2k - 1) pi slash (2n))$, $k = 1, dots, n$, all in $(-1, 1)$;
+  + $T_n (-x) = (-1)^n T_n (x)$.
+] <prop:chebyshev-properties>
+
+#proof[
+  The degree and the leading coefficient follow from the recurrence by induction.
+  The bound and the extrema follow from $abs(cos theta) <= 1$ and $cos(k pi) = (-1)^k$ at $theta = k pi slash n$.
+  The zeros solve $cos(n theta) = 0$, that is $n theta = (2k - 1) pi slash 2$.
+  Parity follows from $cos(n(pi - theta)) = (-1)^n cos(n theta)$.
+]
+
+The first two items make $T_n$ the polynomial of degree $n$ with the smallest possible size on $[-1, 1]$ among those with a fixed leading coefficient.
+
+#theorem(name: "Minimal Deviation of Monic Polynomials")[
+  Let $n >= 1$ and let $p(x) = x^n + a_(n-1) x^(n-1) + dots.c + a_0$ be a monic polynomial of degree $n$.
+  Then
+  #eq[$
+    max_(x in [-1, 1]) abs(p(x)) >= 2^(1-n),
+  $] <eq:chebyshev-minimal-monic>
+  with equality if and only if $p = 2^(1-n) T_n$.
+] <thm:chebyshev-minimax>
+
+#proof[
+  The polynomial $2^(1-n) T_n$ is monic by #link(<prop:chebyshev-properties>)[the leading coefficient] and has absolute value at most $2^(1-n)$ on $[-1, 1]$, so the bound is attained.
+
+  Suppose a monic $p$ satisfies $||p||_oo < 2^(1-n)$.
+  At the $n + 1$ extrema $x_k = cos(k pi slash n)$ of $T_n$, the polynomial
+  $
+    q = 2^(1-n) T_n - p
+  $
+  has degree at most $n - 1$, and at $x_k$ it equals $(-1)^k 2^(1-n) - p(x_k)$, whose sign is $(-1)^k$ because $abs(p(x_k)) < 2^(1-n)$.
+  Hence $q$ alternates in sign at $n + 1$ points and has at least $n$ zeros, contradicting $"deg" q <= n - 1$ unless $q = 0$; but $q = 0$ means $p = 2^(1-n) T_n$, which was excluded.
+]
+
+#figure(
+  image("img/chebyshev-extrema-zeros.svg", width: 88%),
+  caption: [Top: $T_5$ on $[-1, 1]$, with its six alternating extrema at $cos(k pi slash 5)$ and its five zeros. Bottom: the monic polynomial $2^(-4) T_5$, whose deviation from zero is as small as possible among monic polynomials of degree five; the dashed lines mark the band $plus.minus 2^(-4)$.],
+) <fig:chebyshev-extrema-zeros>
+
+The theorem answers the node question of the interpolation chapter.
+By #link(<cor:interpolation-error-bound>)[the interpolation error bound], the error depends on the nodes only through the maximum of $abs(omega)$, where $omega = product_(i=0)^n (x - x_i)$ is monic of degree $n + 1$.
+
+#corollary(name: "Chebyshev Nodes are Optimal")[
+  Among all choices of $n + 1$ distinct nodes in $[-1, 1]$, the maximum of $abs(omega)$ is minimized by the zeros of $T_(n+1)$, for which
+  #eq[$
+    abs(omega(x)) <= 2^(-n), quad x in [-1, 1].
+  $] <eq:chebyshev-node-bound>
+  Consequently, for $f in C^((n+1))[-1, 1]$,
+  $
+    ||f - L_n f||_oo <= (||f^((n+1))||_oo)/(2^n (n+1)!).
+  $
+] <cor:chebyshev-nodes-optimal>
+
+#proof[
+  $omega$ is monic of degree $n + 1$, so #link(<thm:chebyshev-minimax>)[the minimal deviation theorem] gives $||omega||_oo >= 2^(-n)$, with equality for $omega = 2^(-n) T_(n+1)$.
+  The zeros of $T_(n+1)$ are the nodes that realize this choice.
+  Substituting the bound into the interpolation remainder gives the estimate on $[-1, 1]$.
+  On $[a, b]$ the affine change of variable $x = (a + b) slash 2 + ((b - a) slash 2) t$ multiplies the bound by $((b - a) slash 2)^(n+1)$, hence
+  $
+    abs(omega(x)) <= ((b - a)/(2))^(n+1) 2^(-n) = ((b - a)^(n+1))/(2^(2n+1)).
+  $
+]
+
+#link(<cor:chebyshev-nodes-optimal>)[The corollary] settles the optimal-node half of the promise made in *Interpolation Error and Runge Phenomenon*.
+The other half is the comparison with the best possible error.
+By #link(<lem:interpolation-operator-bound>)[the interpolation operator bound],
+$
+  E_n^* (f) <= ||f - L_n f||_oo <= (1 + Lambda_n) E_n^* (f),
+$
+so interpolation at Chebyshev nodes is optimal up to the Lebesgue constant, and that constant grows only logarithmically.
+
+#note(title: "Growth of the Lebesgue constant")[
+  For Chebyshev nodes, $Lambda_n = (2 slash pi) log n + O(1)$.
+  Every set of $n + 1$ nodes has a Lebesgue constant growing at least logarithmically, so no interpolation scheme can remove the factor; the proof of both statements belongs to approximation theory.
+  What matters here is the consequence: the interpolation error exceeds the best possible error by a factor that grows so slowly that it is negligible in practice.
+]
+
+The minimal deviation theorem also gives a practical way of lowering the degree of a polynomial with controlled damage.
+
+#proposition(name: "Economization")[
+  Let $p = sum_(k=0)^n b_k T_k$ be a polynomial written in the Chebyshev basis.
+  Then for every $m < n$,
+  $
+    max_(x in [-1, 1]) abs(p(x) - sum_(k=0)^m b_k T_k (x)) <= sum_(k=m+1)^n abs(b_k).
+  $
+] <prop:economization>
+
+#proof[
+  On $[-1, 1]$ we have $abs(T_k) <= 1$ by #link(<prop:chebyshev-properties>)[the properties], so the triangle inequality gives the bound.
+]
+
+#example(name: "Economizing the Taylor polynomial of $e^x$")[
+  The Taylor polynomial of degree five for $e^x$ at the origin is
+  $
+    p_5(x) = 1 + x + x^2/2 + x^3/6 + x^4/24 + x^5/120.
+  $
+  Since $x^5 = (T_5 + 5 T_3 + 10 T_1) slash 16$, the coefficient of $T_5$ in $p_5$ is $1 slash 1920$.
+  Dropping this term gives a polynomial of degree four whose error on $[-1, 1]$ is at most
+  $
+    abs(e^x - p_5(x)) + 1 slash 1920 <= 1.62 times 10^(-3) + 0.52 times 10^(-3) approx 2.1 times 10^(-3),
+  $
+  whereas the Taylor polynomial of degree four has error $approx 9.9 times 10^(-3)$.
+  The economized polynomial is four times more accurate than the Taylor polynomial of the same degree, at the cost of one subtraction.
+] <ex:taylor-economization>
+
+== Continuous Least-Squares Approximation // 连续最小二乘逼近
+
+The uniform norm measures the worst point; the square norm measures the average.
+Averaging is the right choice when errors of either sign are equally likely, or when the approximant is used inside an integral.
+
+The square norm comes from an inner product, and the minimizer is therefore a projection.
+This is the geometry of *Algèbre Linéaire* transported to a function space.
+
+Let $w$ be a positive weight on $(a, b)$, with all moments $integral_a^b w(x) x^k dif x$ finite.
+On the functions for which the integrals below converge, set
+$
+  ⟨ f, g ⟩_w = integral_a^b w(x) f(x) g(x) dif x, quad ||f||_(2,w) = sqrt(⟨ f, f ⟩_w).
+$
+All constructions of this section hold for this inner product; the unweighted case $w = 1$ is the default.
+
+#definition(name: "Best Square Approximation")[
+  Let $f$ be continuous on $[a, b]$ and $n >= 0$.
+  A polynomial $p^* in Pi_n$ satisfying
+  $
+    ||f - p^*||_(2,w) = min_(p in Pi_n) ||f - p||_(2,w)
+  $
+  is called a *best approximation of $f$ in the square mean*, or the *continuous least-squares approximation* of $f$.
+] <def:best-square-approximation>
+
+#theorem(name: "Continuous Normal Equations")[
+  Let $phi_0, dots, phi_n$ be a basis of $Pi_n$ and let $p^* = sum_(j=0)^n c_j phi_j$.
+  Then $p^*$ is the best square approximation of $f$ if and only if
+  #eq[$
+    ⟨ f - p^*, phi_j ⟩_w = 0, quad j = 0, dots, n.
+  $] <eq:continuous-normal-equations>
+  Equivalently, the coefficients solve
+  #eq[$
+    G c = d, quad G_(j k) = ⟨ phi_j, phi_k ⟩_w, quad d_j = ⟨ f, phi_j ⟩_w.
+  $] <eq:gram-system>
+  The Gram matrix $G$ is symmetric and positive definite, so the solution is unique.
+] <thm:continuous-normal-equations>
+
+#proof[
+  Write $Q(c) = ||f - sum_j c_j phi_j||_(2,w)^2$.
+  Expanding,
+  $
+    Q(c) = ||f||_(2,w)^2 - 2 sum_j c_j ⟨ f, phi_j ⟩_w + sum_(j,k) c_j c_k ⟨ phi_j, phi_k ⟩_w,
+  $
+  which is a quadratic form with Hessian $2 G$.
+  For $c != 0$, $c^"T" G c = ||sum_j c_j phi_j||_(2,w)^2 > 0$ because the $phi_j$ are linearly independent and $w$ is positive, so $G$ is positive definite and $Q$ is strictly convex.
+  Its unique stationary point satisfies $nabla Q = 0$, that is $-2 d + 2 G c = 0$, which is @eq:gram-system.
+  The stationarity conditions are exactly the orthogonality relations @eq:continuous-normal-equations.
+]
+
+#corollary(name: "Square Error Identity")[
+  With the notation of #link(<thm:continuous-normal-equations>)[the normal equations],
+  #eq[$
+    ||f - p^*||_(2,w)^2 = ||f||_(2,w)^2 - sum_(j=0)^n c_j d_j.
+  $] <eq:square-error-identity>
+] <cor:square-approximation-error>
+
+#proof[
+  Since $f - p^*$ is orthogonal to $p^*$, Pythagoras gives $||f||^2 = ||f - p^*||^2 + ||p^*||^2$.
+  Moreover $||p^*||^2 = ⟨ p^*, p^* ⟩_w = ⟨ p^*, f ⟩_w = sum_j c_j ⟨ phi_j, f ⟩_w = sum_j c_j d_j$.
+]
+
+#example(name: "Best linear square approximation of $sqrt(x)$")[
+  Let $f(x) = sqrt(x)$ on $[0, 1]$ with $w = 1$ and $n = 1$.
+  With $phi_0 = 1$ and $phi_1 = x$,
+  $
+    G = mat(1, 1/2; 1/2, 1/3), quad d = (2/3, 2/5)^"T",
+  $
+  and @eq:gram-system gives $c_0 = 4 slash 15$ and $c_1 = 4 slash 5$, so
+  $
+    p^* (x) = 4/15 + 4/5 x.
+  $
+  The square error is $||f - p^*||_2^2 = 1 slash 2 - 112 slash 225 = 1 slash 450$, that is $||f - p^*||_2 approx 0.047$.
+  The pointwise error is largest at the singular endpoint, $f(0) - p^* (0) = -4 slash 15 approx -0.267$.
+  The square norm tolerates this because the error is large only on a short interval near the endpoint; the uniform best approximation of the previous section would not.
+] <ex:continuous-least-squares>
+
+#example(name: "The Hilbert matrix as a Gram matrix")[
+  Take the monomial basis $phi_j (x) = x^j$ on $[0, 1]$ with $w = 1$.
+  Then
+  $
+    G_(j k) = integral_0^1 x^(j + k) dif x = 1/(j + k + 1),
+  $
+  which is exactly the Hilbert matrix of *Condition Number and Ill-Conditioned Problems*.
+  This is where Hilbert matrices come from: they are the Gram matrices of the monomial basis, and the ill-conditioning of least squares in that basis is the ill-conditioning of the Hilbert matrix.
+  For $n = 4$ the condition number is already $4.8 times 10^5$, and for $n = 9$ it is $1.6 times 10^13$.
+  The normal equations of a degree-nine fit in the monomial basis therefore cannot be solved accurately in double precision, although the approximation problem itself is perfectly well posed.
+] <ex:hilbert-gram>
+
+#note(title: "The basis, not the problem")[
+  The failure is not in the square norm and not in the minimization: for every $n$ the best approximation exists and is unique, and its square error is given by @eq:square-error-identity.
+  The failure is in the monomial basis, whose Gram matrix couples all coefficients and amplifies perturbations.
+  A basis that makes $G$ diagonal removes the difficulty at once, and such bases are the subject of the next section.
+]
+
+== Orthogonal Polynomials // 正交多项式
+
+The Gram matrix is diagonal precisely when the basis functions are mutually orthogonal.
+For a given weight and interval there is a canonical such basis, and it is characterized by a three-term recurrence.
+
+#definition(name: "Orthogonal Polynomials")[
+  A sequence $(p_n)_(n >= 0)$ is a family of *orthogonal polynomials* with respect to the weight $w$ on $(a, b)$ if each $p_n$ is a polynomial of degree $n$ and
+  $
+    ⟨ p_m, p_n ⟩_w = 0, quad m != n.
+  $
+  The family is *monic* if each $p_n$ is monic.
+] <def:orthogonal-polynomials>
+
+The monic normalization makes the recurrence cleanest; any nonzero multiple of $p_n$ satisfies the same orthogonality relations.
+
+#proposition(name: "Classical Orthogonal Polynomials")[
+  The following families are orthogonal for the stated weight and interval, with the stated recurrence and squared norm.
+  #tex-table(
+    ("Family", "Interval", "Weight", [Recurrence], [Norm squared]),
+    ([Legendre $P_n$], [$[-1, 1]$], [$1$], [$(n+1) P_(n+1) = (2n+1) x P_n - n P_(n-1)$], [$2/(2n+1)$]),
+    ([Chebyshev $T_n$], [$[-1, 1]$], [$(1 - x^2)^(-1/2)$], [$T_(n+1) = 2x T_n - T_(n-1)$], [$pi$ if $n = 0$, $pi slash 2$ otherwise]),
+    ([Laguerre $L_n$], [$[0, oo)$], [$e^(-x)$], [$(n+1) L_(n+1) = (2n+1-x) L_n - n L_(n-1)$], [$1$]),
+    ([Hermite $H_n$], [$(-oo, oo)$], [$e^(-x^2)$], [$H_(n+1) = 2x H_n - 2n H_(n-1)$], [$2^n n! sqrt(pi)$]),
+  )
+] <prop:classical-orthogonal-polynomials>
+
+The recurrences in the table refer to the standard normalization of each family, the one in which the stated squared norm holds; the monic normalization of the next theorem differs from it by constant factors.
+The two families used in this notebook are Legendre and Chebyshev; Laguerre and Hermite are recorded because they are the orthogonal families of the half-line and of the whole line, and because they reappear as soon as an integral over an unbounded interval is discretized.
+
+#theorem(name: "Three-Term Recurrence")[
+  Let $(p_n)$ be the monic orthogonal polynomials for $w$ on $(a, b)$, with the convention $p_(-1) = 0$.
+  Then
+  #eq[$
+    p_(n+1)(x) = (x - alpha_n) p_n (x) - beta_n p_(n-1) (x), quad n >= 0,
+  $] <eq:three-term-recurrence>
+  where
+  $
+    alpha_n = (⟨ x p_n, p_n ⟩_w)/(⟨ p_n, p_n ⟩_w), quad beta_n = (⟨ p_n, p_n ⟩_w)/(⟨ p_(n-1), p_(n-1) ⟩_w) quad (n >= 1),
+  $
+  and $beta_0$ is arbitrary.
+] <thm:three-term-recurrence>
+
+#proof[
+  The polynomial $x p_n$ has degree $n + 1$, so it expands in the orthogonal basis as
+  $
+    x p_n = sum_(k=0)^(n+1) gamma_k p_k, quad gamma_k = (⟨ x p_n, p_k ⟩_w)/(⟨ p_k, p_k ⟩_w).
+  $
+  For $k <= n - 2$, orthogonality gives $⟨ x p_n, p_k ⟩_w = ⟨ p_n, x p_k ⟩_w = 0$, because $x p_k$ has degree $k + 1 <= n - 1$.
+  Hence only $k = n - 1, n, n + 1$ survive, and comparing leading coefficients gives $gamma_(n+1) = 1$.
+  The coefficients of $p_n$ and $p_(n-1)$ are the stated $alpha_n$ and $beta_n$.
+]
+
+#theorem(name: "Zeros of Orthogonal Polynomials")[
+  For $n >= 1$, $p_n$ has $n$ simple zeros, all in $(a, b)$.
+] <thm:orthogonal-polynomial-zeros>
+
+#proof[
+  A polynomial of degree $n$ has at most $n$ real zeros.
+  Suppose $p_n$ changes sign at only $m < n$ distinct points $xi_1, dots, xi_m$ in $(a, b)$, where the zeros of odd multiplicity are located.
+  Then $p_n (x) product_(i=1)^m (x - xi_i)$ does not change sign on $(a, b)$, so
+  $
+    integral_a^b w(x) p_n (x) product_(i=1)^m (x - xi_i) dif x != 0.
+  $
+  But the product has degree $m < n$, so it is orthogonal to $p_n$ and the integral must vanish, a contradiction.
+  Hence $m = n$ and every zero is simple.
+]
+
+#note(title: "Interlacing of the zeros")[
+  The zeros of $p_n$ and $p_(n+1)$ interlace: between two consecutive zeros of $p_(n+1)$ there is exactly one zero of $p_n$.
+  The statement follows from the recurrence @eq:three-term-recurrence by a Sturm comparison, and it is the reason why the nodes built from orthogonal polynomials are well separated.
+  It is used in *Gaussian Quadrature*, where the zeros of $p_(n+1)$ are taken as nodes.
+]
+
+#theorem(name: "Orthogonal Expansion")[
+  Let $(p_k)$ be orthogonal for $w$ on $(a, b)$ and let $f$ be continuous.
+  The best square approximation of $f$ in $Pi_n$ is
+  #eq[$
+    p^* = sum_(k=0)^n c_k p_k, quad c_k = (⟨ f, p_k ⟩_w)/(⟨ p_k, p_k ⟩_w),
+  $] <eq:orthogonal-coefficients>
+  and its error is given by @eq:square-error-identity.
+] <thm:orthogonal-expansion>
+
+#proof[
+  The Gram matrix in the orthogonal basis is diagonal with entries $⟨ p_k, p_k ⟩_w$, so #link(<thm:continuous-normal-equations>)[the normal equations] reduce to the stated formula for $c_k$.
+  The error identity is #link(<cor:square-approximation-error>)[the square error identity], with $d_k = ⟨ f, p_k ⟩_w$.
+]
+
+This is the general form of the Fourier expansion.
+With $w = 1$ on $[-1, 1]$ and $p_k = P_k$ the coefficients are the Legendre coefficients of $f$; with $p_k = T_k$ they are the Chebyshev coefficients.
+The trigonometric case of *Analyse Harmonique* is the same statement with $p_k$ replaced by $e^("i"k x)$ and the interval by the circle.
+The inequality $sum c_k^2 ⟨ p_k, p_k ⟩_w <= ||f||_(2,w)^2$ is Bessel's inequality, and equality in the limit is Parseval's identity.
+
+#example(name: "Legendre expansion of $e^x$")[
+  On $[-1, 1]$ with $w = 1$, expand $f(x) = e^x$ up to degree two.
+  The coefficients are
+  $
+    c_0 = 1/2 integral_(-1)^1 e^x dif x = sinh 1 approx 1.1752, quad
+    c_1 = 3/2 integral_(-1)^1 x e^x dif x = 3/e approx 1.1036,
+  $
+  and
+  $
+    c_2 = 5/2 integral_(-1)^1 (3 x^2 - 1)/2 e^x dif x = 5/2 (e - 7/e) approx 0.3584.
+  $
+  The truncated expansion is $c_0 P_0 + c_1 P_1 + c_2 P_2$, and @eq:square-error-identity gives
+  $
+    ||f - p^*||_2^2 = sinh 2 - (2 c_0^2 + 2/3 c_1^2 + 2/5 c_2^2) approx 1.3 times 10^(-3),
+  $
+  so $||f - p^*||_2 approx 0.036$.
+] <ex:legendre-expansion>
+
+#note(title: "Clenshaw summation")[
+  The recurrence @eq:three-term-recurrence evaluates a truncated orthogonal expansion without forming the polynomials individually.
+  For $S = sum_(k=0)^n c_k p_k$, the backwards recursion
+  $
+    b_k = c_k + (x - alpha_k) b_(k+1) - beta_(k+1) b_(k+2), quad b_(n+1) = b_(n+2) = 0,
+  $
+  gives $S = b_0 p_0$ after $n$ steps.
+  The cost is $O(n)$ operations and no cancellation, exactly as in Horner's scheme of *Algorithm Design Techniques*.
+]
+
+The zeros of $p_n$ are not merely a qualitative fact.
+They are the nodes at which Gaussian quadrature attains its maximal algebraic accuracy, and that construction is developed in *Gaussian Quadrature*.
+
+== Discrete Least-Squares Fitting // 离散最小二乘拟合
+
+Interpolation and continuous approximation both assume that the data determine the function: values at nodes, or an integrable function.
+Measured data are different. There are more observations than parameters, the values are noisy, and the model is chosen in advance.
+
+The problem is to minimize a weighted sum of squared residuals.
+In matrix form it is an overdetermined linear system, and its algebraic solution is already known.
+
+#definition(name: "Discrete Least-Squares Fit")[
+  Let $(x_i, y_i)$, $i = 1, dots, m$, be data with distinct nodes and let $omega_i > 0$ be weights.
+  A polynomial $p^* in Pi_n$, with $n + 1 < m$, is a *weighted least-squares fit* of the data if it minimizes
+  $
+    sum_(i=1)^m omega_i (y_i - p(x_i))^2.
+  $
+] <def:discrete-least-squares>
+
+Choosing a basis $phi_0, dots, phi_n$ of $Pi_n$ and writing $p = sum_j c_j phi_j$ turns the problem into a linear one.
+With $A_(i j) = phi_j (x_i)$, $y = (y_1, dots, y_m)^"T"$ and $W = "diag"(omega_1, dots, omega_m)$, the residual is $y - A c$ and the fit minimizes $(y - A c)^"T" W (y - A c)$.
+The normal equations are
+#eq[$
+  A^"T" W A c = A^"T" W y.
+$] <eq:discrete-normal-equations>
+
+#note(title: "What is inherited from linear algebra")[
+  @eq:discrete-normal-equations gives the normal equations of *Algèbre Linéaire*, written for the inner product $⟨ u, v ⟩_W = u^"T" W v$.
+  The theorem proved there states that a solution always exists and is unique exactly when $A$ has full column rank, which for $n + 1 < m$ holds whenever the nodes are distinct and the basis functions are linearly independent on them.
+  Nothing is repeated here; the numerical question is how the solution is computed.
+]
+
+#proposition(name: "Conditioning of the Normal Equations")[
+  Let $A in bb(R)^(m times (n+1))$ have full column rank and let $W = I$.
+  Then
+  #eq[$
+    kappa_2(A^"T" A) = kappa_2(A)^2.
+  $] <eq:normal-equation-conditioning>
+] <prop:normal-equation-conditioning>
+
+#proof[
+  The nonzero singular values of $A^"T" A$ are the squares of those of $A$, and the condition number in the $2$-norm is the ratio of the extreme singular values.
+]
+
+The proposition explains why the normal equations are the wrong way to solve a least-squares problem.
+Forming $A^"T" A$ squares the condition number, so half of the available digits are lost before the linear system is even solved.
+If $A$ itself has condition number $10^8$, the normal equations have condition number $10^16$, and the computed solution carries no correct digit in double precision.
+
+#proposition(name: "Discrete Orthogonal Bases")[
+  Suppose $phi_0, dots, phi_n$ satisfy
+  $
+    ⟨ phi_j, phi_k ⟩_omega = sum_(i=1)^m omega_i phi_j (x_i) phi_k (x_i) = 0, quad j != k.
+  $
+  Then the normal equations are diagonal, and the least-squares fit is
+  $
+    p^* = sum_(k=0)^n c_k phi_k, quad c_k = (sum_(i=1)^m omega_i y_i phi_k (x_i))/(sum_(i=1)^m omega_i phi_k (x_i)^2).
+  $
+] <prop:discrete-orthogonal-basis>
+
+#proof[
+  The Gram matrix $A^"T" W A$ is diagonal with entries $sum_i omega_i phi_k (x_i)^2$, so @eq:discrete-normal-equations decouples.
+]
+
+#example(name: "A straight-line fit")[
+  Fit $y = c_0 + c_1 x$ to $(0, 1)$, $(1, 2)$, $(2, 4)$, $(3, 5)$ with unit weights.
+  The normal equations are
+  $
+    mat(4, 6; 6, 14) mat(c_0; c_1) = mat(12; 25),
+  $
+  whose solution is $c_0 = 0.9$ and $c_1 = 1.4$.
+  The residuals are $0.1, -0.3, 0.3, -0.1$, and the sum of their squares is $0.2$.
+] <ex:linear-least-squares-fit>
+
+#example(name: "An exponential fit by linearization")[
+  Fit $y = a e^(b x)$ to $(0, 2.0)$, $(1, 3.2)$, $(2, 5.2)$, $(3, 8.3)$.
+  Taking logarithms turns the model into $ln y = ln a + b x$, a straight line in the data $(x_i, ln y_i)$.
+  The least-squares line is
+  $
+    ln y = 0.6921 + 0.4755 x,
+  $
+  hence $a = e^0.6921 approx 2.00$ and $b approx 0.4755$, so the fitted model is $y = 2.00 e^(0.4755 x)$.
+] <ex:exponential-fit>
+
+#caution[
+  Linearization changes the norm.
+  Fitting $ln y$ by least squares minimizes $sum (ln y_i - ln a - b x_i)^2$, which is a sum of relative errors in $y$, not of absolute errors.
+  The two fits differ, and neither is universally correct: the choice must follow the error model of the experiment, not the convenience of the transformation.
+]
+
+#figure(
+  image("img/least-squares-fit.svg", width: 66%),
+  caption: [The least-squares line $y = 0.9 + 1.4x$ through the four data points of the example. The vertical segments are the residuals whose squares are summed; their signs cancel in the fit, but their squares do not.],
+) <fig:least-squares-fit>
+
+#note(title: "Stable solution")[
+  @eq:normal-equation-conditioning shows that forming $A^"T" W A$ costs half of the available digits.
+  The remedy is to avoid the normal equations and factor $A$ orthogonally; this is developed in *Orthogonal Factorizations and QR Decomposition*, where the QR decomposition is applied to the least-squares problem.
+  In the polynomial case a discrete orthogonal basis, as in #link(<prop:discrete-orthogonal-basis>)[the proposition above], achieves the same decoupling without modifying the matrix.
+]
+
+== Trigonometric Interpolation and DFT // 三角插值与离散 Fourier 变换
+
+A polynomial cannot be periodic unless it is constant, so polynomial approximation is the wrong tool for periodic data.
+The natural space is spanned by $1, cos x, sin x, dots.c, cos n x, sin n x$, whose complex form is the space of exponentials $e^("i" k x)$ with $abs(k) <= n$.
+
+#definition(name: "Trigonometric Interpolation")[
+  Let $N = 2 n + 1$ and let $x_j = 2 pi j slash N$ for $j = 0, dots, N - 1$.
+  Given data $y_0, dots, y_(N-1)$, a *trigonometric interpolant* is a function
+  $
+    T(x) = sum_(k=-n)^n c_k e^("i" k x)
+  $
+  satisfying $T(x_j) = y_j$ for every $j$.
+] <def:trigonometric-interpolation>
+
+#theorem(name: "Existence and Uniqueness of the Trigonometric Interpolant")[
+  For every data vector $(y_0, dots, y_(N-1))$ there is exactly one trigonometric interpolant, and its coefficients are
+  #eq[$
+    c_k = 1/N sum_(j=0)^(N-1) y_j e^(-"i" k x_j), quad k = -n, dots, n.
+  $] <eq:trig-coefficients>
+] <thm:trig-interpolation-uniqueness>
+
+#proof[
+  The exponentials $e^("i" k x)$ with $abs(k) <= n$ form a basis of a space of dimension $N$, and evaluation at the $N$ nodes is a square linear system in the coefficients.
+  Its matrix has entries $e^("i" k x_j) = omega_N^(j k)$ with $omega_N = e^(2 pi "i" slash N)$, and the discrete orthogonality
+  $
+    sum_(j=0)^(N-1) omega_N^(j (k - l)) = cases(N & "if" k - l equiv 0 mod N, 0 & "otherwise")
+  $
+  says that the columns are orthogonal.
+  Multiplying the interpolation equations by $e^(-"i" k x_j)$, summing over $j$, and using orthogonality gives @eq:trig-coefficients.
+  The coefficients are therefore determined and the system has a unique solution.
+]
+
+#note(title: "The DFT viewpoint")[
+  @eq:trig-coefficients is, up to the factor $1 slash N$, the discrete Fourier transform of the data, with the sign convention of *Analyse Harmonique*.
+  The definition, the inversion formula and the radix-two recursion are recorded there and are used here without proof.
+  In this chapter the transform is a tool for interpolation, not an object of study.
+]
+
+#proposition(name: "Aliasing")[
+  Let $f(x) = sum_(m in bb(Z)) hat(f)(m) e^("i" m x)$ be absolutely convergent, and let $T$ be its trigonometric interpolant at $N = 2 n + 1$ equally spaced nodes, with coefficients $c_k$.
+  Then
+  #eq[$
+    c_k = sum_(l in bb(Z)) hat(f)(k + l N), quad abs(k) <= n.
+  $] <eq:aliasing>
+] <prop:aliasing>
+
+#proof[
+  Substitute the Fourier series into @eq:trig-coefficients and exchange the order of summation, which is legitimate by absolute convergence:
+  $
+    c_k = sum_m hat(f)(m) dot 1/N sum_(j=0)^(N-1) e^("i"(m - k) x_j).
+  $
+  By the orthogonality relation of #link(<thm:trig-interpolation-uniqueness>)[the existence theorem], the inner sum equals one when $m - k$ is a multiple of $N$ and zero otherwise.
+  Hence only the indices $m = k + l N$ contribute.
+]
+
+#example(name: "Aliasing of a cosine")[
+  Take $N = 9$, so $n = 4$, and sample $f(x) = cos 5 x$ at $x_j = 2 pi j slash 9$.
+  Since $5 equiv -4 (mod 9)$,
+  $
+    cos(5 x_j) = cos(10 pi j slash 9) = cos(2 pi j - 8 pi j slash 9) = cos(4 x_j),
+  $
+  so the data are also the samples of $cos 4 x$.
+  The trigonometric interpolant is therefore $cos 4 x$, a frequency below the Nyquist frequency $n = 4$; the true frequency $5$ has been folded onto $4$ and cannot be recovered from the samples.
+] <ex:aliasing-of-cosine>
+
+#note(title: "Convergence and smoothness")[
+  The interpolation error obeys the same principle as @eq:aliasing: it is the tail of the Fourier series that folds onto the resolved frequencies.
+  If $f$ has $s$ continuous derivatives, the coefficients decay like $abs(k)^(-s)$ and the interpolation error is $O(N^(-s))$; if $f$ is analytic, the decay is exponential.
+  These rates are consequences of the coefficient decay results of *Analyse Harmonique*; the Weierstrass second theorem guarantees only that the error tends to zero.
+]
+
+Computing the $N$ coefficients from @eq:trig-coefficients directly costs $N$ operations per coefficient, that is $O(N^2)$ in total.
+The radix-two recursion of *Analyse Harmonique* reduces this to $O(N log_2 N)$, which for $N = 2^20$ is a factor of about $5 times 10^4$.
+This is why trigonometric interpolation is the practical method for large periodic data sets, and why the fast Fourier transform is the standard tool of signal processing.
+
+#figure(
+  image("img/aliasing.svg", width: 78%),
+  caption: [Aliasing with $N = 9$ samples. The samples of $cos 5x$ (grey) coincide with those of $cos 4x$ (dashed), so the trigonometric interpolant through the samples is $cos 4x$: the frequency $5$ is folded onto $4$ by the grid.],
+) <fig:aliasing>
+
+The chapter began with the choice of a norm and ends with a transform.
+In each case the answer is a projection onto a finite-dimensional space, and the numerical work is the same: choose a basis in which the projection is cheap and stable.
+Orthogonal polynomials do this for the square norm, orthogonal matrices do it for discrete least squares, and the exponential basis does it for periodic data.
+
 #bibliography("references.bib", title: "References", full: true)
