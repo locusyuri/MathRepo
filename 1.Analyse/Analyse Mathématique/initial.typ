@@ -8371,28 +8371,465 @@ On this basis, the Weierstrass approximation theorems are stated as follows:
 // B11: ch11 Limits and Continuity in Euclidean Spaces（欧氏空间上的极限与连续性）
 = Limits and Continuity in Euclidean Spaces // 欧氏空间上的极限与连续性
 
-== Continuous Mappings
+#note(title: "Prerequisites")[
+  The point-set notions of $bb(R)^n$ — neighborhoods, interior and boundary points, accumulation and isolated points, closure, open and closed sets, and compact sets — are developed in *Real Numbers* of *Théorie des Ensembles*.
+  They are used below without being repeated.
+  The only notation we add is the open ball
+  $
+    U(bold(x)_0, delta) = {bold(x) in bb(R)^n | norm(bold(x) - bold(x)_0) < delta},
+  $
+  which extends the one-dimensional notation of *Notations*.
+  Recall that in $bb(R)^n$ a set is compact if and only if it is closed and bounded (Heine-Borel).
+]
 
-// 注：tex 中 "Continuous Mappings on Compact Sets" 为空壳标题（无内容来源），
-// 紧集上连续映射的性质属 P0-1 补全范围，待大纲确认后重建。
+== Point Sequences and Limits // 点列与极限
+
+=== Sequences in Euclidean Space // 欧氏空间中的点列
+
+A sequence ${bold(x)_k}$ in $bb(R)^n$ converges to $bold(x)$ if $norm(bold(x)_k - bold(x)) -> 0$; this is the Euclidean case of the limit defined in *Real Numbers*.
+Write $bold(x)_k = (x_(1,k), x_(2,k), dots.c, x_(n,k))$ and $bold(x) = (x_1, x_2, dots.c, x_n)$.
+Convergence can then be tested one coordinate at a time.
+
+#proposition(name: "Coordinatewise Convergence")[
+  A sequence ${bold(x)_k}$ in $bb(R)^n$ converges to $bold(x)$ if and only if $x_(i,k) -> x_i$ for every $i = 1, 2, dots.c, n$.
+] <prop:coordinatewise-convergence>
+
+#proof[
+  For every $k$ and every $i$,
+  $
+    abs(x_(i,k) - x_i) <= norm(bold(x)_k - bold(x)) <= sum_(j=1)^n abs(x_(j,k) - x_j).
+  $
+  If the norm tends to $0$, the left inequality forces $x_(i,k) -> x_i$.
+  If all coordinates converge, the right-hand side tends to $0$, and the middle term is squeezed to $0$.
+]
+
+#theorem(name: "Bolzano-Weierstrass Theorem in $bb(R)^n$")[
+  Every bounded sequence in $bb(R)^n$ has a convergent subsequence.
+] <thm:bolzano-weierstrass-euclidean>
+
+#proof[
+  We argue by induction on $n$.
+  For $n = 1$ the claim is #link(<thm:bolzano-weierstrass>)[the Bolzano-Weierstrass theorem] on the real line.
+
+  Assume the claim holds in $bb(R)^(n-1)$ and let ${bold(x)_k}$ be bounded in $bb(R)^n$.
+  The truncated points $(x_(1,k), dots.c, x_(n-1,k))$ form a bounded sequence in $bb(R)^(n-1)$, so passing to a subsequence we may assume that the first $n - 1$ coordinates converge.
+  The last coordinates of this subsequence form a bounded sequence of real numbers, so a further subsequence makes them converge.
+  For this sub-subsequence all coordinates converge, hence the points converge by #link(<prop:coordinatewise-convergence>)[coordinatewise convergence].
+]
+
+#theorem(name: "Cauchy Criterion in $bb(R)^n$")[
+  A sequence in $bb(R)^n$ converges if and only if it is a Cauchy sequence.
+] <thm:cauchy-criterion-euclidean>
+
+#proof[
+  If ${bold(x)_k}$ converges to $bold(x)$, then
+  $
+    norm(bold(x)_k - bold(x)_l) <= norm(bold(x)_k - bold(x)) + norm(bold(x) - bold(x)_l)
+  $
+  gives the Cauchy property.
+
+  Conversely, let ${bold(x)_k}$ be Cauchy.
+  Since $abs(x_(i,k) - x_(i,l)) <= norm(bold(x)_k - bold(x)_l)$, each coordinate sequence is Cauchy in $bb(R)$ and converges by #link(<thm:cauchy-criterion>)[the Cauchy criterion on the real line].
+  Then #link(<prop:coordinatewise-convergence>)[coordinatewise convergence] gives the convergence of ${bold(x)_k}$.
+]
+
+#example(name: "Coordinatewise Convergence in the Plane")[
+  Show that $bold(x)_k = (1/k, (-1)^k / k)$ converges to $(0, 0)$, while $bold(y)_k = (1/k, (-1)^k)$ does not converge.
+]
+
+#solution[
+  Both coordinates of $bold(x)_k$ tend to $0$, so #link(<prop:coordinatewise-convergence>)[coordinatewise convergence] applies.
+  The second coordinate of $bold(y)_k$ alternates between $1$ and $-1$ and has no limit.
+]
+
+=== Limits of Multivariable Functions // 多元函数的极限
+
+#definition(name: "Limit of a Multivariable Function")[
+  Let $D subset bb(R)^n$, let $bold(x)_0$ be an accumulation point of $D$, and let $bold(f): D -> bb(R)^m$.
+  A point $bold(a) in bb(R)^m$ is called the *limit* of $bold(f)$ at $bold(x)_0$ if for every $epsilon > 0$ there exists $delta > 0$ such that
+  $
+    bold(x) in D, quad 0 < norm(bold(x) - bold(x)_0) < delta quad => quad norm(bold(f)(bold(x)) - bold(a)) < epsilon.
+  $
+  In this case we write
+  $
+    lim_(bold(x) -> bold(x)_0) bold(f)(bold(x)) = bold(a).
+  $
+] <def:limit-of-multivariable-function>
+
+#proposition(name: "Limit Laws")[
+  Let $bold(f), bold(g): D -> bb(R)^m$ have limits $bold(a)$ and $bold(b)$ at the accumulation point $bold(x)_0$ of $D$.
+  Then:
+  + the limit of $bold(f)$ is unique;
+  + $bold(f) + bold(g) -> bold(a) + bold(b)$, and $lambda bold(f) -> lambda bold(a)$ for every $lambda in bb(R)$;
+  + if $m = 1$, then $f g -> a b$, and $f / g -> a / b$ provided $b != 0$ and $g$ does not vanish near $bold(x)_0$;
+  + if $m = 1$ and $abs(f(bold(x))) <= h(bold(x))$ for $bold(x) in D$ with $h(bold(x)) -> 0$, then $f(bold(x)) -> 0$.
+] <prop:limit-of-multivariable-function-properties>
+
+#theorem(name: "Sequential Criterion for Limits")[
+  Let $D$, $bold(x)_0$ and $bold(f)$ be as above.
+  Then $lim_(bold(x) -> bold(x)_0) bold(f)(bold(x)) = bold(a)$ if and only if $bold(f)(bold(x)_k) -> bold(a)$ for every sequence ${bold(x)_k} subset D backslash {bold(x)_0}$ with $bold(x)_k -> bold(x)_0$.
+] <thm:sequential-criterion-multivariable>
+
+#proof[
+  Assume the limit is $bold(a)$ and let ${bold(x)_k} subset D backslash {bold(x)_0}$ converge to $bold(x)_0$.
+  Given $epsilon > 0$, take $delta > 0$ from the definition of the limit; for all large $k$ the point $bold(x)_k$ satisfies $0 < norm(bold(x)_k - bold(x)_0) < delta$, hence $norm(bold(f)(bold(x)_k) - bold(a)) < epsilon$.
+
+  Conversely, suppose the limit is not $bold(a)$.
+  Then some $epsilon > 0$ has the property that for every $k$ there is $bold(x)_k in D$ with $0 < norm(bold(x)_k - bold(x)_0) < 1/k$ and $norm(bold(f)(bold(x)_k) - bold(a)) >= epsilon$.
+  The sequence ${bold(x)_k}$ converges to $bold(x)_0$ but $bold(f)(bold(x)_k)$ does not converge to $bold(a)$, a contradiction.
+]
+
+#example(name: "A Limit That Exists")[
+  Show that
+  $
+    lim_((x, y) -> (0, 0)) (x^2 y) / (x^2 + y^2) = 0.
+  $
+]
+
+#solution[
+  For $(x, y) != (0, 0)$,
+  $
+    abs((x^2 y) / (x^2 + y^2)) = (x^2) / (x^2 + y^2) abs(y) <= abs(y),
+  $
+  so the conclusion follows from the squeeze item of #link(<prop:limit-of-multivariable-function-properties>)[the limit laws].
+]
+
+#example(name: "A Limit That Fails")[
+  Show that $(x y) / (x^2 + y^2)$ has no limit at the origin.
+] <ex:limit-fails-multivariable>
+
+#solution[
+  Along the line $y = k x$ with $x -> 0$,
+  $
+    (x y) / (x^2 + y^2) = k / (1 + k^2),
+  $
+  which depends on $k$.
+  By #link(<thm:sequential-criterion-multivariable>)[the sequential criterion], different limits along different sequences rule out the existence of the multiple limit.
+]
+
+=== Iterated Limits // 累次极限
+
+#definition(name: "Iterated Limits")[
+  Let $f$ be defined on a deleted neighborhood of $(x_0, y_0)$ in $bb(R)^2$.
+  If for every $y$ near $y_0$ the limit $phi(y) = lim_(x -> x_0) f(x, y)$ exists, and if $phi(y) -> A$ as $y -> y_0$, then $A$ is called the *iterated limit*
+  $
+    lim_(y -> y_0) lim_(x -> x_0) f(x, y) = A.
+  $
+  The iterated limit with the two limits interchanged is defined analogously.
+] <def:iterated-limits>
+
+#theorem(name: "Multiple Limit Implies Iterated Limit")[
+  Suppose $f$ is defined on a deleted neighborhood of $(x_0, y_0)$ and $lim_((x, y) -> (x_0, y_0)) f(x, y) = A$.
+  If $phi(y) = lim_(x -> x_0) f(x, y)$ exists for every $y$ in some deleted neighborhood of $y_0$, then $lim_(y -> y_0) phi(y) = A$.
+] <thm:double-limit-implies-iterated>
+
+#proof[
+  Let $epsilon > 0$ and take $delta > 0$ with $abs(f(x, y) - A) < epsilon$ whenever $0 < norm((x, y) - (x_0, y_0)) < delta$.
+  Fix $y$ with $0 < abs(y - y_0) < delta/2$.
+  For every $x$ with $0 < abs(x - x_0) < delta/2$ the point $(x, y)$ lies in the punctured ball of radius $delta$, so $abs(f(x, y) - A) < epsilon$.
+  Letting $x -> x_0$ gives $abs(phi(y) - A) <= epsilon$ for all such $y$, which is the claim.
+]
+
+#caution(title: "Iterated limits do not imply a multiple limit")[
+  For
+  $
+    f(x, y) = (x y) / (x^2 + y^2) quad ((x, y) != (0, 0)), quad quad f(0, 0) = 0,
+  $
+  both iterated limits at the origin are $0$, while the multiple limit does not exist by #link(<ex:limit-fails-multivariable>)[the example above].
+]
+
+#example(name: "Iterated Limits May Differ")[
+  Show that the two iterated limits of $f(x, y) = (x^2 - y^2) / (x^2 + y^2)$ at the origin are different.
+]
+
+#solution[
+  For fixed $y != 0$, $lim_(x -> 0) f(x, y) = -1$, hence $lim_(y -> 0) lim_(x -> 0) f(x, y) = -1$.
+  For fixed $x != 0$, $lim_(y -> 0) f(x, y) = 1$, hence the other iterated limit equals $1$.
+]
+
+== Continuous Mappings // 连续映射
+
+#definition(name: "Continuity of a Mapping")[
+  Let $D subset bb(R)^n$, $bold(x)_0 in D$ and $bold(f): D -> bb(R)^m$.
+  The mapping $bold(f)$ is *continuous at* $bold(x)_0$ if for every $epsilon > 0$ there exists $delta > 0$ such that
+  $
+    bold(x) in D, quad norm(bold(x) - bold(x)_0) < delta quad => quad norm(bold(f)(bold(x)) - bold(f)(bold(x)_0)) < epsilon.
+  $
+  It is *continuous on* $D$ if it is continuous at every point of $D$.
+] <def:continuity-of-mapping>
+
+#definition(name: "Relative Openness")[
+  Let $D subset bb(R)^n$.
+  A set $A subset D$ is *open in* $D$ if $A = D inter U$ for some open set $U subset bb(R)^n$, and *closed in* $D$ if $D backslash A$ is open in $D$.
+] <def:relative-openness>
+
+#definition(name: "Uniform Continuity of a Mapping")[
+  A mapping $bold(f): D -> bb(R)^m$ is *uniformly continuous* on $D$ if for every $epsilon > 0$ there exists $delta > 0$ such that
+  $
+    bold(x), bold(y) in D, quad norm(bold(x) - bold(y)) < delta quad => quad norm(bold(f)(bold(x)) - bold(f)(bold(y))) < epsilon.
+  $
+] <def:uniform-continuity-multivariable>
+
+#theorem(name: "Continuity and Open Preimages")[
+  Let $D subset bb(R)^n$ and $bold(f): D -> bb(R)^m$.
+  Then $bold(f)$ is continuous on $D$ if and only if $bold(f)^(-1)(G)$ is open in $D$ for every open set $G subset bb(R)^m$.
+] <thm:continuity-open-preimage>
+
+#proof[
+  Assume first that $bold(f)$ is continuous and let $G$ be open.
+  Every $bold(x) in bold(f)^(-1)(G)$ has $bold(f)(bold(x)) in G$, so there is $eta_(bold(x)) > 0$ with
+  $
+    bold(f)(U(bold(x), eta_(bold(x))) inter D) subset G.
+  $
+  The set
+  $
+    U = union.big_(bold(x) in bold(f)^(-1)(G)) U(bold(x), eta_(bold(x)))
+  $
+  is open and satisfies $D inter U = bold(f)^(-1)(G)$, so the preimage is open in $D$.
+
+  Conversely, assume that preimages of open sets are open in $D$, and let $bold(x)_0 in D$ and $epsilon > 0$.
+  The ball $G = U(bold(f)(bold(x)_0), epsilon)$ is open, so $bold(f)^(-1)(G) = D inter U$ for some open $U$.
+  Since $bold(x)_0 in U$, some $delta > 0$ satisfies $U(bold(x)_0, delta) subset U$; then $bold(x) in D$ with $norm(bold(x) - bold(x)_0) < delta$ gives $bold(f)(bold(x)) in G$.
+]
+
+#theorem(name: "Sequential Criterion for Continuity")[
+  A mapping $bold(f): D -> bb(R)^m$ is continuous at $bold(x)_0 in D$ if and only if $bold(f)(bold(x)_k) -> bold(f)(bold(x)_0)$ for every sequence ${bold(x)_k} subset D$ with $bold(x)_k -> bold(x)_0$.
+] <thm:continuity-sequential-criterion>
+
+#proof[
+  If $bold(x)_0$ is isolated in $D$, every sequence in $D$ converging to it is eventually equal to it and the condition holds.
+
+  Otherwise $bold(x)_0$ is an accumulation point of $D$, and the statement is #link(<thm:sequential-criterion-multivariable>)[the sequential criterion for limits] applied with $bold(a) = bold(f)(bold(x)_0)$.
+  Sequences that meet $bold(x)_0$ are handled by deleting those terms, which does not affect the convergence of the remaining subsequence.
+]
+
+#theorem(name: "Componentwise Continuity")[
+  A mapping $bold(f) = (f_1, f_2, dots.c, f_m): D -> bb(R)^m$ is continuous at $bold(x)_0$ if and only if every component $f_i$ is continuous at $bold(x)_0$.
+] <thm:componentwise-continuity>
+
+#proof[
+  For every $bold(x) in D$,
+  $
+    max_(1 <= i <= m) abs(f_i(bold(x)) - f_i(bold(x)_0)) <= norm(bold(f)(bold(x)) - bold(f)(bold(x)_0)) <= sum_(i=1)^m abs(f_i(bold(x)) - f_i(bold(x)_0)).
+  $
+  The left inequality turns continuity of $bold(f)$ into continuity of every component; the right one turns continuity of the components into continuity of $bold(f)$.
+]
+
+#proposition(name: "Operations on Continuous Mappings")[
+  Let $bold(f), bold(g): D -> bb(R)^m$ be continuous at $bold(x)_0 in D$.
+  Then $bold(f) + bold(g)$ and $lambda bold(f)$ are continuous at $bold(x)_0$.
+  If $m = 1$, then $f g$ is continuous at $bold(x)_0$, and $f / g$ is continuous there provided $g(bold(x)_0) != 0$.
+  If $bold(g): D -> bb(R)^k$ is continuous at $bold(x)_0$ and $bold(f): bold(g)(D) -> bb(R)^m$ is continuous at $bold(g)(bold(x)_0)$, then $bold(f) compose bold(g)$ is continuous at $bold(x)_0$.
+] <prop:continuity-mapping-operations>
+
+#example(name: "Continuous Elementary Functions in $bb(R)^n$")[
+  Show that polynomials in $x_1, dots.c, x_n$ are continuous on $bb(R)^n$, that rational functions are continuous where the denominator does not vanish, and that $bold(x) mapsto norm(bold(x))$ is continuous.
+]
+
+#solution[
+  Constants and the coordinate functions $bold(x) mapsto x_i$ are continuous, and #link(<prop:continuity-mapping-operations>)[the operations above] preserve continuity under sums, products and quotients, which gives the first two claims.
+  For the norm, the reverse triangle inequality gives
+  $
+    abs(norm(bold(x)) - norm(bold(y))) <= norm(bold(x) - bold(y)),
+  $
+  so the norm is even Lipschitz.
+]
+
+#caution(title: "Separate continuity is not continuity")[
+  Define $f: bb(R)^2 -> bb(R)$ by
+  $
+    f(x, y) = (x y) / (x^2 + y^2) quad ((x, y) != (0, 0)), quad quad f(0, 0) = 0.
+  $
+  For each fixed $y$ the function $x mapsto f(x, y)$ is continuous at $x = 0$, and for each fixed $x$ the function $y mapsto f(x, y)$ is continuous at $y = 0$.
+  Yet $f$ is not continuous at the origin by #link(<ex:limit-fails-multivariable>)[the example above].
+]
+
+=== Continuous Mappings on Compact Sets // 紧集上的连续映射
+
+// B11 P0-1 补全：原 tex 中的空壳标题 "Continuous Mappings on Compact Sets" 在此重建。
+
+#theorem(name: "Continuous Image of a Compact Set")[
+  Let $K subset bb(R)^n$ be compact and $bold(f): K -> bb(R)^m$ continuous.
+  Then $bold(f)(K)$ is compact.
+] <thm:continuous-image-compact>
+
+#proof[
+  Let ${G_alpha}$ be an open cover of $bold(f)(K)$ in $bb(R)^m$.
+  By #link(<thm:continuity-open-preimage>)[the open-preimage criterion], each $bold(f)^(-1)(G_alpha)$ equals $K inter U_alpha$ for some open set $U_alpha subset bb(R)^n$.
+  Every $bold(x) in K$ satisfies $bold(f)(bold(x)) in G_alpha$ for some $alpha$, hence $bold(x) in U_alpha$; so ${U_alpha}$ is an open cover of $K$.
+  Compactness gives finitely many indices $alpha_1, dots.c, alpha_N$ with $K subset U_(alpha_1) union dots.c union U_(alpha_N)$.
+  For $bold(x) in K$, the point $bold(x)$ lies in some $U_(alpha_i)$, hence in $K inter U_(alpha_i) = bold(f)^(-1)(G_(alpha_i))$, so $bold(f)(bold(x)) in G_(alpha_i)$.
+  Thus $bold(f)(K) subset G_(alpha_1) union dots.c union G_(alpha_N)$.
+]
+
+#theorem(name: "Extreme Value Theorem in $bb(R)^n$")[
+  Let $K subset bb(R)^n$ be nonempty and compact, and let $f: K -> bb(R)$ be continuous.
+  Then $f$ is bounded on $K$ and attains its maximum and minimum.
+] <thm:extreme-value-multivariable>
+
+#proof[
+  By #link(<thm:continuous-image-compact>)[the previous theorem] $f(K)$ is a compact subset of $bb(R)$, hence closed and bounded.
+  A nonempty closed bounded subset of $bb(R)$ contains its supremum and infimum, so there are points $bold(x)_max, bold(x)_min in K$ with
+  $
+    f(bold(x)_max) = sup_(bold(x) in K) f(bold(x)), quad quad f(bold(x)_min) = inf_(bold(x) in K) f(bold(x)).
+  $
+]
+
+#theorem(name: "Heine-Cantor Theorem in $bb(R)^n$")[
+  Let $K subset bb(R)^n$ be compact and $bold(f): K -> bb(R)^m$ continuous.
+  Then $bold(f)$ is uniformly continuous on $K$.
+] <thm:heine-cantor-multivariable>
+
+#proof[
+  Suppose not.
+  Then there is $epsilon > 0$ such that for every $k in bb(N)$ there exist $bold(x)_k, bold(y)_k in K$ with
+  $
+    norm(bold(x)_k - bold(y)_k) < 1/k, quad quad norm(bold(f)(bold(x)_k) - bold(f)(bold(y)_k)) >= epsilon.
+  $
+  Since $K$ is bounded, #link(<thm:bolzano-weierstrass-euclidean>)[Bolzano-Weierstrass] yields a subsequence $bold(x)_(k_j) -> bold(x)$; as $K$ is closed, $bold(x) in K$.
+  Then $bold(y)_(k_j) -> bold(x)$ as well, and continuity at $bold(x)$ makes both $bold(f)(bold(x)_(k_j))$ and $bold(f)(bold(y)_(k_j))$ tend to $bold(f)(bold(x))$, contradicting the lower bound $epsilon$.
+]
+
+#corollary(name: "Continuous Inverse on a Compact Set")[
+  Let $K subset bb(R)^n$ be compact and $bold(f): K -> bb(R)^m$ continuous and injective.
+  Then $bold(f)^(-1): bold(f)(K) -> K$ is continuous.
+] <cor:inverse-continuous-compact>
+
+#proof[
+  Let $bold(y)_k = bold(f)(bold(x)_k)$ converge to $bold(y) = bold(f)(bold(x))$ in $bold(f)(K)$.
+  If $bold(x)_k$ did not converge to $bold(x)$, some $epsilon > 0$ and a subsequence would satisfy $norm(bold(x)_(k_j) - bold(x)) >= epsilon$.
+  By #link(<thm:bolzano-weierstrass-euclidean>)[Bolzano-Weierstrass] a further subsequence would converge to some $bold(z) in K$ with $norm(bold(z) - bold(x)) >= epsilon$.
+  Continuity would give $bold(f)(bold(z)) = bold(y) = bold(f)(bold(x))$, contradicting injectivity.
+  Hence $bold(x)_k -> bold(x)$, and $bold(f)^(-1)$ is continuous by #link(<thm:continuity-sequential-criterion>)[the sequential criterion].
+]
+
+#example(name: "Distance to a Compact Set")[
+  Let $K subset bb(R)^n$ be nonempty and compact and let $bold(a) in bb(R)^n$.
+  Show that there exists $bold(x)^* in K$ such that
+  $
+    norm(bold(a) - bold(x)^*) = "dist"(bold(a), K) colon.eq inf_(bold(x) in K) norm(bold(a) - bold(x)).
+  $
+] <ex:distance-attained-to-compact>
+
+#solution[
+  The function $bold(x) mapsto norm(bold(a) - bold(x))$ is continuous on $K$, being the composition of the norm with the continuous map $bold(x) mapsto bold(a) - bold(x)$.
+  By #link(<thm:extreme-value-multivariable>)[the extreme value theorem] it attains its minimum on the compact set $K$.
+]
+
+#note[
+  For $n = 1$ these results reduce to #link(<thm:boundedness-closed>)[boundedness on a closed interval], #link(<thm:extreme-value>)[the extreme value theorem] and #link(<thm:cantor-theorem>)[Cantor's theorem].
+  No separate Heine-Borel theorem for $bb(R)^n$ is needed: compactness enters through the open-cover definition, and closedness of compact sets is used only in the last two proofs.
+]
 
 === Continuous Mappings on Connected Sets // 连通集上的连续映射
 
 #definition(name: "Connected Set")[
-  Let $S$ be a set of points in $bb(R)^n$. If a continuous mapping
-  $
-    gamma: [0, 1] -> bb(R)^n
-  $
-  satisfies that the range $gamma([0, 1])$ lies entirely within $S$, we call $gamma$ a *path* in $S$, where $gamma(0)$ and $gamma(1)$ are referred to as the starting point and ending point of the path, respectively.
-
-  If for any two points $bold(x), bold(y) in S$ there exists a path in $S$ with $bold(x)$ as the starting point and $bold(y)$ as the ending point, then $S$ is called *path-connected*, or equivalently, $S$ is called a *connected set*.
-
-  A connected open set is called an *(open) region*. The closure of an (open) region is referred to as a *closed region*.
+  A set $S subset bb(R)^n$ is *connected* if it is not the union of two nonempty disjoint sets that are open in $S$.
+  Equivalently, $S$ is not the union of two nonempty disjoint sets that are closed in $S$.
 ] <def:connected-set>
 
-#note[
-  Intuitively, this means that any two points in $S$ can be connected by a curve lying entirely within $S$. Clearly, a connected subset of $bb(R)$ is an interval, and a connected subset of $bb(R)$ is compact if and only if it is a closed interval.
+#definition(name: "Path-Connected Set")[
+  A *path* in $S subset bb(R)^n$ is a continuous mapping $gamma: [0, 1] -> bb(R)^n$ whose range lies in $S$; the points $gamma(0)$ and $gamma(1)$ are its starting and ending points.
+  The set $S$ is *path-connected* if any two of its points are the starting and ending points of a path in $S$, and *polygonally connected* if such a path can always be chosen to be a polygonal line.
+] <def:path-connected-set>
+
+#definition(name: "Region")[
+  A connected open set is called an *(open) region*; its closure is called a *closed region*.
+] <def:region>
+
+#lemma(name: "Connected Subsets of the Real Line")[
+  A subset of $bb(R)$ is connected if and only if it is an interval.
+] <lem:connected-subsets-of-real-line>
+
+#proof[
+  Assume $I$ is an interval and $I = A union B$ with $A, B$ nonempty, disjoint and open in $I$.
+  Take $a in A$ and $b in B$ with $a < b$, and set $c = sup(A inter [a, b])$.
+  Since $A$ is closed in $I$, one has $c in A$, and $c != b$, so $c < b$.
+  Since $A$ is open in $I$, some $delta > 0$ satisfies $I inter (c - delta, c + delta) subset A$, which gives points of $A inter [a, b]$ larger than $c$, contradicting the definition of $c$.
+  Hence $I$ is connected.
+
+  Conversely, if $S$ is not an interval, there are $a < b < c$ with $a, c in S$ and $b in.not S$.
+  Then $S inter (-oo, b)$ and $S inter (b, oo)$ are nonempty, disjoint and open in $S$, so $S$ is not connected.
 ]
+
+#lemma(name: "Closure of a Connected Set")[
+  If $S subset bb(R)^n$ is connected, then $overline(S)$ is connected.
+] <lem:closure-connected>
+
+#proof[
+  Suppose $overline(S) = A union B$ with $A, B$ nonempty, disjoint and open in $overline(S)$; then both are also closed in $overline(S)$.
+  If $S inter A$ and $S inter B$ were both nonempty, they would separate $S$, which is impossible.
+  Hence $S subset A$ or $S subset B$; in the first case $overline(S) subset A$ because $A$ is closed in $overline(S)$ and $S$ is dense, so $B$ is empty, a contradiction.
+]
+
+#theorem(name: "Path-Connected Sets are Connected")[
+  Every path-connected subset of $bb(R)^n$ is connected.
+] <thm:path-connected-implies-connected>
+
+#proof[
+  Suppose $S$ is path-connected and $S = A union B$ with $A, B$ nonempty, disjoint and open in $S$.
+  Choose $bold(x) in A$ and $bold(y) in B$, together with a path $gamma: [0, 1] -> bb(R)^n$ in $S$ from $bold(x)$ to $bold(y)$.
+  Then $gamma^(-1)(A)$ and $gamma^(-1)(B)$ are nonempty, disjoint and open in $[0, 1]$, and their union is $[0, 1]$, contradicting #link(<lem:connected-subsets-of-real-line>)[the connectedness of an interval].
+]
+
+#theorem(name: "Open Connected Sets are Polygonally Connected")[
+  Let $D subset bb(R)^n$ be open and connected.
+  Then any two points of $D$ can be joined by a polygonal line in $D$.
+] <thm:open-connected-path-connected>
+
+#proof[
+  Fix $bold(x)_0 in D$ and let $A$ be the set of points of $D$ that can be joined to $bold(x)_0$ by a polygonal line in $D$.
+  The set $A$ is nonempty, and $A$ and $D backslash A$ are both open in $D$.
+
+  If $bold(x) in A$, choose $r > 0$ with $U(bold(x), r) subset D$; every $bold(y) in U(bold(x), r)$ is joined to $bold(x)$ by the segment $[bold(x), bold(y)] subset U(bold(x), r) subset D$, hence lies in $A$.
+
+  If $bold(x) in D backslash A$, choose $r > 0$ with $U(bold(x), r) subset D$; if some $bold(y) in A$ lay in $U(bold(x), r)$, then $bold(x)$ would be reachable from $bold(x)_0$ through $bold(y)$, a contradiction, so $U(bold(x), r) subset D backslash A$.
+
+  Since $D$ is connected and $A$ is nonempty, the complement $D backslash A$ must be empty.
+]
+
+#theorem(name: "Continuous Image of a Connected Set")[
+  Let $S subset bb(R)^n$ be connected and $bold(f): S -> bb(R)^m$ continuous.
+  Then $bold(f)(S)$ is connected.
+] <thm:continuous-image-connected>
+
+#proof[
+  Suppose $bold(f)(S) = A union B$ with $A, B$ nonempty, disjoint and open in $bold(f)(S)$.
+  Then $bold(f)^(-1)(A)$ and $bold(f)^(-1)(B)$ are nonempty, disjoint and open in $S$ by #link(<thm:continuity-open-preimage>)[the open-preimage criterion], and their union is $S$, contradicting connectedness.
+]
+
+#corollary(name: "Intermediate Value Theorem")[
+  Let $S subset bb(R)^n$ be connected and $f: S -> bb(R)$ continuous.
+  If $bold(a), bold(b) in S$ and $f(bold(a)) < c < f(bold(b))$, then $f(bold(x)) = c$ for some $bold(x) in S$.
+] <cor:intermediate-value-multivariable>
+
+#proof[
+  By #link(<thm:continuous-image-connected>)[the previous theorem] $f(S)$ is a connected subset of $bb(R)$, hence an interval by #link(<lem:connected-subsets-of-real-line>)[the lemma above].
+  It contains $f(bold(a))$ and $f(bold(b))$, so it contains every intermediate value $c$.
+]
+
+#corollary(name: "Continuous Image of a Path-Connected Set")[
+  The continuous image of a path-connected set is path-connected.
+] <cor:image-path-connected>
+
+#proof[
+  If $gamma: [0, 1] -> S$ is a path and $bold(f): S -> bb(R)^m$ is continuous, then $bold(f) compose gamma$ is a path in $bold(f)(S)$.
+]
+
+#caution(title: "Connected does not imply path-connected")[
+  Let
+  $
+    S = {(x, sin(1/x)) | 0 < x <= 1} union ({0} times [-1, 1]).
+  $
+  The graph is path-connected, hence connected, and its closure is $S$, so $S$ is connected by #link(<lem:closure-connected>)[the closure lemma].
+  It is not path-connected (@fig:topologist-sine-curve): a path from a point of the vertical segment to a point of the graph would have to pass through graph points with arbitrarily small $x$, where $sin(1/x)$ oscillates between $-1$ and $1$, and uniform continuity of the path on $[0, 1]$ rules this out.
+]
+
+#figure(
+  image("img/topologist-sine-curve.svg", width: 76%),
+  caption: [The topologist's sine curve. (a) The graph together with the vertical segment. (b) A path leaving the vertical segment would have to cross graph points with arbitrarily small $x$.],
+) <fig:topologist-sine-curve>
+
 // B12: ch12 Multi-variable Differential Calculus（多元微分学）
 = Multi-variable Differential Calculus // 多元微分学
 
