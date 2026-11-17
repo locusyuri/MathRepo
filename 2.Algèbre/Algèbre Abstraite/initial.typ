@@ -5474,12 +5474,13 @@ The additive half is an abelian group (#link(<def:abelian-group>)[§2.1]), so ev
 The multiplicative half is only a semigroup: it may lack an identity, lack inverses, and lack commutativity.
 Ring theory is the systematic study of how far the multiplicative half is from being a group, and of the tools that survive when it is not.
 
-The strengthening happens in three independent directions — *commutativity*, *identity*, *invertibility* — and the ladder it generates,
+The strengthening happens in three independent directions — *commutativity*, *identity*, *invertibility* — and the classes they generate,
 $
   "ring" subset "commutative ring" subset "integral domain" subset "field",
 $
-together with its non-commutative sibling the division ring, organises most of the vocabulary of the subject.
-Its strictness is the content of #link(<fig:ring-hierarchy>)[the hierarchy figure] in *Integral Domains and Fields*.
+together with the non-commutative sibling of the field, the division ring, organise most of the vocabulary of the subject.
+Independence matters: the three directions cannot be run into one chain, because commuting and possessing a $1$ are conditions of different kinds, and the classes therefore form a lattice.
+That lattice, and the strictness of each of its arrows, is drawn in #link(<fig:ring-hierarchy>)[the hierarchy figure] of *Integral Domains and Fields*.
 
 The exposition runs as follows.
 *Definition of Rings* fixes the axioms and the language of units and zero divisors.
@@ -5909,18 +5910,18 @@ Between the two lies a sharp finiteness phenomenon — in a finite ring the seco
 
 Cancellation is a genuine gain — $bb(Z)_6$ cancels nothing nontrivially — but it is not invertibility: the multiplicative semigroup of a domain is cancellative and may still miss almost every inverse, as $bb(Z)$ does.
 
-#definition(name: "Field")[
-  A *field* is a commutative unital ring $R$ with $R^times = R backslash {0}$: every nonzero element is a unit.
-] <def:field>
-
-The zero ring is excluded by the equation itself, since there $R^times = {0}$ whereas $R backslash {0} = emptyset$.
-
 #definition(name: "Division Ring")[
   A *division ring*, or *skew field*, is a unital ring $R != {0}$ in which every nonzero element is a unit.
-  Commutativity is not required.
 ] <def:division-ring>
 
-The definition imposes a condition on every nonzero element, and checking them one by one is rarely necessary: the solvability of a single family of equations settles the matter.
+#definition(name: "Field")[
+  A *field* is a commutative division ring, that is, a commutative unital ring $R != {0}$ with $R^times = R backslash {0}$.
+] <def:field>
+
+Commutativity is the only condition the second definition adds, so a field is exactly a division ring in which $a b = b a$, and the division rings that are not fields are the non-commutative ones.
+The zero ring is excluded twice over: a division ring is required to be nonzero, and in the zero ring $R^times = {0}$ while $R backslash {0} = emptyset$.
+
+The definition of a division ring imposes a condition on every nonzero element, and checking the conditions one by one is rarely necessary: the solvability of a single family of equations settles the matter.
 
 #theorem(name: "A Criterion for Division Rings")[
   Let $R$ be a ring with $abs(R) > 1$.
@@ -5961,38 +5962,37 @@ The definition imposes a condition on every nonzero element, and checking them o
   It is not commutative, since $i j = k$ while $j i = -k$, so it is not a field; and ${±1, ±i, ±j, ±k}$ is the quaternion group $Q_8$ (#link(<ex:quaternion-group>)[§2.2]) sitting inside $bb(H)^times$.
 ] <ex:quaternion-ring>
 
-#theorem(name: "Every Field Is an Integral Domain")[
-  Every field is an integral domain.
-] <thm:field-is-domain>
+The four words of the ladder — field, division ring, domain, unital ring — are not four separate theorems but one system of implications, and it is worth stating the system once.
+
+#theorem(name: "The Relations of the Ladder")[
+  Let $R$ be a ring.
+  + If $R$ is a field, then $R$ is an integral domain.
+  + If $R$ is a finite integral domain, then $R$ is a field.
+  + Consequently a finite commutative nonzero ring is a field exactly when it is an integral domain, and a field is always a division ring.
+] <thm:ladder-relations>
 
 #proof[
-  Let $F$ be a field and $a b = 0$ with $a != 0$.
+  (1) Let $F$ be a field and $a b = 0$ with $a != 0$.
   Then $b = a^(-1) (a b) = a^(-1) dot 0 = 0$.
   A field is commutative, unital and nonzero by definition, so the defining conditions of a domain are met.
-]
 
-The converse fails, and $bb(Z)$ is the witness.
-It recovers in the finite case.
-
-#theorem(name: "Finite Domains Are Fields")[
-  Every finite integral domain is a field.
-] <thm:finite-domain-field>
-
-#proof[
-  Let $R$ be a finite domain and $a in R$ nonzero, and consider the map $mu_a: R -> R$, $x |-> a x$.
+  (2) Let $R$ be a finite domain and $a in R$ nonzero, and consider the map $mu_a: R -> R$, $x |-> a x$.
   It is injective, because $a x = a y$ gives $x = y$ by #link(<prop:cancellation-domain>)[cancellation].
-  An injective self-map of a finite set is surjective, so $1$ lies in the
-  image: there is $b in R$ with $a b = 1$.
-  Every nonzero element is therefore a unit.
+  An injective self-map of a finite set is surjective, so $1$ lies in the image: there is $b in R$ with $a b = 1$.
+  Every nonzero element is therefore a unit, which makes $R$ a division ring, and $R$ is a field because it is commutative.
+
+  (3) Both halves are the statements just proved, read in one direction: field to domain by (1), and domain to field under the finiteness hypothesis by (2).
 ]
 
-The argument uses nothing about the additive structure beyond finiteness — the pigeonhole principle, in the form "injective implies bijective for self-maps of a finite set".
+The first implication does not reverse, and $bb(Z)$ is the witness: it is a domain that is not a field.
+What closes the gap is finiteness, and the argument uses nothing about the additive structure beyond it — the pigeonhole principle, in the form "injective implies bijective for self-maps of a finite set".
+
 The same step recurs in #link(<thm:zn-field-iff-prime>)[the criterion for $bb(Z)_n$] stated below and, in *Finite Fields*, identifies the finite domains of order $p^n$ with $bb(F)_(p^n)$.
 
 === Finite Rings // 有限环
 
 Finiteness is the hypothesis that turns absence of zero divisors into invertibility, and it does so without commutativity.
-The statements below sharpen #link(<thm:finite-domain-field>)[the theorem above] until nothing but the field structure is left.
+The statements below sharpen #link(<thm:ladder-relations>)[item (2) of the theorem above] until nothing but the field structure is left.
 
 #theorem(name: "Non-Zero-Divisors in a Finite Ring")[
   Let $R$ be a finite ring with $abs(R) > 1$, and suppose that some nonzero element of $R$ is not a zero divisor.
@@ -6052,7 +6052,7 @@ Commutativity is the one condition still missing, and restoring it is a genuine 
 ]
 
 #note(title: "Three routes to one conclusion")[
-  #link(<thm:finite-domain-field>)[The theorem above] assumes commutativity and unitality and proves invertibility from the pigeonhole principle.
+  #link(<thm:ladder-relations>)[The second item of the theorem above] assumes commutativity and unitality and proves invertibility from the pigeonhole principle.
   #link(<cor:finite-no-zero-divisor-field>)[The corollary just proved] keeps only finiteness and the absence of zero divisors, at the price of importing Wedderburn's theorem.
   In both cases finiteness is essential: $bb(Z)$ is an infinite ring without zero divisors that is not a field.
 ] <note:finite-ring-routes>
@@ -6064,9 +6064,9 @@ Commutativity is the one condition still missing, and restoring it is a genuine 
 #proof[
   Suppose first that $n = p$ is prime and $overline(a) overline(b) = overline(0)$, that is, $p | a b$.
   Then $p | a$ or $p | b$, so one factor is already $overline(0)$: $bb(Z)_p$ has no zero divisors.
-  A finite domain is a field by #link(<thm:finite-domain-field>)[the theorem above].
+  A finite domain is a field by #link(<thm:ladder-relations>)[the theorem above].
 
-  Conversely, if $n = u v$ with $1 < u, v < n$, then $overline(u)$ and $overline(v)$ are nonzero while their product is $overline(0)$, so $bb(Z)_n$ is not a domain and hence, by #link(<thm:field-is-domain>)[the first theorem of this section], not a field.
+  Conversely, if $n = u v$ with $1 < u, v < n$, then $overline(u)$ and $overline(v)$ are nonzero while their product is $overline(0)$, so $bb(Z)_n$ is not a domain and hence, by #link(<thm:ladder-relations>)[item (1) of the theorem above], not a field.
 ]
 
 #example(name: "Units and zero divisors in $bb(Z)_n$.")[
@@ -6093,25 +6093,30 @@ Commutativity is the one condition still missing, and restoring it is a genuine 
 ]
 
 #note(title: "Why a field is required to commute")[
-  Dropping commutativity is not a cosmetic weakening.
-  In $bb(H)$ the equations $x i = j$ and $i x = j$ have different solutions, so the usual elimination arguments of linear algebra break down.
+  The commutativity built into the definition of a field is not a cosmetic weakening of the division ring.
+  In $bb(H)$ the equations $x i = j$ and $i x = j$ have different solutions, so the usual elimination arguments of linear algebra break down, and the division ring $bb(H)$ is not the ground structure of any linear algebra over it that behaves as expected.
   Authors who take "field" to include the non-commutative case say *commutative field* for what is called a field here, or reserve *skew field* for $bb(H)$-like structures.
   We keep *field* commutative throughout, so that a field is always the ground structure of linear algebra.
 ] <note:field-convention>
 
 #figure(
-  image("img/ring-hierarchy.svg", width: 96%),
-  caption: [The ladder of ring axioms. Each class is obtained from the one
-    outside it by adjoining a single multiplicative condition:
-    commutativity, then absence of zero divisors, then invertibility of
-    every nonzero element. The branch on the right keeps commutativity out
-    and stops at the division ring $bb(H)$.],
+  image("img/ring-hierarchy.svg", width: 84%),
+  caption: [The lattice of ring classes. Commutativity and a multiplicative
+    identity are independent conditions on a ring, so their conjunction is a
+    class of its own, the commutative unital ring, and the classes form a
+    lattice rather than a chain. From that junction the ladder climbs through
+    the integral domain to the field, the last steps being the divisibility
+    refinements of *Divisibility Theory*; the branch on the right adjoins
+    inverses without commutativity and reaches the same field from below.
+    Every arrow names the condition it adds, and every box carries one example
+    of its class.],
   placement: auto,
   supplement: [Fig.],
 ) <fig:ring-hierarchy>
 
-The ladder is strict at every rung, and each rung has a named witness: $bb(Z)$ is a domain that is not a field, $bb(Z)_6$ is a commutative unital ring that is not a domain, $bb(H)$ is a division ring that is not a field, and $2 bb(Z)$ is a ring that is not unital.
-No implication in the ladder reverses.
+Every arrow of the figure is strict, and each rung has a named witness: $2 bb(Z)$ is a commutative ring without identity, $M_2(bb(R))$ a unital ring that is not a division ring, $bb(Z)_6$ a commutative unital ring with zero divisors, $bb(Z)[x]$ a domain that is not a principal ideal domain, $k[x]$ a Euclidean domain that is not a field, and $bb(H)$ a division ring that is not a field.
+No implication reverses.
+The single arrow without a witness in this book is the passage from a principal ideal domain to a Euclidean domain: such rings exist, and #link(<note:hierarchy-strictness>)[the note on strictness] in *Divisibility Theory* records that none is exhibited here.
 
 == Characteristic and Prime Fields // 环的特征与素域
 
@@ -6941,7 +6946,7 @@ The two names are justified by the next two theorems, which translate them into 
 ] <cor:maximal-implies-prime>
 
 #proof[
-  If $I$ is maximal then $R \/ I$ is a field by #link(<thm:maximal-iff-field>)[the theorem above], hence an integral domain by #link(<thm:field-is-domain>)[§8.3], hence $I$ is prime by #link(<thm:prime-iff-domain>)[the first theorem].
+  If $I$ is maximal then $R \/ I$ is a field by #link(<thm:maximal-iff-field>)[the theorem above], hence an integral domain by #link(<thm:ladder-relations>)[§8.3], hence $I$ is prime by #link(<thm:prime-iff-domain>)[the first theorem].
 ]
 
 The converse fails, and the examples below show why: a quotient can be a domain without being a field.
@@ -8992,11 +8997,11 @@ Both agree when $R$ is commutative, which covers the case $R = F$ of #link(<ex:e
 
 //   Section 8.3: 整环与域 (Integral Domains and Fields)
 //     - 整环与消去律
-//     - 域、除环、四元数体
+//     - 除环，域（域 = 交换除环）、四元数体
 //     - 除环判据：阶大于 1 且 $a x = b$ 恒可解（群论唯一解性质的类比）
-//     - 域必为整环；有限整环必为域；$\bb(Z)_n$ 为域 ⟺ n 素
+//     - 一个定理汇总阶梯关系：域 ⟹ 整环；有限整环 ⟹ 域；$\bb(Z)_n$ 为域 ⟺ n 素
 //     - 有限环：非零非零因子 ⟹ 幺环且可逆；无零因子 ⟹ 除环；Wedderburn 定理（陈述）
-//     - 环的公理阶梯图 fig:ring-hierarchy
+//     - 环类格图 fig:ring-hierarchy（交换 / 含幺两条独立分支，汇于域）
 
 //   Section 8.4: 环的特征与素域 (Characteristic and Prime Fields)
 //     - 典范同态 $\chi_R: \bb(Z) -> R$ 与特征的定义
