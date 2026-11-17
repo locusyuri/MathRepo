@@ -9,6 +9,7 @@
 | （根） | `no-pwsh.ps1` 任务聚合入口 | 不想记具体脚本，只想"编译 / 出图 / 校验 / 发布" |
 | `images/` | 插图渲染 | 新增/修改绘图脚本后重建 `img/` |
 | `check/` | 静态校验 | 提交前检查 Typst 语法、交叉引用 |
+| `glossary/` | 全仓术语索引 | 从各笔记 Glossary 生成 README 的 Term Index |
 | `pdf/` | 产物分发 | 编译完 PDF 后本地归类或上传 OSS |
 
 ## no-pwsh.ps1（任务聚合）
@@ -51,6 +52,23 @@ uv run scripts/check/check-typst-attachments.py --fix
 ```
 
 退出码：检查模式有命中为 1，无命中为 0。
+
+## glossary/
+
+| 脚本 | 用途 |
+|---|---|
+| `collect-glossaries.py` | 扫描所有 `*/initial.typ` 的 `= Glossary`，合并词条与所属笔记，生成/更新 README 的 Term Index |
+
+```powershell
+uv run scripts/glossary/collect-glossaries.py --stats                  # 查看各笔记条目数与去重后总数
+uv run scripts/glossary/collect-glossaries.py --defs-only              # 只收 def: 词条
+uv run scripts/glossary/collect-glossaries.py --types def,thm,prop,lem,cor,ex --no-chinese --write README.md
+```
+
+- 默认类型为 `def,thm,prop,lem,cor`；`--types` 可加入 `ex` 等。
+- `--write README.md` 只替换 `# Term Index | 术语索引` 到 `------` 之间的内容。
+- 同名词条会合并所属笔记；README 中已有的词条会保留并补全笔记归属。
+- `--no-chinese` 输出纯英文词条；不加时保留 README 里已有的中文译名。
 
 ## pdf/
 
