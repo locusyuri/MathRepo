@@ -8099,12 +8099,54 @@ We first approximate Riemann integrable functions by continuous functions, and c
   $
 ] <thm:continuous-approximates-integrable>
 
+#proof[
+  Let $epsilon > 0$.
+  Since $f in R[a, b]$, there exists a partition $a = x_0 < x_1 < dots.c < x_n = b$ such that
+  $
+    sum_(i=1)^n omega_i Delta x_i < epsilon,
+  $
+  where $omega_i$ is the oscillation of $f$ on $[x_(i-1), x_i]$.
+
+  Let $g in C[a, b]$ be the polygonal line joining the points $(x_i, f(x_i))$.
+  On $[x_(i-1), x_i]$ the value $g(x)$ is a convex combination of $f(x_(i-1))$ and $f(x_i)$, hence
+  $
+    abs(f(x) - g(x)) <= omega_i, quad quad x in [x_(i-1), x_i],
+  $
+  and therefore
+  $
+    integral_a^b abs(f(x) - g(x)) dif x <= sum_(i=1)^n omega_i Delta x_i < epsilon.
+  $
+]
+
 #theorem(name: "Approximation of Continuous Functions by Smooth Functions")[
   Let $f(x) in C[a, b]$. For any $epsilon > 0$, there exists a function $g(x) in C^oo [a, b]$ such that
   $
     abs(f(x) - g(x)) < epsilon, quad quad forall x in [a, b].
   $
 ] <thm:smooth-approximates-continuous>
+
+#proof[
+  Extend $f$ continuously to $[-1, 2]$ and, for $n in bb(N)$ and $x in [0, 1]$, set
+  $
+    g_(n)(x) = c_(n) integral_(-1)^1 f(x + s) (1 - s^2)^n dif s, quad quad c_(n)^(-1) = integral_(-1)^1 (1 - s^2)^n dif s.
+  $
+
+  *Smoothness.* Each $g_(n)$ is $C^oo$ on $[0, 1]$: differentiating $k$ times under the integral sign gives
+  $
+    g_(n)^((k))(x) = c_(n) integral_(-1)^1 f(x + s) dif^k/(dif s^k) (1 - s^2)^n dif s,
+  $
+  and the integrand is continuous in $(x, s)$ on the compact set $[0, 1] times [-1, 1]$.
+
+  *Convergence.* Let $epsilon > 0$ and choose $delta in (0, 1)$ such that $abs(s) < delta$ implies $abs(f(x + s) - f(x)) < epsilon / 2$ for all $x in [0, 1]$.
+  Since $c_(n) integral_(-1)^1 (1 - s^2)^n dif s = 1$ and $(1 - s^2)^n <= (1 - delta^2)^n$ for $delta <= abs(s) <= 1$,
+  $
+    abs(g_(n)(x) - f(x)) <= epsilon / 2 + 2 M (1 - delta^2)^n,
+  $
+  where $M = sup_(x in [0, 1]) abs(f(x))$.
+  Hence $abs(g_(n)(x) - f(x)) < epsilon$ for all $x in [0, 1]$ once $n$ is large enough.
+
+  An affine change of variable carries $g_(n)$ to $[a, b]$.
+]
 
 On this basis, the Weierstrass approximation theorems are stated as follows:
 
@@ -8214,8 +8256,52 @@ On this basis, the Weierstrass approximation theorems are stated as follows:
   $
 ] <thm:weierstrass-second-approximation>
 
+#proof(name: "via the Fejér kernel")[
+  Since $f$ is $2 pi$-periodic, we may integrate over $[-pi, pi]$ after any shift.
+  For $n in bb(N)$ define the *Fejér kernel*
+  $
+    F_(n)(t) = 1 / (2 n pi) (sin(n t / 2) / sin(t / 2))^2 quad (t != 0), quad quad F_(n)(0) = n / (2 pi),
+  $
+  and the *Fejér mean*
+  $
+    sigma_(n) f(x) = integral_(-pi)^(pi) f(x - t) F_(n)(t) dif t.
+  $
+  By #link(<ex:fejer-integral>)[the Fejér integral], $F_(n) >= 0$ and
+  $
+    integral_(-pi)^(pi) F_(n)(t) dif t = 1.
+  $
+
+  *The mean is a trigonometric polynomial.* The expansion obtained in #link(<ex:fejer-integral>)[the Fejér integral] gives
+  $
+    F_(n)(t) = 1 / (2 pi) lr(1 + 2 sum_(j=1)^(n-1) (1 - j/n) cos j t).
+  $
+  Substituting and shifting the argument $s = x - t$,
+  $
+    integral_(-pi)^(pi) f(x - t) cos j t dif t = cos j x integral_(-pi)^(pi) f(s) cos j s dif s + sin j x integral_(-pi)^(pi) f(s) sin j s dif s,
+  $
+  hence
+  $
+    sigma_(n) f(x) = A_0 / 2 + sum_(j=1)^(n-1) (1 - j/n) (A_j cos j x + B_j sin j x),
+  $
+  where
+  $
+    A_j = 1 / pi integral_(-pi)^(pi) f(s) cos j s dif s, quad quad B_j = 1 / pi integral_(-pi)^(pi) f(s) sin j s dif s.
+  $
+
+  *Uniform convergence.* Let $epsilon > 0$ and choose $delta in (0, pi)$ such that $abs(s) < delta$ implies $abs(f(x + s) - f(x)) < epsilon / 2$ for all $x$.
+  For $delta <= abs(t) <= pi$ one has $sin(t / 2) >= sin(delta / 2)$, hence $F_(n)(t) <= 1 / (2 n pi sin^2(delta / 2))$, and consequently
+  $
+    abs(sigma_(n) f(x) - f(x))
+    & <= integral_(abs(t) < delta) abs(f(x - t) - f(x)) F_(n)(t) dif t + 2 M integral_(delta <= abs(t) <= pi) F_(n)(t) dif t \
+    & <= epsilon / 2 + (2 M) / (n sin^2(delta / 2)),
+  $
+  where $M = sup abs(f)$.
+  The right-hand side is $< epsilon$ for all sufficiently large $n$, uniformly in $x$, so $T_(n-1) = sigma_(n) f$ has the required form.
+]
+
 #example(name: "Approximation by Step and Continuous Functions")[
-  A function $p: [a, b] -> bb(R)$ is called a *step function* on $[a, b]$ if there exists a partition $a = x_0 < x_1 < dots.c < x_n = b$ such that $p$ is constant on each open subinterval $(x_(i-1), x_i)$, $i = 1, 2, dots, n$. Let $f(x)$ be Riemann integrable on $[a, b]$. Show that:
+  A function $p: [a, b] -> bb(R)$ is called a *step function* on $[a, b]$ if there exists a partition $a = x_0 < x_1 < dots.c < x_n = b$ such that $p$ is constant on each open subinterval $(x_(i-1), x_i)$, $i = 1, 2, dots, n$.
+  Let $f(x)$ be Riemann integrable on $[a, b]$. Show that:
 
   *1.* For every $epsilon > 0$ there exist step functions $p, q$ on $[a, b]$ with $p <= f <= q$ on $[a, b]$ and
   $
@@ -8225,17 +8311,26 @@ On this basis, the Weierstrass approximation theorems are stated as follows:
   $
     integral_a^b [q(x) - p(x)] dif x < epsilon.
   $
+] <ex:step-continuous-approximation>
 
-  *Proof of Item 1.* Since $f(x) in R[a, b]$, for every $epsilon > 0$ there exists a partition $P$ with $sum_(i=1)^n omega_i Delta x_i < epsilon$, where $omega_i$ is the oscillation of $f$ on the $i$-th subinterval. Take $q(x)$ and $p(x)$ to be the supremum and infimum of $f$ on each subinterval, respectively; then $p <= f <= q$ and the integral inequality holds.
+#solution(name: "of Item 1")[
+  Since $f(x) in R[a, b]$, for every $epsilon > 0$ there exists a partition $P$ with $sum_(i=1)^n omega_i Delta x_i < epsilon$, where $omega_i$ is the oscillation of $f$ on the $i$-th subinterval.
+  Take $q(x)$ and $p(x)$ to be the supremum and infimum of $f$ on each subinterval, respectively; then $p <= f <= q$ and the integral inequality holds.
+]
 
-  *Proof of Item 2.* Since $f(x) in R[a, b]$, for every $epsilon > 0$ there exists a partition $P$ ($a = x_0 < x_1 < dots.c < x_n = b$) with $sum_(i=1)^n omega_i Delta x_i < epsilon$, i.e. $overline(S)(P) - underline(S)(P) < epsilon$, and there exists $M > 0$ with $abs(f(x)) <= M$. Choose $delta < min_(1 <= i <= n) lr({Delta x_i / 2})$ with $4 M delta (n - 1) < epsilon / 2$.
+#solution(name: "of Item 2")[
+  Since $f(x) in R[a, b]$, for every $epsilon > 0$ there exists a partition $P$ ($a = x_0 < x_1 < dots.c < x_n = b$) with $sum_(i=1)^n omega_i Delta x_i < epsilon$, i.e. $overline(S)(P) - underline(S)(P) < epsilon$, and there exists $M > 0$ with $abs(f(x)) <= M$.
+  Choose $delta < min_(1 <= i <= n) lr({Delta x_i / 2})$ with $4 M delta (n - 1) < epsilon / 2$.
 
-  On each closed subinterval $[x_(i-1) + delta, x_i - delta]$, set $q(x) = M_i$ and $p(x) = m_i$ (the supremum and infimum of $f$ there). In the neighborhood $[x_i - delta, x_i + delta]$ of each partition point, let $q(x)$ pass linearly from $M_i$ to $M_(i+1)$, ensuring $q(x) >= max lr({M_i, M_(i+1)}) >= f(x)$ throughout the transition region, and construct $p(x)$ analogously. The continuous functions $q(x)$ and $p(x)$ then satisfy
+  On each closed subinterval $[x_(i-1) + delta, x_i - delta]$, set $q(x) = M_i$ and $p(x) = m_i$ (the supremum and infimum of $f$ there).
+  In the neighborhood $[x_i - delta, x_i + delta]$ of each partition point, let $q(x)$ rise linearly from $M_i$ to $max lr({M_i, M_(i+1)})$ on $[x_i - delta, x_i]$ and fall linearly to $M_(i+1)$ on $[x_i, x_i + delta]$; then $q(x) >= f(x)$ throughout, since $f(x) <= M_i$ on the left part and $f(x) <= M_(i+1)$ on the right part.
+  Construct $p(x)$ analogously.
+  The continuous functions $q(x)$ and $p(x)$ then satisfy
   $
     integral_a^b q(x) dif x <= overline(S)(P) + epsilon / 2, quad quad integral_a^b p(x) dif x >= underline(S)(P) - epsilon / 2,
   $
   and the conclusion follows.
-] <ex:step-continuous-approximation>
+]
 
 #example(name: "Approximation by Successively Better Classes of Functions")[
   Let $f(x) in R[a, b]$. Show that for every $epsilon > 0$ there exists a function $g$ with
@@ -8243,10 +8338,18 @@ On this basis, the Weierstrass approximation theorems are stated as follows:
     integral_a^b abs(f(x) - g(x)) dif x < epsilon,
   $
   where $g$ is respectively: *1.* a step function; *2.* a piecewise linear (polygonal) function; *3.* a continuous function; *4.* a continuously differentiable function.
+] <ex:successive-approximation>
 
-  *Proof of Item 1.* Since $f(x) in R[a, b]$, for every $epsilon > 0$ there exists a partition $P$ with $sum_(i=1)^n omega_i Delta x_i < epsilon$. Set $g(x) = f(x_i)$ for $x in (x_(i-1), x_i)$; the values at the partition points may be chosen arbitrarily.
+#solution(name: "of Item 1")[
+  Since $f(x) in R[a, b]$, for every $epsilon > 0$ there exists a partition $P$ with $sum_(i=1)^n omega_i Delta x_i < epsilon$.
+  Set $g(x) = f(x_i)$ for $x in (x_(i-1), x_i)$; the values at the partition points may be chosen arbitrarily.
+]
 
-  *Proof of Items 2 and 3.* A polygonal function is in particular continuous. For every $epsilon > 0$, divide $[a, b]$ into $n$ equal parts, let $x_i = a + (b - a) / n dot i$ ($i = 0, 1, dots, n$), and choose $n$ so large that $sum_(i=1)^n omega_i Delta x_i < epsilon$. Let $y = f_(n)(x)$ be the polygonal line joining the points $(x_i, f(x_i))$. For any $x in [x_(i-1), x_i]$,
+#solution(name: "of Items 2 and 3")[
+  A polygonal function is in particular continuous.
+  For every $epsilon > 0$, divide $[a, b]$ into $n$ equal parts, let $x_i = a + (b - a) / n dot i$ ($i = 0, 1, dots, n$), and choose $n$ so large that $sum_(i=1)^n omega_i Delta x_i < epsilon$.
+  Let $y = f_(n)(x)$ be the polygonal line joining the points $(x_i, f(x_i))$.
+  For any $x in [x_(i-1), x_i]$,
   $
        & abs(f_(n)(x) - f(x)) \
      = & abs((x_i - x) / (x_i - x_(i-1)) [f(x_(i-1)) - f(x)] + (x - x_(i-1)) / (x_i - x_(i-1)) [f(x_i) - f(x)]) \
@@ -8257,9 +8360,11 @@ On this basis, the Weierstrass approximation theorems are stated as follows:
   $
     integral_a^b abs(f_(n)(x) - f(x)) dif x = sum_(i=1)^n integral_(x_(i-1))^(x_i) abs(f_(n)(x) - f(x)) dif x <= sum_(i=1)^n omega_i Delta x_i < epsilon.
   $
+]
 
-  *Proof of Item 4.* A Riemann integrable function can be approximated by a continuous function, and by #link(<thm:weierstrass-first-approximation>)[the Weierstrass first approximation theorem] a continuous function can be approximated by a polynomial (in particular a continuously differentiable function); combining the two gives the result.
-] <ex:successive-approximation>
+#solution(name: "of Item 4")[
+  A Riemann integrable function can be approximated by a continuous function, and by #link(<thm:weierstrass-first-approximation>)[the Weierstrass first approximation theorem] a continuous function can be approximated by a polynomial (in particular a continuously differentiable function); combining the two gives the result.
+]
 
 // --- Part IV: 多元微积分本体（决策③：ch11–13） ---
 #part("Multivariable Calculus") // 多元微积分
