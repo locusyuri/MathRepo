@@ -90,3 +90,14 @@ Compile the file after insertion:
 ```bash
 typst compile "<subject>/initial.typ" "<subject>/initial.pdf" --root .
 ```
+
+### Repo-wide Term Index
+
+To merge every note's glossary into the README term index:
+
+```bash
+uv run scripts/glossary/collect-glossaries.py --stats
+uv run scripts/glossary/collect-glossaries.py --types def,thm,prop,lem,cor,ex --no-chinese --write README.md
+```
+
+The script groups terms A–Z, merges duplicate terms with all notes that define them, and replaces only the `# Term Index | 术语索引` section. Add `--defs-only` if the index should contain definitions only.
