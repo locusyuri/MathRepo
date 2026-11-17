@@ -133,10 +133,13 @@ $
 ) <fig:trig-triangle>
 
 #property(name: "Geometric Remarks")[
-  - On the gray triangle (@fig:trig-triangle), the sum of the squares of the two numbers above
-    is equal to the square of the number below, for instance, $tan^2 x + 1 = sec^2 x$.
+  - On each gray triangle (@fig:trig-triangle), the sum of the squares of the two numbers above
+    is equal to the square of the number below: $sin^2 x + cos^2 x = 1$,
+    $tan^2 x + 1 = sec^2 x$, and $cot^2 x + 1 = csc^2 x$.
   - The three trigonometric functions in the clockwise direction have the following properties:
-    $tan x = (sin x) / (cos x)$, etc.
+    $tan x = (sin x) / (cos x)$, $cot x = (cos x) / (sin x)$, etc.
+  - The two trigonometric functions on each diagonal are reciprocals of each other:
+    $sin x csc x = 1$, $cos x sec x = 1$, and $tan x cot x = 1$.
 ] <prop:trig-triangle-remarks>
 
 #theorem(name: "Weierstrass Substitution (All-Powerful Formula)")[
