@@ -8,12 +8,17 @@
 
 内置检查项（可用 --check 选择）：
 
-    paren   [_^][a-zA-Z]+(      下/上标后紧跟括号，括号会被吞进上下标
-                                例：L^oo(Omega) 渲染成 L^{oo(Omega)}
-                                建议：L^(oo)(Omega)          —— 可自动修
-                                （`_{函数}(参数)` 除外：integral_bb(R)、
+    paren   [_^][a-zA-Z]+(      下/上标后紧跟括号，括号可能被吞进上下标
+                                例：f_m(x) 渲染成 f_{m(x)}
+                                建议：f_(m)(x)               —— 可自动修
+                                （上标如 L^p(x) 当前能正常渲染，但统一分组更稳；
+                                 `_{函数}(参数)` 除外：integral_bb(R)、
                                  V_text("out") 里的括号本就是函数参数，
                                  已实测渲染正确，不在报告范围内）
+    space   \^[a-zA-Z]+(        上标后紧跟括号，建议用空格明确分隔
+                                例：L^p(bb(R)^n)
+                                建议：L^p (bb(R)^n)           —— 只报告，需人工
+                                （默认不启用，用 --check space 显式运行）
     brace   [_^]{               LaTeX 花括号残留，Typst 中会按字面渲染
                                 例：a_{i j}(x) 渲染出可见的 {i j}
                                 建议：a_(i j)(x)             —— 可自动修
@@ -79,6 +84,14 @@ CHECKS = {
         "pattern": re.compile(rf"(?P<sig>[_^])(?!(?:{_FUNCTION_GUARD})\()(?P<name>[a-zA-Z]+)\("),
         "plan": plan_paren,
         "fixable": True,
+    },
+    "space": {
+        "title": "上标后紧跟括号（建议用空格分隔）",
+        "pattern": re.compile(rf"(?P<sig>\^)(?!(?:{_FUNCTION_GUARD})\()(?P<name>[a-zA-Z]+)\("),
+        "plan": None,
+        "fixable": False,
+        "default": False,
+        "hint": "建议写成 ^p (...)，用空格把括号移出上标",
     },
     "brace": {
         "title": "LaTeX 花括号残留（Typst 按字面渲染）",
@@ -154,7 +167,7 @@ def analyze(path, names, include_comments):
                 if in_comment and not include_comments:
                     continue
                 plan = CHECKS[name]["plan"](match, body) if CHECKS[name]["plan"] else None
-                suggestion = plan[2] if plan else "需人工改写（脚本不猜）"
+                suggestion = plan[2] if plan else CHECKS[name].get("hint", "需人工改写（脚本不猜）")
                 hits.append((number, match.start() + 1, name, match.group(0), suggestion, plan, body, in_comment))
     return lines, hits
 
@@ -218,7 +231,7 @@ def main():
         "--check",
         action="append",
         choices=sorted(CHECKS),
-        help="只运行指定检查项，可重复；默认全部",
+        help="只运行指定检查项，可重复；默认运行除 space 外的全部检查",
     )
     parser.add_argument(
         "--include-comments",
@@ -237,7 +250,7 @@ def main():
     )
     args = parser.parse_args()
 
-    names = args.check or list(CHECKS)
+    names = args.check or [name for name, cfg in CHECKS.items() if cfg.get("default", True)]
     total = 0
     manual_total = 0
     fixed_total = 0
