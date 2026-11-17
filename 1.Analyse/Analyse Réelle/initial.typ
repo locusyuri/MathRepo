@@ -2668,9 +2668,19 @@ $
 // --- Appendix ---
 #part("Appendix") // 附录
 
-= Glossary // 术语表
+= Glossary <sec:glossary> // 术语表
 
-== A
+#{
+  set heading(numbering: none)
+  show heading.where(level: 2): it => {
+    set par(first-line-indent: 0em)
+    v(1.2em)
+    text(size: 18pt, font: font-latin-title, weight: "bold", fill: color-title)[#it.body]
+    v(0.5em)
+  }
+
+  [
+  == A
 - *#link(<thm:absolute-continuity-of-indefinite-integrals>)[Absolute Continuity of Indefinite Integrals]*
 - *#link(<prop:absolute-integrability-is-equivalent-to-integrability>)[Absolute Integrability is Equivalent to Integrability]*
 - *#link(<def:absolutely-continuous-function>)[Absolutely Continuous Function]*
@@ -2832,6 +2842,8 @@ $
 
 == Y
 - *#link(<lem:young-inequality>)[Young's Inequality]*
+  ]
+}
 
 // 只有被引用的章节才会被编译和显示在目录中，因此如果你想要显示某个章节，请确保在主文件中正确引用了它。
 // refer to @zhou2016
