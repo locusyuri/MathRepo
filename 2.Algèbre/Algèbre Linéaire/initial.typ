@@ -3920,19 +3920,6 @@ Norms need not come from inner products; the standard examples on $bb(R)^n$ are 
   satisfies the parallelogram law.
 ]
 
-#note[
-  The maximum is the *infinity norm*, not the *$0$-norm*.
-
-  The *$0$-norm* is the counting function
-  $
-    ||alpha||_0 = lim_(p -> 0) sum_(i=1)^n abs(a_i)^p,
-  $
-  the number of non-zero coordinates of $alpha$.
-  It is not a norm, since absolute homogeneity fails:
-  $||k alpha||_0 = ||alpha||_0 != abs(k) ||alpha||_0$ for $k != 0, ±1$.
-  It is nevertheless a useful measure of sparsity.
-]
-
 The most important norm comes from an inner product.
 
 #property(name: "Norm Induced by an Inner Product")[
