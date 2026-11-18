@@ -1,8 +1,8 @@
 """First Isomorphism Theorem commutative diagram.
 
-G --pi--> G/ker f --f_bar--> im f --i--> H
+G --pi--> G/ker f --phi--> im f --i--> H
 
-Decomposition: f = i . f_bar . pi
+Decomposition: f = i . phi . pi
 
 Run with: uv run python src/math_paper/first_isomorphism.py
 """
@@ -45,7 +45,7 @@ def build_figure():
     # -- node centres ---------------------------------------------------- #
     nodes = [
         (1.5,  2.25, r"$G$"),
-        (5.5,  2.25, r"$G/\!\ker f$"),
+        (5.5,  2.25, r"$G/\ker f$"),
         (9.5,  2.25, r"$\mathrm{im}\, f$"),
         (13.0, 2.25, r"$H$"),
     ]
@@ -75,7 +75,7 @@ def build_figure():
         arrowprops=dict(arrowstyle="-|>", color=COR, lw=1.8,
                         mutation_scale=18),
         zorder=1)
-    ax.text(7.5, 2.60, r"$\overline{f}$", fontsize=13, ha="center",
+    ax.text(7.5, 2.60, r"$\varphi$", fontsize=15, ha="center",
             va="bottom", color=COR, style="italic")
     ax.text(7.5, 1.70, "isomorphism", fontsize=11, ha="center",
             va="top", color=GRY)
@@ -91,7 +91,7 @@ def build_figure():
 
     # -- bottom theorem statement ----------------------------------------- #
     ax.text(7.0, 0.6,
-            r"First Isomorphism Theorem:  $G/\!\ker f \cong \mathrm{im}\, f$",
+            r"First Isomorphism Theorem:  $G/\ker f \cong \mathrm{im}\, f$",
             fontsize=11, ha="center", va="center", color=GRY)
 
     # -- canvas ---------------------------------------------------------- #
@@ -106,6 +106,9 @@ def build_figure():
 def main():
     fig = build_figure()
     path = SPEC.save(fig, OUT_DIR / "first-isomorphism")
+    preview = Path(__file__).resolve().parent.parent.parent.parent / "temp" / "first-isomorphism-preview.png"
+    preview.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(preview, format="png", bbox_inches="tight", facecolor="white", dpi=150)
     plt.close(fig)
     print(f"Saved: {path}")
 

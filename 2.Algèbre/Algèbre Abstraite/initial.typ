@@ -1465,7 +1465,7 @@ and it upgrades to a fully symmetric statement.
   the last equality holding since the subgroups $H$ and $K$ satisfy
   $H^(-1) = H$ and $K^(-1) = K$.
 
-  ($<==>$) Suppose $H K = K H$. To pass the one-step criterion, take
+  ($<==$) Suppose $H K = K H$. To pass the one-step criterion, take
   $h, h' in H$ and $k, k' in K$. Then
   $
     (h k) (h' k')^(-1) = h (k k'^(-1)) h'^(-1),
@@ -3440,7 +3440,7 @@ recovers, up to renaming, exactly the image $"Im" f$.
 #theorem(name: "First Isomorphism Theorem")[
   Let $f: G -> H$ be a group homomorphism. The map
   $
-    overline(f): G \/ "Ker" f -> "Im" f, quad a("Ker" f) |-> f(a),
+    phi: G \/ "Ker" f -> "Im" f, quad a("Ker" f) |-> f(a),
   $
   is a well-defined isomorphism. In particular,
   $
@@ -3449,39 +3449,41 @@ recovers, up to renaming, exactly the image $"Im" f$.
 ] <thm:first-isomorphism>
 
 #proof[
-  We verify four things in turn: that $overline(f)$ is well-defined,
+  We verify four things in turn: that $phi$ is well-defined,
   a homomorphism, injective, and surjective.
 
   *Well-defined.* If $a("Ker" f) = b("Ker" f)$ then $b^(-1) a in
   "Ker" f$ by #link(<def:coset>)[§3.3], so $f(b^(-1) a) = e'$, i.e.
-  $f(b)^(-1) f(a) = e'$, giving $f(a) = f(b)$. Thus $overline(f)$
+  $f(b)^(-1) f(a) = e'$, giving $f(a) = f(b)$. Thus $phi$
   depends only on the coset, not on the representative.
 
   *Homomorphism.* For $a, b in G$,
   $
-    overline(f)(a("Ker" f) dot b("Ker" f)) & = overline(f)((a b)("Ker"
+    phi(a("Ker" f) dot b("Ker" f)) & = phi((a b)("Ker"
                                                  f)) = f(a b) \
-                                           & = f(a) f(b) = overline(f)(a("Ker" f)) dot overline(f)(b("Ker" f)),
+                                           & = f(a) f(b) = phi(a("Ker" f)) dot phi(b("Ker" f)),
   $
   using the definition of the quotient operation
   (#link(<thm:quotient-group>)[§4.2]) and that $f$ is a homomorphism.
 
-  *Injective.* If $overline(f)(a("Ker" f)) = e'$, then $f(a) = e'$,
+  *Injective.* If $phi(a("Ker" f)) = e'$, then $f(a) = e'$,
   so $a in "Ker" f$, i.e. $a("Ker" f) = "Ker" f$ — the identity of
-  $G \/ "Ker" f$. The kernel of $overline(f)$ is trivial.
+  $G \/ "Ker" f$. The kernel of $phi$ is trivial.
 
   *Surjective.* By definition, every element of $"Im" f$ is of the
-  form $f(a) = overline(f)(a("Ker" f))$ for some $a in G$.
+  form $f(a) = phi(a("Ker" f))$ for some $a in G$.
 
   Being a well-defined, injective and surjective homomorphism,
-  $overline(f)$ is an isomorphism.
+  $phi$ is an isomorphism.
 ]
 
 #figure(
   image("img/first-isomorphism.svg"),
-  caption: [The First Isomorphism Theorem as a commutative diagram:
-    every row is exact, and $overline(f)$ fills the dashed arrow as
-    the canonical isomorphism $G \/ "Ker" f tilde.equiv "Im" f$.],
+  caption: [The First Isomorphism Theorem as a commutative diagram.
+    The projection $pi$ forgets exactly the kernel, the inclusion $iota$
+    remembers exactly the image, and $phi$ is the isomorphism between the
+    two that makes the diagram commute, $a("Ker" f) |-> f(a)$; this is the
+    precise sense in which $G \/ "Ker" f tilde.equiv "Im" f$.],
 ) <fig:first-isomorphism>
 
 #corollary(name: "The Fundamental Theorem of Group Homomorphisms")[
@@ -3507,10 +3509,10 @@ more useful in practice than the bare isomorphism.
 #corollary(name: "Homomorphism Factorization")[
   Every group homomorphism $f: G -> H$ factors as
   $
-    G arrow.r^pi G \/ "Ker" f arrow.r^(overline(f)) "Im" f
+    G arrow.r^pi G \/ "Ker" f arrow.r^(phi) "Im" f
     arrow.r.hook H,
   $
-  where $pi$ is the natural projection, $overline(f)$ is the
+  where $pi$ is the natural projection, $phi$ is the
   isomorphism of #link(<thm:first-isomorphism>)[the theorem], and
   the last arrow is the inclusion. In particular, every homomorphism
   is — up to isomorphism — a projection followed by an inclusion.
@@ -3524,10 +3526,10 @@ land), with the quotient doing the rest.
 #example(name: "Cyclic groups from $bb(Z)$.")[
   Consider the homomorphism
   $
-    phi: bb(Z) -> bb(Z)_n, quad k |-> overline(k) = k + n bb(Z),
+    pi: bb(Z) -> bb(Z)_n, quad k |-> overline(k) = k + n bb(Z),
   $
   mapping an integer to its residue modulo $n$. It is surjective,
-  with kernel $"Ker" phi = n bb(Z)$. The First Isomorphism Theorem
+  with kernel $"Ker" pi = n bb(Z)$. The First Isomorphism Theorem
   recovers the classification of cyclic groups of order $n$:
   $
     bb(Z) \/ n bb(Z) tilde.equiv bb(Z)_n.
@@ -3610,14 +3612,12 @@ Isomorphism Theorems, treated next.
 The First Isomorphism Theorem identifies $G \/ "Ker" f$ with $"Im" f$.
 Two natural follow-up questions arise:
 
-(a) If $N$, $K$ are both normal in $G$ with $N subset.eq K$, does
-$K \/ N$ sit inside $G \/ N$ as a normal subgroup, and is the
-further quotient $(G \/ N) \/ (K \/ N)$ the same as $G \/ K$?
-(b) If $H <= G$ and $N lt.closed.eq G$, what is $H N \/ N$ in terms of $H$?
++ If $N$, $K$ are both normal in $G$ with $N subset.eq K$, does $K \/ N$ sit inside $G \/ N$ as a normal subgroup, and is the further quotient $(G \/ N) \/ (K \/ N)$ the same as $G \/ K$?
++ If $H <= G$ and $N lt.closed.eq G$, what is $H N \/ N$ in terms of $H$?
 
-The *Third* Isomorphism Theorem answers (a) — quotienting "twice" is
+The *Third* Isomorphism Theorem answers (1) — quotienting "twice" is
 the same as quotienting once by the larger subgroup. The *Second*
-Isomorphism Theorem answers (b) — quotienting $H N$ by $N$ kills only
+Isomorphism Theorem answers (2) — quotienting $H N$ by $N$ kills only
 the $N$-part, leaving $H$ intact.
 
 #theorem(name: "Second Isomorphism Theorem (Diamond Theorem)")[
@@ -5779,7 +5779,7 @@ The distinction is not pedantry: $2 bb(Z)$ is a subring of $bb(Z)$ with no ident
 
 #proposition(name: "Intersections of Subrings")[
   Let ${S_i : i in I}$ be a family of subrings of a ring $R$.
-  Then $inter_(i in I) S_i$ is a subring of $R$.
+  Then $inter.big_(i in I) S_i$ is a subring of $R$.
 ] <prop:subring-intersection>
 
 #proof[
@@ -6735,8 +6735,8 @@ with the empty sum read as $0$; for $S = {a_1, dots, a_m}$ one writes $(a_1, dot
   Every ideal of $bb(Z)$ is principal.
   For $I != (0)$ let $n$ be the least positive element of $I$ and divide an arbitrary $a in I$ by it: $a = q n + r$ with $0 <= r < n$.
   Since $r = a - q n in I$ and $r < n$, minimality forces $r = 0$, hence $a in n bb(Z)$.
-  So the ideals of $bb(Z)$ are the sets $n bb(Z)$ for $n >= 0$, and
-  $(m) + (n) = (gcd(m, n))$, while $(m) inter (n) = ("lcm"(m, n))$.
+
+  So the ideals of $bb(Z)$ are the sets $n bb(Z)$ for $n >= 0$, and $(m) + (n) = (gcd(m, n))$, while $(m) inter (n) = ("lcm"(m, n))$.
 ] <ex:ideals-in-z>
 
 The ideals of a domain are therefore a measure of how far it is from a field, and the measure is decisive as soon as it is finite.
@@ -8714,7 +8714,7 @@ The difference is that an ideal absorbs multiplication by elements of $R$ on bot
 
 #proposition(name: "Intersections and Sums of Submodules")[
   Let $M$ be a left $R$-module and let ${N_i : i in I}$ be a family of submodules.
-  - $inter_(i in I) N_i$ is a submodule;
+  - $inter.big_(i in I) N_i$ is a submodule;
   - for two submodules $N$ and $L$, the set $N + L = {n + l : n in N, l in L}$ is a submodule and is the smallest one containing $N union L$;
   - consequently every subset $S subset.eq M$ lies in a smallest submodule $⟨S⟩$, whose elements are the finite sums $sum_k r_k s_k$ with $r_k in R$ and $s_k in S$.
 ] <prop:submodule-operations>
