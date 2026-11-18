@@ -10031,20 +10031,20 @@ $
 *Spherical Coordinate System.*
 $
   cases(
-    x = r sin phi cos theta,
-    y = r sin phi sin theta,
-    z = r cos phi,
+    x = r sin phi.alt cos theta,
+    y = r sin phi.alt sin theta,
+    z = r cos phi.alt,
   )
   quad quad
   cases(
     r = sqrt(x^2 + y^2 + z^2) quad & r >= 0,
-    phi = arccos(z / r) quad & r != 0 "and" phi in [0, pi],
+    phi.alt = arccos(z / r) quad & r != 0 "and" phi.alt in [0, pi],
     theta = arctan(y / x) quad & x != 0 "and" theta in [0, 2pi],
   )
 $
 and
 $
-  frac(partial (x, y, z), partial (r, theta, phi)) = r^2 sin phi.
+  frac(partial (x, y, z), partial (r, theta, phi.alt)) = r^2 sin phi.alt.
 $
 
 #figure(
@@ -10265,12 +10265,12 @@ Some tips for choosing between the two methods (take the two examples above as r
 ] <ex:triple-integral-spherical>
 
 #solution[
-  In spherical coordinates $x = r sin phi cos theta$, $y = r sin phi sin theta$, $z = r cos phi$,
-  the ball is $0 <= r <= R$, $0 <= phi <= pi$, $0 <= theta <= 2 pi$,
-  and the volume element is $dif V = r^2 sin phi dif r dif phi dif theta$.
+  In spherical coordinates $x = r sin phi.alt cos theta$, $y = r sin phi.alt sin theta$, $z = r cos phi.alt$,
+  the ball is $0 <= r <= R$, $0 <= phi.alt <= pi$, $0 <= theta <= 2 pi$,
+  and the volume element is $dif V = r^2 sin phi.alt dif r dif phi.alt dif theta$.
   The integrand becomes $r^2$, hence
   $
-    I = integral_0^(2 pi) dif theta integral_0^pi sin phi dif phi integral_0^R r^4 dif r
+    I = integral_0^(2 pi) dif theta integral_0^pi sin phi.alt dif phi.alt integral_0^R r^4 dif r
     = 2 pi dot 2 dot R^5/5
     = (4 pi R^5)/5.
   $
@@ -10283,12 +10283,12 @@ Some tips for choosing between the two methods (take the two examples above as r
 ] <ex:triple-integral-cone-sphere>
 
 #solution[
-  In spherical coordinates the cone $z = sqrt(x^2 + y^2)$ is given by $phi = pi/4$,
+  In spherical coordinates the cone $z = sqrt(x^2 + y^2)$ is given by $phi.alt = pi/4$,
   and the sphere by $r = R$.
   Hence
   $
-    I = integral_0^(2 pi) dif theta integral_0^(pi/4) sin phi dif phi integral_0^R r cos phi dot r^2 dif r
-    = 2 pi dot (integral_0^(pi/4) sin phi cos phi dif phi) dot R^4/4
+    I = integral_0^(2 pi) dif theta integral_0^(pi/4) sin phi.alt dif phi.alt integral_0^R r cos phi.alt dot r^2 dif r
+    = 2 pi dot (integral_0^(pi/4) sin phi.alt cos phi.alt dif phi.alt) dot R^4/4
     = 2 pi dot 1/4 dot R^4/4
     = (pi R^4)/8.
   $
@@ -10349,10 +10349,10 @@ A standard pipeline for computing a multiple integral:
 5. *Evaluate from the inside out.* Apply the one-variable integration rules at each stage.
 
 #caution(title: "Common Mistakes in Multiple Integrals")[
-  - Forgetting the Jacobian factor: $r$ in polar and cylindrical coordinates, $r^2 sin phi$ in spherical coordinates.
+  - Forgetting the Jacobian factor: $r$ in polar and cylindrical coordinates, $r^2 sin phi.alt$ in spherical coordinates.
   - Writing inconsistent limits when swapping the order of integration; redraw the region first.
   - Applying symmetry without checking both the symmetry of the region and the parity of the integrand.
-  - Confusing the spherical angle: the cone $z = sqrt(x^2 + y^2)$ corresponds to $phi = pi/4$, not $pi/2$.
+  - Confusing the spherical angle: the cone $z = sqrt(x^2 + y^2)$ corresponds to $phi.alt = pi/4$, not $pi/2$.
 ]
 
 == Improper Multiple Integrals // 反常多重积分
@@ -10949,10 +10949,10 @@ $
     = (4 pi R^4)/3.
   $
   A direct computation via the parametrization
-  $x = R sin phi cos theta$, $y = R sin phi sin theta$, $z = R cos phi$
-  (with $dif S = R^2 sin phi dif phi dif theta$) confirms the value:
+  $x = R sin phi.alt cos theta$, $y = R sin phi.alt sin theta$, $z = R cos phi.alt$
+  (with $dif S = R^2 sin phi.alt dif phi.alt dif theta$) confirms the value:
   $
-    I = integral_0^(2 pi) dif theta integral_0^pi R^2 cos^2 phi dot R^2 sin phi dif phi
+    I = integral_0^(2 pi) dif theta integral_0^pi R^2 cos^2 phi.alt dot R^2 sin phi.alt dif phi.alt
     = 2 pi R^4 dot 2/3
     = (4 pi R^4)/3.
   $

@@ -2,8 +2,13 @@
 
 Outputs (transparent SVG into ../img/, white JPG previews into ../../tmp/):
   - polar-coordinates.svg       (x = r cos theta, y = r sin theta)
-  - cylindrical-coordinates.svg (x = r cos theta, y = r sin theta, z = z)
-  - spherical-coordinates.svg   (x = r sin phi cos theta, y = r sin phi sin theta, z = r cos phi)
+  - cylindrical-coordinates.svg (cylinder surface drawn explicitly;
+                                 x = r cos theta, y = r sin theta, z = z)
+  - spherical-coordinates.svg   (sphere surface drawn explicitly;
+                                 x = r sin varphi cos theta, y = r sin varphi sin theta,
+                                 z = r cos varphi)
+
+Notation follows the notes: r, varphi (Typst phi.alt), theta.
 """
 
 from pathlib import Path
@@ -63,36 +68,79 @@ def axes3d(ax, xmax, ymax, zmax):
         ax.quiver(0, 0, 0, *vec, arrow_length_ratio=0.07, color="black", lw=LW)
 
 
+def arc_segments(azim_deg):
+    """Split a horizontal circle into the front (solid) and back (dashed) halves
+    as seen from the camera at horizontal azimuth ``azim_deg``."""
+    a_front = np.linspace(np.deg2rad(azim_deg - 90), np.deg2rad(azim_deg + 90), 80)
+    a_back = np.linspace(np.deg2rad(azim_deg + 90), np.deg2rad(azim_deg + 270), 80)
+    return a_front, a_back
+
+
+SURFACE = "#9fb2c8"  # light blue-gray for the drawn surfaces
+
 # ---------- 2. Cylindrical coordinates (3D) ----------
 fig = plt.figure(figsize=(5.0, 4.6))
 fig.patch.set_alpha(0)
 ax = fig.add_subplot(projection="3d")
 ax.set_alpha(0)
 
-axes3d(ax, 4.4, 3.6, 3.6)
-P = np.array([1.6, 1.1, 0.0])
-M = np.array([1.6, 1.1, 2.4])
-th = np.arctan2(1.1, 1.6)
+M = np.array([0.5, 1.7, 2.3])
+rc = float(np.hypot(M[0], M[1]))  # cylinder radius through M
+H = 2.9                            # cylinder height
+th = np.arctan2(M[1], M[0])
+P = np.array([M[0], M[1], 0.0])
+AZIM = 25
 
+axes3d(ax, 4.4, 3.6, 3.6)
+
+# Lateral surface as a translucent shell.
+uu = np.linspace(0, 2 * np.pi, 80)
+zz = np.array([0, H])
+UU, ZZ = np.meshgrid(uu, zz)
+ax.plot_surface(rc * np.cos(UU), rc * np.sin(UU), ZZ,
+                color=SURFACE, alpha=0.14, linewidth=0, shade=False)
+# Bottom and top disks.
+rr = np.linspace(0, rc, 20)
+UU2, RR2 = np.meshgrid(uu, rr)
+ax.plot_surface(RR2 * np.cos(UU2), RR2 * np.sin(UU2), 0 * RR2,
+                color=SURFACE, alpha=0.10, linewidth=0, shade=False)
+ax.plot_surface(RR2 * np.cos(UU2), RR2 * np.sin(UU2), H + 0 * RR2,
+                color=SURFACE, alpha=0.10, linewidth=0, shade=False)
+
+# Bottom rim: front half solid, back half dashed; top rim solid.
+a_front, a_back = arc_segments(AZIM)
+ax.plot(rc * np.cos(a_front), rc * np.sin(a_front), 0 * a_front,
+        color="black", lw=LW)
+ax.plot(rc * np.cos(a_back), rc * np.sin(a_back), 0 * a_back,
+        color="black", lw=0.9, linestyle=(0, (4, 3)))
+ax.plot(rc * np.cos(uu), rc * np.sin(uu), H + 0 * uu, color="black", lw=0.9)
+
+# Silhouette generators at the horizontal extremes w.r.t. the camera.
+for a_ext in (np.deg2rad(AZIM - 90), np.deg2rad(AZIM + 90)):
+    ax.plot([rc * np.cos(a_ext)] * 2, [rc * np.sin(a_ext)] * 2, [0, H],
+            color="black", lw=0.9)
+
+# Point M on the cylinder, its projection P, the radius r and the angle theta.
 ax.plot([0, P[0]], [0, P[1]], [0, 0], color="black", lw=LW)
-ax.plot([P[0], M[0]], [P[1], M[1]], [0, M[2]], color="black", lw=0.9, linestyle=(0, (4, 3)))
+ax.plot([P[0], M[0]], [P[1], M[1]], [0, M[2]], color="black", lw=0.9,
+        linestyle=(0, (4, 3)))
 t = np.linspace(0, th, 60)
 ax.plot(0.9 * np.cos(t), 0.9 * np.sin(t), 0 * t, color="black", lw=1.0)
 
-ax.text(*0.5 * P + np.array([0.1, 0.08, 0.15]), r"$r$", fontsize=FS)
-ax.text(1.18 * np.cos(th / 2), 1.18 * np.sin(th / 2) - 0.04, 0, r"$\theta$", fontsize=FS)
-ax.text(P[0] - 0.2, P[1] + 0.12, 1.1, r"$z$", fontsize=FS)
-ax.text(4.5, 0, 0, r"$x$", fontsize=FS)
-ax.text(0, 3.7, 0, r"$y$", fontsize=FS)
-ax.text(0, 0, 3.7, r"$z$", fontsize=FS)
-ax.text(-0.15, -0.12, 0, r"$O$", fontsize=FS)
+ax.text(0.30, 1.30, 0.38, r"$r$", fontsize=FS)
+ax.text(0.70, 0.70, 0, r"$\theta$", fontsize=FS)
+ax.text(P[0] + 0.12, P[1] - 0.22, 1.3, r"$z$", fontsize=FS)
+ax.text(4.55, 0, 0, r"$x$", fontsize=FS)
+ax.text(0, 3.75, 0, r"$y$", fontsize=FS)
+ax.text(0.08, 0, 3.72, r"$z$", fontsize=FS)
+ax.text(0.95, -0.62, 0, r"$O$", fontsize=FS)
 ax.text(M[0] + 0.1, M[1] + 0.1, M[2] + 0.12, r"$M$", fontsize=FS)
 
-ax.view_init(elev=20, azim=-55)
+ax.view_init(elev=20, azim=AZIM)
 ax.set_box_aspect((1, 1, 1))
-ax.set_xlim(0, 4.4)
-ax.set_ylim(0, 3.6)
-ax.set_zlim(0, 3.6)
+ax.set_xlim(-2.2, 5.2)
+ax.set_ylim(-2.4, 5.0)
+ax.set_zlim(-2.0, 5.4)
 ax.axis("off")
 save(fig, "cylindrical-coordinates")
 
@@ -103,35 +151,64 @@ fig.patch.set_alpha(0)
 ax = fig.add_subplot(projection="3d")
 ax.set_alpha(0)
 
-axes3d(ax, 4.0, 3.2, 3.8)
-M = np.array([1.15, 0.95, 2.55])
-r = np.linalg.norm(M)
+M = np.array([0.42, 1.43, 2.55])
+R = float(np.linalg.norm(M))  # sphere radius through M
 P = np.array([M[0], M[1], 0.0])
-phi = np.arccos(M[2] / r)
+phi = np.arccos(M[2] / R)
 th = np.arctan2(M[1], M[0])
+AZIM = 25
 
+axes3d(ax, 4.4, 3.8, 4.0)
+
+# Sphere as a translucent shell with a faint wireframe.
+u_sphere = np.linspace(0, 2 * np.pi, 80)
+v_sphere = np.linspace(0, np.pi, 40)
+UU, VV = np.meshgrid(u_sphere, v_sphere)
+ax.plot_surface(R * np.sin(VV) * np.cos(UU), R * np.sin(VV) * np.sin(UU),
+                R * np.cos(VV), color=SURFACE, alpha=0.12, linewidth=0,
+                shade=False)
+for a_mer in np.linspace(0, np.pi, 7):  # meridians (every 30 deg)
+    ax.plot(R * np.sin(v_sphere) * np.cos(a_mer),
+            R * np.sin(v_sphere) * np.sin(a_mer),
+            R * np.cos(v_sphere), color=SURFACE, lw=0.4, alpha=0.35)
+for z_par in np.linspace(np.pi / 6, 5 * np.pi / 6, 5):  # parallels (every 30 deg)
+    ax.plot(R * np.sin(z_par) * np.cos(u_sphere),
+            R * np.sin(z_par) * np.sin(u_sphere),
+            R * np.cos(z_par) * np.ones_like(u_sphere),
+            color=SURFACE, lw=0.4, alpha=0.35)
+
+# Equator: dashed (as in the reference figure).
+ax.plot(R * np.cos(u_sphere), R * np.sin(u_sphere), 0 * u_sphere,
+        color="black", lw=0.9, linestyle=(0, (4, 3)))
+
+# Front meridian through M, the radius vector, vertical projection, theta arc.
+u_mer = np.linspace(0, np.pi, 80)
+ax.plot(R * np.sin(u_mer) * np.cos(th), R * np.sin(u_mer) * np.sin(th),
+        R * np.cos(u_mer), color="black", lw=1.0)
 ax.plot([0, M[0]], [0, M[1]], [0, M[2]], color="black", lw=LW)
-ax.plot([M[0], P[0]], [M[1], P[1]], [M[2], 0], color="black", lw=0.9, linestyle=(0, (4, 3)))
+ax.plot([M[0], P[0]], [M[1], P[1]], [M[2], 0], color="black", lw=0.9,
+        linestyle=(0, (4, 3)))
 t = np.linspace(0, th, 60)
 ax.plot(0.85 * np.cos(t), 0.85 * np.sin(t), 0 * t, color="black", lw=1.0)
 u = np.linspace(0, phi, 60)
-ax.plot(1.25 * np.sin(u) * np.cos(th), 1.25 * np.sin(u) * np.sin(th), 1.25 * np.cos(u), color="black", lw=1.0)
+ax.plot(1.25 * np.sin(u) * np.cos(th), 1.25 * np.sin(u) * np.sin(th),
+        1.25 * np.cos(u), color="black", lw=1.0)
 
-ax.text(*0.58 * M + np.array([0.22, 0.05, -0.28]), r"$r$", fontsize=FS)
+ax.text(0.385, 0.85, 1.84, r"$r$", fontsize=FS)
 um = phi / 2
-ax.text(1.5 * np.sin(um) * np.cos(th) - 0.32, 1.5 * np.sin(um) * np.sin(th) + 0.1, 1.5 * np.cos(um), r"$\phi$", fontsize=FS)
-ax.text(1.1 * np.cos(th / 2), 1.1 * np.sin(th / 2), 0, r"$\theta$", fontsize=FS)
-ax.text(P[0] + 0.05, P[1] + 0.2, 0.08, r"$P$", fontsize=FS)
-ax.text(4.1, 0, 0, r"$x$", fontsize=FS)
-ax.text(0, 3.3, 0, r"$y$", fontsize=FS)
-ax.text(0, 0, 3.9, r"$z$", fontsize=FS)
-ax.text(-0.15, -0.1, 0, r"$O$", fontsize=FS)
+ax.text(0.031, 0.463, 1.21, r"$\varphi$", fontsize=FS)
+ax.text(0.92, 0.92, 0, r"$\theta$", fontsize=FS)
+ax.text(P[0] + 0.16, P[1] + 0.22, 0.05, r"$P$", fontsize=FS)
+ax.text(4.55, 0, 0, r"$x$", fontsize=FS)
+ax.text(0, 3.95, 0, r"$y$", fontsize=FS)
+ax.text(0.08, 0, 4.12, r"$z$", fontsize=FS)
+ax.text(-0.35, -0.35, 0, r"$O$", fontsize=FS)
 ax.text(M[0] + 0.1, M[1] + 0.1, M[2] + 0.12, r"$M$", fontsize=FS)
 
-ax.view_init(elev=18, azim=-55)
+ax.view_init(elev=18, azim=AZIM)
 ax.set_box_aspect((1, 1, 1))
-ax.set_xlim(0, 4.0)
-ax.set_ylim(0, 3.2)
-ax.set_zlim(0, 3.8)
+ax.set_xlim(-3.4, 5.4)
+ax.set_ylim(-3.4, 5.4)
+ax.set_zlim(-3.4, 5.4)
 ax.axis("off")
 save(fig, "spherical-coordinates")
