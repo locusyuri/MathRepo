@@ -8100,6 +8100,8 @@ Uniform approximation implies integral approximation on a finite interval, since
 We first approximate Riemann integrable functions by continuous functions, and continuous functions by smooth functions, respectively.
 
 === Riemann Integrable Functions, Continuous Functions and Smooth Functions // Riemann 可积函数、连续函数和平滑函数
+
+
 #theorem(name: "Approximation of Riemann Integrable Functions by Continuous Functions")[
   Let $f(x) in R[a, b]$. For any $epsilon > 0$, there exists a function $g(x) in C[a, b]$ such that
   $
@@ -8126,6 +8128,39 @@ We first approximate Riemann integrable functions by continuous functions, and c
   $
 ]
 
+#definition(name: "Landau Kernels")[
+  For $n in bb(N)$, the *Landau kernel* is
+  $
+    L_(n)(s) = c_(n) (1 - s^2)^n quad quad (abs(s) <= 1), quad quad c_(n)^(-1) = integral_(-1)^1 (1 - s^2)^n dif s.
+  $
+  For a bounded function $f$ on an interval $I subset bb(R)$, the *Landau averaging operator* is
+  $
+    A_(n)[f](x) = integral_(x-1)^(x+1) f(u) L_(n)(u - x) dif u,
+  $
+  defined for every $x$ with $[x - 1, x + 1] subset I$.
+] <def:landau-kernels>
+
+#proposition(name: "Properties of Landau Kernels")[
+  + Normalization: $L_(n) >= 0$ and $integral_(-1)^1 L_(n)(s) dif s = 1$.
+  + Concentration: for every $delta in (0, 1)$,
+  $
+    integral_(delta <= abs(s) <= 1) L_(n)(s) dif s <= 4 sqrt(n) (1 - delta^2)^n quad -> quad 0 quad (n -> oo).
+  $
+  + Smoothing: if $f in C(I)$ and $[x - 1, x + 1] subset I$, then $A_(n)[f]$ is $C^n$ in a neighborhood of $x$, and for $k <= n$,
+  $
+    dif^k/(dif x^k) A_(n)[f](x) = (-1)^k c_(n) integral_(x-1)^(x+1) f(u) (partial^k) / (partial u^k) (1 - (u - x)^2)^n dif u.
+  $
+] <prop:landau-kernel-properties>
+
+#proof[
+  Normalization is the definition of $c_(n)$.
+  For the concentration, note first that for $n >= 2$ and $abs(s) <= 1 / sqrt(n)$ one has $(1 - s^2)^n >= (1 - 1/n)^n >= 1/4$ (the sequence $(1 - 1/n)^n$ is increasing for $n >= 2$), hence $c_(n)^(-1) >= 1 / (2 sqrt(n))$ and $c_(n) <= 2 sqrt(n)$; for $n = 1$ one has $c_(1) = 3 / 4 <= 2$ directly.
+  Since $(1 - s^2)^n <= (1 - delta^2)^n$ on $delta <= abs(s) <= 1$, the outside mass is at most $2 c_(n) (1 - delta^2)^n <= 4 sqrt(n) (1 - delta^2)^n$.
+
+  For the smoothing, differentiate under the integral sign.
+  The boundary terms produced by the Leibniz rule all contain the factor $L_(n)(plus.minus 1) = 0$; for $k <= n$ the boundary terms of the higher derivatives contain $(1 - s^2)^n$ differentiated at most $k$ times, which still vanishes at $s = plus.minus 1$, so the $k$-th derivative is obtained by differentiating the kernel $k$ times, as stated.
+]
+
 #theorem(name: "Approximation of Continuous Functions by Smooth Functions")[
   Let $f(x) in C[a, b]$. For every $m in bb(N)$ and $epsilon > 0$, there exists a function $g(x) in C^m [a, b]$ such that
   $
@@ -8134,19 +8169,19 @@ We first approximate Riemann integrable functions by continuous functions, and c
 ] <thm:smooth-approximates-continuous>
 
 #proof[
-  Affinely map $[a, b]$ to $[0, 1]$, extend $f$ continuously to $[-1, 2]$ (for instance, constantly), and consider the Landau averaging operator of #link(<def:landau-kernels>)[the definition below]:
+  Affinely map $[a, b]$ to $[0, 1]$, extend $f$ continuously to $[-1, 2]$ (for instance, constantly), and consider the Landau averaging operator of #link(<def:landau-kernels>)[the definition above]:
   $
-    g_(n)(x) = A_n[f](x) = c_(n) integral_(-1)^1 f(x + s) (1 - s^2)^n dif s, quad quad x in [0, 1].
+    g_(n)(x) = A_(n)[f](x) = c_(n) integral_(-1)^1 f(x + s) (1 - s^2)^n dif s, quad quad x in [0, 1].
   $
 
-  *Smoothness.* By the smoothing property of #link(<prop:landau-kernel-properties>)[the proposition below], $g_(n) in C^n$ on $[0, 1]$, since the boundary terms of the Leibniz rule all contain the factor $L_n(plus.minus 1) = 0$.
+  *Smoothness.* By the smoothing property of #link(<prop:landau-kernel-properties>)[the proposition above], $g_(n) in C^n$ on $[0, 1]$, since the boundary terms of the Leibniz rule all contain the factor $L_(n)(plus.minus 1) = 0$.
   Hence $g_(n) in C^m$ once $n >= m$.
 
   *Convergence.* Let $epsilon > 0$ and choose $delta in (0, 1)$ such that $abs(s) < delta$ implies $abs(f(x + s) - f(x)) < epsilon / 2$ for all $x in [0, 1]$.
-  By the normalization and the concentration of #link(<prop:landau-kernel-properties>)[the proposition below],
+  By the normalization and the concentration of #link(<prop:landau-kernel-properties>)[the proposition above],
   $
-    abs(g_(n)(x) - f(x)) & <= integral_(abs(s) < delta) abs(f(x + s) - f(x)) L_n(s) dif s + 2 M integral_(delta <= abs(s) <= 1) L_n(s) dif s \
-                         & <= epsilon / 2 + 8 M sqrt(n) (1 - delta^2)^n,
+    abs(g_(n)(x) - f(x)) & <= integral_(abs(s) < delta) abs(f(x + s) - f(x)) L_(n)(s) dif s + 2 M integral_(delta <= abs(s) <= 1) L_(n)(s) dif s \
+    & <= epsilon / 2 + 8 M sqrt(n) (1 - delta^2)^n,
   $
   where $M = sup_(x in [0, 1]) abs(f(x))$.
   Since $sqrt(n) (1 - delta^2)^n -> 0$, the right-hand side is $< epsilon$ for all $x in [0, 1]$ once $n$ is large enough.
@@ -8158,7 +8193,7 @@ Once the first approximation theorem below is established, the stronger statemen
 
 === Weierstrass Approximation Theorems // Weierstrass 近似定理
 
-The proofs below rely on two families of averaging kernels, which are defined here once for later use.
+The proof below relies on the Bernstein polynomials, which are defined here once for later use; the Landau kernels were introduced in the previous subsection.
 
 #definition(name: "Bernstein Polynomials")[
   For $n in bb(N)$, the polynomials
@@ -8177,8 +8212,8 @@ The proofs below rely on two families of averaging kernels, which are defined he
   + Degree and interpolation: $B_n f$ is a polynomial of degree at most $n$, and $B_n f(0) = f(0)$, $B_n f(1) = f(1)$.
   + Moment identities:
   $
-    sum_(k=0)^n b_(n,k)(x) & = 1, \
-    sum_(k=0)^n (k/n - x) b_(n,k)(x) & = 0, \
+                sum_(k=0)^n b_(n,k)(x) & = 1, \
+      sum_(k=0)^n (k/n - x) b_(n,k)(x) & = 0, \
     sum_(k=0)^n (k/n - x)^2 b_(n,k)(x) & = (x (1 - x)) / n <= 1 / (4 n).
   $
 ] <prop:bernstein-properties>
@@ -8187,7 +8222,7 @@ The proofs below rely on two families of averaging kernels, which are defined he
   Nonnegativity is clear, and the first identity is the binomial theorem at $u = x$, $v = 1 - x$.
   At $x = 0$ only the term $k = 0$ survives ($b_(n,0)(0) = 1$), and at $x = 1$ only $k = n$ survives, which gives the interpolation and, together with the basis form, the degree bound.
 
-  Differentiating the binomial theorem $sum_(k=0)^n binom(n,k) u^k v^(n-k) = (u+v)^n$ once and twice with respect to $u$, multiplying by $u/n$ and $u^2/n^2$ respectively, and setting $u = x$, $v = 1 - x$ gives
+  Differentiating the binomial theorem $sum_(k=0)^n binom(n, k) u^k v^(n-k) = (u+v)^n$ once and twice with respect to $u$, multiplying by $u/n$ and $u^2/n^2$ respectively, and setting $u = x$, $v = 1 - x$ gives
   $
     sum_(k=0)^n k b_(n,k)(x) = n x, quad quad sum_(k=0)^n k(k-1) b_(n,k)(x) = n (n-1) x^2.
   $
@@ -8196,39 +8231,6 @@ The proofs below rely on two families of averaging kernels, which are defined he
     sum_(k=0)^n ((k/n)^2 - 2x dot k/n + x^2) b_(n,k)(x)
     = ((n-1) x^2 + x) / n - x^2 = (x (1 - x)) / n.
   $
-]
-
-#definition(name: "Landau Kernels")[
-  For $n in bb(N)$, the *Landau kernel* is
-  $
-    L_n(s) = c_n (1 - s^2)^n quad quad (abs(s) <= 1), quad quad c_n^(-1) = integral_(-1)^1 (1 - s^2)^n dif s.
-  $
-  For a bounded function $f$ on an interval $I subset bb(R)$, the *Landau averaging operator* is
-  $
-    A_n[f](x) = integral_(x-1)^(x+1) f(u) L_n(u - x) dif u,
-  $
-  defined for every $x$ with $[x - 1, x + 1] subset I$.
-] <def:landau-kernels>
-
-#proposition(name: "Properties of Landau Kernels")[
-  + Normalization: $L_n >= 0$ and $integral_(-1)^1 L_n(s) dif s = 1$.
-  + Concentration: for every $delta in (0, 1)$,
-  $
-    integral_(delta <= abs(s) <= 1) L_n(s) dif s <= 4 sqrt(n) (1 - delta^2)^n quad -> quad 0 quad (n -> oo).
-  $
-  + Smoothing: if $f in C(I)$ and $[x - 1, x + 1] subset I$, then $A_n[f]$ is $C^n$ in a neighborhood of $x$, and for $k <= n$,
-  $
-    dif^k/(dif x^k) A_n[f](x) = (-1)^k c_n integral_(x-1)^(x+1) f(u) (partial^k) / (partial u^k) (1 - (u - x)^2)^n dif u.
-  $
-] <prop:landau-kernel-properties>
-
-#proof[
-  Normalization is the definition of $c_n$.
-  For the concentration, note first that for $n >= 2$ and $abs(s) <= 1 / sqrt(n)$ one has $(1 - s^2)^n >= (1 - 1/n)^n >= 1/4$ (the sequence $(1 - 1/n)^n$ is increasing for $n >= 2$), hence $c_n^(-1) >= 1 / (2 sqrt(n))$ and $c_n <= 2 sqrt(n)$; for $n = 1$ one has $c_1 = 3 / 4 <= 2$ directly.
-  Since $(1 - s^2)^n <= (1 - delta^2)^n$ on $delta <= abs(s) <= 1$, the outside mass is at most $2 c_n (1 - delta^2)^n <= 4 sqrt(n) (1 - delta^2)^n$.
-
-  For the smoothing, write $A_n[f](x) = integral_(x-1)^(x+1) f(u) L_n(u - x) dif u$ and differentiate under the integral sign.
-  The boundary terms produced by the Leibniz rule all contain the factor $L_n(plus.minus 1) = 0$; for $k <= n$ the boundary terms of the higher derivatives contain $(1 - s^2)^n$ differentiated at most $k$ times, which still vanishes at $s = plus.minus 1$, so the $k$-th derivative is obtained by differentiating the kernel $k$ times, as stated.
 ]
 
 #note[
@@ -8657,7 +8659,7 @@ Convergence can then be tested one coordinate at a time.
 #proof[
   For every $bold(x) in D$,
   $
-    max_(1 <= i <= m) abs(f_i(bold(x)) - f_i(bold(x)_0)) <= norm(bold(f)(bold(x)) - bold(f)(bold(x)_0)) <= sum_(i=1)^m abs(f_i(bold(x)) - f_i(bold(x)_0)).
+    max_(1 <= i <= m) abs(f_(i)(bold(x)) - f_(i)(bold(x)_0)) <= norm(bold(f)(bold(x)) - bold(f)(bold(x)_0)) <= sum_(i=1)^m abs(f_(i)(bold(x)) - f_(i)(bold(x)_0)).
   $
   The left inequality turns continuity of $bold(f)$ into continuity of every component; the right one turns continuity of the components into continuity of $bold(f)$.
 ]
