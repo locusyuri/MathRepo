@@ -67,7 +67,7 @@ denotes such a field and $V, V'$ finite-dimensional linear spaces over $F$.
     ],
   ),
   ([$V^*$], [Dual space of $V$, i.e. the set of linear functions on $V$]),
-  ([$V / W$], [Quotient space of $V$ by the subspace $W$]),
+  ([$V \/ W$], [Quotient space of $V$ by the subspace $W$]),
   ([$"dim" V$], [Dimension of $V$]),
   (
     [$"Ker"(A)$, $"Im"(A)$, $"span"(S)$],
@@ -2059,7 +2059,7 @@ then these vectors form a basis and $V$ is $n$-dimensional.
   $-W = W$, and transitivity from the closure of $W$ under addition.
   The equivalence class $[alpha] = alpha + W = {alpha + gamma : gamma in W}$
   is called a *coset* of $W$ in $V$. The set of all cosets, denoted
-  $V / W$, with the operations
+  $V \/ W$, with the operations
 
   $
     [alpha] + [beta] = [alpha + beta], quad k [alpha] = [k alpha],
@@ -2073,29 +2073,29 @@ $[alpha'] = [alpha]$ and $[beta'] = [beta]$, then $alpha' - alpha in W$ and
 $beta' - beta in W$, hence $(alpha' + beta') - (alpha + beta) in W$ and
 $k alpha' - k alpha = k (alpha' - alpha) in W$, so $[alpha' + beta'] = [alpha + beta]$ and
 $[k alpha'] = [k alpha]$. The axioms then follow from the corresponding axioms in $V$; the class
-$[0] = W$ is the zero vector of $V / W$, and $[-alpha]$ is the inverse of $[alpha]$.
+$[0] = W$ is the zero vector of $V \/ W$, and $[-alpha]$ is the inverse of $[alpha]$.
 
 #theorem(name: "Dimension of Quotient Space")[
   Let $V$ be a finite-dimensional linear space and $W subset V$ a subspace. Then
 
   $
-    "dim"(V / W) = "dim"(V) - "dim"(W).
+    "dim"(V \/ W) = "dim"(V) - "dim"(W).
   $
 ] <thm:quotient-dimension>
 
 #proof[
   Extend a basis $w_1, ..., w_r$ of $W$ to a basis $w_1, ..., w_r, v_1, ..., v_k$ of $V$
   (#link(<thm:basis-extension>)[basis extension]). The cosets $[v_1], ..., [v_k]$ span
-  $V / W$: if $alpha = sum_i a_i w_i + sum_j b_j v_j$, then $[alpha] = sum_j b_j [v_j]$ because
+  $V \/ W$: if $alpha = sum_i a_i w_i + sum_j b_j v_j$, then $[alpha] = sum_j b_j [v_j]$ because
   $[w_i] = [0]$. They are independent: $sum_j b_j [v_j] = [0]$ means $sum_j b_j v_j in W$, say
   $sum_j b_j v_j = sum_i a_i w_i$, and the independence of $w_1, ..., w_r, v_1, ..., v_k$ forces
   $b_j = 0$ for all $j$. Hence
-  $"dim"(V / W) = k = "dim"(V) - r = "dim"(V) - "dim"(W)$.
+  $"dim"(V \/ W) = k = "dim"(V) - r = "dim"(V) - "dim"(W)$.
 ]
 
 #definition(name: "Induced Mapping")[
   Let $sigma: V -> V'$ be a linear mapping with kernel $W = "Ker"(sigma)$.
-  The map $overline(sigma): V / W -> "Im"(sigma)$ defined by
+  The map $overline(sigma): V \/ W -> "Im"(sigma)$ defined by
   $overline(sigma)([alpha]) = sigma(alpha)$ is called the *induced mapping* of $sigma$.
 ] <def:induced-mapping>
 
@@ -2122,13 +2122,13 @@ $[0] = W$ is the zero vector of $V / W$, and $[-alpha]$ is the inverse of $[alph
   Let $sigma: V -> V'$ be a linear mapping. Then
 
   $
-    V / "Ker"(sigma) tilde.equiv "Im"(sigma).
+    V \/ "Ker"(sigma) tilde.equiv "Im"(sigma).
   $
 ] <thm:first-isomorphism-theorem>
 
 #proof[
   By #link(<prop:induced-mapping-isomorphism>)[the proposition above], $overline(sigma)$ is a
-  bijective linear map from $V / "Ker"(sigma)$ onto $"Im"(sigma)$.
+  bijective linear map from $V \/ "Ker"(sigma)$ onto $"Im"(sigma)$.
 ]
 
 == Special Linear Spaces // 特殊线性空间
@@ -2356,7 +2356,7 @@ composition $A B$ is defined by $(A B)(alpha) = A(B(alpha))$.
   The *cokernel* of $A$ is the quotient space
 
   $
-    "Coker"(A) = V' / "Im"(A).
+    "Coker"(A) = V' \/ "Im"(A).
   $
 ] <def:cokernel>
 
