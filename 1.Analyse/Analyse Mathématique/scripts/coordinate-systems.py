@@ -5,10 +5,10 @@ Outputs (transparent SVG into ../img/, white JPG previews into ../../tmp/):
   - cylindrical-coordinates.svg (cylinder surface drawn explicitly;
                                  x = r cos theta, y = r sin theta, z = z)
   - spherical-coordinates.svg   (sphere surface drawn explicitly;
-                                 x = r sin Phi cos theta, y = r sin Phi sin theta,
-                                 z = r cos Phi)
+                                 x = r sin phi cos theta, y = r sin phi sin theta,
+                                 z = r cos phi)
 
-Notation follows the reference figure: r, Phi (capital, polar angle), theta.
+Notation follows the notes: r, phi (Typst phi.alt = LaTeX phi), theta.
 """
 
 from pathlib import Path
@@ -25,8 +25,8 @@ FS = 15
 
 
 def save(fig, name):
-    fig.savefig(ROOT / "1.Analyse/Analyse Mathématique/img" / f"{name}.svg", transparent=True, bbox_inches="tight", pad_inches=0.05)
-    fig.savefig(ROOT / "tmp" / f"{name}-preview.jpg", facecolor="white", bbox_inches="tight", pad_inches=0.05, dpi=150)
+    fig.savefig(ROOT / "1.Analyse/Analyse Mathématique/img" / f"{name}.svg", transparent=True, bbox_inches="tight", pad_inches=0.02)
+    fig.savefig(ROOT / "tmp" / f"{name}-preview.jpg", facecolor="white", bbox_inches="tight", pad_inches=0.02, dpi=150)
     plt.close(fig)
     print(f"saved: {name}.svg")
 
@@ -81,7 +81,7 @@ SURFACE = "#9fb2c8"  # light blue-gray for the drawn surfaces
 # ---------- 2. Cylindrical coordinates (3D) ----------
 fig = plt.figure(figsize=(5.0, 4.6))
 fig.patch.set_alpha(0)
-ax = fig.add_subplot(projection="3d")
+ax = fig.add_axes([0, 0, 1, 1], projection="3d")
 ax.set_alpha(0)
 
 M = np.array([0.5, 1.7, 2.3])
@@ -91,7 +91,7 @@ th = np.arctan2(M[1], M[0])
 P = np.array([M[0], M[1], 0.0])
 AZIM = 25
 
-axes3d(ax, 3.3, 2.7, 3.0)
+axes3d(ax, 2.5, 2.1, 3.3)
 
 # Lateral surface as a translucent shell.
 uu = np.linspace(0, 2 * np.pi, 80)
@@ -127,20 +127,20 @@ ax.plot([P[0], M[0]], [P[1], M[1]], [0, M[2]], color="black", lw=1.0,
 t = np.linspace(0, th, 60)
 ax.plot(0.9 * np.cos(t), 0.9 * np.sin(t), 0 * t, color="black", lw=1.2)
 
-ax.text(0.30, 1.30, 0.38, r"$r$", fontsize=FS)
-ax.text(0.70, 0.70, 0, r"$\theta$", fontsize=FS)
+ax.text(0.55, 0.95, 0.22, r"$r$", fontsize=FS)
+ax.text(0.94, 0.66, 0, r"$\theta$", fontsize=FS)
 ax.text(P[0] + 0.12, P[1] - 0.22, 1.3, r"$z$", fontsize=FS)
-ax.text(3.45, 0, 0, r"$x$", fontsize=FS)
-ax.text(0, 2.85, 0, r"$y$", fontsize=FS)
-ax.text(0.08, 0, 3.12, r"$z$", fontsize=FS)
+ax.text(2.65, 0, 0, r"$x$", fontsize=FS)
+ax.text(0, 2.25, 0, r"$y$", fontsize=FS)
+ax.text(0.08, 0, 3.45, r"$z$", fontsize=FS)
 ax.text(0.95, -0.62, 0, r"$O$", fontsize=FS)
 ax.text(M[0] + 0.1, M[1] + 0.1, M[2] + 0.12, r"$M$", fontsize=FS)
 
 ax.view_init(elev=20, azim=AZIM)
 ax.set_box_aspect((1, 1, 1))
-ax.set_xlim(-2.0, 3.4)
-ax.set_ylim(-2.1, 3.3)
-ax.set_zlim(-1.6, 3.8)
+ax.set_xlim(-1.95, 2.75)
+ax.set_ylim(-1.95, 2.75)
+ax.set_zlim(-0.8, 3.9)
 ax.axis("off")
 save(fig, "cylindrical-coordinates")
 
@@ -148,7 +148,7 @@ save(fig, "cylindrical-coordinates")
 # ---------- 3. Spherical coordinates (3D) ----------
 fig = plt.figure(figsize=(5.0, 4.6))
 fig.patch.set_alpha(0)
-ax = fig.add_subplot(projection="3d")
+ax = fig.add_axes([0, 0, 1, 1], projection="3d")
 ax.set_alpha(0)
 
 M = np.array([0.42, 1.43, 2.55])
@@ -158,7 +158,7 @@ phi = np.arccos(M[2] / R)
 th = np.arctan2(M[1], M[0])
 AZIM = 25
 
-axes3d(ax, 3.9, 3.5, 3.7)
+axes3d(ax, 3.3, 3.0, 3.2)
 
 # Sphere as a clean translucent shell (no wireframe clutter).
 u_sphere = np.linspace(0, 2 * np.pi, 80)
@@ -186,20 +186,18 @@ ax.plot(1.6 * np.sin(u) * np.cos(th), 1.6 * np.sin(u) * np.sin(th),
         1.6 * np.cos(u), color="black", lw=1.2)
 
 ax.text(0.55, 1.15, 2.15, r"$r$", fontsize=FS)
-um = phi / 2
-ax.text(-0.02, 0.55, 1.62, r"$\Phi$", fontsize=FS)
-ax.text(0.92, 0.92, 0, r"$\theta$", fontsize=FS)
-ax.text(P[0] + 0.16, P[1] + 0.22, 0.05, r"$P$", fontsize=FS)
-ax.text(4.05, 0, 0, r"$x$", fontsize=FS)
-ax.text(0, 3.65, 0, r"$y$", fontsize=FS)
-ax.text(0.08, 0, 3.82, r"$z$", fontsize=FS)
-ax.text(-0.35, -0.35, 0, r"$O$", fontsize=FS)
+ax.text(-0.08, 0.26, 1.60, r"$\phi$", fontsize=FS)
+ax.text(1.10, 0.70, 0, r"$\theta$", fontsize=FS)
+ax.text(3.45, 0, 0, r"$x$", fontsize=FS)
+ax.text(0, 3.15, 0, r"$y$", fontsize=FS)
+ax.text(0.08, 0, 3.35, r"$z$", fontsize=FS)
+ax.text(-0.15, -0.60, 0, r"$O$", fontsize=FS)
 ax.text(M[0] + 0.1, M[1] + 0.1, M[2] + 0.12, r"$M$", fontsize=FS)
 
 ax.view_init(elev=18, azim=AZIM)
 ax.set_box_aspect((1, 1, 1))
-ax.set_xlim(-3.3, 4.2)
-ax.set_ylim(-3.3, 4.2)
-ax.set_zlim(-3.3, 4.2)
+ax.set_xlim(-3.4, 3.6)
+ax.set_ylim(-3.6, 3.4)
+ax.set_zlim(-3.6, 3.4)
 ax.axis("off")
 save(fig, "spherical-coordinates")
