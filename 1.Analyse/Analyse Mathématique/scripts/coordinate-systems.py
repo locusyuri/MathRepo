@@ -24,9 +24,53 @@ LW = 1.5
 FS = 15
 
 
+def _content_bounds(fig):
+    """Fractional bounding box of the non-transparent pixels of the canvas."""
+    fig.canvas.draw()
+    buf = np.asarray(fig.canvas.buffer_rgba())
+    alpha = buf[:, :, 3]
+    ys, xs = np.nonzero(alpha > 8)
+    h, w = alpha.shape
+    padx, pady = 0.01 * w, 0.01 * h
+    x0 = max(xs.min() - padx, 0.0) / w
+    x1 = min(xs.max() + 1 + padx, w) / w
+    y0 = max(ys.min() - pady, 0.0) / h
+    y1 = min(ys.max() + 1 + pady, h) / h
+    return x0, x1, y0, y1
+
+
+def _crop_svg(path, x0, x1, y0, y1):
+    """Rewrite the SVG canvas so the viewBox hugs the content bounds."""
+    import re
+
+    text = path.read_text(encoding="utf-8")
+    m = re.search(
+        r'width="([0-9.]+)pt" height="([0-9.]+)pt" viewBox="0 0 ([0-9.]+) ([0-9.]+)"',
+        text,
+    )
+    wpt, hpt = float(m.group(1)), float(m.group(2))
+    nx, ny = x0 * wpt, y0 * hpt
+    nw, nh = (x1 - x0) * wpt, (y1 - y0) * hpt
+    repl = (
+        f'width="{nw:.2f}pt" height="{nh:.2f}pt" '
+        f'viewBox="{nx:.2f} {ny:.2f} {nw:.2f} {nh:.2f}"'
+    )
+    text = text[: m.start()] + repl + text[m.end() :]
+    path.write_text(text, encoding="utf-8")
+
+
 def save(fig, name):
-    fig.savefig(ROOT / "1.Analyse/Analyse Mathématique/img" / f"{name}.svg", transparent=True, bbox_inches="tight", pad_inches=0.02)
-    fig.savefig(ROOT / "tmp" / f"{name}-preview.jpg", facecolor="white", bbox_inches="tight", pad_inches=0.02, dpi=150)
+    x0, x1, y0, y1 = _content_bounds(fig)
+    svg = ROOT / "1.Analyse/Analyse Mathématique/img" / f"{name}.svg"
+    fig.savefig(svg, transparent=True)
+    _crop_svg(svg, x0, x1, y0, y1)
+    from PIL import Image
+
+    jpg = ROOT / "tmp" / f"{name}-preview.jpg"
+    fig.savefig(jpg, facecolor="white", dpi=150)
+    im = Image.open(jpg)
+    w, h = im.size
+    im.crop((int(x0 * w), int(y0 * h), int(x1 * w), int(y1 * h))).save(jpg, quality=90)
     plt.close(fig)
     print(f"saved: {name}.svg")
 
@@ -38,6 +82,7 @@ ax.set_alpha(0)
 
 r0, th0 = 3.9, np.deg2rad(36)
 M = (r0 * np.cos(th0), r0 * np.sin(th0))
+ax.patch.set_alpha(0)
 
 ax.annotate("", xy=(4.9, 0), xytext=(-0.6, 0), arrowprops=dict(arrowstyle="-|>", color="black", lw=LW))
 ax.annotate("", xy=(0, 3.9), xytext=(0, -0.5), arrowprops=dict(arrowstyle="-|>", color="black", lw=LW))
@@ -83,6 +128,7 @@ fig = plt.figure(figsize=(5.0, 4.6))
 fig.patch.set_alpha(0)
 ax = fig.add_axes([0, 0, 1, 1], projection="3d")
 ax.set_alpha(0)
+ax.patch.set_alpha(0)
 
 M = np.array([0.5, 1.7, 2.3])
 rc = float(np.hypot(M[0], M[1]))  # cylinder radius through M
@@ -91,7 +137,7 @@ th = np.arctan2(M[1], M[0])
 P = np.array([M[0], M[1], 0.0])
 AZIM = 25
 
-axes3d(ax, 2.5, 2.1, 3.3)
+axes3d(ax, 4.4, 3.6, 3.6)
 
 # Lateral surface as a translucent shell.
 uu = np.linspace(0, 2 * np.pi, 80)
@@ -127,20 +173,20 @@ ax.plot([P[0], M[0]], [P[1], M[1]], [0, M[2]], color="black", lw=1.0,
 t = np.linspace(0, th, 60)
 ax.plot(0.9 * np.cos(t), 0.9 * np.sin(t), 0 * t, color="black", lw=1.2)
 
-ax.text(0.55, 0.95, 0.22, r"$r$", fontsize=FS)
-ax.text(0.94, 0.66, 0, r"$\theta$", fontsize=FS)
+ax.text(0.70, 0.85, 0.05, r"$r$", fontsize=FS)
+ax.text(1.15, 0.55, 0, r"$\theta$", fontsize=FS)
 ax.text(P[0] + 0.12, P[1] - 0.22, 1.3, r"$z$", fontsize=FS)
-ax.text(2.65, 0, 0, r"$x$", fontsize=FS)
-ax.text(0, 2.25, 0, r"$y$", fontsize=FS)
-ax.text(0.08, 0, 3.45, r"$z$", fontsize=FS)
+ax.text(4.55, 0, 0, r"$x$", fontsize=FS)
+ax.text(0, 3.75, 0, r"$y$", fontsize=FS)
+ax.text(0.08, 0, 3.72, r"$z$", fontsize=FS)
 ax.text(0.95, -0.62, 0, r"$O$", fontsize=FS)
 ax.text(M[0] + 0.1, M[1] + 0.1, M[2] + 0.12, r"$M$", fontsize=FS)
 
 ax.view_init(elev=20, azim=AZIM)
 ax.set_box_aspect((1, 1, 1))
-ax.set_xlim(-1.95, 2.75)
-ax.set_ylim(-1.95, 2.75)
-ax.set_zlim(-0.8, 3.9)
+ax.set_xlim(-2.2, 5.2)
+ax.set_ylim(-2.4, 5.0)
+ax.set_zlim(-2.0, 5.4)
 ax.axis("off")
 save(fig, "cylindrical-coordinates")
 
@@ -150,6 +196,7 @@ fig = plt.figure(figsize=(5.0, 4.6))
 fig.patch.set_alpha(0)
 ax = fig.add_axes([0, 0, 1, 1], projection="3d")
 ax.set_alpha(0)
+ax.patch.set_alpha(0)
 
 M = np.array([0.42, 1.43, 2.55])
 R = float(np.linalg.norm(M))  # sphere radius through M
@@ -158,7 +205,7 @@ phi = np.arccos(M[2] / R)
 th = np.arctan2(M[1], M[0])
 AZIM = 25
 
-axes3d(ax, 3.3, 3.0, 3.2)
+axes3d(ax, 4.4, 3.8, 4.0)
 
 # Sphere as a clean translucent shell (no wireframe clutter).
 u_sphere = np.linspace(0, 2 * np.pi, 80)
@@ -185,19 +232,19 @@ u = np.linspace(0, phi, 60)
 ax.plot(1.6 * np.sin(u) * np.cos(th), 1.6 * np.sin(u) * np.sin(th),
         1.6 * np.cos(u), color="black", lw=1.2)
 
-ax.text(0.55, 1.15, 2.15, r"$r$", fontsize=FS)
+ax.text(0.60, 1.20, 1.55, r"$r$", fontsize=FS)
 ax.text(-0.08, 0.26, 1.60, r"$\phi$", fontsize=FS)
 ax.text(1.10, 0.70, 0, r"$\theta$", fontsize=FS)
-ax.text(3.45, 0, 0, r"$x$", fontsize=FS)
-ax.text(0, 3.15, 0, r"$y$", fontsize=FS)
-ax.text(0.08, 0, 3.35, r"$z$", fontsize=FS)
+ax.text(4.55, 0, 0, r"$x$", fontsize=FS)
+ax.text(0, 3.95, 0, r"$y$", fontsize=FS)
+ax.text(0.08, 0, 4.12, r"$z$", fontsize=FS)
 ax.text(-0.15, -0.60, 0, r"$O$", fontsize=FS)
 ax.text(M[0] + 0.1, M[1] + 0.1, M[2] + 0.12, r"$M$", fontsize=FS)
 
 ax.view_init(elev=18, azim=AZIM)
 ax.set_box_aspect((1, 1, 1))
-ax.set_xlim(-3.4, 3.6)
-ax.set_ylim(-3.6, 3.4)
-ax.set_zlim(-3.6, 3.4)
+ax.set_xlim(-3.4, 5.4)
+ax.set_ylim(-3.4, 5.4)
+ax.set_zlim(-3.4, 5.4)
 ax.axis("off")
 save(fig, "spherical-coordinates")
