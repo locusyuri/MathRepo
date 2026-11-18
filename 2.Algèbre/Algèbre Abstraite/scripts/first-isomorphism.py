@@ -1,6 +1,6 @@
 """First Isomorphism Theorem commutative diagram.
 
-G --pi--> G/ker f --phi--> im f --i--> H
+G --pi--> G/Ker f --phi--> Im f --i--> H
 
 Decomposition: f = i . phi . pi
 
@@ -45,8 +45,8 @@ def build_figure():
     # -- node centres ---------------------------------------------------- #
     nodes = [
         (1.5,  2.25, r"$G$"),
-        (5.5,  2.25, r"$G/\ker f$"),
-        (9.5,  2.25, r"$\mathrm{im}\, f$"),
+        (5.5,  2.25, r"$G/\mathrm{Ker}\, f$"),
+        (9.5,  2.25, r"$\mathrm{Im}\, f$"),
         (13.0, 2.25, r"$H$"),
     ]
 
@@ -60,7 +60,7 @@ def build_figure():
         ax.text(cx, cy, label, fontsize=14, ha="center", va="center",
                 color=INK, zorder=3)
 
-    # -- arrow 1: G -> G/ker f  (pi, surjection) ------------------------- #
+    # -- arrow 1: G -> G/Ker f  (pi, surjection) ------------------------- #
     ax.annotate(
         "", xy=(4.7, 2.25), xytext=(2.3, 2.25),
         arrowprops=dict(arrowstyle="-|>", color=BLU, lw=1.0,
@@ -69,7 +69,7 @@ def build_figure():
     ax.text(3.5, 2.60, r"$\pi$", fontsize=12, ha="center",
             va="bottom", color=BLU, style="italic")
 
-    # -- arrow 2: G/ker f -> im f  (f_bar, ISOMORPHISM) ------------------ #
+    # -- arrow 2: G/Ker f -> Im f  (phi, ISOMORPHISM) -------------------- #
     ax.annotate(
         "", xy=(8.7, 2.25), xytext=(6.3, 2.25),
         arrowprops=dict(arrowstyle="-|>", color=COR, lw=1.8,
@@ -91,7 +91,7 @@ def build_figure():
 
     # -- bottom theorem statement ----------------------------------------- #
     ax.text(7.0, 0.6,
-            r"First Isomorphism Theorem:  $G/\ker f \cong \mathrm{im}\, f$",
+            r"First Isomorphism Theorem:  $G/\mathrm{Ker}\, f \cong \mathrm{Im}\, f$",
             fontsize=11, ha="center", va="center", color=GRY)
 
     # -- canvas ---------------------------------------------------------- #

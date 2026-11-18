@@ -69,8 +69,8 @@ def panel(ax, char_zero):
 
     box(ax, 3.68, 2.10, 1.44, 0.42, FILL_IMAGE, BLUE, lw=1.1)
     ax.text(4.40, 2.31,
-            "$\\mathrm{im}\\,\\chi \\cong \\mathbb{Z}$" if char_zero
-            else "$\\mathrm{im}\\,\\chi \\cong \\mathbb{F}_p$",
+            "$\\mathrm{Im}\\,\\chi \\cong \\mathbb{Z}$" if char_zero
+            else "$\\mathrm{Im}\\,\\chi \\cong \\mathbb{F}_p$",
             fontsize=10, color=BLUE, ha="center", va="center")
 
     if char_zero:
@@ -78,7 +78,7 @@ def panel(ax, char_zero):
             dot(ax, x, 2.60, INK, label=lab)
         ax.text(1.74, 2.60, "$\\cdots$", fontsize=11, color=INK,
                 ha="center", va="center")
-        caption = ["$\\chi$ is injective:  $\\ker\\chi = \\{0\\}$",
+        caption = ["$\\chi$ is injective:  $\\mathrm{Ker}\\,\\chi = \\{0\\}$",
                    "prime subring $\\cong \\mathbb{Z}$ (not a field)"]
     else:
         for x, lab in ((0.70, "$0$"), (1.04, "$1$")):
@@ -93,7 +93,7 @@ def panel(ax, char_zero):
                 ha="center", va="center")
         ax.text(1.70, 2.30, "$p\\mathbb{Z}$", fontsize=9.5, color=RED,
                 ha="left", va="center")
-        caption = ["$\\chi$ is not injective:  $\\ker\\chi = p\\mathbb{Z}$",
+        caption = ["$\\chi$ is not injective:  $\\mathrm{Ker}\\,\\chi = p\\mathbb{Z}$",
                    "prime subring $\\cong \\mathbb{F}_p$ (already a field)"]
 
     ax.text(0.40, 1.55, caption[0], fontsize=11.5, color=INK, ha="left",
