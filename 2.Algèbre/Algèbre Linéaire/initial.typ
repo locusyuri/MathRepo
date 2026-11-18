@@ -79,7 +79,7 @@ denotes such a field and $V, V'$ finite-dimensional linear spaces over $F$.
     [$"det"(A)$, $"tr"(A)$, $"adj"(A)$],
     [Determinant, trace and adjugate matrix of a square matrix $A$],
   ),
-  ([$upright("rank")(A)$, $r(A)$], [Rank of a matrix $A$]),
+  ([$"rank"(A)$], [Rank of a matrix $A$]),
   ([$"diag"(d_1, ..., d_n)$], [Diagonal matrix with diagonal entries $d_1, ..., d_n$]),
   ([$J_r (lambda)$], [Jordan block of size $r$ for the eigenvalue $lambda$]),
   (
@@ -852,8 +852,8 @@ is closed under linear combinations; this motivates the following notion.
 #theorem(name: "Dimension of the Solution Space")[
   The solutions of $A x = O$ form a linear space, called its *solution space*, and every fundamental
   system of solutions is a basis of it.
-  Consequently the solution space has dimension $n - upright("rank")(A)$, and every fundamental
-  system of solutions contains exactly $n - upright("rank")(A)$ solutions.
+  Consequently the solution space has dimension $n - "rank"(A)$, and every fundamental
+  system of solutions contains exactly $n - "rank"(A)$ solutions.
 ] <thm:dimension-of-solution-space>
 
 #proof[
@@ -1531,23 +1531,23 @@ $C$ performs the following cyclic operations when multiplied by another matrix:
   + *Addition*:
 
     $
-      abs(upright("rank")(A) - upright("rank")(B)) <= upright("rank")(A + B) <=
-      upright("rank")(A) + upright("rank")(B).
+      abs("rank"(A) - "rank"(B)) <= "rank"(A + B) <=
+      "rank"(A) + "rank"(B).
     $
 
     On the basis of #link(<thm:dimension-formula>)[the dimension formula],
-    $upright("rank")(A + B) = upright("rank")(A) + upright("rank")(B) -
+    $"rank"(A + B) = "rank"(A) + "rank"(B) -
     "dim"(R(A) inter R(B))$, where $R(A)$ and $R(B)$ are the column spaces of $A$ and $B$.
-  + *Multiplication*: $upright("rank")(A B) <= upright("rank")(A)$ and $upright("rank")(A B) <= upright("rank")(B)$.
-    + *Sylvester's Inequality*: for $A_(s times n)$ and $B_(n times m)$, $ upright("rank")(A B) >= upright("rank")(A) + upright("rank")(B) - n. $ In particular, if $A B = O$, then $upright("rank")(A) + upright("rank")(B) <= n$.
-    + *Frobenius Inequality*: $upright("rank")(A B C) >= upright("rank")(A B) + upright("rank")(B C) -
-      upright("rank")(B)$.
+  + *Multiplication*: $"rank"(A B) <= "rank"(A)$ and $"rank"(A B) <= "rank"(B)$.
+    + *Sylvester's Inequality*: for $A_(s times n)$ and $B_(n times m)$, $ "rank"(A B) >= "rank"(A) + "rank"(B) - n. $ In particular, if $A B = O$, then $"rank"(A) + "rank"(B) <= n$.
+    + *Frobenius Inequality*: $"rank"(A B C) >= "rank"(A B) + "rank"(B C) -
+      "rank"(B)$.
   + *Transpose*:
-    $upright("rank")(A A^"T") = upright("rank")(A^"T" A) = upright("rank")(A) =
-    upright("rank")(A^"T")$.
-  + *Inverse*: if $A$ is invertible, then $upright("rank")(A) = upright("rank")(A^(-1)) = n$.
+    $"rank"(A A^"T") = "rank"(A^"T" A) = "rank"(A) =
+    "rank"(A^"T")$.
+  + *Inverse*: if $A$ is invertible, then $"rank"(A) = "rank"(A^(-1)) = n$.
   + *Block Matrix*:
-    $upright("rank")mat(A, O; O, D) = upright("rank")(A) + upright("rank")(D)$.
+    $"rank"mat(A, O; O, D) = "rank"(A) + "rank"(D)$.
 ] <prop:operations-of-rank>
 
 == Low-Rank Corrections // 低秩修正
@@ -1563,8 +1563,8 @@ calculation rules:
   - *Exponentiation*: for any positive integer $k >= 1$,
     $A^k = (beta^"T" alpha)^(k-1) dot A$, where $beta^"T" alpha$ is a scalar (the inner product
     of the vectors).
-  - *Rank Transmission*: if $B$ is any matrix, then $upright("rank")(A B) <= 1$ and
-    $upright("rank")(B A) <= 1$; multiplying a rank-$1$ matrix by arbitrary matrices yields
+  - *Rank Transmission*: if $B$ is any matrix, then $"rank"(A B) <= 1$ and
+    $"rank"(B A) <= 1$; multiplying a rank-$1$ matrix by arbitrary matrices yields
     rank not exceeding $1$.
 ] <prop:rank-one-matrix>
 
@@ -2574,9 +2574,9 @@ i.e. $A$ and $A'$ are *similar* matrices.
 #proposition(name: "Idempotent and Involutional Characterization")[
   Let $V$ be a finite-dimensional linear space over $F$, and $A in upright("End")(V)$.
   - $A$ is idempotent ($A^2 = A$) if and only if
-    $upright("rank")(A) + upright("rank")(E - A) = "dim"(V)$.
+    $"rank"(A) + "rank"(E - A) = "dim"(V)$.
   - $A$ is involutional ($A^2 = E$) if and only if
-    $upright("rank")(A - E) + upright("rank")(A + E) = "dim"(V)$.
+    $"rank"(A - E) + "rank"(A + E) = "dim"(V)$.
 ] <prop:idempotent-involutional-characterization>
 
 #proof[
@@ -3103,7 +3103,7 @@ as it reduces problems on the whole space to problems on lower-dimensional subsp
   Let $A$ be idempotent, i.e. $A^2 = A$.
   - Any eigenvalue of $A$ is either $0$ or $1$.
   - $A$ is diagonalizable and $V = E_1 ⊕ E_0 = "Ker"(A - E) ⊕ "Ker"(A) = "Im"(A) ⊕ "Ker"(A)$.
-  - ($V$ finite-dimensional) The rank equals the trace: $upright("rank")(A) = "tr"(A)$.
+  - ($V$ finite-dimensional) The rank equals the trace: $"rank"(A) = "tr"(A)$.
 ] <prop:idempotent-matrix>
 
 #proposition(name: "Nilpotent Matrix")[
@@ -3296,7 +3296,7 @@ derives the existence and computation method of the Jordan canonical form.
 
 #definition(name: "Invariant Divisors")[
   Let $D_1(lambda), ..., D_(r)(lambda)$ be the determinant divisors of $A(lambda)$
-  (where $r = upright("rank")(A(lambda))$). The polynomials
+  (where $r = "rank"(A(lambda))$). The polynomials
 
   $
     d_1(lambda) = D_1(lambda),
@@ -3476,7 +3476,7 @@ derives the existence and computation method of the Jordan canonical form.
   1. Compute the #link(<def:eigenpolynomial>)[characteristic polynomial]
     $f(lambda) = "det"(lambda E - A)$ and factor it into linear factors over $bb(C)$.
   2. For each eigenvalue $lambda$ put
-    $n_(k)(lambda) = upright("rank")((lambda E - A)^k)$, with $n_0(lambda) = n$.
+    $n_(k)(lambda) = "rank"((lambda E - A)^k)$, with $n_0(lambda) = n$.
     Then the number of Jordan blocks of $A$ for $lambda$ whose size is at least $k$ equals
     $n_(k-1)(lambda) - n_(k)(lambda)$, and the number of blocks of size exactly $k$ equals
     $n_(k-1)(lambda) - 2 n_(k)(lambda) + n_(k+1)(lambda)$.
@@ -3567,7 +3567,7 @@ under congruent transformations, and criteria for positive definite quadratic fo
   where $X = (x_1, ..., x_n)^"T"$ and $A = (a_(i j))_(n times n)$ with $a_(i j) = a_(j i)$,
   is called a *quadratic form* in $n$ variables over $F$. The
   #link(<def:symmetric-matrix>)[symmetric] matrix $A$ is the *matrix* of $f$, and
-  $upright("rank")(A)$ is called the *rank* of $f$.
+  $"rank"(A)$ is called the *rank* of $f$.
 ] <def:quadratic-form>
 
 #note[
