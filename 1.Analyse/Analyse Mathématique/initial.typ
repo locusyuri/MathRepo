@@ -9570,14 +9570,14 @@ is called the *Hessian matrix* of the function $f$.
   *Method 2: Implicit Function Theorem.* By #link(<thm:implicit-mapping-theorem>)[the implicit mapping theorem], we have
   $
     mat((dif x) / (dif z); (dif y) / (dif z)) & = - mat(
-                                          frac(partial F, partial x), frac(partial F, partial y);
-                                          frac(partial G, partial x), frac(partial G, partial y)
-                                        )^(-1)
-                                        mat(frac(partial F, partial z); frac(partial G, partial z)) \
-                                      & = mat(
-                                          frac(z G_(1)(F_1 - F_2) - F_(1)(y G_1 - x z^2 G_2), z (F_2 G_1 - F_1 G_2 z^2));
-                                          frac(F_(2)(y G_1 - x z^2 G_2) - G_2 z^3 (F_1 - F_2), z (F_2 G_1 - F_1 G_2 z^2))
-                                        ).
+                                                  frac(partial F, partial x), frac(partial F, partial y);
+                                                  frac(partial G, partial x), frac(partial G, partial y)
+                                                )^(-1)
+                                                mat(frac(partial F, partial z); frac(partial G, partial z)) \
+                                              & = mat(
+                                                  frac(z G_(1)(F_1 - F_2) - F_(1)(y G_1 - x z^2 G_2), z (F_2 G_1 - F_1 G_2 z^2));
+                                                  frac(F_(2)(y G_1 - x z^2 G_2) - G_2 z^3 (F_1 - F_2), z (F_2 G_1 - F_1 G_2 z^2))
+                                                ).
   $
 ]
 
@@ -10024,7 +10024,7 @@ $
 // 注：tex 该式 Jacobian 分母误作 (r, theta, varphi)，与变换变量 (r, theta, z) 不符，已修正为 (r, theta, z)。
 
 #figure(
-  image("img/cylindrical-coordinates.svg", width: 42%),
+  image("img/cylindrical-coordinates.svg", width: 58%),
   caption: [Cylindrical coordinate system.],
 ) <fig:cylindrical-coordinates>
 
@@ -10048,7 +10048,7 @@ $
 $
 
 #figure(
-  image("img/spherical-coordinates.svg", width: 42%),
+  image("img/spherical-coordinates.svg", width: 58%),
   caption: [Spherical coordinate system.],
 ) <fig:spherical-coordinates>
 // 注：tex 原为柱面+球面合绘的 coordinate.png（未加标签），现按用户要求拆分为三张独立配图，
@@ -10388,7 +10388,9 @@ Improper multiple integrals can also be classified into two types: infinite inte
 #note(
   title: [Absolute versus conditional convergence in one and several variables],
 )[
-  This theorem reveals a genuine difference between one-dimensional and multi-dimensional improper integrals, and it is worth emphasizing because the statement runs counter to the intuition built in the one-dimensional theory. For improper integrals on $bb(R)$, absolute convergence and (conditional) convergence are two distinct notions: for example, $integral_1^oo (sin x)/x dif x$ converges, yet its absolute value diverges. In several variables, however, the theorem asserts that the two notions coincide: an improper multiple integral converges precisely when it converges absolutely, so *conditional convergence can never occur*.
+  This theorem reveals a genuine difference between one-dimensional and multi-dimensional improper integrals, and it is worth emphasizing because the statement runs counter to the intuition built in the one-dimensional theory.
+
+  For improper integrals on $bb(R)$, absolute convergence and (conditional) convergence are two distinct notions: for example, $integral_1^oo (sin x)/x dif x$ converges, yet its absolute value diverges. In several variables, however, the theorem asserts that the two notions coincide: an improper multiple integral converges precisely when it converges absolutely, so *conditional convergence can never occur*.
 
   The heuristic reason is that one-dimensional conditional convergence relies essentially on a *specific order* in which the domain is exhausted (the cancellation between the positive and the negative parts is arranged along the single direction of the real line). For a domain in $bb(R)^n$ there is no canonical order of exhaustion: convergence must hold regardless of how the domain is enlarged, and this order-independence forces the positive and the negative parts each to be integrable, which is exactly absolute convergence.
 ]
