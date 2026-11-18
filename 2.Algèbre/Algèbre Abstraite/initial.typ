@@ -1509,65 +1509,6 @@ protagonist of Chapter 4.
     Chapter 4.
 ] <ex:subgroup-inventory>
 
-=== Conjugate Subgroups // 共轭子群
-
-Conjugating an element rebinds it as $a x a^(-1)$ (#link(<def:conjugate-elements>)[§2.3]); conjugating a subgroup rebinds all of its elements at once.
-
-#definition(name: "Conjugate Subgroup")[
-  Let $H <= G$ and $a in G$. The *conjugate* of $H$ by $a$ is
-  $
-    a H a^(-1) = {a h a^(-1) | h in H}.
-  $
-] <def:conjugate-subgroup>
-
-Conjugation applies the bijection $x |-> a x a^(-1)$ to every element of $H$ at once. This bijection respects products and inverses, because $a (x y) a^(-1) = (a x a^(-1))(a y a^(-1))$ and $a x^(-1) a^(-1) = (a x a^(-1))^(-1)$; it is the prototype of an *inner automorphism* (#link(<def:inner-automorphism>)[§5.4]). Hence it carries subgroups to subgroups, and the next proposition records this together with the preservation of size.
-
-#proposition(name: "Conjugates Are Subgroups of the Same Order")[
-  Let $H <= G$ and $a in G$. Then $a H a^(-1) <= G$, and $abs(a H a^(-1)) = abs(H)$.
-] <prop:conjugate-subgroup>
-
-#proof[
-  The map $x |-> a x a^(-1)$ is a bijection of $G$ with inverse $x |-> a^(-1) x a$, so it carries $H$ bijectively onto $a H a^(-1)$, and the two sets have the same cardinality.
-  For the subgroup claim, take $h_1, h_2 in H$; the one-step criterion asks for $(a h_1 a^(-1))(a h_2 a^(-1))^(-1) in a H a^(-1)$, and
-  $
-    (a h_1 a^(-1))(a h_2 a^(-1))^(-1) = a (h_1 h_2^(-1)) a^(-1) in a H a^(-1)
-  $
-  because $h_1 h_2^(-1) in H$. The set is non-empty, containing $a e a^(-1) = e$.
-]
-
-Conjugation is an equivalence relation on the set of subgroups — reflexive with $a = e$, symmetric by replacing $a$ with $a^(-1)$, and transitive by composing the conjugators — so the subgroups of $G$ split into *conjugacy classes*: the orbits of $G$ acting on its subgroups by conjugation, a preview of the group actions of Chapter 6.
-
-The normalizer singles out the conjugators that leave a given subgroup fixed.
-
-#definition(name: "Normalizer of a Subgroup")[
-  Let $H <= G$. The *normalizer* of $H$ in $G$ is
-  $
-    N_(G)(H) = {a in G | a H a^(-1) = H}.
-  $
-] <def:normalizer>
-
-#proposition(name: "The Normalizer Is a Subgroup Containing $H$")[
-  Let $H <= G$. Then $N_(G)(H) <= G$ and $H subset.eq N_(G)(H) subset.eq G$.
-] <prop:normalizer>
-
-#proof[
-  For $h in H$ the conjugation $x |-> h x h^(-1)$ maps $H$ bijectively into itself, hence $h H h^(-1) = H$ and $H subset.eq N_(G)(H)$; in particular the normalizer is non-empty.
-  If $a, b in N_(G)(H)$, then
-  $
-    (a b) H (a b)^(-1) = a (b H b^(-1)) a^(-1) = a H a^(-1) = H,
-    quad quad a^(-1) H a = H,
-  $
-  so $N_(G)(H)$ passes the one-step criterion (#link(<cor:subgroup-criterion>)[the criterion above]).
-]
-
-The conjugates of $H$ correspond bijectively to the cosets of $N_(G)(H)$: two conjugators $a, b$ produce the same conjugate exactly when $b^(-1) a in N_(G)(H)$. The coset counting of §3.3 therefore identifies their number with the index $[G : N_(G)(H)]$.
-
-A subgroup whose normalizer is all of $G$ — one that every conjugation leaves fixed — is exactly a *normal* subgroup: the condition $a H a^(-1) = H$ for all $a$ is equivalent to $a H = H a$ (#link(<thm:normal-equivalents>)[§4.1]). Such subgroups are alone in their conjugacy class.
-
-#example(name: "Conjugacy classes of subgroups in $S_3$.")[
-  The inventory above lists the three order-$2$ subgroups $⟨(1 2)⟩$, $⟨(1 3)⟩$, $⟨(2 3)⟩$ and the order-$3$ subgroup $⟨(1 2 3)⟩$. Conjugation by $(2 3)$ sends $⟨(1 2)⟩$ to $⟨(1 3)⟩$, and a further conjugation sends it to $⟨(2 3)⟩$, so the three order-$2$ subgroups form one conjugacy class and each has normalizer itself. The order-$3$ subgroup is unique of its order, hence self-conjugate, and so are ${e}$ and $S_3$: $S_3$ has four conjugacy classes of subgroups.
-] <ex:conjugate-subgroups-s3>
-
 === The Center // 中心
 
 One subgroup deserves special mention because of what it measures:
@@ -2696,6 +2637,105 @@ instance, when we ask which normal subgroup a generating set of $G$
 produces (and so, indirectly, in
 #link(<thm:kernel-normal>)[§5.1], when we examine kernels
 of homomorphisms from $G$).
+
+=== Conjugate Subgroups // 共轭子群
+
+Conjugating an element rebinds it as $a x a^(-1)$ (#link(<def:conjugate-elements>)[§2.3]); conjugating a subgroup rebinds all of its elements at once.
+Conjugates already appeared in #link(<thm:normal-equivalents>)[the characterizations of normality], where the point was that they never leave a normal subgroup; here they are the object of study.
+
+#definition(name: "Conjugate Subgroup")[
+  Let $H <= G$ and $a in G$. The *conjugate* of $H$ by $a$ is
+  $
+    a H a^(-1) = {a h a^(-1) | h in H}.
+  $
+] <def:conjugate-subgroup>
+
+Conjugation applies the bijection $x |-> a x a^(-1)$ to every element of $H$ at once.
+This bijection respects products and inverses, because $a (x y) a^(-1) = (a x a^(-1))(a y a^(-1))$ and $a x^(-1) a^(-1) = (a x a^(-1))^(-1)$; it is the prototype of an *inner automorphism* (#link(<def:inner-automorphism>)[§5.4]).
+Hence it carries subgroups to subgroups, and the next proposition records this together with the preservation of size.
+
+#proposition(name: "Conjugates Are Subgroups of the Same Order")[
+  Let $H <= G$ and $a in G$. Then $a H a^(-1) <= G$, and $abs(a H a^(-1)) = abs(H)$.
+] <prop:conjugate-subgroup>
+
+#proof[
+  The map $x |-> a x a^(-1)$ is a bijection of $G$ with inverse $x |-> a^(-1) x a$, so it carries $H$ bijectively onto $a H a^(-1)$, and the two sets have the same cardinality.
+  For the subgroup claim, take $h_1, h_2 in H$; the one-step criterion asks for $(a h_1 a^(-1))(a h_2 a^(-1))^(-1) in a H a^(-1)$, and
+  $
+    (a h_1 a^(-1))(a h_2 a^(-1))^(-1) = a (h_1 h_2^(-1)) a^(-1) in a H a^(-1)
+  $
+  because $h_1 h_2^(-1) in H$. The set is non-empty, containing $a e a^(-1) = e$.
+]
+
+Conjugation is an equivalence relation on the set of subgroups — reflexive with $a = e$, symmetric by replacing $a$ with $a^(-1)$, and transitive by composing the conjugators — so the subgroups of $G$ split into *conjugacy classes*: the orbits of $G$ acting on its subgroups by conjugation, a preview of the group actions of Chapter 6.
+A normal subgroup is exactly one that is alone in its class, which is the reformulation #link(<thm:normal-equivalents>)[test (2)] already made available.
+
+=== The Normalizer // 正规化子
+
+Conjugates of $H$ being defined, the remaining question about them is which conjugators reproduce $H$ itself.
+The answer is a subgroup, and it is the largest setting in which $H$ is normal — which is where the name comes from.
+
+#definition(name: "Normalizer of a Subgroup")[
+  Let $H <= G$. The *normalizer* of $H$ in $G$ is
+  $
+    N_(G)(H) = {a in G | a H a^(-1) = H}.
+  $
+] <def:normalizer>
+
+#proposition(name: "The Normalizer Is a Subgroup Containing $H$")[
+  Let $H <= G$. Then $N_(G)(H) <= G$ and $H subset.eq N_(G)(H) subset.eq G$.
+] <prop:normalizer>
+
+#proof[
+  For $h in H$ the conjugation $x |-> h x h^(-1)$ maps $H$ bijectively into itself, hence $h H h^(-1) = H$ and $H subset.eq N_(G)(H)$; in particular the normalizer is non-empty.
+  If $a, b in N_(G)(H)$, then
+  $
+    (a b) H (a b)^(-1) = a (b H b^(-1)) a^(-1) = a H a^(-1) = H,
+    quad quad a^(-1) H a = H,
+  $
+  so $N_(G)(H)$ passes the one-step criterion (#link(<cor:subgroup-criterion>)[the criterion of §3.1]).
+]
+
+#theorem(name: "The Normalizer Is the Largest Normal Setting for $H$")[
+  Let $H <= G$.
+  Then $H lt.closed.eq N_(G)(H)$, and a subgroup $K$ with $H <= K <= G$ satisfies $H lt.closed.eq K$ if and only if $K subset.eq N_(G)(H)$.
+] <thm:normalizer-largest>
+
+#proof[
+  Every $a in N_(G)(H)$ satisfies $a H a^(-1) = H$ by definition, so $H$ is invariant under conjugation by the elements of its normalizer, that is, $H lt.closed.eq N_(G)(H)$ (#link(<thm:normal-equivalents>)[test (2)]).
+
+  If $H lt.closed.eq K$, then each $k in K$ satisfies $k H k^(-1) = H$, that is, $k in N_(G)(H)$; hence $K subset.eq N_(G)(H)$.
+  Conversely, if $K subset.eq N_(G)(H)$ then every $k in K$ conjugates $H$ to itself, so $H lt.closed.eq K$.
+]
+
+#theorem(name: "The Number of Conjugates Is an Index")[
+  Let $H <= G$.
+  Then $a H a^(-1) = b H b^(-1)$ exactly when $a N_(G)(H) = b N_(G)(H)$, so the conjugates of $H$ in $G$ correspond bijectively to the cosets of $N_(G)(H)$, and there are exactly $[G : N_(G)(H)]$ of them.
+] <thm:conjugates-index>
+
+#proof[
+  Consider the map
+  $
+    Phi: G \/ N_(G)(H) -> {a H a^(-1) | a in G}, quad a N_(G)(H) |-> a H a^(-1).
+  $
+  It is well defined: if $a N_(G)(H) = b N_(G)(H)$, then $b^(-1) a in N_(G)(H)$ (#link(<def:coset>)[§3.3]), that is, $b^(-1) a H a^(-1) b = H$, whence $a H a^(-1) = b (b^(-1) a H a^(-1) b) b^(-1) = b H b^(-1)$.
+
+  The same computation read backwards gives injectivity, and surjectivity holds by construction, so $Phi$ is a bijection.
+  The number of conjugates is therefore the number of cosets of the normalizer, which is its index (#link(<def:index>)[§3.3]).
+]
+
+The normalizer measures two things at once: it is the largest subgroup in which $H$ is normal, and its index counts the conjugates of $H$; in particular $N_(G)(H) = G$ exactly when $H$ is normal, and then $H$ is alone in its class.
+The same bijection counts the conjugates of an arbitrary subset $S subset.eq G$, with $N_(G)(S) = {a in G | a S a^(-1) = S}$ in place of the normalizer — a subgroup that need not contain $S$, since $S$ need not be closed under anything.
+
+#example(name: "Conjugacy classes of subgroups in $S_3$.")[
+  The inventory of #link(<ex:subgroup-inventory>)[§3.1] lists the three order-$2$ subgroups $⟨(1 2)⟩$, $⟨(1 3)⟩$, $⟨(2 3)⟩$ and the order-$3$ subgroup $⟨(1 2 3)⟩$.
+
+  Conjugation by $(2 3)$ sends $⟨(1 2)⟩$ to $⟨(1 3)⟩$, and a further conjugation sends that to $⟨(2 3)⟩$, so the three order-$2$ subgroups form one conjugacy class.
+  Its size is also read off from #link(<thm:conjugates-index>)[the index formula]: $⟨(1 2)⟩$ is its own normalizer — it is not normal, and no subgroup of $S_3$ lies strictly between it and $S_3$ — so the class has $[S_3 : ⟨(1 2)⟩] = 3$ elements.
+
+  The order-$3$ subgroup $⟨(1 2 3)⟩$ has index $2$, hence is normal (#link(<prop:normal-properties>)[the properties above]), so its normalizer is $S_3$ and its class is a singleton.
+  Together with ${e}$ and $S_3$ itself, this makes four conjugacy classes of subgroups in all.
+] <ex:conjugate-subgroups-s3>
 
 == Quotient Groups // 商群
 
@@ -9097,9 +9137,12 @@ Both agree when $R$ is commutative, which covers the case $R = F$ of #link(<ex:e
 // --- Chapter 4: 正规子群与商群 (Normal Subgroups and Quotient Groups) ---
 
 //   Section 4.1: 正规子群 (Normal Subgroups)
-//     - 正规子群的定义与判定
-//     - 正规子群与陪集的关系
+//     - 正规子群的定义与判定（陪集相等 / 共轭稳定 / 内自同构不变）
+//     - 正规子群与陪集的关系；基本性质（交、积、指数 2、中间子群继承）；正规闭包
 //     - 典型例子
+//     - 共轭子群与共轭类（预告 Ch6 的作用）；正规子群 = 共轭类中的单元素
+//     - 正规化子 $N_G(H)$：是含 $H$ 的子群，且 $H \normal N_G(H)$，为「$H$ 正规」的最大子群
+//     - 共轭子群个数 $= [G : N_G(H)]$（子集版本同理）
 
 //   Section 4.2: 商群 (Quotient Groups)
 //     - 商群的构造
