@@ -8090,6 +8090,13 @@ where $E_(2n)$ denote the Euler numbers and $B_(2n)$ the Bernoulli numbers.
 
 == Smooth Approximation of Functions // 平滑函数的近似
 
+This section uses two approximation modes, matched to the regularity of the target function.
+
+- *Uniform approximation*: $abs(f - g) < epsilon$ at every point of the interval, i.e. convergence in the supremum norm. It requires the target $f$ to be continuous — a uniform limit of continuous functions is continuous — and is the mode of the smooth-approximation theorem and of both Weierstrass approximation theorems below.
+- *Integral approximation*: $integral_a^b abs(f - g) dif x < epsilon$, i.e. convergence in the $L^1$ mean. It works for merely Riemann integrable $f$, whose discontinuities rule out uniform approximation by continuous functions; this is the mode of the approximation theorem below and of the examples, one of which uses the one-sided variant $p <= f <= q$ with $integral_a^b (q - p) dif x < epsilon$.
+
+Uniform approximation implies integral approximation on a finite interval, since $integral_a^b abs(f - g) dif x <= (b - a) dot sup_(x in [a, b]) abs(f(x) - g(x))$; the converse fails in general.
+
 We first approximate Riemann integrable functions by continuous functions, and continuous functions by smooth functions, respectively.
 
 === Riemann Integrable Functions, Continuous Functions and Smooth Functions // Riemann 可积函数、连续函数和平滑函数
