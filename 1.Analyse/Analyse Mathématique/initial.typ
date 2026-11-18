@@ -10024,7 +10024,7 @@ $
 // 注：tex 该式 Jacobian 分母误作 (r, theta, varphi)，与变换变量 (r, theta, z) 不符，已修正为 (r, theta, z)。
 
 #figure(
-  image("img/cylindrical-coordinates.svg", width: 58%),
+  image("img/cylindrical-coordinates.svg", width: 48%),
   caption: [Cylindrical coordinate system.],
 ) <fig:cylindrical-coordinates>
 
@@ -10048,7 +10048,7 @@ $
 $
 
 #figure(
-  image("img/spherical-coordinates.svg", width: 58%),
+  image("img/spherical-coordinates.svg", width: 48%),
   caption: [Spherical coordinate system.],
 ) <fig:spherical-coordinates>
 // 注：tex 原为柱面+球面合绘的 coordinate.png（未加标签），现按用户要求拆分为三张独立配图，

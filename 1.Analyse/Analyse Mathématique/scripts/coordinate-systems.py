@@ -173,8 +173,8 @@ ax.plot([P[0], M[0]], [P[1], M[1]], [0, M[2]], color="black", lw=1.0,
 t = np.linspace(0, th, 60)
 ax.plot(0.9 * np.cos(t), 0.9 * np.sin(t), 0 * t, color="black", lw=1.2)
 
-ax.text(0.70, 0.85, 0.05, r"$r$", fontsize=FS)
-ax.text(1.15, 0.55, 0, r"$\theta$", fontsize=FS)
+ax.text(0.55, 1.10, 0.0, r"$r$", fontsize=FS)
+ax.text(1.45, 0.55, 0, r"$\theta$", fontsize=FS)
 ax.text(P[0] + 0.12, P[1] - 0.22, 1.3, r"$z$", fontsize=FS)
 ax.text(4.55, 0, 0, r"$x$", fontsize=FS)
 ax.text(0, 3.75, 0, r"$y$", fontsize=FS)
@@ -232,9 +232,9 @@ u = np.linspace(0, phi, 60)
 ax.plot(1.6 * np.sin(u) * np.cos(th), 1.6 * np.sin(u) * np.sin(th),
         1.6 * np.cos(u), color="black", lw=1.2)
 
-ax.text(0.60, 1.20, 1.55, r"$r$", fontsize=FS)
+ax.text(0.55, 0.95, 1.30, r"$r$", fontsize=FS)
 ax.text(-0.08, 0.26, 1.60, r"$\phi$", fontsize=FS)
-ax.text(1.10, 0.70, 0, r"$\theta$", fontsize=FS)
+ax.text(1.30, 1.00, 0, r"$\theta$", fontsize=FS)
 ax.text(4.55, 0, 0, r"$x$", fontsize=FS)
 ax.text(0, 3.95, 0, r"$y$", fontsize=FS)
 ax.text(0.08, 0, 4.12, r"$z$", fontsize=FS)
