@@ -622,7 +622,7 @@ solving by back-substitution. *Gauss-Jordan elimination* continues until the red
 echelon form is reached. The complete procedure is summarized in the flowchart below.
 
 #figure(
-  image("img/elimination-flowchart.svg", width: 58%),
+  image("img/elimination-flowchart.svg", width: 90%),
   caption: [Elimination process: Gaussian elimination reaches row echelon form, the last column
     is tested for inconsistency, and the solution set follows by back-substitution or, after
     reduction to RREF, is read off directly.],
