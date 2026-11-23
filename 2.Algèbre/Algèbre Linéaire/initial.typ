@@ -619,7 +619,15 @@ operations.
 A linear system can be solved by *elimination*: applying elementary row operations to the
 augmented matrix of the system, so that the coefficient part becomes triangular, and then
 solving by back-substitution. *Gauss-Jordan elimination* continues until the reduced row
-echelon form is reached.
+echelon form is reached. The complete procedure is summarized in the flowchart below.
+
+#figure(
+  image("img/elimination-flowchart.svg", width: 58%),
+  caption: [Elimination process: Gaussian elimination reaches row echelon form, the last column
+    is tested for inconsistency, and the solution set follows by back-substitution or, after
+    reduction to RREF, is read off directly.],
+  supplement: [Fig.],
+) <fig:elimination-flowchart>
 
 #definition(name: "Row Echelon Form")[
   Let $R$ be a matrix.
