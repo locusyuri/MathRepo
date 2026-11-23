@@ -724,6 +724,14 @@ Two integrals of that function were measured long before it was known.
   $
 ]
 
+@fig:blackbody-spectrum shows the measured family of curves, on which both regularities are visible at once: the peak moves towards shorter wavelengths as the temperature rises, and the area under each curve grows as $T^4$.
+
+#figure(
+  image("img/blackbody-spectrum.svg", width: 86%),
+  caption: [Spectral exitance of a blackbody at four temperatures. Raising the temperature shifts the maximum towards shorter wavelengths and increases the total emitted power.],
+  supplement: [Fig.],
+) <fig:blackbody-spectrum>
+
 These two laws fix the total power and the position of the peak, and say nothing about the shape of the curve between them.
 The shape is what classical physics failed to produce.
 Treating the cavity field as a collection of standing waves, each mode carrying the equipartition energy $k_"B" T$, gives the Rayleigh-Jeans formula.
@@ -733,6 +741,15 @@ Treating the cavity field as a collection of standing waves, each mode carrying 
 $] <eq:rayleigh-jeans>
 
 The formula agrees with experiment in the far infrared and fails at short wavelengths, and the failure is not a small correction.
+@fig:blackbody-classical puts the three candidates next to the data at $T = 1646 "K"$: the measurements follow Planck's curve along its whole length, follow Wien's curve on the rising side of the peak, and follow the Rayleigh-Jeans curve only on the far tail.
+
+#figure(
+  image("img/blackbody-classical.svg", width: 86%),
+  caption: [Measured blackbody spectrum compared with the Planck, Wien and Rayleigh-Jeans formulas. Wien's curve falls too fast on the long-wavelength side, while the Rayleigh-Jeans curve diverges on the short-wavelength side.],
+  supplement: [Fig.],
+) <fig:blackbody-classical>
+
+The disagreement of the classical curve is therefore not a matter of fitting a constant: the two limits fail in opposite directions, so no choice of parameters can repair the classical result.
 
 #caution(title: "The ultraviolet catastrophe")[
   The Rayleigh-Jeans formula grows without bound as $lambda -> 0$, so the predicted total exitance $integral_0^oo M_lambda dif lambda$ is infinite.
@@ -803,13 +820,13 @@ All four statements contradict the wave picture of light, and they do so in diff
 
 Einstein's proposal was to take Planck's quantum literally and apply it to the radiation field itself, not merely to the oscillators in the wall.
 
-@fig:photoelectric-iv isolates the two features that the wave theory cannot reproduce: the stopping voltage is fixed by frequency alone, while the saturation current is fixed by intensity.
+@fig:photoelectric isolates the two features that the wave theory cannot reproduce, and adds the linear law that makes the effect a measurement of $h$.
 
 #figure(
-  image("img/photoelectric-iv.svg", width: 82%),
-  caption: [Photocurrent against retarding voltage. Curves of the same frequency but different intensity share one stopping voltage $U_0$ and differ in saturation current; raising the frequency shifts $U_0$ while leaving the shape unchanged.],
+  image("img/photoelectric.svg", width: 100%),
+  caption: [Photoelectric effect. (a) Curves of one frequency but two intensities share the stopping voltage $U_0$ and differ in saturation current; raising the frequency shifts $U_0$ without changing the shape. (b) $U_0$ grows linearly with $nu$, the slope $h/e$ is the same for every metal, and the threshold is $nu_0 = W/h$.],
   supplement: [Fig.],
-) <fig:photoelectric-iv>
+) <fig:photoelectric>
 
 #postulate(name: "Einstein's Light Quantum Hypothesis")[
   Radiation of frequency $nu$ consists of quanta of energy $h nu$, and one quantum is absorbed by one electron as a whole.
@@ -843,15 +860,60 @@ A light quantum of energy $h nu$ also carries momentum, since $E = p c$ for a ma
   p = (h nu)/c = h/lambda.
 $] <eq:photon-momentum>
 
-Momentum is confirmed by Compton scattering, in which a photon transfers part of its energy and momentum to a free electron and emerges with a longer wavelength.
+Compton's experiment sends X-rays of wavelength $lambda$ on graphite and records the radiation scattered at angle $theta$.
+Besides the unshifted line at $lambda$ there is a second line at a longer wavelength $lambda'$, and the shift grows with the angle.
+The wave picture predicts no such shift, because a classical scatterer re-radiates at the frequency it is driven at; the photon picture predicts one from energy and momentum conservation alone.
 
-#eq[$
-  Delta lambda = (h)/(m_e c)(1 - cos theta).
-$] <eq:compton-shift>
+#theorem(name: "Compton Shift")[
+  A photon of wavelength $lambda$ scattered through angle $theta$ by a free electron at rest emerges with wavelength
+  #eq[$
+    Delta lambda = lambda' - lambda = (h)/(m_e c)(1 - cos theta).
+  $] <eq:compton-shift>
+] <thm:compton-shift>
 
-#note(title: "Compton scattering")[
-  The derivation uses four-momentum conservation and is given in *Compton Scattering* in the optics notebook.
-  The scale of the shift is the Compton wavelength $h / (m_e c) = 2.43 times 10^(-12) "m"$, which is why the effect is invisible at optical wavelengths and decisive for X-rays.
+#proof(name: "of the Compton shift")[
+  *Step 1 — energy conservation.* With $gamma = 1/sqrt(1 - v^2/c^2)$ for the recoiling electron,
+  $
+    h nu + m_e c^2 = h nu' + gamma m_e c^2.
+  $
+
+  *Step 2 — momentum conservation.* Resolving the photon and electron momenta along and perpendicular to the incident direction, with $phi$ the recoil angle of the electron,
+  $
+    (h nu)/c = ((h nu')/c) cos theta + gamma m_e v cos phi,
+  $
+  $
+    0 = ((h nu')/c) sin theta - gamma m_e v sin phi.
+  $
+
+  *Step 3 — eliminate the electron.* Squaring and adding the two momentum equations removes $phi$ and gives $gamma^2 m_e^2 v^2 c^2 = h^2 (nu^2 + (nu')^2 - 2 nu nu' cos theta)$, while Step 1 gives $gamma m_e c^2 = h (nu - nu') + m_e c^2$.
+  Eliminating $gamma$ and $v$ between these two relations leaves
+  $
+    h nu nu' (1 - cos theta) = m_e c^2 (nu - nu').
+  $
+
+  *Step 4 — convert to wavelengths.* Dividing by $nu nu'$ turns the right-hand side into $m_e c^2 (1/nu' - 1/nu) = m_e c (lambda' - lambda)$, hence $Delta lambda = (h(1 - cos theta))/(m_e c)$.
+]
+
+Three features of the result are what made the experiment decisive, and each of them is a prediction that the wave picture cannot make.
+
+- The shift depends on the scattering angle alone, not on the incident wavelength, the material, or the intensity.
+- It rises monotonically from zero at $theta = 0$ to twice the Compton wavelength at $theta = 180 degree$, where the photon is backscattered and the electron recoils forward with the largest energy.
+- Its size is set by the Compton wavelength $lambda_"C" = h/(m_e c) = 2.43 times 10^(-12) "m"$, which is a few percent of the wavelength for X-rays and unobservable in the visible, so the effect had to wait for X-ray sources.
+
+#example(name: "Compton scattering of molybdenum $K alpha$ radiation")[
+  The $K alpha$ line of molybdenum has $lambda = 71.1 "pm"$, corresponding to a photon energy of $17.4 "keV"$.
+  At $theta = 90 degree$ the shift is exactly one Compton wavelength, so $lambda' = 73.5 "pm"$ and the photon energy falls to $16.9 "keV"$.
+  The recoiling electron carries away the difference, $0.5 "keV"$ of kinetic energy, which is the quantity the detector measures.
+]
+
+#note(title: "The unshifted line")[
+  The line at the original wavelength comes from scattering off electrons bound tightly enough that the recoil is shared by the whole atom.
+  Its shift is smaller than the free-electron value by the ratio $m_e/M_"atom"$, which is unobservable even for carbon, so the two lines in the spectrum are the free and the bound cases rather than two competing theories.
+]
+
+#note(title: "Four-momentum shortcut")[
+  The same shift follows in three lines from four-momentum conservation, and that route is taken in *Compton Scattering* in the optics notebook, together with the experimental history.
+  The derivation above is kept here because the two conservation laws it uses are the ones this notebook will rely on from start to finish.
 ]
 
 #note(title: "Two faces of one object")[

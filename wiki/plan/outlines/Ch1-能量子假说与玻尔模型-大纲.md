@@ -1,7 +1,7 @@
 # 第 1 章「The Quantum Hypothesis // 能量子假说与玻尔模型」写作大纲
 
 > 状态：正文已按本大纲写入 `6.Mathématiques appliquées/Mécanique quantique/initial.typ`（2026-11-23）。
-> 两张配图已由同目录 `scripts/` 下的脚本生成（`bohr-levels.svg`、`photoelectric-iv.svg`）。
+> 四张配图已由同目录 `scripts/` 下的脚本生成（`blackbody-spectrum.svg`、`blackbody-classical.svg`、`photoelectric.svg`、`bohr-levels.svg`），脚本只输出 SVG，不生成 PNG。
 > 任务类型：**A 类新章规划**（全书第一章，正文尚无任何内容）。
 > 教材基线：李艳华、王新顺《大学物理教程（下册）》第 2 版，第 21.1 节（@li2026）。
 
@@ -11,7 +11,7 @@
 
 **核心洞察**：**旧量子论的每一次成功都来自「给经典理论强行加一条量子化条件」，而不是来自新的力学**。Planck 加 $E = n h nu$，Einstein 把量子推广到辐射场，Bohr 再加 $L = n planck$。三个假设各自有效却互不统属，且对氦原子立刻失效——这正是 Ch 2 物质波与 Ch 5 Schrödinger 方程的动机来源。
 
-**规模**：正文约 480–560 行，3 节，约 28 个新标签（含 8 个编号公式），2 张图。
+**规模**：正文约 600 行，3 节，约 30 个新标签（含 8 个编号公式），4 张图。
 
 **与既有笔记的边界（SRP）**：
 
@@ -45,12 +45,12 @@
 | `#definition` | 1 | `<def:blackbody>` |
 | `#law` | 4 | `<law:kirchhoff>`, `<law:stefan-boltzmann>`, `<law:wien-displacement>`, `<law:photoelectric-effect>` |
 | `#postulate` | 3 | `<post:planck-quantum>`, `<post:einstein-photon>`, `<post:bohr>` |
-| `#theorem` | 2 | `<thm:bohr-energy>`, `<thm:rydberg-constant>` |
+| `#theorem` | 3 | `<thm:compton-shift>`, `<thm:bohr-energy>`, `<thm:rydberg-constant>` |
 | `#proposition` | 1 | `<prop:bohr-correspondence>` |
-| `#example` | 4 | `<ex:planck-limits>`, `<ex:quantum-of-action>`, `<ex:millikan-h>`, `<ex:hydrogen-ionization>` |
+| `#example` | 5 | `<ex:planck-limits>`, `<ex:quantum-of-action>`, `<ex:millikan-h>`, `<ex:compton-mo>`, `<ex:hydrogen-ionization>` |
 | `#caution` | 3 | 紫外灾难 / Rutherford 悖论 / 旧量子论局限（后两个带标签） |
-| `#note` | ~6 | 跨笔记引用、前瞻承诺，无标签 |
-| `#figure` | 2 | `<fig:bohr-levels>`（A 级）, `<fig:photoelectric-iv>`（B 级） |
+| `#note` | ~8 | 跨笔记引用、前瞻承诺，无标签 |
+| `#figure` | 4 | `<fig:blackbody-spectrum>`, `<fig:blackbody-classical>`（A 级）, `<fig:photoelectric>`（A 级，双面板）, `<fig:bohr-levels>`（A 级） |
 | 编号公式 | 8 | 见 §七 |
 
 三类「历史假设」统一用 `#postulate` 而非 `#theorem`，因为它们在本笔记的体系里**不被证明**，只被后续章节取代或被严格化。
@@ -160,6 +160,7 @@ caution:old-quantum-limits ──► Ch 2 §2.1 de Broglie 物质波
 
 | 定理/命题 | 证明策略 | 关键工具 |
 |---|---|---|
+| `<thm:compton-shift>` | 能量守恒 + 两个方向的动量守恒 → 消去电子角度与速度 → 换成波长 | `@eq:photon-momentum`、Lorentz 因子 $gamma$ |
 | `<thm:bohr-energy>` | Coulomb 力提供向心力 + 角动量量子化 $m v r = n planck$ → 解出 $v_n$、$r_n$ → 能量 $E = T + V$ 化到 `@eq:bohr-radius` | `@post:bohr`、`@eq:bohr-radius` |
 | `<thm:rydberg-constant>` | 频率条件 $h c / lambda = E_(n_2) - E_(n_1)$ 代入 `@thm:bohr-energy` → 与 `@eq:rydberg` 比对系数 → 得 $R = m_e e^4 / (8 epsilon_0^2 h^3 c)$，代入数值 $1.097 times 10^7 "m"^(-1)$ | `@thm:bohr-energy`、`@eq:rydberg` |
 | `<prop:bohr-correspondence>` | 取 $n >> 1$、$Delta n = 1$：$nu = (E_(n+1) - E_n)/h approx (1/h) dif E/(dif n)$；经典频率 $nu_"cl" = v_n / (2 pi r_n)$；两式化简相等 | `@thm:bohr-energy`、`@eq:bohr-radius` |
@@ -185,13 +186,17 @@ caution:old-quantum-limits ──► Ch 2 §2.1 de Broglie 物质波
 
 | # | 文件名 | 标签 | 内容 | 布局 | 优先级 |
 |---|--------|------|------|------|--------|
-| 1 | `bohr-levels.svg` | `<fig:bohr-levels>` | 氢原子能级 $n = 1..4$（横向能量轴，$E_n = -13.6/n^2$ eV），Lyman / Balmer / Paschen 三组跃迁箭头按色彩区分，右侧标注对应波长（121.6 nm、656.3 nm、…） | 单面板 | **A 核心** |
-| 2 | `photoelectric-iv.svg` | `<fig:photoelectric-iv>` | 光电效应 $I$–$U$ 曲线：同一频率、两种光强 → 同一截止电压、不同饱和电流；再叠一条较高频率曲线 → 截止电压更负 | 单面板双线组（可加小插图） | B 推荐 |
+| 1 | `blackbody-spectrum.svg` | `<fig:blackbody-spectrum>` | 1100 / 1300 / 1500 / 1700 K 四条 $M_lambda(lambda)$ 曲线（教材图 21-2），标出最高温曲线的 $lambda_m$ | 单面板 | **A 核心** |
+| 2 | `blackbody-classical.svg` | `<fig:blackbody-classical>` | $T = 1646$ K：Planck（实线）、Wien（点划线）、Rayleigh–Jeans（虚线）与实验点（空心圆）对比（教材图 21-3） | 单面板 | **A 核心** |
+| 3 | `photoelectric.svg` | `<fig:photoelectric>` | 双面板：(a) $I$–$U$ 曲线，同频双强度共用 $-U_0$，另加高频曲线；(b) $U_0$–$nu$ 直线，Cs/Na/Ca 三种金属共用斜率 $h/e$，标出红限 $nu_0 = W/h$（教材图 21-5、21-6） | 左右双面板 | **A 核心** |
+| 4 | `bohr-levels.svg` | `<fig:bohr-levels>` | 氢原子能级 $n = 1..4$，Lyman / Balmer / Paschen 三组跃迁箭头与波长标注 | 单面板 | **A 核心** |
 
 不画的图：
 
-- 黑体谱曲线 —— `Optique` 已有 `fig:planck-spectrum`，重复违反 SRP，正文直接指向。
+- 光电效应实验装置图（教材图 21-4）—— 文字可交代，装置细节不进入论证（C 级）。
 - Franck–Hertz 曲线 —— 单个 I–V 峰列，文字可交代（C 级）。
+
+绘图约定：脚本只写 SVG（`fig.savefig(OUT, format="svg")`），不生成 PNG。
 
 ## 九、参考资料对照
 

@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 
 BLUE, RED, GREEN, GRAY = "#3b6fb6", "#c74440", "#2f9e44", "#888888"
 OUT = Path(__file__).resolve().parent.parent / "img" / "bohr-levels.svg"
-OUT_PNG = OUT.with_suffix(".png")
 
 # 能级：E_n = -13.6 / n^2 (eV)
 LEVELS = {1: -13.60, 2: -3.40, 3: -1.51, 4: -0.85}
@@ -63,7 +62,6 @@ def main() -> None:
     fig.tight_layout()
     OUT.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(OUT, format="svg", bbox_inches="tight", transparent=True)
-    fig.savefig(OUT_PNG, format="png", bbox_inches="tight", transparent=True)
 
 
 if __name__ == "__main__":
