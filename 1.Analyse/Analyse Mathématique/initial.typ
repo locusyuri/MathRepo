@@ -2999,9 +2999,9 @@ product of two or more functions, we need the following theorems.
   limit $0$ at every point.
 ]
 
-#lemma(name: "Fermat's Lemma")[
+#lemma(name: "Fermat's Lemma: Vanishing Derivative at an Extremum")[
   If $f$ is differentiable at a local extremum point $x_0$, then $f'(x_0) = 0$.
-] <lem:fermat>
+] <lem:fermat-stationary-point>
 
 #proof[
   Suppose $x_0$ is a local maximum point (the minimum case is analogous). By
@@ -12080,12 +12080,12 @@ This theorem and #link(<thm:improper-double-iterated>)[the reduction theorem for
 ] <thm:differentiation-parameter>
 // 注：tex 原文该定理的区域写作 D = [a, +\infty] × [c, d]，无穷端点误用闭括号，已修正为 [a, +∞)。
 
-#example[
+#example(name: "A Frullani-Type Parameter Integral")[
   Let
   $ F(a) = integral_0^(+oo) 1 / t (1 - e^(-a t)) cos b t dif t, quad b != 0. $
   + Prove that $F(a) in C[0, +oo) inter D(0, +oo)$.
   + Find the expression of $F(a)$.
-] <ex:fa-cos-bt>
+] <ex:frullani-cosine-parameter>
 // 注：tex 原文该例题未提供解答。
 
 === Imbedding Method // 嵌入法（原 leftbarTitle 非空壳，升级为小节）
@@ -12415,13 +12415,13 @@ Next, we give three important formulas about the Gamma function, which can be ex
     - *#link(<thm:extreme-value>)[Extreme Value]*
 
     == F
-    - *#link(<ex:fa-cos-bt>)[Fa Cos Bt]*
+    - *#link(<ex:frullani-cosine-parameter>)[Frullani-Type Parameter Integral]*
     - *#link(<ex:factorial-bounds>)[Factorial Bounds]*
     - *#link(<def:factorial-power>)[Factorial Power]*
     - *#link(<thm:fan-ky>)[Fan Ky]*
     - *#link(<ex:fejer-integral>)[Fejer Integral]*
     - *#link(<prop:homogeneous-properties>)[Further Properties of Homogeneous Functions]*
-    - *#link(<lem:fermat>)[Fermat]*
+    - *#link(<lem:fermat-stationary-point>)[Fermat's Lemma: Vanishing Derivative at an Extremum]*
     - *#link(<prop:fermat-point>)[Fermat Point]*
     - *#link(<def:first-fundamental-form>)[First Fundamental Form]*
     - *#link(<ex:fixed-point-interval>)[Fixed Point Interval]*
