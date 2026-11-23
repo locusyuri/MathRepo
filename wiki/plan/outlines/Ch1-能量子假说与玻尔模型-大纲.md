@@ -1,6 +1,7 @@
 # 第 1 章「The Quantum Hypothesis // 能量子假说与玻尔模型」写作大纲
 
-> 状态：待写。目标文件 `6.Mathématiques appliquées/Mécanique quantique/initial.typ`。
+> 状态：正文已按本大纲写入 `6.Mathématiques appliquées/Mécanique quantique/initial.typ`（2026-11-23）。
+> 两张配图已由同目录 `scripts/` 下的脚本生成（`bohr-levels.svg`、`photoelectric-iv.svg`）。
 > 任务类型：**A 类新章规划**（全书第一章，正文尚无任何内容）。
 > 教材基线：李艳华、王新顺《大学物理教程（下册）》第 2 版，第 21.1 节（@li2026）。
 

@@ -678,6 +678,323 @@
 //   第 23 章 4 节 15 个知识点，全部映射到上方覆盖度表，无遗漏。
 // ==========================================================================
 
+#part("Foundations: Waves, States and Postulates") // 量子论基础与公设
+
+= The Quantum Hypothesis <ch:quantum-hypothesis> // 能量子假说与玻尔模型
+
+Classical physics in 1900 could account for neither the spectrum of a hot body nor the stability of an atom.
+This chapter records the three failures that forced the quantum hypothesis, in the order in which they were resolved: the blackbody spectrum, the photoelectric effect, and the spectrum of hydrogen.
+The thread running through them is a single device — a quantisation condition imposed on a classical system from outside.
+Planck quantised the energy of an oscillator, Einstein quantised the energy of the radiation field, and Bohr quantised the angular momentum of an electron.
+Each device solved its own problem, none of them followed from a principle, and all of them eventually failed when pushed harder.
+The purpose of the chapter is therefore to state the facts that later chapters must explain, not to build a theory.
+
+== Blackbody Radiation and Planck's Quantum Hypothesis // 黑体辐射与普朗克能量子假说
+
+Every body emits electromagnetic radiation, and the spectrum of that emission depends on temperature.
+For most surfaces the spectrum also depends on the material, which makes a general law impossible.
+The one case in which the material drops out is the ideal absorber.
+
+#definition(name: "Blackbody")[
+  A body is called a *blackbody* if it absorbs all radiation incident on it, at every wavelength, without reflection.
+]
+
+A blackbody is realised in practice by a cavity with a small hole: radiation entering the hole is absorbed after repeated reflection inside, and radiation leaving the hole is the emission of the cavity walls.
+The relevant quantity is the *spectral exitance* $M_lambda$, the power emitted per unit area per unit wavelength interval.
+For a blackbody it is a universal function of $lambda$ and $T$ alone.
+
+#law(name: "Kirchhoff's Law of Thermal Radiation")[
+  For any body in thermal equilibrium with radiation, the ratio of spectral exitance to spectral absorptance is the same function of $lambda$ and $T$ for all bodies; for a blackbody the absorptance is one, so this ratio is the blackbody spectral exitance $M_lambda$.
+]
+
+Kirchhoff's law reduces the problem to a single unknown function of two variables.
+Two integrals of that function were measured long before it was known.
+
+#law(name: "Stefan-Boltzmann Law")[
+  The total exitance of a blackbody is
+  $
+    M = sigma T^4, quad sigma = 5.670 times 10^(-8) "W" dot "m"^(-2) dot "K"^(-4).
+  $
+]
+
+#law(name: "Wien Displacement Law")[
+  The wavelength at which the spectral exitance is maximal satisfies
+  $
+    lambda_"max" T = b, quad b = 2.898 times 10^(-3) "m" dot "K".
+  $
+]
+
+These two laws fix the total power and the position of the peak, and say nothing about the shape of the curve between them.
+The shape is what classical physics failed to produce.
+Treating the cavity field as a collection of standing waves, each mode carrying the equipartition energy $k_"B" T$, gives the Rayleigh-Jeans formula.
+
+#eq[$
+  M_lambda = (2 pi c k_"B" T) / (lambda^4).
+$] <eq:rayleigh-jeans>
+
+The formula agrees with experiment in the far infrared and fails at short wavelengths, and the failure is not a small correction.
+
+#caution(title: "The ultraviolet catastrophe")[
+  The Rayleigh-Jeans formula grows without bound as $lambda -> 0$, so the predicted total exitance $integral_0^oo M_lambda dif lambda$ is infinite.
+  Since a cavity in thermal equilibrium with its walls would then radiate infinite power, the classical result is not merely inaccurate but impossible.
+  Equipartition of energy over infinitely many field modes is the assumption that breaks.
+]
+
+Planck's step was not to question equipartition over the field modes but to question the energy of the oscillators in the wall that exchange energy with those modes.
+
+#postulate(name: "Planck's Quantum Hypothesis")[
+  The energy of an oscillator of frequency $nu$ in the cavity wall is restricted to the discrete values
+  $
+    E_n = n h nu, quad n = 0, 1, 2, dots,
+  $
+  with $h = 6.626 times 10^(-34) "J" dot "s"$, and radiation is emitted or absorbed only in units of $h nu$.
+]
+
+Replacing the equipartition average by a discrete Boltzmann average over these levels gives the distribution that carries Planck's name.
+
+#eq[$
+  M_lambda = (2 pi h c^2)/(lambda^5) dot 1 / (e^((h c)/(lambda k_"B" T)) - 1).
+$] <eq:planck-law>
+
+#note(title: "Where the derivation lives")[
+  The counting of cavity modes and the discrete Boltzmann sum are carried out in *Photon Gas and Planck's Law* in the thermodynamics notebook and in *Blackbody Radiation and Planck's Law* in the optics notebook.
+  This chapter records only the result and its limits, because the subject of this notebook begins where the classical mode counting stops.
+]
+
+The two limits of @eq:planck-law recover both classical formulas, which is why the older results survive as approximations.
+
+#example(name: "The two classical limits")[
+  In the short-wavelength limit $h c / lambda >> k_"B" T$ the exponential dominates the denominator, and @eq:planck-law reduces to Wien's empirical distribution $M_lambda prop lambda^(-5) e^(-h c / (lambda k_"B" T))$, which fits the data on the rising side of the peak.
+  In the long-wavelength limit $h c / lambda << k_"B" T$ the expansion $e^x - 1 approx x$ turns @eq:planck-law into the Rayleigh-Jeans formula of @eq:rayleigh-jeans.
+  The classical theory is thus the low-frequency limit of the quantum one, exactly as classical mechanics is the slow-speed limit of relativity.
+]
+
+The size of $h$ explains why the quantum structure of radiation went unnoticed for so long.
+
+#example(name: "Why quantisation is invisible in daily life")[
+  A quantum of visible light has energy $h nu approx 2 "eV"$, while the thermal energy at room temperature is $k_"B" T approx 0.026 "eV"$, so at optical frequencies the ratio $h nu / (k_"B" T)$ is of order eighty and quantisation is decisive.
+  For a pendulum of frequency $1 "Hz"$, the quantum is $h nu approx 4 times 10^(-15) "eV"$, which at room temperature corresponds to an excitation number $n approx k_"B" T / (h nu) approx 10^(13)$.
+  A ladder with $10^(13)$ rungs is a continuum for every practical purpose, so the classical description of a macroscopic oscillator is the correct one.
+]
+
+Planck himself treated the discrete energies as a formal device for obtaining the right formula, and tried for years to remove them from the theory.
+The next experiment showed that the quantum was not a bookkeeping trick.
+
+== The Photoelectric Effect and Light Quanta // 光电效应与光量子
+
+When ultraviolet light falls on a clean metal surface, electrons are emitted from it.
+The effect was discovered by Hertz in 1887 and studied systematically by Lenard, and its regularities are simple enough to state in four lines.
+A photocell is operated with a variable retarding voltage $U$: the current saturates at large positive $U$, and vanishes at a stopping voltage $U_0$ that measures the maximum kinetic energy of the emitted electrons.
+
+#law(name: "The Photoelectric Effect: Empirical Laws")[
+  - For fixed frequency, the saturation current is proportional to the light intensity.
+  - The stopping voltage $U_0$ is independent of the intensity.
+  - $U_0$ depends linearly on the frequency $nu$, and vanishes below a threshold frequency $nu_0$ characteristic of the metal.
+  - Emission begins within $10^(-9) "s"$ of illumination, with no measurable delay even at very low intensity.
+]
+
+All four statements contradict the wave picture of light, and they do so in different ways.
+
+#caution(title: "What the wave theory cannot explain")[
+  - *Energy.* A classical wave spreads its energy continuously over the illuminated surface, so a single electron would need a long time to accumulate the escape energy $W$; the observed delay is unmeasurably short.
+  - *Intensity.* Brighter light should eject faster electrons, whereas it ejects more electrons at the same speed.
+  - *Frequency.* A wave of any frequency carries energy, so no threshold frequency should exist.
+]
+
+Einstein's proposal was to take Planck's quantum literally and apply it to the radiation field itself, not merely to the oscillators in the wall.
+
+@fig:photoelectric-iv isolates the two features that the wave theory cannot reproduce: the stopping voltage is fixed by frequency alone, while the saturation current is fixed by intensity.
+
+#figure(
+  image("img/photoelectric-iv.svg", width: 82%),
+  caption: [Photocurrent against retarding voltage. Curves of the same frequency but different intensity share one stopping voltage $U_0$ and differ in saturation current; raising the frequency shifts $U_0$ while leaving the shape unchanged.],
+  supplement: [Fig.],
+) <fig:photoelectric-iv>
+
+#postulate(name: "Einstein's Light Quantum Hypothesis")[
+  Radiation of frequency $nu$ consists of quanta of energy $h nu$, and one quantum is absorbed by one electron as a whole.
+]
+
+Energy conservation for a single absorption event gives the photoelectric equation.
+
+#eq[$
+  h nu = W + E_k.
+$] <eq:photoelectric>
+
+Combining @eq:photoelectric with the retarding-voltage definition $e U_0 = E_k$ gives the measured straight line.
+
+#eq[$
+  e U_0 = h nu - W.
+$] <eq:stopping-potential>
+
+@eq:stopping-potential makes a sharp prediction: for every metal the data lie on a straight line whose slope is $h / e$ and whose intercept is $-W / e$.
+The slope is independent of the material, which is what makes the effect a measurement of $h$ rather than a property of metals.
+
+#example(name: "Measuring Planck's constant")[
+  For a potassium surface the work function is $W = 2.2 "eV"$.
+  Illumination at $lambda_1 = 400 "nm"$ gives $h nu_1 = 3.10 "eV"$ and $U_0 = 0.90 "V"$, while $lambda_2 = 500 "nm"$ gives $h nu_2 = 2.48 "eV"$ and $U_0 = 0.28 "V"$.
+  The frequency difference is $Delta nu = c (1/lambda_1 - 1/lambda_2) approx 1.50 times 10^(14) "Hz"$, and the voltage difference is $Delta U_0 = 0.62 "V"$.
+  Hence $h = e Delta U_0 / Delta nu approx 1.602 times 10^(-19) times 0.62 / (1.50 times 10^(14)) approx 6.6 times 10^(-34) "J" dot "s"$, in agreement with Planck's value.
+]
+
+A light quantum of energy $h nu$ also carries momentum, since $E = p c$ for a massless particle.
+
+#eq[$
+  p = (h nu)/c = h/lambda.
+$] <eq:photon-momentum>
+
+Momentum is confirmed by Compton scattering, in which a photon transfers part of its energy and momentum to a free electron and emerges with a longer wavelength.
+
+#eq[$
+  Delta lambda = (h)/(m_e c)(1 - cos theta).
+$] <eq:compton-shift>
+
+#note(title: "Compton scattering")[
+  The derivation uses four-momentum conservation and is given in *Compton Scattering* in the optics notebook.
+  The scale of the shift is the Compton wavelength $h / (m_e c) = 2.43 times 10^(-12) "m"$, which is why the effect is invisible at optical wavelengths and decisive for X-rays.
+]
+
+#note(title: "Two faces of one object")[
+  Interference and diffraction require the wave picture, while the photoelectric effect and Compton scattering require the quantum picture.
+  No classical model carries both faces at once, and the resolution offered by quantum mechanics is not a compromise between them but a different kind of description, developed in *Matter Waves and the Uncertainty Principle*.
+]
+
+The question that the next chapter takes up is forced by this one: if radiation has both a wave and a particle face, why should matter not have both as well?
+
+== Atomic Spectra and Bohr's Model // 原子光谱与玻尔氢原子理论
+
+A discharge tube filled with hydrogen emits a small number of sharp lines rather than a continuous spectrum.
+Balmer reduced the four visible lines to a formula in 1885, and Rydberg generalised it to the whole spectrum.
+
+#eq[$
+  1/lambda = R_"H" (1/n_1^2 - 1/n_2^2), quad n_2 > n_1 = 1, 2, 3, dots
+$] <eq:rydberg>
+
+The same constant $R_"H" = 1.097 times 10^7 "m"^(-1)$ fits every series, which is the striking part of the formula.
+
+#tex-table(
+  ([Series], [Lower level $n_1$], [Spectral region], [First line]),
+  ([Lyman], [$1$], [ultraviolet], [$121.6 "nm"$]),
+  ([Balmer], [$2$], [visible], [$656.3 "nm"$]),
+  ([Paschen], [$3$], [infrared], [$1875 "nm"$]),
+)
+
+Nothing in classical physics explains either the discreteness of the lines or the numerical value of $R_"H"$.
+The nuclear model of the atom, which had just been established by Rutherford's scattering experiments, made the difficulty sharper rather than smaller.
+
+#caution(title: "Two failures of the nuclear model")[
+  - *Stability.* An electron in a circular orbit is accelerating, so by Larmor's formula it radiates and spirals into the nucleus within about $10^(-11) "s"$; atoms do not collapse.
+  - *Spectrum.* Radiation from a shrinking orbit would be continuous and its frequency would sweep upward as the orbit contracts, whereas the observed lines are sharp and fixed.
+]
+
+Bohr's response was to keep the orbit but to forbid radiation on it, and to allow radiation only in the passage between two orbits.
+
+#postulate(name: "Bohr's Postulates")[
+  1. *Stationary states.* An electron can move in certain circular orbits without radiating, each carrying a definite energy $E_n$.
+  2. *Frequency condition.* Radiation is emitted or absorbed only in a transition between two stationary states, with $h nu = E_(n_2) - E_(n_1)$.
+  3. *Quantisation of angular momentum.* The allowed orbits satisfy $m_e v r = n planck$, with $n = 1, 2, 3, dots$.
+]
+
+The postulates are inconsistent with classical electrodynamics by construction: the first denies the radiation that the third makes inevitable for an accelerating charge, and the second restores radiation only at the instants of transition.
+That inconsistency is the honest description of the model — it is a patch on classical mechanics, not a replacement for it, and it is judged by what it computes.
+
+For a circular orbit the Coulomb force supplies the centripetal acceleration, $e^2/(4 pi epsilon_0 r^2) = m_e v^2/r$.
+Eliminating $v$ with the third postulate turns the allowed radii into a discrete set.
+
+#eq[$
+  r_n = n^2 a_0, quad a_0 = (4 pi epsilon_0 planck^2)/(m_e e^2) = 5.29 times 10^(-11) "m".
+$] <eq:bohr-radius>
+
+The length $a_0$ is the Bohr radius, the radius of the smallest allowed orbit; the allowed orbits grow as $n^2$, so the atom is mostly empty space already at $n = 10$.
+
+#theorem(name: "Bohr Energy Levels")[
+  The energy of the $n$-th stationary state of hydrogen is
+  $
+    E_n = - (m_e e^4)/(8 epsilon_0^2 h^2) dot 1/n^2 = - (13.6 "eV")/n^2.
+  $
+] <thm:bohr-energy>
+
+#proof(name: "of the Bohr energy levels")[
+  *Step 1 — energy in terms of the radius.* The force balance gives $m_e v^2 = e^2/(4 pi epsilon_0 r)$, hence $T = e^2/(8 pi epsilon_0 r)$, while $V = -e^2/(4 pi epsilon_0 r)$; therefore $E = T + V = -e^2/(8 pi epsilon_0 r)$.
+
+  *Step 2 — insert the quantised radius.* Substituting @eq:bohr-radius gives $E_n = -e^2/(8 pi epsilon_0 n^2 a_0) = -(m_e e^4)/(8 epsilon_0^2 h^2 n^2)$.
+
+  *Step 3 — numerical value.* With the constants above the prefactor is $13.6 "eV"$, so the ground state lies $13.6 "eV"$ below the ionisation limit and the levels crowd towards zero as $n$ grows.
+]
+
+The empirical formula now follows from the model, which is the test the model had to pass.
+
+#theorem(name: "Rydberg Constant from Bohr's Model")[
+  The transition frequencies implied by #link(<thm:bohr-energy>)[*Bohr Energy Levels*] reproduce @eq:rydberg with
+  $
+    R_"H" = (m_e e^4)/(8 epsilon_0^2 h^3 c).
+  $
+] <thm:rydberg-constant>
+
+#proof(name: "of the Rydberg constant")[
+  The frequency condition gives $h c/lambda = E_(n_2) - E_(n_1)$.
+  Inserting #link(<thm:bohr-energy>)[*Bohr Energy Levels*] and dividing by $h c$ yields
+  $
+    1/lambda = (m_e e^4)/(8 epsilon_0^2 h^3 c)(1/n_1^2 - 1/n_2^2),
+  $
+  which is @eq:rydberg with the stated coefficient.
+  Evaluating the coefficient from the constants gives $1.097 times 10^7 "m"^(-1)$, matching the spectroscopic value to four figures.
+]
+
+The agreement was decisive because $R_"H"$ had been measured spectroscopically long before 1913, so the model predicted a number that it had not been fitted to.
+
+#example(name: "Ionisation and excitation energies")[
+  The ground state of hydrogen is $E_1 = -13.6 "eV"$, so ionisation costs $13.6 "eV"$.
+  At room temperature $k_"B" T approx 0.026 "eV"$, a factor of about five hundred smaller, which is why thermal collisions do not ionise atoms in ordinary matter.
+  The first excited level lies $10.2 "eV"$ above the ground state, corresponding to the Lyman-$alpha$ line at $121.6 "nm"$.
+]
+
+The level structure and the three series are drawn in @fig:bohr-levels.
+
+#figure(
+  image("img/bohr-levels.svg", width: 88%),
+  caption: [Energy levels of hydrogen in electronvolts, with the Lyman, Balmer and Paschen series marked by transition arrows.],
+  supplement: [Fig.],
+) <fig:bohr-levels>
+
+#note(title: "Franck-Hertz experiment")[
+  Electrons accelerated through mercury vapour lose energy in discrete amounts: the anode current falls at accelerating voltages separated by $4.9 "V"$, the energy of the first excited state of mercury.
+  The experiment confirms discrete atomic levels without using spectroscopy, and it therefore tests the quantum hypothesis rather than a particular spectral formula.
+]
+
+One consistency condition must hold if the model is to be more than a numerical coincidence: at large quantum numbers the quantum and classical descriptions must merge.
+Here it does, and the check is worth doing because it will reappear as a guiding principle throughout the notebook.
+
+#proposition(name: "Correspondence Principle for the Bohr Atom")[
+  For $n >> 1$ and $Delta n = 1$ the frequency of the emitted radiation equals the frequency of the classical circular motion in the same orbit.
+] <prop:bohr-correspondence>
+
+#proof(name: "of the correspondence principle")[
+  For large $n$ the energy difference is approximated by a derivative,
+  $
+    h nu = E_(n+1) - E_n approx (dif E)/(dif n).
+  $
+
+  With $E_n = -A/n^2$ this gives $nu approx 2 A/(h n^3)$.
+
+  The classical orbital frequency is $nu_"cl" = v/(2 pi r_n)$; using the force balance and @eq:bohr-radius it becomes $nu_"cl" = m_e e^4/(4 epsilon_0^2 h^3 n^3)$.
+
+  Since $A = m_e e^4/(8 epsilon_0^2 h^2)$, the two frequencies coincide, and the quantum and classical pictures agree in the limit of large quantum numbers.
+]
+
+The model is nevertheless not a theory of the atom, and the reasons are worth stating explicitly, since each of them is repaired by a later chapter.
+
+#caution(title: "Where the old quantum theory fails")[
+  - *Mixed description.* The first postulate keeps a classical trajectory and the third forbids the radiation that classical electrodynamics requires from that trajectory; no single set of assumptions contains both.
+  - *More than one electron.* Helium, the next atom in the table, is already out of reach: there is no rule for how two electrons share an orbit.
+  - *Intensities.* The model gives the frequencies of the lines but says nothing about which lines are strong, and the correspondence argument is a consistency check rather than a calculation.
+  - *Wrong quantisation.* The eigenvalues of angular momentum are $l(l+1)planck^2$ with component $m planck$, not $n planck$; Bohr's condition is accidentally right for the circular orbits of hydrogen only.
+]
+
+The escape from these difficulties is to drop the orbit rather than to patch it.
+If the electron is a wave, the allowed states are the standing waves of that wave in the Coulomb potential, and the quantum conditions become boundary conditions instead of extra assumptions.
+That step is taken in *Matter Waves and the Uncertainty Principle* and completed in *The Schrödinger Equation and Stationary States*, with the hydrogen spectrum recovered from first principles in *The Hydrogen Atom*.
+
 // ==========================================================================
 // References (参考文献)
 // ==========================================================================
