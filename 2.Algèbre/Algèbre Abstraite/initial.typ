@@ -3499,9 +3499,11 @@ recovers, up to renaming, exactly the image $"Im" f$.
 
   *Homomorphism.* For $a, b in G$,
   $
-    phi(a("Ker" f) dot b("Ker" f)) & = phi((a b)("Ker"
-                                                 f)) = f(a b) \
-                                           & = f(a) f(b) = phi(a("Ker" f)) dot phi(b("Ker" f)),
+    phi(a("Ker" f) dot b("Ker" f)) & = phi(
+                                       (a b)("Ker"
+                                         f)
+                                     ) = f(a b) \
+                                   & = f(a) f(b) = phi(a("Ker" f)) dot phi(b("Ker" f)),
   $
   using the definition of the quotient operation
   (#link(<thm:quotient-group>)[§4.2]) and that $f$ is a homomorphism.
@@ -7355,7 +7357,7 @@ The closing remarks of the previous chapter reduced arithmetic to a statement ab
 Divisibility is not a private relation between two elements: $a$ divides $b$ exactly when $(b) subset.eq (a)$, so a chain of divisors is a chain of principal ideals and a factorization is a way of writing one ideal as a product of smaller ones.
 This chapter develops that translation into a theory, and then applies it to two rings.
 
-The vocabulary comes first: divisibility, associates, irreducible elements, prime elements.
+The vocabulary comes first: divisibility, associates, trivial and proper divisors, irreducible elements, prime elements.
 The two adjectives are the heart of the matter, and they are not synonyms: an irreducible element cannot be broken into factors, a prime element forces its way into every product it divides, and in a general domain the first does not imply the second.
 
 Three classes of rings close the gap, in increasing strength:
@@ -7385,6 +7387,24 @@ Boundaries: polynomial rings, their division algorithm and Gauss's lemma belong 
 The relation is reflexive and transitive but not antisymmetric: $2$ divides $-2$ and $-2$ divides $2$ in $bb(Z)$, and the two are not equal.
 What fails is exactly the distinction between an element and its unit multiples, which is why associates enter the picture at once.
 
+#definition(name: "Associates")[
+  Two elements $a$ and $b$ of an integral domain are *associates*, written $a tilde^"asso" b$, if $a = u b$ for some unit $u$.
+] <def:associate>
+
+The relation is an equivalence relation, since the units form a group under multiplication, and the class of $a$ is exactly the set of elements generating the same principal ideal (#link(<prop:divisibility-properties>)[the proposition below]).
+In $bb(Z)$ the associates of $n$ are $±n$, and in $bb(Z)["i"]$ they are $±n, ±"i"n$; choosing one representative per class is the content of "unique up to associates".
+
+Divisibility separates two kinds of divisor, and only one of them carries information.
+
+#definition(name: "Trivial and Proper Divisors")[
+  Let $R$ be an integral domain and $b in R$ nonzero.
+  A divisor $a$ of $b$ is *trivial* if $a$ is a unit or an associate of $b$, and *proper*, or *non-trivial*, otherwise.
+] <def:trivial-divisor>
+
+A unit divides every element, and every element is an associate of itself, so both trivial divisors are available for every nonzero $b$.
+A proper divisor is what remains after these two are set aside: it is a divisor that produces a genuine factorization of $b$.
+In $bb(Z)$ the trivial divisors of $6$ are $±1$ and $±6$, and the proper divisors are $±2$ and $±3$.
+
 #proposition(name: "Elementary Properties of Divisibility")[
   Let $R$ be an integral domain and $a, b, c in R$.
   - $a | a$, and $a | b$ together with $b | c$ gives $a | c$;
@@ -7397,19 +7417,33 @@ What fails is exactly the distinction between an element and its unit multiples,
   (1) $a = a dot 1$, and $c = b c' = a (c c')$ if $b = a c'$.
 
   (2) If $a = b u$ and $b = a v$ with units $u, v$, then $a = a (u v)$.
-  For $a != 0$ cancellation (#link(<prop:cancellation-domain>)[§8.3]) gives $u v = 1$, so both are units and $a ~ b$; for $a = b = 0$ the statement is void.
+  For $a != 0$ cancellation (#link(<prop:cancellation-domain>)[§8.3]) gives $u v = 1$, so both are units and $a tilde^"asso" b$; for $a = b = 0$ the statement is void.
 
   (3) If $u$ is a unit then $a = u (u^(-1) a)$; and $0 | b$ means $b = 0 dot c$ for some $c$, that is, $b = 0$.
 
   (4) $r b + s c = r a b' + s a c' = a (r b' + s c')$.
 ]
 
-#definition(name: "Associates")[
-  Two elements $a$ and $b$ of an integral domain are *associates*, written $a ~ b$, if $a = u b$ for some unit $u$.
-] <def:associate>
+#proposition(name: "Proper Divisors and Non-trivial Factorizations")[
+  Let $R$ be an integral domain and $a in R$ nonzero.
+  Then $a$ has a proper divisor if and only if $a = b c$ with neither $b$ nor $c$ a unit.
+] <prop:proper-divisor>
 
-Associativity of this relation is the multiplication of units, and #link(<prop:divisibility-properties>)[the proposition] says that the class of $a$ is exactly the set of elements generating the same principal ideal.
-In $bb(Z)$ the associates of $n$ are $±n$, and in $bb(Z)["i"]$ they are $±n, ±"i"n$; choosing one representative per class is the content of "unique up to associates".
+#proof[
+  *Only if.*
+  Let $b$ be a proper divisor, so $a = b c$.
+  By definition $b$ is neither a unit nor an associate of $a$.
+  The cofactor $c$ is not a unit either: $c$ a unit would give $b = a c^(-1)$, making $b$ an associate of $a$.
+
+  *If.*
+  Let $a = b c$ with $b$ and $c$ nonunits.
+  Then $b$ divides $a$ and $b$ is not a unit.
+  Nor is $b$ an associate of $a$: from $b = a u$ with $u$ a unit one gets $a = a (u c)$, and cancelling the nonzero $a$ makes $c = u^(-1)$ a unit, contrary to the hypothesis.
+  So $b$ is a proper divisor.
+]
+
+Two statements about a nonzero $a$ are therefore the same statement: $a$ has a proper divisor, and $a$ admits a factorization into two nonunits.
+Irreducibility is the negation of both, once the two degenerate factors are excluded.
 
 === The Dictionary
 
@@ -7418,13 +7452,13 @@ The whole chapter rests on one translation, which is worth stating before any pr
 #note(title: "Elements read as ideals")[
   Let $R$ be an integral domain.
   - $a | b$ exactly when $(b) subset.eq (a)$ (#link(<def:principal-ideal>)[§9.1]);
-  - $a ~ b$ exactly when $(a) = (b)$;
+  - $a tilde^"asso" b$ exactly when $(a) = (b)$;
   - $a$ is a unit exactly when $(a) = R$, and $a = 0$ exactly when $(a) = (0)$;
   - $a$ is irreducible exactly when $(a)$ is maximal among the proper principal ideals;
   - $p$ is prime exactly when $(p)$ is a nonzero prime ideal (#link(<def:prime-ideal>)[§9.4]).
 
   The first three items are immediate from the definitions.
-  For the fourth, $(a) subset.eq (b)$ means $b | a$, so "$(a)$ cannot be enlarged without reaching $R$" is the statement that every divisor of $a$ is a unit or an associate, which is irreducibility.
+  For the fourth, $(a) subset.eq (b)$ means $b | a$, so "$(a)$ cannot be enlarged without reaching $R$" is the statement that every divisor of $a$ is trivial (#link(<def:trivial-divisor>)[Trivial and Proper Divisors]), which is irreducibility.
   For the fifth, $p | a b$ is $a b in (p)$, so the primality of the element and the primality of the principal ideal say the same thing.
 ] <note:element-ideal-dictionary>
 
@@ -7435,9 +7469,27 @@ Statements about factors are statements about inclusions, and the tools of §9.3
   A nonzero nonunit $a$ of an integral domain $R$ is *irreducible* if $a = b c$ implies that $b$ is a unit or $c$ is a unit.
 ] <def:irreducible>
 
+In the language of divisors, $a$ is irreducible exactly when it has no proper divisor, that is, when each of its divisors is trivial (#link(<def:trivial-divisor>)[trivial divisors], #link(<prop:proper-divisor>)[proper divisors]).
+The restriction to nonzero nonunits is what makes the two formulations agree: every factorization of a unit is trivial, and $0 = 0 dot 0$ is a factorization into nonunits.
+
 #definition(name: "Prime Element")[
   A nonzero nonunit $p$ of an integral domain $R$ is *prime* if, for all $a, b in R$, $p | a b$ implies $p | a$ or $p | b$.
 ] <def:prime-element>
+
+#proposition(name: "Associates of an Irreducible Element")[
+  Let $R$ be an integral domain, $p in R$ irreducible and $epsilon in R^times$ a unit.
+  Then $epsilon p$ is irreducible.
+] <prop:irreducible-associate>
+
+#proof[
+  Suppose $epsilon p = b c$.
+  Multiplying by $epsilon^(-1)$ gives $p = (epsilon^(-1) b) c$, and $p$ is irreducible, so $epsilon^(-1) b$ is a unit or $c$ is a unit.
+  In the second case $c$ is a unit and the factorization is trivial.
+  In the first case $b = epsilon (epsilon^(-1) b)$ is a unit, and the factorization is trivial again.
+]
+
+Applying the proposition to $epsilon^(-1)$ in place of $epsilon$ shows that $p$ is irreducible exactly when $epsilon p$ is.
+Irreducibility is therefore a property of the associate class, which is why factorization is counted up to associates and why "pairwise non-associate" is the condition in #link(<def:ufd>)[the definition of a UFD].
 
 In $bb(Z)$ the two notions coincide, and the coincidence is so familiar that the distinction is easy to miss.
 Prime numbers are usually introduced as the irreducibles — numbers with no proper factorization — and Euclid's lemma, that a prime dividing a product divides a factor, is then proved from the fundamental theorem of arithmetic.
@@ -7525,7 +7577,55 @@ $bb(Z)["i"]$ is a UFD for the same reason, once the Euclidean property is availa
   So $p$ is prime.
 ]
 
-The converse statement — that a UFD is characterized by its irreducibles being prime — is true, and needs the existence half of the definition as well; it is not used below.
+The theorem is one half of a characterization.
+The other half needs the existence of factorizations as a separate hypothesis, and producing uniqueness out of it is the content of the criterion below.
+
+#theorem(name: "A Criterion for Unique Factorization")[
+  Let $R$ be an integral domain.
+  Then $R$ is a unique factorization domain if and only if
+  + every nonzero nonunit of $R$ is a product of finitely many irreducible elements, and
+  + every irreducible element of $R$ is prime.
+] <thm:ufd-criterion>
+
+#proof[
+  *Necessity.*
+  The first condition is the existence half of #link(<def:ufd>)[the definition of a UFD], and the second is #link(<thm:ufd-irreducible-prime>)[the theorem above].
+
+  *Sufficiency.*
+  Assume both conditions and let $a$ be a nonzero nonunit.
+  The first condition supplies a factorization of $a$ into irreducibles, so only its uniqueness is at stake.
+  Suppose $p_1 dots.c p_r = q_1 dots.c q_s$ with all factors irreducible, and induct on $r + s$; the case $r = s = 0$ is the empty product $1 = 1$.
+  The element $p_1$ is prime by the second condition, so it divides some $q_j$; renumbering the $q$'s, assume $p_1 | q_1$, say $q_1 = u p_1$.
+  Here $u$ is a unit, because $q_1$ is irreducible and $p_1$ is not a unit.
+  Cancelling the nonzero $p_1$ (#link(<prop:cancellation-domain>)[cancellation]) gives
+  $p_2 dots.c p_r = (u q_2) q_3 dots.c q_s$,
+  and $u q_2$ is irreducible by #link(<prop:irreducible-associate>)[the proposition on associates of irreducibles], so both sides are products of irreducibles again, with $r + s - 2$ factors in all.
+  The induction hypothesis gives $r - 1 = s - 1$ and a matching of the factors up to order and associates, and $p_1 tilde^"asso" q_1$ completes it.
+]
+
+#proposition(name: "Euclid's Lemma in a UFD")[
+  Let $R$ be a unique factorization domain, $a, b, c in R$ with $a != 0$ and $a | b c$.
+  If the only common divisors of $a$ and $b$ are units, then $a | c$.
+] <prop:euclid-lemma>
+
+#proof[
+  The hypothesis is the same as saying that no irreducible element divides both $a$ and $b$: an irreducible is a nonunit, and every nonunit common divisor is divisible by an irreducible factor of $a$.
+
+  Write $a = u p_1^(e_1) dots.c p_k^(e_k)$ in the standard form of #link(<eq:ufd-factorisation>)[a UFD factorization], the $p_i$ being irreducible and pairwise non-associate.
+  Since $a | b c$, each $p_i$ divides $b c$; being irreducible, $p_i$ is prime by #link(<thm:ufd-irreducible-prime>)[the theorem above], so $p_i | b$ or $p_i | c$, and the first alternative is excluded by the hypothesis.
+  Hence every $p_i$ divides $c$.
+
+  The multiplicities behave the same way.
+  An irreducible $p_i$ divides $b$ not at all, so its exponent in $b c$ is exactly its exponent $m_i$ in $c$; and $p_i^(e_i) | a | b c$ forces $e_i <= m_i$.
+  Therefore $p_1^(e_1) dots.c p_k^(e_k)$ divides $c$, and so does $a$.
+]
+
+The hypothesis is the case $gcd(a, b) = 1$ of #link(<def:gcd>)[the definition of a gcd], read as "every common divisor is a unit".
+In $bb(Z)$ the conclusion is Euclid's lemma in its usual form: an integer coprime to $b$ and dividing $b c$ divides $c$.
+For $a$ irreducible the proposition says exactly that $a$ is prime, so it is the quantitative form of #link(<thm:ufd-irreducible-prime>)[the theorem above].
+
+The hypothesis cannot be dropped: in $bb(Z)$ one has $6 | 4 dot 3$, yet $6$ divides neither $4$ nor $3$, and $gcd(6, 4) = 2$ is not a unit.
+In a domain that is not a UFD the proposition has no content at all, since the gcd it invokes may fail to exist: in $bb(Z)[sqrt(-5)]$ the elements $6$ and $2 (1 + sqrt(-5))$ have none (#link(<def:gcd>)[the remark on gcds]).
 
 #example(name: "$bb(Z)[sqrt(-5)]$ is not a UFD.")[
   In $R = bb(Z)[sqrt(-5)]$ there are two factorizations
@@ -8387,7 +8487,7 @@ The name is justified by the next theorem: among the polynomials vanishing at $a
 
   *Irreducibility.*
   Suppose $m_alpha = g h$ with $g, h in F[x]$ of positive degree.
-  Then $0 = m_alpha(alpha) = g(alpha) h(alpha)$, and $E$ is a field, so $g(alpha) = 0$ or $h(alpha) = 0$.
+  Then $0 = m_(alpha)(alpha) = g(alpha) h(alpha)$, and $E$ is a field, so $g(alpha) = 0$ or $h(alpha) = 0$.
   In either case $m_alpha$ divides one of $g, h$, which is impossible because both have smaller degree.
 
   *Conversely*, if $p$ is monic irreducible with $p(alpha) = 0$, then $m_alpha$ divides $p$; irreducibility of $p$ forces the quotient to be a unit, and since both are monic, $p = m_alpha$.
