@@ -105,10 +105,10 @@ def build_figure():
             "mathtext.fontset": "dejavuserif",
         }
     )
-    fig = plt.figure(figsize=(8.6, 9.9), facecolor="white")
+    fig = plt.figure(figsize=(8.4, 8.81), facecolor="white")
     ax = fig.add_axes([0, 0, 1, 1])
-    ax.set_xlim(0, 13)
-    ax.set_ylim(0, 15)
+    ax.set_xlim(0.35, 12.65)
+    ax.set_ylim(1.95, 14.85)
     ax.set_aspect("equal")
     ax.axis("off")
 
@@ -195,14 +195,14 @@ def main():
     fig.savefig(
         OUT,
         bbox_inches="tight",
-        pad_inches=0.06,
+        pad_inches=0.02,
         facecolor="white",
         transparent=False,
     )
     fig.savefig(
         PREVIEW,
         bbox_inches="tight",
-        pad_inches=0.06,
+        pad_inches=0.02,
         facecolor="white",
         transparent=False,
         dpi=160,
