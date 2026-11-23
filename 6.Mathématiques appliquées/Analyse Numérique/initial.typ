@@ -2692,4 +2692,538 @@ The chapter began with the choice of a norm and ends with a transform.
 In each case the answer is a projection onto a finite-dimensional space, and the numerical work is the same: choose a basis in which the projection is cheap and stable.
 Orthogonal polynomials do this for the square norm, orthogonal matrices do it for discrete least squares, and the exponential basis does it for periodic data.
 
+= Numerical Differentiation and Integration // 数值微分与数值积分
+
+#part("Numerical Linear Algebra") // 数值线性代数
+
+= Direct Methods for Linear Systems // 线性方程组直接法
+
+= Iterative Methods for Linear Systems // 线性方程组迭代法
+
+= Eigenvalue Problems // 特征值问题
+
+#part("Nonlinear Equations and Numerical ODEs") // 非线性方程与常微分方程数值解
+
+= Nonlinear Equations // 非线性方程求根
+
+#counter(math.equation).update(0)
+
+The previous parts computed with functions and matrices that were given.
+This part solves for the unknown instead: given $f$, find $x^*$ with $f(x^*) = 0$.
+A root rarely has a closed form, and even when it does the formula may be numerically useless; the methods below produce a sequence of approximations instead.
+
+Every method of the chapter generates such a sequence, and the methods differ in the information they use about $f$.
+Bisection uses only the sign of $f$ on an interval.
+Fixed-point iteration uses values of a rearranged map $phi$.
+Newton's method uses $f$ and $f'$.
+The secant and Müller methods use values of $f$ at previous iterates, which replaces the derivative by interpolation.
+For systems, the derivative becomes the Jacobian matrix.
+
+The information determines both the robustness and the speed.
+The speed is measured by the order of convergence of *Rates of Convergence*, and the chapter is organized around the trade-off: the methods that use more information converge faster, but only from initial data that are close enough to the root.
+
+One structural fact unifies the scalar methods: each is a fixed-point iteration $x_(k+1) = G(x_k)$ for a suitable $G$, and the order is the order of the first nonvanishing derivative of $G(x) - x$ at the root.
+Newton's method is the choice $G(x) = x - f(x)/f'(x)$, for which $G'(x^*) = 0$.
+The interpolation methods build $G$ from the last two or three values of $f$.
+
+== Bisection Method // 二分法
+
+The only assumption is continuity, and the only information used is the sign of $f$.
+Existence of a root follows from the intermediate value theorem of *Analyse Mathématique*, and the algorithm turns existence into a certified approximation.
+
+#definition(name: "Bisection Method")[
+  Let $f$ be continuous on $[a_0, b_0]$ with $f(a_0) f(b_0) < 0$.
+  For $k = 0, 1, 2, dots.c$ set $m_k = (a_k + b_k)/2$, and let the next bracket be
+  #eq[$
+    [a_(k+1), b_(k+1)] = cases([a_k, m_k] & "if" f(a_k) f(m_k) <= 0, [m_k, b_k] & "otherwise").
+  $] <eq:bisection-update>
+  The iteration stops when a stopping criterion is met, and $m_k$ is returned as the approximation of the root.
+] <def:bisection-method>
+
+The bracket always contains a root, because the sign change is preserved by construction.
+The length is halved at every step, and that is the only reason the method converges.
+
+#definition(name: "Stopping Criteria")[
+  Let $(x_k)$ be an iteration converging to $x^*$.
+  The *increment test* is $abs(x_k - x_(k-1)) < epsilon$, the *relative increment test* is $abs(x_k - x_(k-1)) < epsilon abs(x_k)$, the *residual test* is $abs(f(x_k)) < epsilon$, and, when a bracket is available, the *bracket test* is $b_k - a_k < epsilon$.
+] <def:stopping-criterion>
+
+No single test is sufficient.
+The increment test can be small while the error is large when the iteration is slow, and the residual test measures the value of $f$, not the distance to the root.
+
+#caution[
+  A small residual does not imply a small error.
+  If $abs(f') >= m > 0$ near the root, then $abs(x_k - x^*) <= abs(f(x_k)) slash m$, so the two are comparable; but if $f'(x^*) = 0$, as at a multiple root, the residual can be tiny while $x_k$ is far from $x^*$.
+  The increment test has the opposite defect: near the roundoff level the iterates stop moving even when the error is not small, which is the finite-precision caution of *Rates of Convergence*.
+]
+
+#theorem(name: "Convergence of the Bisection Method")[
+  Let $f in C[a, b]$ with $f(a) f(b) < 0$, and let $[a_k, b_k]$ be the brackets produced by the bisection method.
+  Then
+  #eq[$
+    b_k - a_k = (b - a)/2^k, quad abs(m_k - x^*) <= (b - a)/2^(k+1),
+  $] <eq:bisection-error>
+  for every root $x^*$ in $[a, b]$.
+  The error is at most halved at each step, which is the model case of linear convergence with rate $1 slash 2$.
+] <thm:bisection-convergence>
+
+#proof[
+  Each step halves the interval, so the length is $(b - a) slash 2^k$ by induction.
+  The root remains in every bracket by the intermediate value theorem, and $m_k$ is the midpoint of the bracket, so its distance to any root in the bracket is at most half the length.
+  This is the stated bound, and it says that the worst-case error is reduced by the factor $1 slash 2$ per step, the linear case of #link(<def:order-of-convergence>)[*Order of Convergence*].
+]
+
+#corollary(name: "Steps Needed by Bisection")[
+  To guarantee $abs(m_k - x^*) <= epsilon$ it suffices to take
+  $
+    k >= log_2((b - a)/epsilon) - 1.
+  $
+] <cor:bisection-steps>
+
+#proof[
+  Solve $(b - a) slash 2^(k+1) <= epsilon$ for $k$.
+]
+
+#example(name: "Bisection for $root(3, 2)$")[
+  Let $f(x) = x^3 - 2$ on $[1, 2]$.
+  After $10$ steps the bracket has length $1 slash 2^10 approx 9.8 times 10^(-4)$, so the midpoint is within $4.9 times 10^(-4)$ of $root(3, 2) approx 1.259921$.
+  After $20$ steps the bound is $4.8 times 10^(-7)$.
+  Ten steps buy about three decimal digits and twenty buy about six, which is the factor $log_10 2 approx 0.301$ digits per step of a linear method with rate $1 slash 2$.
+] <ex:bisection-cube-root>
+
+#note(title: "What bisection cannot do")[
+  It needs a bracket, so it cannot start from a single guess.
+  It cannot detect a root of even multiplicity, where $f$ does not change sign, and it cannot find a complex root.
+  Its virtue is the opposite: given a bracket, it always converges, and the bracket supplies a certified error bound at every step.
+]
+
+== Fixed-Point Iteration and Acceleration // 不动点迭代与加速
+
+Every equation $f(x) = 0$ can be rewritten as $x = phi(x)$ in infinitely many ways, and each rewriting gives an iteration
+#eq[$
+  x_(k+1) = phi(x_k).
+$] <eq:fixed-point-iteration>
+The convergence theory of this iteration is the contraction mapping theorem, which is proved in *Iterative Sequences* in *Analyse Mathématique*; it is recalled here and then used, not reproved.
+
+#note(title: "The contraction theorem, recalled")[
+  If $phi$ maps a closed interval $I$ into itself and is a contraction, $abs(phi(x) - phi(y)) <= L abs(x - y)$ with $L < 1$, then $phi$ has a unique fixed point $x^* in I$ and the iteration converges to it from every $x_0 in I$.
+  The error obeys $abs(x_k - x^*) <= L^k abs(x_0 - x^*)$ and the a posteriori bound $abs(x_k - x^*) <= L/(1 - L) abs(x_k - x_(k-1))$.
+  When $phi$ is differentiable, $abs(phi'(x^*)) < 1$ makes $phi$ a contraction of some neighbourhood of $x^*$, while $abs(phi'(x^*)) > 1$ pushes nearby orbits away.
+  The proofs and the cobweb diagrams that visualize the iteration are in *Iterative Sequences*.
+]
+
+The theorem says whether the iteration converges, but not how fast.
+The speed is read from the Taylor expansion of $phi$ at the fixed point.
+
+#proposition(name: "Order of a Fixed-Point Iteration")[
+  Let $phi in C^p$ near a fixed point $x^*$, and suppose
+  $
+    phi'(x^*) = dots.c = phi^((p-1))(x^*) = 0, quad phi^((p))(x^*) != 0.
+  $
+  Then the iteration @eq:fixed-point-iteration converges locally with order $p$, and
+  #eq[$
+    e_(k+1) = (phi^((p))(x^*))/(p!) e_k^p + o(e_k^p).
+  $] <eq:fixed-point-order>
+  In particular, if $phi'(x^*) != 0$ the convergence is linear with rate $abs(phi'(x^*))$.
+] <prop:fixed-point-order>
+
+#proof[
+  Taylor's formula with Lagrange remainder gives
+  $
+    phi(x_k) = phi(x^*) + sum_(j=1)^(p-1) (phi^((j))(x^*))/(j!) (x_k - x^*)^j + (phi^((p))(xi_k))/(p!) (x_k - x^*)^p
+  $
+  for some $xi_k$ between $x_k$ and $x^*$.
+  Every term of the sum vanishes by hypothesis, and $phi(x_k) - x^* = x_(k+1) - x^*$ by the iteration, which is the stated expansion.
+]
+
+A linear iteration wastes the structure of its own errors: if $e_k approx C lambda^k$, three consecutive iterates determine $C lambda^k$ and it can be subtracted.
+
+#proposition(name: "Aitken's Delta-Squared Acceleration")[
+  Let $x_k -> x^*$ with $x_k - x^* = C lambda^k + O(lambda^(2k))$, where $abs(lambda) < 1$, and define $Delta x_k = x_(k+1) - x_k$, $Delta^2 x_k = Delta x_(k+1) - Delta x_k$.
+  Then
+  #eq[$
+    hat(x)_k = x_k - (Delta x_k)^2/(Delta^2 x_k)
+  $] <eq:aitken>
+  satisfies $hat(x)_k - x^* = O(lambda^(2k))$.
+] <prop:aitken-acceleration>
+
+#proof[
+  Substituting the expansion into the differences gives
+  $
+    Delta x_k = C lambda^k (lambda - 1) + O(lambda^(2k)), quad Delta^2 x_k = C lambda^k (lambda - 1)^2 + O(lambda^(2k)).
+  $
+  Hence $(Delta x_k)^2 slash Delta^2 x_k = C lambda^k + O(lambda^(2k))$, and subtracting this from $x_k$ cancels the leading error term.
+]
+
+Aitken's formula needs $lambda$ only through the iterates, so it can be applied to the fixed-point iteration itself.
+This turns the acceleration into a method.
+
+Replacing $x_k, x_(k+1), x_(k+2)$ by $x_k, phi(x_k), phi(phi(x_k))$ in @eq:aitken gives the *Steffensen iteration*
+#eq[$
+  x_(k+1) = x_k - (phi(x_k) - x_k)^2/(phi(phi(x_k)) - 2 phi(x_k) + x_k).
+$] <eq:steffensen>
+
+#theorem(name: "Quadratic Convergence of Steffensen's Method")[
+  Let $x^*$ be a fixed point of $phi in C^2$ with $phi'(x^*) != 1$.
+  Then there is a neighbourhood of $x^*$ on which the iteration @eq:steffensen is defined and converges quadratically to $x^*$.
+] <thm:steffensen-convergence>
+
+#proof[
+  Write the iteration as $x_(k+1) = G(x_k)$, where
+  $
+    G(x) = x - (phi(x) - x)^2/(phi(phi(x)) - 2 phi(x) + x).
+  $
+  A Taylor expansion of the numerator and denominator around $x^*$, or two applications of L'Hôpital's rule, gives $G(x^*) = x^*$ and $G'(x^*) = 0$ when $phi'(x^*) != 1$.
+  Since $G$ is continuously differentiable near $x^*$, #link(<prop:fixed-point-order>)[the order proposition] gives quadratic convergence.
+]
+
+#caution[
+  Both accelerations divide by a second difference.
+  When $lambda$ is close to $1$ the denominator is small and the accelerated value is dominated by roundoff; when the iterates are not yet in the asymptotic regime the formula can move away from the root.
+  Steffensen's method is still local: it improves a convergent iteration, it does not create one.
+]
+
+#example(name: "Accelerating a slowly convergent iteration")[
+  The equation $x^2 - 2 = 0$ is equivalent to $x = phi(x) = (x + 2)/(x + 1)$, since
+  $
+    x - phi(x) = (x^2 - 2)/(x + 1).
+  $
+  At $x^* = sqrt(2)$ one has $phi'(x^*) = -1/(1 + sqrt(2))^2 approx -0.1716$, so the iteration is linear with a small rate.
+  Starting from $x_0 = 1$, the plain iteration gives $1.5, 1.4, 1.41667, 1.41379, dots.c$ and needs about $13$ steps to reach $10^(-10)$.
+  Aitken's formula applied to these values, and Steffensen's iteration, give
+  $
+    1.41667, quad 1.41421362, quad 1.41421356,
+  $
+  so three steps reach the full accuracy of double precision.
+] <ex:fixed-point-acceleration>
+
+== Newton's Method // Newton 法
+
+The order proposition suggests a design principle: to obtain order $p$, choose $phi$ whose first $p - 1$ derivatives vanish at the root.
+For a simple root the choice $phi(x) = x - f(x)/f'(x)$ achieves this with $p = 2$, and it has a direct geometric meaning.
+
+#definition(name: "Newton's Method")[
+  Let $f$ be differentiable and let $f'(x_k) != 0$.
+  *Newton's method* generates
+  #eq[$
+    x_(k+1) = x_k - (f(x_k))/(f'(x_k)).
+  $] <eq:newton-update>
+] <def:newton-method>
+
+Geometrically, $x_(k+1)$ is the intersection of the tangent at $(x_k, f(x_k))$ with the $x$-axis.
+Algebraically, it is the root of the linearization $f(x_k) + f'(x_k)(x - x_k)$ of $f$ at $x_k$.
+The iteration function is $phi(x) = x - f(x)/f'(x)$, whose derivative is
+$
+  phi'(x) = (f(x) f''(x))/(f'(x)^2),
+$
+so $phi'(x^*) = 0$ at a simple root: the iteration is at least quadratic there.
+
+The failure of the derivative at a multiple root is best described by separating the multiplicity.
+
+#definition(name: "Multiplicity of a Root")[
+  A root $x^*$ of $f$ has *multiplicity* $m >= 1$ if $f$ and its first $m - 1$ derivatives vanish at $x^*$ and $f^((m))(x^*) != 0$.
+  A root of multiplicity one is *simple*.
+] <def:root-multiplicity>
+
+#theorem(name: "Local Quadratic Convergence of Newton's Method")[
+  Let $f in C^2$ on a neighbourhood of a simple root $x^*$, so that $f(x^*) = 0$ and $f'(x^*) != 0$.
+  Then there is $delta > 0$ such that for every $x_0$ with $abs(x_0 - x^*) < delta$ the Newton iterates are defined and
+  #eq[$
+    abs(x_(k+1) - x^*) = abs((f''(xi_k))/(2 f'(x_k))) abs(x_k - x^*)^2
+  $] <eq:newton-error>
+  for some $xi_k$ between $x_k$ and $x^*$.
+  In particular the convergence is quadratic.
+] <thm:newton-convergence>
+
+#proof[
+  Taylor's formula with Lagrange remainder at $x_k$ gives
+  $
+    0 = f(x^*) = f(x_k) + f'(x_k)(x^* - x_k) + 1/2 f''(xi_k)(x^* - x_k)^2
+  $
+  for some $xi_k$ between $x_k$ and $x^*$.
+  Dividing by $f'(x_k)$ and rearranging,
+  $
+    x^* = x_k - (f(x_k))/(f'(x_k)) - (f''(xi_k))/(2 f'(x_k)) (x_k - x^*)^2 = x_(k+1) - (f''(xi_k))/(2 f'(x_k)) (x_k - x^*)^2,
+  $
+  which is @eq:newton-error.
+
+  Since $f'$ is continuous and $f'(x^*) != 0$, there is a neighbourhood in which $abs(f'(x_k)) >= abs(f'(x^*)) slash 2$ and $abs(f''(xi_k)) <= 2 abs(f''(x^*))$.
+  Hence
+  $
+    abs(x_(k+1) - x^*) <= C abs(x_k - x^*)^2, quad C = (2 abs(f''(x^*)))/(abs(f'(x^*))).
+  $
+  If $C abs(x_0 - x^*) < 1$, the error decreases and the iterates remain in the neighbourhood, so the estimate holds for every $k$ and the convergence is quadratic.
+]
+
+#proposition(name: "Newton's Method at a Multiple Root")[
+  Let $x^*$ be a root of multiplicity $m > 1$ of $f in C^2$, and suppose $f'(x_k) != 0$ along the iteration.
+  Then Newton's method converges linearly, with
+  $
+    lim_(k -> oo) (x_(k+1) - x^*)/(x_k - x^*) = 1 - 1/m,
+  $
+  and the modified iteration
+  #eq[$
+    x_(k+1) = x_k - m (f(x_k))/(f'(x_k))
+  $] <eq:modified-newton>
+  converges quadratically.
+] <prop:newton-multiple-root>
+
+#proof[
+  Write $f(x) = (x - x^*)^m g(x)$ with $g(x^*) != 0$.
+  Then $f'(x) = (x - x^*)^(m-1) [m g(x) + (x - x^*) g'(x)]$, so
+  $
+    (f(x))/(f'(x)) = (x - x^*) (g(x))/(m g(x) + (x - x^*) g'(x)) -> (x - x^*)/m.
+  $
+  Hence $x_(k+1) - x^* = (x_k - x^*) - f slash f' = (1 - 1 slash m)(x_k - x^*) + o(x_k - x^*)$, which is the stated ratio.
+  Replacing $f slash f'$ by $m f slash f'$ removes the factor and leaves $x_(k+1) - x^* = O((x_k - x^*)^2)$.
+]
+
+#note(title: "Damped Newton and line search")[
+  Quadratic convergence is local, and a full Newton step can leave the basin of attraction; the second example below cycles between two points.
+  A *damped* Newton step multiplies the correction by a factor $alpha_k$ with $0 < alpha_k <= 1$:
+  $
+    x_(k+1) = x_k - alpha_k (f(x_k))/(f'(x_k)),
+  $
+  with $alpha_k$ chosen by backtracking so that $abs(f(x_(k+1))) < abs(f(x_k))$ whenever possible.
+  The resulting method is no longer quadratically convergent in the worst case, but it is far more robust.
+
+  The same word denotes a different algorithm in optimization, where one solves $nabla g = 0$ with the Hessian of $g$ instead of $f'$; that version is developed in *Optimisation Convexe*.
+]
+
+#example(name: "Newton's method for $root(3, 2)$")[
+  For $f(x) = x^3 - 2$ and $x_0 = 3 slash 2$,
+  $
+    x_1 = 3/2 - (27/8 - 2)/(27/4) = 35/27 approx 1.29630.
+  $
+  Continuing gives $x_2 approx 1.26093$, $x_3 approx 1.25992186$ and $x_4 approx 1.25992105$.
+  The errors are about $2.4 times 10^(-1)$, $3.6 times 10^(-2)$, $1.0 times 10^(-3)$, $8.1 times 10^(-7)$ and $5.2 times 10^(-13)$, so the number of correct digits roughly doubles after the first step.
+] <ex:newton-cube-root>
+
+#example(name: "Newton's method can cycle")[
+  For $f(x) = x^3 - 2x + 2$ and $x_0 = 0$,
+  $
+    f(0) = 2, quad f'(0) = -2, quad x_1 = 1,
+  $
+  and then $f(1) = 1$, $f'(1) = 1$, so $x_2 = 0$.
+  The iteration is periodic with period two and never approaches the real root $approx -1.7693$.
+  The failure is not caused by a vanishing derivative; it is the global behaviour of the iteration map that is at fault.
+] <ex:newton-cycle>
+
+== Secant and Muller Methods // 弦截法与抛物线法
+
+Newton's method needs $f'$.
+When the derivative is unavailable or expensive, it can be replaced by the slope of the chord through the last two iterates; this is the secant method.
+Replacing the chord by a parabola through the last three iterates gives Müller's method, which also works in the complex plane.
+
+#definition(name: "Secant Method")[
+  Let $x_(k-1)$ and $x_k$ be two distinct approximations of a root of $f$.
+  The *secant method* generates
+  #eq[$
+    x_(k+1) = x_k - f(x_k) (x_k - x_(k-1))/(f(x_k) - f(x_(k-1))).
+  $] <eq:secant-update>
+] <def:secant-method>
+
+The quotient is the divided difference $f[x_(k-1), x_k]$ of *Newton Interpolation and Divided Differences*, so the step is Newton's step with $f'(x_k)$ replaced by the slope of the chord.
+Only one new function value is needed per step, because the previous value is reused.
+
+#theorem(name: "Local Convergence of the Secant Method")[
+  Let $f in C^2$ near a simple root $x^*$, and let the secant iterates converge to $x^*$.
+  Then the errors satisfy
+  $
+    e_(k+1) approx (f''(x^*))/(2 f'(x^*)) e_k e_(k-1),
+  $
+  and the convergence is superlinear with order
+  $
+    p = (1 + sqrt(5))/2 approx 1.618,
+  $
+  the positive root of $p^2 = p + 1$.
+] <thm:secant-convergence>
+
+#proof[
+  The secant step is Newton's step with the derivative replaced by the divided difference $f[x_(k-1), x_k]$.
+  The interpolation error formula for that difference gives
+  $
+    f[x_(k-1), x_k] = f'(x^*) + 1/2 f''(x^*)(x_(k-1) + x_k - 2 x^*) + O(e^2),
+  $
+  and subtracting $x^*$ from the step and dividing by $f'(x^*)$ yields the stated recursion.
+
+  Assume $e_(k+1) = A e_k^p$ asymptotically.
+  Then $e_k = A e_(k-1)^p$, so $e_(k-1) = (e_k slash A)^(1 slash p)$, and the recursion becomes
+  $
+    A e_k^p = C e_k (e_k slash A)^(1 slash p).
+  $
+  Comparing powers gives $p = 1 + 1 slash p$, that is $p^2 = p + 1$; the positive solution is the golden ratio.
+]
+
+#example(name: "Secant versus Newton")[
+  Apply both methods to $f(x) = x^3 - 2$.
+  Newton from $x_0 = 3 slash 2$ gives $1.29630, 1.26093, 1.25992186, 1.25992105$, with errors $3.6 times 10^(-2)$, $1.0 times 10^(-3)$, $8.1 times 10^(-7)$ and $5.2 times 10^(-13)$.
+  The secant method from $x_0 = 2$, $x_1 = 3 slash 2$ gives $1.35135, 1.27471, 1.26094, 1.259933, 1.25992106$, with errors $9.1 times 10^(-2)$, $1.5 times 10^(-2)$, $1.0 times 10^(-3)$, $1.2 times 10^(-5)$ and $9.5 times 10^(-9)$.
+  The secant method needs two more steps for the same accuracy, but each step evaluates $f$ once instead of evaluating both $f$ and $f'$.
+] <ex:secant-comparison>
+
+#definition(name: "Müller's Method")[
+  Let $x_(k-2), x_(k-1), x_k$ be three approximations of a root of $f$, and let $p$ be the quadratic interpolating $f$ at these points.
+  *Müller's method* takes $x_(k+1)$ to be the root of $p$ closest to $x_k$.
+] <def:muller-method>
+
+Writing the interpolant in the form
+$
+  p(x) = a (x - x_k)^2 + b (x - x_k) + c
+$
+with $a = f[x_(k-2), x_(k-1), x_k]$, $b = f[x_(k-1), x_k] + a (x_k - x_(k-1))$ and $c = f(x_k)$, the roots are obtained from the stable quadratic formula
+$
+  x_(k+1) = x_k - (2 c)/(b plus.minus sqrt(b^2 - 4 a c)),
+$
+with the sign chosen to maximize the modulus of the denominator.
+No derivative is needed, and the square root may be imaginary.
+
+#note(title: "Convergence order of Müller's method")[
+  When the iterates converge to a simple root, the order of Müller's method is the real root of $p^3 - p^2 - p - 1 = 0$, approximately $1.84$.
+  The order is derived by the same exponent balancing as for the secant method, with a three-term recursion; the proof is longer and is not reproduced here.
+  Because the quadratic may have complex roots, the method can reach complex roots from real starting values, which no real secant or bisection iteration can do.
+]
+
+#example(name: "A complex root from real data")[
+  The polynomial $f(x) = x^4 + 1$ has no real root.
+  Müller's method from the real starting values $0, 1, 2$ leaves the real line at the second step and converges to
+  $
+    0.7071 - 0.7071 "i" = e^(-pi "i" slash 4),
+  $
+  one of the four complex roots.
+  The iterates are $0.6306$, $0.6926 - 0.3476 "i"$, $0.6224 - 0.5260 "i"$, and after eight steps the root is reached to full double precision.
+] <ex:muller-complex-root>
+
+#note(title: "False position and Brent's method")[
+  The *false position* method keeps a bracket and uses the secant step inside it.
+  It always converges in exact arithmetic but typically stalls on one side, so its convergence is linear and can be much slower than the secant method.
+  *Brent's method* combines bisection, the secant method and inverse quadratic interpolation: it keeps a bracket at all times, tries the fast interpolating step when it is safe, and falls back to bisection otherwise.
+  This is the default of most library root finders, and it illustrates the general design principle: use the bracket for safety and the interpolation for speed.
+]
+
+== Comparison of Root-Finding Methods // 求根方法的收敛阶对比
+
+The methods differ in what they assume and what they deliver.
+Two notions separate them before any table.
+
+#definition(name: "Local and Global Convergence")[
+  An iteration is *locally convergent* at a root $x^*$ if it converges for every starting value in some neighbourhood of $x^*$.
+  It is *globally convergent* on an interval $I$ if it converges for every starting value in $I$.
+] <def:local-convergence>
+
+#tex-table(
+  ("Method", [Order $p$], "Evaluations per step", "Derivative", "Global", "Notes"),
+  ("Bisection", [$1$, rate $1 slash 2$], [$1$], "no", "bracket", "certified error, slow"),
+  ("Fixed point", [$1$, rate $abs(phi'(x^*))$, or higher], [$1$], "no", "no", [depends on $phi$]),
+  ("Newton", [$2$], [1 function, 1 derivative], "yes", "local", [fast, fails if $f' approx 0$]),
+  ("Secant", [$1.618$], [$1$], "no", "local", "two starting values"),
+  ("Müller", [$1.84$], [$1$], "no", "local", "complex roots"),
+  ("Steffensen", [$2$], [$2$], "no", "local", [applied to $phi$]),
+)
+
+The table reads as a rate of digit production per function evaluation.
+By #link(<prop:digits-per-step>)[*Digits Gained per Step*], an order-$p$ method multiplies the number of correct digits by $p$ at each step.
+Newton's method doubles the digits, the secant method multiplies them by $1.618$, and bisection adds $0.301$ digits.
+The cost column says what each of these multiplications is paid for, and the robustness column says how much initial information is required.
+
+#note(title: "Attainable accuracy")[
+  None of the orders survives at the level of the roundoff error.
+  Once the error reaches $u$, further steps cannot improve it, and an iteration may oscillate or wander; this is the finite-precision caution of *Rates of Convergence*.
+  A practical stopping rule uses a bracket when one exists, and otherwise combines the increment test with the residual test and a tolerance related to $u$.
+  For Newton's method the step $x_(k+1) - x_k$ is asymptotically the previous error, so a small step certifies that the current error is of the order of its square; the increment test is therefore more conservative than it looks.
+]
+
+#figure(
+  image("img/root-finding-comparison.svg", width: 96%),
+  caption: [Comparison of the three information sources on $f(x) = x^3 - 2$. (a) Bisection halves a bracket that always contains the root. (b) Newton follows the tangent at $x_0 = 2$. (c) The secant method follows the chord through $x_0 = 2$ and $x_1 = 3 slash 2$. (d) The errors on a logarithmic scale: the bisection bound is a straight line of slope $log_10(1 slash 2)$, Newton accelerates quadratically, and the secant method lies between them.],
+) <fig:root-finding-comparison>
+
+In practice the choice is decided by what is known before the first step.
+If a bracket is available and robustness matters, a hybrid such as Brent's method is the default.
+If the derivative is available and the initial guess is good, Newton's method is usually the fastest.
+If the derivative is unavailable, the secant method is the simplest superlinear choice, and Müller's method adds the ability to reach complex roots.
+
+== Systems of Nonlinear Equations // 非线性方程组
+
+The scalar methods extend to $F(x) = 0$ with $F: bb(R)^n -> bb(R)^n$, provided the derivative is replaced by the Jacobian matrix.
+The Jacobian is the matrix of partial derivatives of *Analyse Mathématique*, and the Newton step is again the root of the linearization.
+
+#definition(name: "Newton's Method for Systems")[
+  Let $F: bb(R)^n -> bb(R)^n$ be differentiable and let $J_F (x^((k)))$ be its Jacobian at $x^((k))$.
+  *Newton's method for systems* computes the step $s_k$ from
+  #eq[$
+    J_F (x^((k))) s_k = -F(x^((k)))
+  $] <eq:newton-system>
+  and sets $x^((k+1)) = x^((k)) + s_k$.
+] <def:newton-system>
+
+Each step requires the solution of a linear system, which is done by the factorizations of *LU and Cholesky Factorizations*; the cost is $O(n^3)$ operations per step for a dense Jacobian.
+
+#theorem(name: "Local Quadratic Convergence for Systems")[
+  Let $F in C^2$ on a neighbourhood of a root $x^*$, and suppose $J_F (x^*)$ is invertible.
+  Then there is $delta > 0$ such that for every $x^((0))$ with $||x^((0)) - x^*|| < delta$ the Newton iterates are defined and
+  $
+    ||x^((k+1)) - x^*|| <= C ||x^((k)) - x^*||^2.
+  $
+] <thm:newton-system-convergence>
+
+#proof[
+  The multivariate Taylor formula at $x^((k))$ gives
+  $
+    0 = F(x^*) = F(x^((k))) + J_F (x^((k)))(x^* - x^((k))) + O(||x^* - x^((k))||^2).
+  $
+  Writing $e_k = x^((k)) - x^*$, this reads $J_F (x^((k))) e_k = -F(x^((k))) + O(||e_k||^2)$.
+  The Newton step solves $J_F (x^((k))) s_k = -F(x^((k)))$, so $s_k = e_k + O(||e_k||^2)$.
+  Hence $e_(k+1) = s_k - e_k = O(||e_k||^2)$.
+
+  Since $J_F$ is continuous and $J_F (x^*)$ is invertible, $J_F (x^((k)))$ is invertible near $x^*$ with a bounded inverse, and the constant in the estimate combines this bound with the size of the second derivatives.
+  For $x^((0))$ close enough the error decreases and the iterates remain in the neighbourhood where the estimates hold.
+]
+
+#example(name: "Newton's method for a $2 times 2$ system")[
+  Solve
+  $
+    f_1(x, y) = x^2 + y^2 - 1 = 0, quad f_2(x, y) = x^2 - y = 0.
+  $
+  From $(x_0, y_0) = (1, 1)$,
+  $
+    J_F (1, 1) = mat(2, 2; 2, -1), quad F(1, 1) = (1, 0)^"T",
+  $
+  and $J_F (1, 1) s = -F(1, 1)$ gives $s = (-1 slash 6, -1 slash 3)^"T"$, hence $(x_1, y_1) = (5 slash 6, 2 slash 3)$.
+  The next step gives $(x_2, y_2) = (331 slash 420, 13 slash 21) approx (0.7881, 0.6190)$, and the solution is $y = (sqrt(5) - 1) slash 2 approx 0.6180$, $x = sqrt(y) approx 0.7862$.
+  The error decreases from about $4.4 times 10^(-1)$ to $6.8 times 10^(-2)$ and then to $2.2 times 10^(-3)$, as the quadratic estimate predicts.
+] <ex:newton-system>
+
+#definition(name: "Broyden's Method")[
+  Broyden's method replaces the Jacobian by a matrix $B_k$ updated at each step.
+  With $s_k = x^((k+1)) - x^((k))$ and $y_k = F(x^((k+1))) - F(x^((k)))$, the step solves
+  $
+    B_k s_k = -F(x^((k))),
+  $
+  and the matrix is updated by the rank-one formula
+  #eq[$
+    B_(k+1) = B_k + ((y_k - B_k s_k) s_k^"T")/(s_k^"T" s_k).
+  $] <eq:broyden-update>
+  The initial matrix is $B_0 = J_F (x^((0)))$ or the identity.
+] <def:broyden-method>
+
+The update is the unique rank-one correction satisfying the *secant condition* $B_(k+1) s_k = y_k$.
+In one dimension it reduces to the secant method.
+
+#note(title: "Local convergence of Broyden's method")[
+  Under the hypotheses of the Newton theorem, and with $B_0$ close enough to $J_F (x^*)$, Broyden's method converges locally and superlinearly.
+  The proof is a matrix perturbation argument and is not reproduced here.
+  In practice the Jacobian is formed once, and with the Sherman–Morrison formula the inverse is updated in $O(n^2)$ operations per step, so the method is much cheaper than forming and factoring a new Jacobian.
+]
+
+#note(title: "Steepest descent as a globalization")[
+  Newton's method for systems is local and requires a nonsingular Jacobian.
+  A globalization strategy minimizes $g(x) = 1/2 ||F(x)||^2$, whose gradient is $nabla g(x) = J_F (x)^"T" F(x)$, by a descent step
+  $
+    x^((k+1)) = x^((k)) - alpha_k J_F (x^((k)))^"T" F(x^((k))).
+  $
+  This decreases $g$ for small $alpha_k$, so it is globally convergent under mild assumptions, but only linearly; the standard strategy switches to Newton steps once the iterates are close enough.
+  The same gradient/Hessian distinction separates root-finding Newton from the optimization Newton of *Optimisation Convexe*.
+]
+
 #bibliography("references.bib", title: "References", full: true)
