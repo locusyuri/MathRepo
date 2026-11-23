@@ -702,6 +702,11 @@ The one case in which the material drops out is the ideal absorber.
 A blackbody is realised in practice by a cavity with a small hole: radiation entering the hole is absorbed after repeated reflection inside, and radiation leaving the hole is the emission of the cavity walls.
 The relevant quantity is the *spectral exitance* $M_lambda$, the power emitted per unit area per unit wavelength interval.
 For a blackbody it is a universal function of $lambda$ and $T$ alone.
+Summing it over all wavelengths gives the *total exitance* $M$, the power emitted per unit area at all wavelengths,
+$
+  M = integral_0^oo M_lambda dif lambda.
+$
+The two measured regularities below concern exactly these two quantities: $M$ as a whole, and the position of the maximum of $M_lambda$.
 
 #law(name: "Kirchhoff's Law of Thermal Radiation")[
   For any body in thermal equilibrium with radiation, the ratio of spectral exitance to spectral absorptance is the same function of $lambda$ and $T$ for all bodies; for a blackbody the absorptance is one, so this ratio is the blackbody spectral exitance $M_lambda$.
@@ -752,7 +757,7 @@ The formula agrees with experiment in the far infrared and fails at short wavele
 The disagreement of the classical curve is therefore not a matter of fitting a constant: the two limits fail in opposite directions, so no choice of parameters can repair the classical result.
 
 #caution(title: "The ultraviolet catastrophe")[
-  The Rayleigh-Jeans formula grows without bound as $lambda -> 0$, so the predicted total exitance $integral_0^oo M_lambda dif lambda$ is infinite.
+  The Rayleigh-Jeans formula grows without bound as $lambda -> 0$, so the integral that defines $M$ diverges and the predicted total exitance is infinite.
   Since a cavity in thermal equilibrium with its walls would then radiate infinite power, the classical result is not merely inaccurate but impossible.
   Equipartition of energy over infinitely many field modes is the assumption that breaks.
 ]
