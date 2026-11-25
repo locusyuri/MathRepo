@@ -82,6 +82,8 @@
 //     - 转换例 <ex:base-conversion>；平衡三进制 #note（竞赛向，简明）
 //   Section 1.4: GCD and LCM（最大公因数与最小公倍数）
 //     - gcd/lcm/互素 #definition <def:gcd> <def:lcm> <def:coprime>
+//     - 多元推广 #definition <def:gcd-lcm-n>（gcd(a_1,…,a_n)、lcm(a_1,…,a_n)）
+//       与两两互素 <def:pairwise-coprime>（Ch3 CRT 与 Ch12 本原多项式消费）
 //     - 初等性质 #property <prop:gcd-basic>；
 //       gcd | 一切线性组合 #corollary <cor:gcd-divides-linear>
 //     - 例 <ex:gcd-lcm-example>（观察 6·90 = 18·30，暂不证）
@@ -97,6 +99,9 @@
 //     - 乘积恒等式 <cor:gcd-lcm-product> + <eq:gcd-lcm-product>（互素可消去引理）；
 //       lcm 整除一切公倍数 #corollary <cor:lcm-divides-common-multiples>
 //     - 例 <ex:gcd-product-identity>（18 与 30 闭环验证）
+//     - n 元推广 #corollary <cor:gcd-lcm-product-n>
+//       （两两互素 ⟹ gcd = 1、lcm = |∏a_i|；归纳 + Bézout 乘出 gcd(a_n, ∏) = 1）；
+//       #caution n ≥ 3 不两两互素时失效（2,4,8 反例），一般情形归 v_p 的 min/max
 //     - 章末 #note：Bézout → Ch10 一次不定方程通解（兑现蓝图伏笔）
 //   图片：fig:euclid-rectangle（img/euclid-rectangle.svg，24×9 矩形切 9²,9²,6²,3²,3²
 //     → gcd 3；A 级核心图；占位先复制 wiki/assets/null.svg）
@@ -993,6 +998,28 @@ make the duality precise.
   prime*) if $"gcd"(a, b) = 1$.
 ] <def:coprime>
 
+#definition(name: "Greatest Common Divisor and Least Common Multiple of Several Integers")[
+  Let $a_1, dots, a_n in bb(Z)$, not all zero. Their *greatest common
+  divisor*
+  $
+    "gcd"(a_1, dots, a_n)
+  $
+  is the largest positive integer dividing every $a_i$. If all the
+  $a_i$ are nonzero, their *least common multiple*
+  $
+    "lcm"(a_1, dots, a_n)
+  $
+  is the smallest positive integer divisible by every $a_i$.
+] <def:gcd-lcm-n>
+
+For $n = 2$ both notions reduce to #link(<def:gcd>)[the definitions
+above].
+
+#definition(name: "Pairwise Coprime Integers")[
+  Integers $a_1, dots, a_n$ are *pairwise coprime* if
+  $"gcd"(a_i, a_j) = 1$ for all $i != j$.
+] <def:pairwise-coprime>
+
 #note[
   The definition of the gcd asks for the *largest* common divisor. That
   it exists is not a formality: the set of common divisors of $a, b$ is
@@ -1354,6 +1381,69 @@ numbers is a multiple of their product.
   $"gcd"(18, 30) dot "lcm"(18, 30) = 6 dot 90 = 540 = 18 dot 30$: the
   relation observed numerically is now a theorem.
 ] <ex:gcd-product-identity>
+
+The two-term identity generalizes, but only under a hypothesis that is
+invisible for two numbers.
+
+#corollary(name: "The Product Identity for Several Integers")[
+  Let $a_1, dots, a_n$ be nonzero and pairwise coprime. Then
+  $
+    "gcd"(a_1, dots, a_n) = 1, quad
+    "lcm"(a_1, dots, a_n) = abs(a_1 a_2 dots.c a_n),
+  $
+  and therefore
+  $
+    "gcd"(a_1, dots, a_n) dot "lcm"(a_1, dots, a_n)
+    = abs(a_1 a_2 dots.c a_n).
+  $
+] <cor:gcd-lcm-product-n>
+
+#proof(name: "of the product identity for several integers")[
+  *The gcd.* A common divisor of all the $a_i$ divides $a_1$ and $a_2$,
+  hence divides $"gcd"(a_1, a_2) = 1$ by
+  #link(<cor:common-divisor-divides-gcd>)[the divisor corollary]; so
+  the only common divisor is $1$.
+
+  *The lcm.* We show by induction on $n$ that every common multiple of
+  $a_1, dots, a_n$ is a multiple of $Q = abs(a_1 dots.c a_n)$, and that
+  $Q$ itself is a common multiple; then $Q$ is the least one. For
+  $n = 2$ this is exactly what the proof of
+  #link(<cor:gcd-lcm-product>)[the two-term identity] establishes.
+
+  Let $n >= 3$ and put $P = abs(a_1 dots.c a_(n-1))$. By induction
+  applied to $a_1, dots, a_(n-1)$, the common multiple $m$ satisfies
+  $P | m$; write $m = P t$. Since $a_n | m$, it remains to cancel
+  $P$. Pairwise coprimality makes $a_n$ coprime to $P$: for each
+  $i < n$, #link(<cor:bezout-coprime>)[the coprime criterion] gives
+  integers $x_i, y_i$ with $a_n x_i + a_i y_i = 1$, and multiplying
+  these $n - 1$ identities produces
+  $
+    a_n X + P Y = 1
+  $
+  for suitable integers $X, Y$. Hence $"gcd"(a_n, P) = 1$, and
+  #link(<lem:coprime-divisibility>)[Euclid's lemma in coprime form]
+  applied to $a_n | P t$ gives $a_n | t$. Writing $t = a_n u$ yields
+  $m = P a_n u$, so $Q = P abs(a_n)$ divides $m$. Finally $Q$ is a
+  common multiple: each $a_i$ with $i < n$ divides $P$, and $a_n$
+  divides $abs(a_n)$. Hence $"lcm"(a_1, dots, a_n) = Q$.
+
+  Multiplying the two statements gives the displayed identity.
+]
+
+#caution[
+  Pairwise coprimality cannot be dropped once $n >= 3$. For
+  $(a_1, a_2, a_3) = (2, 4, 8)$ one has $"gcd" = 2$ and $"lcm" = 8$,
+  so
+  $
+    2 dot 8 = 16 != 64 = 2 dot 4 dot 8.
+  $
+  The two-term identity survives because for two exponents
+  $"min"(alpha, beta) + "max"(alpha, beta) = alpha + beta$; for three
+  or more numbers the minimum plus the maximum is strictly less than
+  the sum. The general statement is the valuation formula of
+  *Applications of Unique Factorization*: the gcd takes the minimum and
+  the lcm the maximum of each $v_p$.
+]
 
 #note[
   Bézout's identity is the seed of Chapter 10: the solutions of the
@@ -4994,7 +5084,8 @@ and $bb(Z)[x]$: the notion of a primitive polynomial.
 #definition(name: "Primitive Polynomial")[
   A polynomial $f(x) = a_n x^n + dots + a_1 x + a_0$ with *integer*
   coefficients is *primitive* if the greatest common divisor of its
-  coefficients is $1$:
+  coefficients, in the sense of #link(<def:gcd-lcm-n>)[the gcd of
+  several integers], is $1$:
   $
     "gcd"(a_0, a_1, dots, a_n) = 1.
   $
