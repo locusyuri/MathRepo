@@ -39,12 +39,18 @@
 // 共 7 Part、20 Chapter。Part IV–VI 与 Part II 的对应章构成「第二遍」：
 // 经典结论已在 Part II 给出，此处在弱解/函数空间框架下重新证明并推广。
 //
-// 职责边界：
+// 职责边界（与 Analyse Fonctionnelle、Analyse Harmonique 的一次性终裁）：
 //   - Fourier 理论 → Analyse Harmonique（交叉引用）
-//   - Sobolev 空间：嵌入定理等深层理论 → Analyse Harmonique（本笔记 Ch9 只给
-//     W^{k,p} 的定义与基本性质，以支撑弱解与正则性）
-//   - Banach / Hilbert 抽象理论、Lax-Milgram 与 Galerkin 的抽象框架
-//     → Analyse Fonctionnelle（本笔记 Ch10 给出用于椭圆边值问题的最小自足版本）
+//   - 分布、弱导数、卷积与磨光的一般理论 → Analyse Fonctionnelle Ch11
+//     （本笔记 Ch7 与 Ch8 §8.1 为面向 PDE 的最小自足摘要，允许并存）
+//   - 基本解与具体核（Laplace / 热 / 波）→ 本笔记 Ch8 §8.2（权威版）
+//   - Sobolev 空间 W^{k,p} 的定义与基本性质 → Analyse Fonctionnelle Ch12
+//     （本笔记 Ch9 保留最小自足版，以支撑弱解与正则性）
+//   - Sobolev 嵌入定理与迹定理（含有界域与边界正则性）→ 本笔记 Ch9（权威版）
+//   - Lax-Milgram、Galerkin 与变分直接法 → Analyse Fonctionnelle Ch13
+//     （本笔记 Ch10 给出用于椭圆边值问题的最小自足版本）
+//   - 算子半群与 Hille-Yosida → Analyse Fonctionnelle Ch15
+//     （本笔记 Ch13 §13.2 引用其框架）
 //   - 谱理论（抽象部分） → Analyse Fonctionnelle
 //   - L^p / 测度论 → Analyse Réelle
 //   - Hamilton-Jacobi 的力学侧（正则变换、作用量-角变量） → Mécanique analytique

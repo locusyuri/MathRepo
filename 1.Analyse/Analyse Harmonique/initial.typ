@@ -30,12 +30,14 @@
 // 主线叙事：经典 Fourier 级数 → Fourier 变换与现代理论 → Sobolev 空间
 // 参考教材：Stein & Shakarchi "Fourier Analysis: An Introduction"，于品 "Fourier 分析"
 //
-// 职责边界 (SRP Boundaries)：
-// - 本笔记负责：Fourier 级数理论、Fourier 变换理论、Sobolev 空间
+// 职责边界 (SRP Boundaries) —— 与 Analyse Fonctionnelle、EDP 的一次性终裁：
+// - 本笔记负责：Fourier 级数理论、Fourier 变换理论、H^s 的 Fourier 刻画与插值
 // - L¹/L²/p 空间的一般理论 → Analyse Réelle（本笔记仅引用结果）
 // - Banach/Hilbert 空间抽象理论 → Analyse Fonctionnelle（本笔记仅引用结果）
-// - 分布理论 (Distribution Theory) → Équations aux Dérivées Partielles
-// - Sobolev 空间在 PDE 中的应用 → Équations aux Dérivées Partielles（引用本笔记定义与定理）
+// - 分布理论 (Distribution Theory) → Analyse Fonctionnelle Ch11（一般理论权威版）
+// - Sobolev 空间 W^{k,p} 的定义与基本性质 → Analyse Fonctionnelle Ch12
+// - Sobolev 嵌入与迹定理（含有界域、边界正则性）→ EDP Ch9（权威版）
+// - Sobolev 空间在 PDE 弱解中的应用 → EDP（引用本笔记的 H^s 刻画）
 
 // ==========================================================================
 // Part I — Classical Fourier Series (经典 Fourier 级数)
@@ -242,31 +244,30 @@
 // 从而把"弱可微"翻译为"频谱衰减"，这是本笔记不可替代的贡献。
 // 对应教材：Evans Ch 5，Adams "Sobolev Spaces"
 //
-// 职责边界（含待裁决项）：
-// - 本笔记负责：H^s(R^d) 的 Fourier 刻画、Plancherel 型范数等价、Fourier 视角下的嵌入与紧嵌入
-// - Équations aux Dérivées Partielles 已写完 Sobolev 空间的定义、嵌入定理与迹定理
-//   （其 Ch "Sobolev Spaces"，EDP:1363-1451）。若照原规划全盘重建，将造成整章重复。
-//   建议裁决：W^(k,p) 的定义、嵌入定理的证明、迹定理 → 归 EDP，本笔记交叉引用；
-//   本 Part 只保留 H^s 的 Fourier 刻画与谱方法视角。此处暂按原规划列出，待用户确认后收缩。
-// - Sobolev 空间在 PDE 弱解中的应用 → EDP
+// 职责边界（终裁）：
+// - 本 Part 只负责：H^s(R^d) 的 Fourier 刻画、Plancherel 型范数等价、
+//   R^d 全空间上的 Fourier 视角嵌入、插值与对偶。
+// - W^{k,p} 的定义与基本性质 → Analyse Fonctionnelle Ch12（本笔记只引用，不重建）。
+// - 有界域上的嵌入定理、Rellich-Kondrachov 与迹定理 → EDP Ch9（权威版，本笔记不重建）。
+// - Sobolev 空间在 PDE 弱解中的应用 → EDP。
 
 // --- Chapter 6: Sobolev Spaces (Sobolev 空间) ---
 
 //   Section 6.1: Definition and Basic Properties (定义与基本性质)
-//     - 弱导数的定义（交叉引用 EDP 笔记，不重建）
-//     - Sobolev 空间 W^(k,p) 与 H^s 的定义
+//     - 弱导数的定义（交叉引用 Analyse Fonctionnelle Ch11，不重建）
+//     - Sobolev 空间 W^(k,p) 与 H^s 的定义（定义权威版见 AF Ch12，本节只取 H^s 版本）
 //     - H^s 的 Fourier 刻画：||f||_(H^s)^2 = ∫ (1 + |omega|^2)^s |hat(f)(omega)|^2 domega
 //     - 基本性质与范数等价
 
-//   Section 6.2: Sobolev Embedding Theorems (Sobolev 嵌入定理)
-//     - 连续嵌入与紧嵌入
-//     - Sobolev 不等式
+//   Section 6.2: Embedding via the Fourier Transform (Fourier 视角的嵌入)
+//     - R^d 全空间上的连续嵌入与 Sobolev 不等式（Fourier 证明）
 //     - Morrey 不等式
-//     - Rellich-Kondrachov 紧嵌入定理（证明归属待裁决，见上）
+//     - 有界域与 Rellich-Kondrachov 紧嵌入：只作陈述，证明见 EDP Ch9
 
-//   Section 6.3: Trace Theorem (迹定理)
+//   Section 6.3: Traces and Boundary Values (迹与边值)
 //     - 边界迹算子的定义
-//     - 迹定理的陈述与证明
+//     - 迹定理的陈述；H^s 边界迹的 Fourier 描述
+//     - 证明见 EDP Ch9 的迹定理，本节不重复
 
 //   Section 6.4: Poincaré and Friedrichs Inequalities (Poincaré 不等式与 Friedrichs 不等式)
 //     - Poincaré 不等式（与 Part I §2.3 的级数版本对照，避免重复陈述）
@@ -292,7 +293,7 @@
 // | Stein Ch 7   | 有限 Fourier 分析（Z/NZ）                                     | 附录 A                           | 仅作 FFT 的代数背景       |
 // | 于品 Ch 1-3  | 经典理论与收敛性                                              | Ch 1-2                           | 直接对应                 |
 // | 于品 Ch 4-5  | 变换与现代理论                                                | Ch 3-5                           | 直接对应                 |
-// | Evans Ch 5   | Sobolev 空间                                                  | Ch 6                             | 与 EDP 重复，待裁决       |
+// | Evans Ch 5   | Sobolev 空间                                                  | Ch 6                             | 只取 H^s 的 Fourier 刻画；W^{k,p}、嵌入、迹见 AF/EDP |
 // | Poisson 核   | Poisson 核与调和函数                                          | Ch 2, §2.5                       | 补充内容                 |
 // | 等分布理论    | Weyl 准则                                                     | Ch 2, §2.6                       | 补充内容                 |
 // | Plancherel   | L² 等距延拓与酉性                                             | Ch 4, §4.2                       | 补充内容（Riesz-Thorin → Analyse Réelle）|
@@ -312,7 +313,8 @@
 //                   → 补充与应用（R^d、Paley-Wiener、Laplace）；FFT 与变换表移入附录。
 //                   L²(T) 上的 Parseval 与平方平均收敛已在 Part I 完成，此处不重复。
 // Part III（Ch 6）：Sobolev 空间，以 H^s 的 Fourier 刻画为核心；
-//                   W^(k,p) 定义、嵌入与迹定理与 EDP 笔记重叠，边界待裁决。
+//                   W^(k,p) 定义与基本性质以 AF Ch12 为准，有界域嵌入与迹定理
+//                   以 EDP Ch9 为准，本笔记只保留 R^d 上的 Fourier 视角与插值/对偶。
 //
 // 教材覆盖：Stein & Shakarchi Ch 1-7（Ch 7 仅作附录背景）、于品 Ch 1-5、Evans Ch 5，
 // 并补充 Poisson 核、等分布、缓增分布的 Fourier 变换、Laplace 反演等内容。
@@ -2288,9 +2290,9 @@ Some common Laplace transforms are collected in #link(<tab:laplace-transforms>)[
 The spaces treated in this part measure smoothness in $L^2$ through the decay of the Fourier transform: $f$ belongs to $H^(s)(bb(R))$ when $(1 + omega^2)^(s\/2) hat(f)(omega)$ is square integrable. This is precisely the point of view opened by #link(<thm:plancherel>)[Plancherel], and it is the reason why the chapter belongs to this note rather than to the PDE note, where Sobolev spaces are built from weak derivatives and where the general theory of $W^(k,p)$, the embedding theorems and the trace theorem are developed.
 
 // TODO（本章正文待补，结构见上方 Part III 蓝图）：
-//   6.1 定义与基本性质：H^s 的 Fourier 刻画、范数等价（弱导数定义引用 EDP）
-//   6.2 嵌入定理：H^s -> C^k 与紧嵌入（证明归属待裁决，可能与 EDP 重复）
-//   6.3 迹定理（同上）
+//   6.1 定义与基本性质：H^s 的 Fourier 刻画、范数等价（弱导数与 W^{k,p} 定义引用 AF Ch11-12）
+//   6.2 嵌入定理：R^d 上的 H^s -> C^k（Fourier 证明）；有界域紧嵌入只陈述，证明见 EDP Ch9
+//   6.3 迹定理：只给陈述与 H^s 边界迹描述，证明见 EDP Ch9
 //   6.4 Poincaré 与 Friedrichs 不等式（与 Part I §2.3 的级数版本对照，避免重复陈述）
 //   6.5 插值与对偶：实/复插值、负指数 H^(-s)
 
