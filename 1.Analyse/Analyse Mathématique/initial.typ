@@ -8338,45 +8338,19 @@ Once the first approximation theorem below is established, the stronger statemen
 
 === Weierstrass Approximation Theorems // Weierstrass 近似定理
 
-The proof below relies on the Bernstein polynomials, which are defined here once for later use; the Landau kernels were introduced in the previous subsection.
+The proof below uses the Bernstein polynomials; their algebraic theory — the basis property, the partition of unity and the moment identities — is developed in the polynomial part of the number theory notebook (*Théorie des Nombres*, *The Bernstein Basis*). Here we only recall the notation and the two identities that the estimate consumes.
 
-#definition(name: "Bernstein Polynomials")[
-  For $n in bb(N)$, the polynomials
-  $
-    b_(n,k)(x) = binom(n, k) x^k (1 - x)^(n-k), quad quad k = 0, 1, dots.c, n,
-  $
-  are the *Bernstein basis polynomials* on $[0, 1]$. For a bounded function $f$ on $[0, 1]$, the polynomial
-  $
-    B_n f(x) = sum_(k=0)^n f(k/n) b_(n,k)(x)
-  $
-  is called the $n$-th *Bernstein polynomial* of $f$.
-] <def:bernstein-polynomials>
-
-#proposition(name: "Properties of Bernstein Polynomials")[
-  + Nonnegative partition of unity: $b_(n,k)(x) >= 0$ on $[0, 1]$ and $sum_(k=0)^n b_(n,k)(x) = 1$.
-  + Degree and interpolation: $B_n f$ is a polynomial of degree at most $n$, and $B_n f(0) = f(0)$, $B_n f(1) = f(1)$.
-  + Moment identities:
-  $
-                sum_(k=0)^n b_(n,k)(x) & = 1, \
-      sum_(k=0)^n (k/n - x) b_(n,k)(x) & = 0, \
-    sum_(k=0)^n (k/n - x)^2 b_(n,k)(x) & = (x (1 - x)) / n <= 1 / (4 n).
-  $
-] <prop:bernstein-properties>
-
-#proof[
-  Nonnegativity is clear, and the first identity is the binomial theorem at $u = x$, $v = 1 - x$.
-  At $x = 0$ only the term $k = 0$ survives ($b_(n,0)(0) = 1$), and at $x = 1$ only $k = n$ survives, which gives the interpolation and, together with the basis form, the degree bound.
-
-  Differentiating the binomial theorem $sum_(k=0)^n binom(n, k) u^k v^(n-k) = (u+v)^n$ once and twice with respect to $u$, multiplying by $u/n$ and $u^2/n^2$ respectively, and setting $u = x$, $v = 1 - x$ gives
-  $
-    sum_(k=0)^n k b_(n,k)(x) = n x, quad quad sum_(k=0)^n k(k-1) b_(n,k)(x) = n (n-1) x^2.
-  $
-  Expanding the third moment with these two identities,
-  $
-    sum_(k=0)^n ((k/n)^2 - 2x dot k/n + x^2) b_(n,k)(x)
-    = ((n-1) x^2 + x) / n - x^2 = (x (1 - x)) / n.
-  $
-]
+For $n in bb(N)$ and $k = 0, 1, dots.c, n$ put
+$
+  b_(n,k)(x) = binom(n, k) x^k (1 - x)^(n-k),
+$
+and for a bounded $f$ on $[0, 1]$ let $B_n f(x) = sum_(k=0)^n f(k/n) b_(n,k)(x)$. The basis is a partition of unity and carries the second moment
+$
+  sum_(k=0)^n b_(n,k)(x) = 1,
+  quad quad
+  sum_(k=0)^n (k/n - x)^2 b_(n,k)(x) = (x (1 - x))/n <= 1/(4 n).
+$
+The Landau kernels were introduced in the previous subsection.
 
 #note[
   A third averaging device, the *Fejér kernel*, is needed for the second approximation theorem below.
@@ -8396,8 +8370,8 @@ On this basis, the Weierstrass approximation theorems are stated as follows:
   It suffices to prove the statement on $[0, 1]$: the affine change of variable
   $x = a + (b - a) t$ carries a polynomial in $t$ into a polynomial in $x$ with the same uniform error.
 
-  Consider the Bernstein polynomials $B_n f$ of #link(<def:bernstein-polynomials>)[the definition above].
-  By #link(<prop:bernstein-properties>)[the moment identities], for every $x in [0, 1]$,
+  Consider the Bernstein polynomials $B_n f$ recalled above.
+  By the moment identities, for every $x in [0, 1]$,
   $
     abs(f(x) - B_n f(x)) & <= sum_(k=0)^n b_(n,k)(x) abs(f(x) - f(k/n)).
   $
