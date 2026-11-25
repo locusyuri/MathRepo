@@ -1520,18 +1520,18 @@ how far a group is from being abelian.
     element of $G$: $a g = g a$ for all $g in G$.
   - The *center* of $G$ is the set of all central elements,
     $
-      C(G) = {z in G | z g = g z " for all " g in G}.
+      Z(G) = {z in G | z g = g z " for all " g in G}.
     $
 ] <def:center-centralizer>
 
 Evidently $a$ is central exactly when $C_(G)(a) = G$, and the center
 is the intersection of all the centralizers,
-$C(G) = inter.big_(a in G) C_(G)(a)$.
+$Z(G) = inter.big_(a in G) C_(G)(a)$.
 
 #property(name: "The Center Is an Abelian Subgroup")[
-  For every group $G$, the center $C(G)$ is an abelian subgroup of
+  For every group $G$, the center $Z(G)$ is an abelian subgroup of
   $G$. Moreover, for every $a in G$ the centralizer $C_(G)(a)$ is a
-  subgroup of $G$ containing $C(G)$.
+  subgroup of $G$ containing $Z(G)$.
 ] <prop:center-is-subgroup>
 
 #proof[
@@ -1546,17 +1546,17 @@ $C(G) = inter.big_(a in G) C_(G)(a)$.
     x y^(-1) g = x g y^(-1) = g x y^(-1),
   $
   the middle step using $g y = y g$, i.e. $g y^(-1) = y^(-1) g$; so
-  $C(G)$ passes the criterion as well. As for the advertised
+  $Z(G)$ passes the criterion as well. As for the advertised
   abelianness: central elements commute with each other in
-  particular, so $C(G)$ is an abelian subgroup; and $z a = a z$ for
-  every central $z$ shows $C(G) subset.eq C_(G)(a)$, making the
+  particular, so $Z(G)$ is an abelian subgroup; and $z a = a z$ for
+  every central $z$ shows $Z(G) subset.eq C_(G)(a)$, making the
   centralizer a subgroup containing the center.
 ]
 
 #example(name: "Centers of the typical groups.")[
-  - If $G$ is abelian, then $C(G) = G$ trivially; the center is only
+  - If $G$ is abelian, then $Z(G) = G$ trivially; the center is only
     informative for non-abelian groups.
-  - $C(S_3) = {e}$. The transposition $(1 2)$ does not commute with
+  - $Z(S_3) = {e}$. The transposition $(1 2)$ does not commute with
     the 3-cycle $(1 2 3)$: $(1 2)(1 2 3) = (2 3)$ whereas
     $(1 2 3)(1 2) = (1 3)$. Every non-identity element of $S_3$ is a
     transposition or a 3-cycle, and a similar check rules out each
@@ -1566,18 +1566,18 @@ $C(G) = inter.big_(a in G) C_(G)(a)$.
 ]
 
 #proposition(name: "The Center of $S_n$ Is Trivial for $n >= 3$")[
-  For every $n >= 3$, $C(S_n) = {e}$.
+  For every $n >= 3$, $Z(S_n) = {e}$.
 ] <prop:symmetric-center>
 
 #proof[
-  Let $sigma in C(S_n)$ and let $(a b)$ be a transposition.
+  Let $sigma in Z(S_n)$ and let $(a b)$ be a transposition.
   Conjugation by $sigma$ sends $(a b)$ to $(sigma(a) sigma(b))$: it maps $sigma(a)$ to $sigma(b)$, $sigma(b)$ to $sigma(a)$, and fixes every other point.
   Since $sigma$ is central, $sigma (a b) sigma^(-1) = (a b)$, so $(sigma(a) sigma(b)) = (a b)$ as permutations, i.e. ${sigma(a), sigma(b)} = {a, b}$ for every pair $a, b$.
   Fix $a$ and choose two distinct elements $b_1, b_2$, neither equal to $a$, which is possible because $n >= 3$; then $sigma(a) in {a, b_1} inter {a, b_2} = {a}$, so $sigma(a) = a$.
   As $a$ was arbitrary, $sigma = "id"$.
 ]
 
-The hypothesis $n >= 3$ is essential: $S_2 tilde.equiv bb(Z)_2$ is abelian, hence $C(S_2) = S_2$.
+The hypothesis $n >= 3$ is essential: $S_2 tilde.equiv bb(Z)_2$ is abelian, hence $Z(S_2) = S_2$.
 
 == Cyclic Groups // 循环群
 
@@ -3920,15 +3920,15 @@ That $phi_a$ is an automorphism is immediate: it is a homomorphism because $phi_
   using that $sigma$ preserves products and inverses. Hence $sigma phi_a sigma^(-1) = phi_(sigma(a)) in "Inn"(G)$: the subgroup $"Inn"(G)$ is invariant under conjugation by $"Aut"(G)$, which is normality.
 ]
 
-#corollary(name: "The Inner Automorphism Group Is $G \/ C(G)$")[
-  Let $G$ be a group. The assignment $iota: a |-> phi_a$ is a surjective homomorphism $G -> "Aut"(G)$ with image $"Inn"(G)$ and kernel $C(G)$; consequently
+#corollary(name: "The Inner Automorphism Group Is $G \/ Z(G)$")[
+  Let $G$ be a group. The assignment $iota: a |-> phi_a$ is a surjective homomorphism $G -> "Aut"(G)$ with image $"Inn"(G)$ and kernel $Z(G)$; consequently
   $
-    "Inn"(G) tilde.equiv G \/ C(G).
+    "Inn"(G) tilde.equiv G \/ Z(G).
   $
 ] <cor:inn-quotient>
 
 #proof[
-  $iota(a b) = phi_(a b) = phi_a circle phi_b = iota(a) circle iota(b)$, so $iota$ is a homomorphism with image $"Inn"(G)$ by definition. Its kernel consists of the $a$ with $a x = x a$ for all $x in G$, i.e. $"Ker" iota = C(G)$ (#link(<def:center-centralizer>)[§3.1]); apply #link(<cor:fundamental-homomorphism>)[§5.2].
+  $iota(a b) = phi_(a b) = phi_a circle phi_b = iota(a) circle iota(b)$, so $iota$ is a homomorphism with image $"Inn"(G)$ by definition. Its kernel consists of the $a$ with $a x = x a$ for all $x in G$, i.e. $"Ker" iota = Z(G)$ (#link(<def:center-centralizer>)[§3.1]); apply #link(<cor:fundamental-homomorphism>)[§5.2].
 ]
 
 === Automorphisms of Cyclic Groups // 循环群的自同构
@@ -3975,15 +3975,15 @@ Normality is invariance under the *inner* automorphisms (#link(<thm:normal-equiv
 ] <def:fully-invariant>
 
 #proposition(name: "The Center Is a Characteristic Subgroup")[
-  For every group $G$, the center $C(G)$ is characteristic in $G$.
+  For every group $G$, the center $Z(G)$ is characteristic in $G$.
 ] <prop:center-characteristic>
 
 #proof[
-  Let $sigma in "Aut"(G)$ and $c in C(G)$. Every $y in G$ is $y = sigma(x)$ for some $x in G$, and
+  Let $sigma in "Aut"(G)$ and $c in Z(G)$. Every $y in G$ is $y = sigma(x)$ for some $x in G$, and
   $
     sigma(c) y = sigma(c) sigma(x) = sigma(c x) = sigma(x c) = sigma(x) sigma(c) = y sigma(c),
   $
-  because $c$ is central. Hence $sigma(c) in C(G)$ and $sigma(C(G)) subset.eq C(G)$.
+  because $c$ is central. Hence $sigma(c) in Z(G)$ and $sigma(Z(G)) subset.eq Z(G)$.
 ]
 
 #proposition(name: "Subgroups of Cyclic Groups Are Fully Invariant")[
@@ -4027,11 +4027,11 @@ The three notions therefore form a strict chain, $"fully invariant" subset "char
 === What the Automorphism Group Detects // 自同构群能反映多少
 
 #proposition(name: "A Centerless Group Has a Centerless Automorphism Group")[
-  If $C(G) = {e}$, then $C("Aut"(G)) = {"id"}$.
+  If $Z(G) = {e}$, then $Z("Aut"(G)) = {"id"}$.
 ] <prop:centerless-aut>
 
 #proof[
-  For $sigma in "Aut"(G)$ and $a in G$ we have $sigma phi_a sigma^(-1) = phi_(sigma(a))$ (#link(<prop:inn-normal>)[above]). If $sigma$ lies in the center of $"Aut"(G)$, then $sigma phi_a sigma^(-1) = phi_a$, hence $phi_(sigma(a)) = phi_a$, and $a^(-1) sigma(a) in C(G) = {e}$. Therefore $sigma(a) = a$ for every $a in G$, i.e. $sigma = "id"$.
+  For $sigma in "Aut"(G)$ and $a in G$ we have $sigma phi_a sigma^(-1) = phi_(sigma(a))$ (#link(<prop:inn-normal>)[above]). If $sigma$ lies in the center of $"Aut"(G)$, then $sigma phi_a sigma^(-1) = phi_a$, hence $phi_(sigma(a)) = phi_a$, and $a^(-1) sigma(a) in Z(G) = {e}$. Therefore $sigma(a) = a$ for every $a in G$, i.e. $sigma = "id"$.
 ]
 
 #note(title: "What the automorphism group detects")[
