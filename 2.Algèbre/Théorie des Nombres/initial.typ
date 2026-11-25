@@ -490,11 +490,17 @@
 // 算术结构——带余除法、Bézout、唯一分解——Part I 的每个定理在此都有镜像；
 // 反向地，Ch5 自含证明的多项式根数界（<lem:poly-roots-bound>）与 Ch6 的
 // 二次剩余理论在此获得系统化回归。对应教材：华罗庚 Ch4（多项式之性质）。
+// 四章依次推进：整除（Ch11）→ 因式与根（Ch12）→ 基与整值性（Ch13）→
+// 多元与置换对称（Ch14）。Ch13 处理"表示"——坐标基决定哪些系数是整数、
+// 哪些值被正性保持；Ch14 先补多元骨架，再证对称多项式基本定理，它是
+// Vièta / Newton 与对称不等式共同的地基。
 // 内容来源：原独立 LaTeX 笔记 Polynôme（2026-10 整体并入）——Ch11/12/14 主体
-// 为迁移 + 扩写，Ch13 原为空壳全新补写；对称不等式（Muirhead/Schur/Nesbitt）
-// 随迁为 Ch14 应用板块，其与数论主线的连接点为对称函数语言。
-// 职责边界：环论/域论视角（多项式环公理构造、UFD/ED、分裂域）→
-// Algèbre Abstraite，本 Part 用算术语言自含，结构视角仅 note 划界。
+// 为迁移 + 扩写，Ch13 由原"整值多项式与插值"重构；Bernstein 基自 Analyse
+// Mathématique 迁入；对称不等式（Muirhead/Schur/Nesbitt）随迁为 Ch14 应用板块。
+// 职责边界：环论/域论视角（多项式环公理构造、UFD/ED、分裂域、多元环与
+// Hilbert 基定理）→ Algèbre Abstraite，本 Part 用算术语言自含，结构视角仅
+// note 划界；数值插值与逼近（Lagrange/Newton 差商/余项/Runge）→
+// Analyse Numérique，本 Part 只保留等距格点上的差分视角。
 // 注意：Ch7–10 尚未写作，本 Part 在当前 PDF 中渲染为 Part III / Ch7–10；
 // 蓝图编号以逻辑编号（Part V / Ch11–14）为准，标签为语义命名不受影响，
 // 待 Ch7–10 补全后编号自动对齐。
@@ -528,6 +534,8 @@
 //     - #definition <def:poly-irreducible>（deg ≥ 1 不能分解为更低次之积）
 //     - Euclid 引理镜像 #proposition <prop:irreducible-prime>
 //       （p 不可约 ⟺ p | f 或 (p, f) = 1 ⟺ p | fg ⇒ p | f ∨ p | g）
+//     - 唯一分解 #theorem <thm:poly-ufd>（镜像 <thm:fta>；存在性：对 deg
+//       强归纳；唯一性：Euclid 引理逐因子消去；兑现章首"factors uniquely"）
 //   Section 12.2: Polynomials with Rational Coefficients（有理系数多项式）
 //     - 本原多项式 #definition <def:primitive-polynomial>；
 //       Gauss 引理 #lemma <lem:gauss-poly-lemma>（本原 × 本原 = 本原）
@@ -552,49 +560,84 @@
 //   图片：fig:roots-of-unity（全 Part 仅此 + Ch14 凸包图 2 张）
 //   写作顺序：§12.1 → §12.2 → §12.3 → §12.4 逐节写入，每节编译一次
 
-// --- Chapter 13: Integer-Valued Polynomials and Interpolation（整值多项式与插值）---
-//   设计注释：原 Polynôme 笔记此章为空壳，本节以下内容为补写；与 Ch8
-//   Legendre 公式的 floor 求和遥相呼应（整值性 = 离散格点上的算术）。
-//   Section 13.1: Integer-Valued Polynomials（整值多项式）
-//     - #definition <def:integer-valued>（f ∈ ℚ[x] 且 f(n) ∈ ℤ ∀n ∈ ℤ）
-//     - 例 <ex:integer-valued-example>（x(x-1)⋯(x-k+1)\/k! 整值但系数非整；
-//       ℤ[x] ⊊ Int(ℤ)）
-//   Section 13.2: The Binomial Polynomial Basis（二项式系数基）
-//     - #theorem <thm:binomial-basis>（f 整值 ⟺ f = Σ c_k binom(x, k)，
-//       c_k ∈ ℤ；差分算子 Δ 递推证明）
-//   Section 13.3: Lagrange Interpolation（Lagrange 插值）
-//     - #theorem <thm:lagrange-interpolation>（n + 1 个横坐标互异的点唯一
-//       确定 deg ≤ n 插值多项式；存在性构造 + 唯一性根数论证回链 Ch12）
-//     - 例 <ex:interpolation-example>（低次数值例）
-//   写作顺序：§13.1 → §13.2 → §13.3 逐节写入，每节编译一次
+// --- Chapter 13: Polynomial Bases and Integer-Valued Polynomials（多项式基与整值多项式）---
+//   设计注释：本章处理"表示"而非"因式"——同一多项式在不同基下的坐标决定了
+//   哪些系数是整数、哪些值被正性保持。原 Lagrange 插值节与 Analyse Numérique
+//   §3.2（Lagrange 基/重心公式/余项/Runge）重复且在本笔记正文零引用，已删除；
+//   "n + 1 个相异点确定次数 ≤ n 的多项式"另立 <cor:poly-identity-by-values>
+//   保留 Ch5/Ch6 所需的唯一性用法。Bernstein 基的定义与命题自 Analyse
+//   Mathématique《Weierstrass 近似定理》迁入，数学分析侧只留公式回顾 + prose 指回。
+//   Section 13.1: Polynomial Bases（多项式基）
+//     - #definition <def:polynomial-basis>（deg p_k = k）
+//     - #proposition <prop:triangular-change>（过渡矩阵三角、对角非零 ⇒ 可逆）
+//     - #note 划界：Stirling 过渡矩阵见 Combinatoire <thm:stirling-connection>，不重复
+//   Section 13.2: Finite Differences and Newton Series（有限差分与 Newton 级数）
+//     - #definition <def:finite-difference>（Δf(x) = f(x+1) − f(x)，Δ^k）
+//     - #property <prop:finite-difference-rules>（线性、降次、
+//       Δ binom(x,k) = binom(x,k−1)、Δ^k f(0) = Σ (−1)^(k−j) binom(k,j) f(j)）
+//     - #theorem <thm:newton-series>（f = Σ Δ^k f(0) binom(x,k)；
+//       证明：Δ^m g(0) = 0 而 deg g = m ⇒ g = 0）
+//     - 例 <ex:newton-power-sums>（x^2、x^3 的展开 + hockey-stick 得平方和）
+//     - #corollary <cor:poly-identity-by-values>（n + 1 个相异点定零；
+//       回链 <lem:poly-roots-bound>，承接被删 Lagrange 节的唯一性用途）
+//   Section 13.3: Integer-Valued Polynomials and the Binomial Basis（整值多项式与二项式基）
+//     - #definition <def:integer-valued>；例 <ex:integer-valued-example>；
+//       #note 环结构（Int(ℤ) ⊋ ℤ[x]）
+//     - #theorem <thm:binomial-basis>（整值 ⟺ 整系数；Δ 递推证明，引用 §13.2 记号）
+//     - #corollary <cor:integer-valued-differences>（整值 ⟺ Δ^k f(0) ∈ ℤ）
+//     - #corollary <cor:integer-valued-basis>（Int(ℤ) 以 binom(x,k) 为 ℤ-基）
+//   Section 13.4: The Bernstein Basis（Bernstein 基）
+//     - 迁移 <def:bernstein-polynomials> 与 <prop:bernstein-properties>
+//       （非负单位分解、端点插值、矩恒等式），证明随迁
+//     - #proposition <prop:bernstein-monomial>（x^k = Σ binom(j,k)\/binom(n,k) b_(n,j)；
+//       证明：代换 x = t\/(1+t) 后比较系数）
+//     - #proposition <prop:bernstein-degree-elevation>（升阶公式）
+//     - #note 全正性/保形 → Bézier（指向 Analyse Numérique 逼近章）
+//     - #tex-table 三基对照（单项式/二项式/Bernstein）
+//   写作顺序：§13.1 → §13.4 逐节写入，每节编译一次
 
-// --- Chapter 14: Symmetric Polynomials and Inequalities（对称多项式与对称不等式）---
-//   设计注释：对称函数语言是本 Part 与数论主线的连接点（Vièta 的 σ_i、
-//   Newton 恒等式）；§14.3–14.4 对称不等式为经典应用（竞赛向板块，
-//   章首 prose 注明定位），主要参考陈柏宇–张福春《Muirhead 不等式》。
-//   Section 14.1: Symmetric Polynomials（对称多项式）
+// --- Chapter 14: Multivariate Polynomials and Symmetric Functions（多元多项式与对称函数）---
+//   设计注释：本章从一元转入多元，再用"置换不变"把多元结构压回一元语言。
+//   §14.1 只补对称函数真正消费的组合骨架（单项式序、齐次分解、置换作用）；
+//   环论构造（迭代定义、k[x,y] 非 PID、Hilbert 基定理）留在 Algèbre Abstraite
+//   §11.5，仅 note 划界。§14.2 就地证明对称多项式基本定理，消除原稿"其证明
+//   属于 Algèbre Abstraite"的悬空承诺（该笔记并无此内容）。§14.4–14.5 对称
+//   不等式为经典应用（竞赛向板块，章首 prose 注明定位），保持原状；双随机
+//   矩阵/优序等价刻画暂驻 §14.4，note 注明归属（Combinatoire 的 Birkhoff
+//   应用与 Optimisation Convexe 的凸分析尚未就绪，暂不迁出）。
+//   Section 14.1: Multivariate Polynomials and Monomial Orders（多元多项式与单项式序）
+//     - #definition <def:multivariate-polynomial>（单项式、全次数、齐次分量）
+//     - #definition <def:monomial-order>（字典序、首单项式）
+//     - #property <prop:lex-well-order>（全序、与加法相容、良序）
+//     - #definition <def:permutation-action>（S_n 在 P[x_1,…,x_n] 上的作用）
+//     - #definition <def:symmetric-sums>（Σ_cyc 与 Σ_sym，自原 §14.1 note 上移）
+//   Section 14.2: Symmetric Polynomials and the Fundamental Theorem（对称多项式与基本定理）
 //     - #definition <def:symmetric-polynomial>（变量置换不变）
 //     - 初等对称多项式 σ_k、幂和 p_k、完全齐次 h_k（定义块列举）
-//   Section 14.2: Newton's Identities（Newton 恒等式）
+//     - #theorem <thm:symmetric-fundamental>（存在性：lex 首单项式归纳；
+//       唯一性：σ^β 的首单项式互异 ⇒ 线性无关）
+//     - #corollary <cor:symmetric-ring>（P[x]^(S_n) = P[σ_1,…,σ_n]）
+//     - 例 <ex:symmetric-fundamental-example>（Σ_sym x_1^2 x_2 = σ_1 σ_2 − 3 σ_3）
+//   Section 14.3: Newton's Identities（Newton 恒等式）
 //     - #theorem <thm:newton-identities>（k σ_k = Σ_(i=1)^k (-1)^(i-1)
 //       σ_(k-i) p_i；回链 <thm:vieta> 的 σ_i 记号）
-//     - 循环和 Σ_cyc 与对称和 Σ_sym 记号（#note，Nesbitt 伏笔）
-//   Section 14.3: Power Means and the Muirhead Inequality（幂平均与 Muirhead 不等式）
+//     - 例 <ex:newton-check>（n = 3 逐条验证）
+//   Section 14.4: Power Means and the Muirhead Inequality（幂平均与 Muirhead 不等式）
 //     - 幂平均链 #theorem <thm:power-mean>（M_p 单调；H ≤ G ≤ A ≤ Q；
 //       n = 2 对数均值插值 G ≤ L ≤ A prose）
 //     - 凸包 #definition <def:convex-hull>（含降序向量 α_↓ 与 H(α)）；
-//       图 fig:convex-hull（img/convex-hull.png，复用原笔记图片）
+//       图 fig:convex-hull（img/convex-hull.svg，复用原笔记图片）
 //     - Muirhead #theorem <thm:muirhead>（α ∈ H(β) ⇒ 对称和不等式；
 //       等号条件）
 //     - 控制 #definition <def:majorization>（α ≺ β）；双随机矩阵
 //       #definition <def:doubly-stochastic>；
 //       三等价刻画 #theorem <thm:majorization-equivalent>
-//       （α ≺ β ⟺ α = Dβ ⟺ α ∈ H(β)）
-//   Section 14.4: Classical Applications（经典应用）
+//       （α ≺ β ⟺ α = Dβ ⟺ α ∈ H(β)）；#note 注明其凸分析/组合归属
+//   Section 14.5: Classical Applications（经典应用）
 //     - Schur #proposition <prop:schur>（r = 1 特例）
 //     - Nesbitt #proposition <prop:nesbitt>（Muirhead 路线：(3,0,0) ≻ (2,1,0)）
-//   图片：fig:convex-hull（img/convex-hull.png，复用原笔记图片）
-//   写作顺序：§14.1 → §14.4 逐节写入，每节编译一次
+//   图片：fig:convex-hull（img/convex-hull.svg，复用原笔记图片）
+//   写作顺序：§14.1 → §14.5 逐节写入，每节编译一次
 
 // ==========================================================================
 // 教材覆盖度映射表 (Coverage Mapping)
@@ -4618,12 +4661,14 @@ polynomial ring $P[x]$ over a number field $P$ (typically $bb(Q)$,
 $bb(R)$, or $bb(C)$). The parallel is exact and it is the point:
 where $bb(Z)$ measures size by the absolute value, $P[x]$ measures it
 by the *degree*, and every argument of Part I that used only "the
-sizes decrease" goes through verbatim. Two later chapters harvest it:
-*Factorization and Roots* develops factorization and roots
-(including the rational root theorem and Eisenstein's criterion behind
-the root bound used in Chapter 5), and *Symmetric Polynomials and
-Inequalities* develops the symmetric polynomial language behind
-Vièta's formulas.
+sizes decrease" goes through verbatim. The later chapters harvest it
+in three ways: *Factorization and Roots* develops factorization and
+roots (including the rational root theorem and Eisenstein's criterion
+behind the root bound used in Chapter 5); *Polynomial Bases and
+Integer-Valued Polynomials* changes coordinates and shows which basis
+records integrality; and *Multivariate Polynomials and Symmetric
+Functions* develops the symmetric polynomial language behind Vièta's
+formulas, together with its classical inequalities.
 
 == Univariate Polynomials // 一元多项式
 
@@ -4903,12 +4948,42 @@ polynomials that cannot be split.
 
 This is the exact mirror of
 #link(<thm:euclid-lemma>)[Euclid's lemma for primes], and it drives
-unique factorization in $P[x]$ the same way: the induction of
-#link(<thm:fta>)[the Fundamental Theorem of Arithmetic] transfers
-verbatim, with "prime" replaced by "irreducible" and absolute values by
-degrees. The ring-theoretic formulation of this state of affairs ($P[x]$
-is a Euclidean domain, hence a unique factorization domain) belongs to
-Algèbre Abstraite.
+unique factorization in $P[x]$ exactly as it did in $bb(Z)$:
+
+#theorem(name: "Unique Factorization in $P[x]$")[
+  Every $f in P[x]$ with $"deg"(f) >= 1$ can be written as
+  $
+    f = c p_1 p_2 dots.c p_r,
+  $
+  where $c in P$ is a nonzero constant and $p_1, dots, p_r$ are monic
+  irreducible polynomials. The factorization is unique up to the order
+  of the factors.
+] <thm:poly-ufd>
+
+#proof(name: "of the theorem")[
+  *Existence.* Strong induction on $n = "deg"(f)$. If $n = 1$, then
+  $f$ is irreducible — a product of two polynomials of smaller degree
+  would have degree $<= 0$ — and $f = a_1 (x + a_0\/a_1)$ with
+  $a_1 != 0$. If $n >= 2$ and $f$ is irreducible, divide by its leading
+  coefficient. Otherwise $f = g h$ with
+  $1 <= "deg"(g), "deg"(h) < n$, and the induction hypothesis factors
+  $g$ and $h$; multiplying the two factorizations and collecting the
+  constants factors $f$.
+
+  *Uniqueness.* Suppose
+  $c p_1 dots.c p_r = c' q_1 dots.c q_s$ with all $p_i$, $q_j$ monic
+  irreducible. Since $p_1 | q_1 dots.c q_s$,
+  #link(<prop:irreducible-prime>)[Euclid's lemma] gives $p_1 | q_j$ for
+  some $j$; as both are monic irreducible, $p_1 = q_j$. Cancelling this
+  factor in the integral domain $P[x]$ and iterating matches the
+  remaining factors one by one, so $r = s$ and the lists agree up to
+  order; the constants then agree because the products are monic.
+]
+
+The ring-theoretic formulation of this state of affairs ($P[x]$ is a
+Euclidean domain, hence a unique factorization domain) belongs to
+Algèbre Abstraite; here the arithmetic statement is what the next two
+sections use.
 
 == Polynomials with Rational Coefficients // 有理系数多项式
 
@@ -5089,8 +5164,8 @@ finding roots.
   $a_(n - k) = a_n (-1)^k sum_(i_1 < dots < i_k) r_(i_1) dots r_(i_k)$.
 ]
 
-In the language of *Symmetric Polynomials and Inequalities*, the sums
-on the left are the *elementary symmetric polynomials*
+In the language of *Multivariate Polynomials and Symmetric Functions*,
+the sums on the left are the *elementary symmetric polynomials*
 $sigma_(k)(r_1, dots, r_n)$ in the roots, so Vièta's formulas read
 $
   sigma_(k)(r_1, dots, r_n) = (-1)^k a_(n-k)\/a_n, quad k = 1, dots, n.
@@ -5212,25 +5287,173 @@ This chapter completes the factorization story begun in Part I: the
 integers factor uniquely into primes, and now polynomials factor
 uniquely into irreducibles, with the rational root theorem and
 Eisenstein's criterion as the practical instruments. The next chapter
-turns from *which* polynomials have *which* roots to a quieter but
-surprising question: which polynomials take integer values at
-integers — and how arbitrary data can be interpolated by a polynomial
-of the right degree.
+turns from *which* polynomials have *which* roots to a different
+question: in which *basis* should a polynomial be written so that its
+coordinates record integrality — and which basis respects positivity
+on an interval.
 
-= Integer-Valued Polynomials and Interpolation // 整值多项式与插值
+= Polynomial Bases and Integer-Valued Polynomials // 多项式基与整值多项式
 
-A polynomial with rational coefficients usually produces rational
-values, yet some of them — the binomial coefficients above all — land
-on integers at every integer input. This chapter studies that
-arithmetic filter and then turns it around: just as the binomial
-basis is adapted to the integers, the Lagrange basis is adapted to
-any finite set of data points. Both are "change of basis" stories,
-and both echo themes from the rest of the notebook — the binomial
-basis stands behind the middle-binomial-coefficient estimates of
-Chapter 8, and interpolation is the uniqueness half of the root-count
-arguments of *Factorization and Roots*.
+A polynomial is a formal object, but every computation with it is a
+computation with coordinates, and the coordinates depend on the basis.
+The monomial basis $1, x, x^2, dots$ is the default of school algebra;
+it is adapted to differentiation and Taylor expansion, and to little
+else. This chapter studies two other bases, each adapted to a different
+kind of data:
 
-== Integer-Valued Polynomials // 整值多项式
+- the *binomial basis* $binom(x, 0), binom(x, 1), binom(x, 2), dots$
+  is adapted to the lattice $bb(Z)$: a rational polynomial is
+  integer-valued exactly when its coordinates in this basis are
+  integers;
+- the *Bernstein basis* $b_(n,0), dots, b_(n,n)$ is adapted to the
+  interval $[0, 1]$: its members are non-negative and sum to $1$, so
+  the coordinates of a polynomial are the values of a convex
+  combination.
+
+Both are change-of-basis stories, and the tool that converts between
+them is the finite difference operator, the discrete counterpart of the
+derivative. Interpolation at arbitrary nodes is not treated here: it
+belongs to numerical analysis, where the conditioning of the problem is
+part of the subject.
+
+== Polynomial Bases // 多项式基
+
+#definition(name: "Polynomial Basis")[
+  A sequence $(p_0, p_1, p_2, dots)$ in $P[x]$ is a *polynomial
+  basis* if $"deg"(p_k) = k$ for every $k$. Equivalently, for every
+  $d$ the polynomials $p_0, dots, p_d$ form a basis of the space of
+  polynomials of degree $<= d$.
+] <def:polynomial-basis>
+
+Because the degrees are prescribed, the change-of-basis matrix between
+two polynomial bases is triangular.
+
+#proposition(name: "Triangular Change of Basis")[
+  Let $(p_k)$ and $(q_k)$ be polynomial bases. Then for every $k$
+  $
+    q_k = sum_(j=0)^k t_(k j) p_j
+  $
+  with $t_(k k) != 0$. The matrix $(t_(k j))$ is therefore invertible,
+  and the coordinates of a polynomial in one basis determine them in
+  the other.
+] <prop:triangular-change>
+
+#proof[
+  Both $q_k$ and $p_k$ have degree $k$, so $q_k$ is a combination of
+  $p_0, dots, p_k$ and not of the later basis elements; the coefficient
+  of $p_k$ in this combination is $t_(k k) = b_k\/a_k$, where $a_k$
+  and $b_k$ are the leading coefficients of $p_k$ and $q_k$, hence
+  nonzero. Triangularity makes the matrix invertible, and the inverse
+  expresses the $p_j$ through the $q_k$.
+]
+
+Three bases recur below: the monomial basis $1, x, x^2, dots$, the
+binomial basis $binom(x, 0), binom(x, 1), dots$, and, for a fixed
+$n$, the Bernstein family $b_(n,0), dots, b_(n,n)$. The first two are
+bases of $P[x]$ itself; the third is a basis of the polynomials of
+degree $<= n$ and depends on $n$. The passage between the monomial and
+falling-factorial bases is governed by the Stirling numbers, which are
+a combinatorial object in their own right.
+
+#note[
+  The Stirling numbers of the second and first kind are the entries of
+  the triangular matrices relating $(x^k)$ and the falling factorials
+  $x (x - 1) dots.c (x - k + 1)$; they are developed in *Combinatoire*,
+  *Stirling Numbers*. What matters here is not the matrices but the
+  arithmetic of the coordinates: which basis makes a given class of
+  polynomials integral.
+]
+
+== Finite Differences and Newton Series // 有限差分与 Newton 级数
+
+On the lattice $bb(Z)$ the derivative is replaced by a difference, and
+Taylor expansion by an expansion in binomial polynomials.
+
+#definition(name: "Finite Difference Operator")[
+  For a function $f$ on $bb(Z)$ the *forward difference* is
+  $
+    (Delta f)(x) = f(x + 1) - f(x),
+  $
+  and $Delta^k$ denotes its $k$-th iterate, with $Delta^0 f = f$. The
+  number $(Delta^k f)(0)$ is the $k$-th *finite difference of $f$ at
+  zero*.
+] <def:finite-difference>
+
+#property(name: "Calculus of Finite Differences")[
+  For polynomials $f, g$ and $k >= 1$:
+  + $Delta$ is linear: $Delta(a f + b g) = a Delta f + b Delta g$;
+  + $Delta$ lowers the degree: if $"deg"(f) = d >= 1$, then
+    $"deg"(Delta f) = d - 1$;
+  + $Delta binom(x, k) = binom(x, k - 1)$, while $Delta 1 = 0$;
+  + $Delta^k f(0) = sum_(j=0)^k (-1)^(k - j) binom(k, j) f(j)$.
+] <prop:finite-difference-rules>
+
+#proof[
+  Linearity is immediate. For the degree, write $f = a_d x^d + dots$
+  with $a_d != 0$: the leading term of $f(x + 1) - f(x)$ is
+  $a_d ((x + 1)^d - x^d) = a_d d x^(d - 1) + dots$, of degree $d - 1$.
+  The third identity is Pascal's rule
+  $binom(x + 1, k) - binom(x, k) = binom(x, k - 1)$. The last one is
+  the inclusion–exclusion expansion of the $k$-fold difference: each
+  $f(j)$ arises from the choices of $j$ increments among $k$, with
+  sign $(-1)^(k - j)$.
+]
+
+#theorem(name: "Newton Series")[
+  Every $f in P[x]$ of degree $<= d$ satisfies the identity
+  $
+    f(x) = sum_(k=0)^d (Delta^k f)(0) binom(x, k).
+  $
+] <thm:newton-series>
+
+#proof[
+  Let $g$ be the difference between the two sides. Both have degree
+  $<= d$, and $Delta^j$ applied to the right side at $x = 0$ gives
+  $(Delta^j f)(0)$, because
+  $Delta^j binom(x, k) = binom(x, k - j)$ for $j <= k$ and vanishes
+  for $j > k$, so only the term $k = j$ survives at the origin. Hence
+  $Delta^j g(0) = 0$ for every
+  $j = 0, dots, d$. If $g != 0$ had degree $m <= d$, then
+  $Delta^m g$ would be a nonzero constant
+  (#link(<prop:finite-difference-rules>)[the degree rule]), and that
+  constant would equal $Delta^m g(0) = 0$ — a contradiction. Hence
+  $g = 0$.
+]
+
+#example(name: "Power Sums from the Newton Series")[
+  The finite differences of $x^2$ at zero are $0, 1, 2$, and those of
+  $x^3$ are $0, 1, 6, 6$, so
+  $
+    x^2 = 2 binom(x, 2) + binom(x, 1), quad
+    x^3 = 6 binom(x, 3) + 6 binom(x, 2) + binom(x, 1).
+  $
+  Summing over $x = 0, dots, n$ and applying the hockey-stick identity
+  $sum_(x=0)^n binom(x, k) = binom(n + 1, k + 1)$ gives
+  $
+    sum_(x=0)^n x^2 = 2 binom(n + 1, 3) + binom(n + 1, 2)
+    = (n (n + 1)(2 n + 1))\/6.
+  $
+] <ex:newton-power-sums>
+
+The Newton series also carries the uniqueness half of interpolation;
+the existence half, at arbitrary nodes, is the subject of numerical
+analysis.
+
+#corollary(name: "Identity Criterion by Values")[
+  Let $f in P[x]$ have degree $<= n$. If $f$ vanishes at $n + 1$
+  distinct points of $P$, then $f = 0$. Consequently two polynomials of
+  degree $<= n$ that agree at $n + 1$ distinct points are equal.
+] <cor:poly-identity-by-values>
+
+#proof[
+  A nonzero polynomial of degree $<= n$ over a field has at most $n$
+  roots — the factor-theorem induction behind
+  #link(<lem:poly-roots-bound>)[the root bound for polynomial
+  congruences] — so $f$ with $n + 1$ roots must vanish. Applying this
+  to the difference of two polynomials gives the second statement.
+]
+
+== Integer-Valued Polynomials and the Binomial Basis // 整值多项式与二项式基
 
 #definition(name: "Integer-Valued Polynomial")[
   A polynomial $f in bb(Q)[x]$ is *integer-valued* if
@@ -5272,11 +5495,10 @@ converse fails — and the failure is instructive.
   formula of Chapter 8.
 ]
 
-== The Binomial Polynomial Basis // 二项式系数基
-
-The binomial polynomials form a basis of $bb(Q)[x]$ (they have
-distinct degrees), and they cut $cal("Int")(bb(Z))$ out with integer
-coordinates.
+The binomial polynomials form a basis of $bb(Q)[x]$ (they have distinct
+degrees), and the Newton series says that this is the basis in which
+finite differences are the coordinates. The next theorem states that it
+is also the basis that cuts out integrality.
 
 #theorem(name: "Binomial Basis Theorem")[
   A polynomial $f in bb(Q)[x]$ of degree $<= d$ is integer-valued if
@@ -5293,14 +5515,14 @@ coordinates.
 
   *Necessity.* Since the polynomials $binom(x, k)$, $k = 0, dots, d$,
   have distinct degrees, they are linearly independent and span the
-  polynomials of degree $<= d$; so $f$ has a unique expansion
-  $f = sum_(k=0)^d c_k binom(x, k)$ over $bb(Q)$. We prove that all
-  $c_k$ are integers, by induction on $d$. For $d = 0$,
-  $c_0 = f(0) in bb(Z)$. For $d >= 1$, apply the difference operator
-  $(Delta f)(x) = f(x + 1) - f(x)$: the leading terms cancel, so
-  $Delta f$ has degree $<= d - 1$ and is again integer-valued, and
-  the identity $binom(x + 1, k) - binom(x, k) = binom(x, k - 1)$
-  gives
+  polynomials of degree $<= d$; so $f$ has a unique expansion over
+  $bb(Q)$. We prove that all $c_k$ are integers, by induction on $d$.
+  For $d = 0$, $c_0 = f(0) in bb(Z)$. For $d >= 1$, apply
+  #link(<def:finite-difference>)[the difference operator]: the leading
+  terms cancel, so $Delta f$ has degree $<= d - 1$ and is again
+  integer-valued, and
+  #link(<prop:finite-difference-rules>)[the rule]
+  $Delta binom(x, k) = binom(x, k - 1)$ gives
   $
     (Delta f)(x) = sum_(k=1)^d c_k binom(x, k - 1).
   $
@@ -5310,96 +5532,285 @@ coordinates.
   $binom(0, k) = 0$ for $k >= 1$, gives $c_0 = f(0) in bb(Z)$.
 ]
 
-The coefficients $c_k$ have a name: $c_k = (Delta^k f)(0)$, the
-$k$-th finite difference at $0$ — the polynomial cousin of the
-Taylor coefficients, with $Delta$ in place of the derivative.
+The proof shows more than the theorem: the coefficients $c_k$ are the
+finite differences $(Delta^k f)(0)$, so integrality of the values is
+equivalent to integrality of the differences.
 
-== Lagrange Interpolation // Lagrange 插值
+#corollary(name: "Integer-Valued Criterion by Differences")[
+  Let $f in bb(Q)[x]$ have degree $<= d$. Then $f$ is integer-valued
+  if and only if $(Delta^k f)(0) in bb(Z)$ for every $k <= d$.
+] <cor:integer-valued-differences>
 
-Where the binomial basis fits the lattice of integers, the Lagrange
-basis fits arbitrary data: any finite table of values is realized by
-exactly one polynomial of bounded degree.
+#corollary(name: "The Binomial Basis of the Integer-Valued Polynomials")[
+  The integer-valued polynomials form a free abelian group with basis
+  $(binom(x, k))_(k >= 0)$: every element has a unique expansion
+  $sum_k c_k binom(x, k)$ with $c_k in bb(Z)$ and finitely many
+  nonzero terms.
+] <cor:integer-valued-basis>
 
-#theorem(name: "Lagrange Interpolation")[
-  Let $x_0, x_1, dots, x_n$ be $n + 1$ *distinct* elements of $P$ and
-  $y_0, y_1, dots, y_n$ arbitrary elements of $P$. There exists
-  exactly one polynomial $f in P[x]$ of degree $<= n$ with
-  $
-    f(x_i) = y_i quad "for" quad i = 0, 1, dots, n.
-  $
-  Explicitly,
-  $
-    f(x) = sum_(i=0)^n y_i L_(i)(x), quad
-    L_(i)(x) = product_(j != i) (x - x_j)\/(x_i - x_j).
-  $
-] <thm:lagrange-interpolation>
-
-#proof(name: "of the theorem")[
-  *Existence.* Each $L_(i)$ is a product of $n$ linear factors, so
-  $"deg"(L_(i)) = n$, and $L_(i)(x_i) = 1$ while $L_(i)(x_j) = 0$ for
-  $j != i$ (one factor vanishes). Hence
-  $f = sum y_i L_(i)$ has degree $<= n$ and $f(x_i) = y_i$.
-
-  *Uniqueness.* If $f$ and $g$ both work, then $f - g$ has degree
-  $<= n$ but vanishes at the $n + 1$ distinct points $x_i$. A nonzero
-  polynomial of degree $<= n$ over a field has at most $n$ roots (the
-  same induction as in
-  #link(<lem:poly-roots-bound>)[the root bound for polynomial
-congruences], via the factor theorem), so $f - g = 0$.
+#proof[
+  The unique expansion over $bb(Q)$ is
+  #link(<thm:binomial-basis>)[the theorem]; the coefficients are
+  integers exactly when the polynomial is integer-valued, and the
+  binomial polynomials are themselves integer-valued
+  (#link(<ex:integer-valued-example>)[the example]). Hence they form a
+  $bb(Z)$-basis of $cal("Int")(bb(Z))$.
 ]
 
-#example(name: "Interpolating Three Points")[
-  Fit a polynomial of degree $<= 2$ through $(0, 1)$, $(1, 2)$ and
-  $(2, 5)$. The Lagrange construction gives
+== The Bernstein Basis // Bernstein 基
+
+Where the binomial basis is adapted to the lattice, the Bernstein basis
+is adapted to the interval $[0, 1]$: its members are non-negative there
+and sum to $1$, so a vector of values is turned into a polynomial by a
+convex combination. The definition and the elementary properties below
+are the algebraic core of the Weierstrass approximation theorem, where
+they are used in *Analyse Mathématique*.
+
+#definition(name: "Bernstein Basis Polynomials")[
+  For $n in bb(N)$ and $k = 0, 1, dots.c, n$, the polynomial
   $
-    f(x) = 1 dot ((x - 1)(x - 2))\/((0 - 1)(0 - 2))
-    + 2 dot ((x - 0)(x - 2))\/((1 - 0)(1 - 2))
-    + 5 dot ((x - 0)(x - 1))\/((2 - 0)(2 - 1)),
+    b_(n,k)(x) = binom(n, k) x^k (1 - x)^(n-k)
   $
-  which simplifies to $f(x) = x^2 + 1$. Spot check:
-  $f(0) = 1$, $f(1) = 2$, $f(2) = 5$ — and by uniqueness no other
-  quadratic fits.
-] <ex:interpolation-example>
+  is the $k$-th *Bernstein basis polynomial* of degree $n$ on
+  $[0, 1]$. For a function $f$ on $[0, 1]$, the $n$-th *Bernstein
+  polynomial* of $f$ is
+  $
+    B_n f(x) = sum_(k=0)^n f(k/n) b_(n,k)(x).
+  $
+] <def:bernstein-polynomials>
+
+#proposition(name: "Properties of the Bernstein Basis")[
+  + *Non-negative partition of unity*: $b_(n,k)(x) >= 0$ on $[0, 1]$
+    and $sum_(k=0)^n b_(n,k)(x) = 1$.
+  + *Degree and endpoints*: $B_n f$ has degree $<= n$, with
+    $B_n f(0) = f(0)$ and $B_n f(1) = f(1)$; and $b_(n,k)$ has degree
+    exactly $n$, with leading coefficient $binom(n, k) (-1)^(n-k)$.
+  + *Moment identities*:
+    $
+      sum_(k=0)^n (k/n - x) b_(n,k)(x) = 0, quad
+      sum_(k=0)^n (k/n - x)^2 b_(n,k)(x)
+      = (x (1 - x))/n <= 1/(4 n).
+    $
+] <prop:bernstein-properties>
+
+#proof[
+  Non-negativity is clear on $[0, 1]$, and the partition of unity is
+  the binomial theorem at $u = x$, $v = 1 - x$. At $x = 0$ only
+  $b_(n,0)(0) = 1$ survives and at $x = 1$ only $b_(n,n)(1) = 1$,
+  which gives the endpoint values; the degree and the leading
+  coefficient are read off from the definition.
+
+  Differentiating the binomial theorem
+  $sum_(k=0)^n binom(n, k) u^k v^(n-k) = (u + v)^n$ once and twice
+  with respect to $u$, multiplying by $u\/n$ and $u^2\/n^2$
+  respectively, and setting $u = x$, $v = 1 - x$ gives
+  $
+    sum_(k=0)^n k b_(n,k)(x) = n x, quad
+    sum_(k=0)^n k (k - 1) b_(n,k)(x) = n (n - 1) x^2.
+  $
+  Expanding the second moment with these two identities,
+  $
+    sum_(k=0)^n ((k/n)^2 - 2 x k/n + x^2) b_(n,k)(x)
+    = ((n - 1) x^2 + x)/n - x^2 = (x (1 - x))/n,
+  $
+  and $x (1 - x) <= 1\/4$ on $[0, 1]$.
+]
+
+#proposition(name: "Monomials in the Bernstein Basis")[
+  For $0 <= k <= n$,
+  $
+    x^k = sum_(j=k)^n (binom(j, k)\/binom(n, k)) b_(n,j)(x).
+  $
+] <prop:bernstein-monomial>
+
+#proof[
+  Divide the identity by $(1 - x)^n$ and substitute
+  $x = t\/(1 + t)$, so that $1 - x = 1\/(1 + t)$ and
+  $b_(n,j)(x) = binom(n, j) t^j (1 + t)^(-n)$. The identity becomes
+  $
+    t^k (1 + t)^(n - k)
+    = sum_(j=k)^n binom(n, j) (binom(j, k)\/binom(n, k)) t^j,
+  $
+  and the coefficient of $t^j$ on the left is $binom(n - k, j - k)$.
+  The comparison is closed by
+  $binom(n - k, j - k)\/binom(n, j) = binom(j, k)\/binom(n, k)$ —
+  both sides equal $j! (n - k)! \/ (n! (j - k)!)$ — and the
+  substitution is legitimate because both sides are polynomials in $x$
+  of degree $<= n$ and $x = t\/(1 + t)$ is invertible.
+]
+
+The formula exhibits $1, x, dots, x^n$ as combinations of
+$b_(n,0), dots, b_(n,n)$, so the Bernstein family spans the polynomials
+of degree $<= n$; as it has $n + 1$ members, it is a basis.
+
+#proposition(name: "Degree Elevation")[
+  For $0 <= k <= n$,
+  $
+    b_(n,k)(x) = (1 - k/(n + 1)) b_(n+1,k)(x)
+      + ((k + 1)/(n + 1)) b_(n+1,k+1)(x).
+  $
+] <prop:bernstein-degree-elevation>
+
+#proof[
+  Both terms on the right have the common factor
+  $x^k (1 - x)^(n-k)$: indeed
+  $binom(n + 1, k)(n + 1 - k)\/(n + 1) = binom(n, k)$ and
+  $binom(n + 1, k + 1)(k + 1)\/(n + 1) = binom(n, k)$, so the right
+  side equals
+  $binom(n, k) x^k (1 - x)^(n-k) [(1 - x) + x] = b_(n,k)(x)$.
+]
+
+The degree-elevation formula is the algebraic form of a geometric fact:
+a Bernstein polynomial of degree $n$ is also one of degree $n + 1$, with
+new coordinates obtained by a single linear step.
 
 #note[
-  Uniqueness is what makes interpolation useful in proofs: to verify
-  an identity between polynomials of degree $<= n$ it suffices to
-  check $n + 1$ values. The same principle ran under the polynomial
-  counting arguments of Chapters 5 and 6, where two degree-$<= (p -
-    1)\/2$ polynomials over $bb(Z)_p$ agreed on enough classes to be
-  identical.
+  Two consequences of positivity deserve names. First, $B_n f$ lies
+  between the minimum and the maximum of the sampled values $f(k/n)$:
+  the Bernstein operator is *shape preserving*, which the monomial
+  basis is not. Second, the basis is *totally positive*: every minor of
+  the matrix $(b_(n,k)(x_i))$ with $0 <= x_1 < dots < x_m <= 1$ is
+  non-negative, so the number of sign changes of a coefficient sequence
+  bounds the number of zeros of the polynomial in $(0, 1)$. These are
+  the properties behind Bézier curves, used in computer-aided geometric
+  design and in the curve-fitting chapter of *Analyse Numérique*.
 ]
 
-This chapter closes the arithmetic study of $P[x]$ on its most
-concrete note: integer-valued polynomials are exactly the integer
-combinations of binomial polynomials, and data points pin down
-polynomials as uniquely as primes pin down integers. The final
-chapter steps into several variables, where symmetry itself becomes
-the object of study.
+A comparison of the three bases closes the chapter:
 
-= Symmetric Polynomials and Inequalities // 对称多项式与对称不等式
+#tex-table(
+  ([Basis], [Adapted to], [Characteristic property]),
+  ([monomial $x^k$], [differentiation], [coordinates are Taylor coefficients]),
+  ([binomial $binom(x, k)$], [the lattice $bb(Z)$], [integer coordinates iff integer values]),
+  ([Bernstein $b_(n,k)$], [the interval $[0, 1]$], [non-negative, partition of unity, shape preserving]),
+)
+
+This chapter closes the arithmetic study of $P[x]$ on its most
+concrete note: a polynomial is integer-valued exactly when its
+coordinates in the binomial basis are integers, and the finite
+differences are those coordinates. The final chapter steps into
+several variables, where symmetry itself becomes the object of study.
+
+= Multivariate Polynomials and Symmetric Functions // 多元多项式与对称函数
 
 The last chapter of the notebook changes perspective one final time:
 several variables at once, and expressions invariant under every
-permutation of them. The *elementary symmetric polynomials* are the
-connecting thread — they are the quantities that
-#link(<thm:vieta>)[Vièta's formulas] read off the coefficients — and
-Newton's
-identities relate them to plain power sums. The second half applies
-this language to the classical symmetric inequalities of the
-competition tradition (power means, Muirhead, Schur, Nesbitt); the
-Muirhead material follows the exposition of Chen and Zhang
-(*Muirhead 不等式*, 数学传播 38(2), 2019).
+permutation of them. Two layers are needed. The first is the
+combinatorial layer of multivariate polynomials: monomials, total
+degree, and the order that picks out a leading term. The second is the
+symmetric layer built on it: the *elementary symmetric polynomials* are
+the quantities that #link(<thm:vieta>)[Vièta's formulas] read off the
+coefficients, and Newton's identities relate them to plain power sums.
+The second half applies this language to the classical symmetric
+inequalities of the competition tradition (power means, Muirhead,
+Schur, Nesbitt); the Muirhead material follows the exposition of Chen
+and Zhang (*Muirhead 不等式*, 数学传播 38(2), 2019).
 
-== Symmetric Polynomials // 对称多项式
+== Multivariate Polynomials and Monomial Orders // 多元多项式与单项式序
+
+A polynomial in several variables is a finite sum of monomials. The
+ring-theoretic construction — the iteration
+$P[x_1, dots, x_n] = (P[x_1, dots, x_(n-1)])[x_n]$, the universal
+property, and the Hilbert basis theorem — belongs to *Algèbre
+Abstraite*. Here only the combinatorial skeleton is needed: the
+monomials, their degrees, an order on them, and the action of the
+symmetric group.
+
+#definition(name: "Multivariate Polynomials and Total Degree")[
+  Let $n >= 1$. A *monomial* in $x_1, dots, x_n$ is
+  $
+    x^alpha = x_1^(alpha_1) x_2^(alpha_2) dots.c x_n^(alpha_n),
+    quad alpha = (alpha_1, dots, alpha_n) in bb(N)^n,
+  $
+  and its *total degree* is $abs(alpha) = alpha_1 + dots.c + alpha_n$.
+  A polynomial $f in P[x_1, dots, x_n]$ is a finite sum
+  $sum_alpha a_alpha x^alpha$; its *total degree* is the largest
+  $abs(alpha)$ with $a_alpha != 0$, and its *homogeneous component of
+  degree $k$* is $f_k = sum_(abs(alpha) = k) a_alpha x^alpha$, so that
+  $f = sum_k f_k$.
+] <def:multivariate-polynomial>
+
+#note[
+  For $n = 1$ this reduces to #link(<def:polynomial>)[the univariate
+  definition], and $abs(alpha)$ is the ordinary degree. The
+  decomposition into homogeneous components is the multivariate form of
+  collecting powers of $x$; it is what keeps the degree rule
+  $"deg"(f g) = "deg"(f) + "deg"(g)$ of
+  #link(<prop:degree-rules>)[the univariate theory] intact.
+]
+
+To speak of a leading term one needs an order on monomials.
+
+#definition(name: "Lexicographic Order")[
+  For $alpha, beta in bb(N)^n$ write $alpha >_"lex" beta$ if, at the
+  first index $i$ with $alpha_i != beta_i$, one has
+  $alpha_i > beta_i$. The *leading monomial* of a nonzero $f$ is the
+  largest $x^alpha$ in this order with $a_alpha != 0$.
+] <def:monomial-order>
+
+#property(name: "Lexicographic Order is a Well-Order")[
+  The relation $>_"lex"$ is a total order on $bb(N)^n$, compatible with
+  addition ($alpha > beta$ implies $alpha + gamma > beta + gamma$),
+  and every nonempty subset of $bb(N)^n$ has a least element. In
+  particular there is no infinite strictly decreasing sequence.
+] <prop:lex-well-order>
+
+#proof[
+  Totality and compatibility are immediate from the definition, since
+  the first differing index is unchanged by adding $gamma$. For the
+  well-order, let $S$ be nonempty and let $m$ be the least value
+  assumed by the first coordinate on $S$ (well-ordering of $bb(N)$);
+  among the elements of $S$ with first coordinate $m$, apply the same
+  argument to the second coordinate, and continue through the $n$
+  coordinates. The process selects a least element after finitely many
+  steps.
+]
+
+The symmetric group acts on polynomials by relabelling the variables.
+
+#definition(name: "Permutation Action on Multivariate Polynomials")[
+  The group $S_n$ acts on $P[x_1, dots, x_n]$ by
+  $
+    (sigma dot f)(x_1, dots, x_n)
+    = f(x_(sigma(1)), dots, x_(sigma(n))).
+  $
+  The *orbit* of a monomial $x^alpha$ under this action is the set of
+  monomials obtained by permuting the exponents $alpha_1, dots,
+  alpha_n$.
+] <def:permutation-action>
+
+Two summation conventions collect these orbits and their cyclic
+analogues; both are used in the applications below, for functions that
+need not be polynomials.
+
+#definition(name: "Cyclic and Symmetric Sums")[
+  For a function $f$ of $n$ variables:
+  - the *cyclic sum* cycles the variables and adds,
+    $
+      sum_"cyc" f(x_1, dots, x_n) = sum_(i=1)^n
+      f(x_i, x_(i+1), dots, x_(i+n-1)),
+    $
+    with indices read modulo $n$; for example
+    $sum_"cyc" a\/(b + c) = a\/(b + c) + b\/(c + a) + c\/(a + b)$;
+  - the *symmetric sum* adds over all permutations,
+    $
+      sum_"sym" f(x_1, dots, x_n) = sum_(sigma in S_n)
+      f(x_(sigma(1)), dots, x_(sigma(n)));
+    $
+    for example $sum_"sym" a^3 = 2(a^3 + b^3 + c^3)$ (each cube arises
+    from two permutations) and
+    $sum_"sym" a^2 b = a^2 b + a^2 c + b^2 a + b^2 c + c^2 a + c^2 b$.
+] <def:symmetric-sums>
+
+== Symmetric Polynomials and the Fundamental Theorem // 对称多项式与基本定理
 
 #definition(name: "Symmetric Polynomial")[
-  A polynomial $f(x_1, x_2, dots, x_n)$ in $n$ variables over $P$ is
-  *symmetric* if it is unchanged by every permutation of its
-  variables: for every permutation $sigma$ of ${1, dots, n}$,
+  A polynomial $f in P[x_1, dots, x_n]$ is *symmetric* if the action
+  of #link(<def:permutation-action>)[$S_n$] fixes it:
   $
     f(x_(sigma(1)), x_(sigma(2)), dots, x_(sigma(n)))
-    = f(x_1, x_2, dots, x_n).
+    = f(x_1, x_2, dots, x_n)
+    quad "for every" quad sigma in S_n.
   $
 ] <def:symmetric-polynomial>
 
@@ -5425,11 +5836,61 @@ Three families of symmetric polynomials recur everywhere.
     $
 ] <def:elementary-symmetric>
 
-A fundamental theorem of the theory — the *fundamental theorem of
-symmetric polynomials* — states that every symmetric polynomial is a
-polynomial in $sigma_1, dots, sigma_n$ alone; its proof and its ring
-formulation belong to Algèbre Abstraite. For us the $sigma_k$ already
-carry arithmetic weight: by #link(<thm:vieta>)[Vièta],
+The elementary symmetric polynomials are the fundamental invariants:
+every symmetric polynomial is a polynomial in them. The proof is a
+descent on the leading monomial, in the order of §14.1.
+
+#theorem(name: "Fundamental Theorem of Symmetric Polynomials")[
+  Let $f in P[x_1, dots, x_n]$ be symmetric. Then there is a unique
+  $g in P[y_1, dots, y_n]$ with
+  $
+    f(x_1, dots, x_n) = g(sigma_1, dots, sigma_n).
+  $
+] <thm:symmetric-fundamental>
+
+#proof(name: "of the theorem")[
+  *Existence.* Induct on the leading monomial $x^alpha$ of $f$ in the
+  #link(<def:monomial-order>)[lexicographic order]. Symmetry forces
+  $alpha$ to be non-increasing: $alpha_1 >= alpha_2 >= dots >=
+  alpha_n$, since a permutation of the exponents would otherwise
+  produce a lexicographically larger monomial of $f$. Put
+  $d_i = alpha_i - alpha_(i+1)$ for $i = 1, dots, n - 1$, put
+  $d_n = alpha_n$, and let $c$ be the coefficient of $x^alpha$. The
+  leading monomial of $sigma_1^(d_1) sigma_2^(d_2) dots.c
+  sigma_n^(d_n)$ is $x^alpha$: the leading monomial of $sigma_k$ is
+  $x_1 dots.c x_k$, and multiplying these out gives exponent
+  $d_j + dots.c + d_n = alpha_j$ in the $j$-th variable. Hence
+  $f - c sigma_1^(d_1) dots.c sigma_n^(d_n)$ is symmetric with a
+  strictly smaller leading monomial, and the well-ordering of
+  #link(<prop:lex-well-order>)[the monomial order] makes the induction
+  terminate.
+
+  *Uniqueness.* The monomials $sigma^beta = sigma_1^(beta_1) dots.c
+  sigma_n^(beta_n)$, $beta in bb(N)^n$, have distinct leading
+  monomials, because the exponent vector $alpha$ of the leading
+  monomial is recovered from $beta$ by
+  $alpha_j = beta_j + beta_(j+1) + dots.c + beta_n$. A nontrivial
+  linear combination of the $sigma^beta$ therefore has a
+  lexicographically largest term that cannot cancel, so it is nonzero.
+]
+
+#corollary(name: "The Ring of Symmetric Polynomials")[
+  The symmetric polynomials form the subring $P[sigma_1, dots,
+  sigma_n]$ of $P[x_1, dots, x_n]$, and the representation of a
+  symmetric polynomial as a polynomial in the $sigma_k$ is unique.
+] <cor:symmetric-ring>
+
+#example(name: "A Symmetric Polynomial in the Elementary Ones")[
+  For $n = 3$, the symmetric sum $sum_"sym" a^2 b$ equals
+  $sigma_1 sigma_2 - 3 sigma_3$: indeed
+  $sigma_1 sigma_2 = sum_"sym" a^2 b + 3 a b c$ and
+  $sigma_3 = a b c$. By #link(<thm:symmetric-fundamental>)[the
+  theorem], no other expression in $sigma_1, sigma_2, sigma_3$ gives
+  the same polynomial.
+] <ex:symmetric-fundamental-example>
+
+The $sigma_k$ also carry arithmetic weight: by
+#link(<thm:vieta>)[Vièta],
 $
   sigma_(k)(r_1, dots, r_n) = (-1)^k a_(n-k)\/a_n,
 $
@@ -5467,25 +5928,8 @@ normalized coefficients.
   $(-1)^(k-1)$ yields the claim.
 ]
 
-Two summation conventions used below, for $f$ a function of
-variables (not necessarily a polynomial):
-- *cyclic sum*: cycle the variables and add,
-  $
-    sum_"cyc" f(x_1, dots, x_n) = sum_(i=1)^n
-    f(x_i, x_(i+1), dots, x_(i+n-1)),
-  $
-  with indices read modulo $n$; for example
-  $sum_"cyc" a\/(b + c) = a\/(b + c) + b\/(c + a) + c\/(a + b)$ — the
-  left side of Nesbitt's inequality, proved in *Classical
-  Applications*;
-- *symmetric sum*: sum over *all* permutations $sigma in S_n$,
-  $
-    sum_"sym" f(x_1, dots, x_n) = sum_(sigma in S_n)
-    f(x_(sigma(1)), dots, x_(sigma(n)));
-  $
-  for example $sum_"sym" a^3 = 2(a^3 + b^3 + c^3)$ (each cube arises
-  from two permutations) and
-  $sum_"sym" a^2 b = a^2 b + a^2 c + b^2 a + b^2 c + c^2 a + c^2 b$.
+The conventions of #link(<def:symmetric-sums>)[Cyclic and Symmetric
+Sums] are used freely from here on.
 
 #example(name: "Reading Newton's Identities at $n = 3$")[
   With $k = 2$: $2 sigma_2 = sigma_1 p_1 - p_2$, i.e.
@@ -5622,6 +6066,16 @@ it has two transparent reformulations.
   shadow of Birkhoff's theorem on doubly stochastic matrices. The
   proofs (Hardy–Littlewood–Pólya and Rado) are omitted in this
   applied chapter; see again the Chen–Zhang exposition.
+
+  The doubly stochastic formulation and the three equivalences really
+  belong to matrix and convex-analysis territory. The *Combinatoire*
+  notebook reaches the Birkhoff polytope through Hall's theorem and
+  permanents (*Systems of Distinct Representatives*), and the convex
+  geometry of majorization belongs with the convex hulls of
+  *Optimisation Convexe*; both treatments are still unwritten. The
+  material is therefore kept here, in the only chapter that uses it,
+  and only the implication $alpha op("prec") beta => alpha in H(beta)$
+  is consumed below (in the proof of Nesbitt's inequality).
 ]
 
 In practice one checks majorization on the sorted vectors and then
