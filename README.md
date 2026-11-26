@@ -40,7 +40,7 @@ This repository collects mathematics notes organized by subject. The list below 
 ## 5.Statistique | 统计学
 - [Probabilités | 概率论与数理统计](https://365.kdocs.cn/l/chKDYqAWsdYS)
 - [~~Processus Stochastique | 随机过程~~](https://365.kdocs.cn/l/ckzEsdQz469B)
-- [Théorie de l'Information | 信息论](https://365.kdocs.cn/l/ckzEsdQz469B)
+- [Théorie de l'Information | 信息论](https://365.kdocs.cn/l/ceSz2WcSHK1p)
 
 
 ## 6.Mathématiques appliquées | 应用数学
