@@ -1,15 +1,15 @@
 ---
 name: 构建与验证命令
-description: 编译、插图生成、静态校验、PDF 分发的权威命令；改脚本或换环境时读
+description: 编译、插图生成、静态校验、PDF 归类的权威命令；改脚本或换环境时读
 ---
 
 # 构建与验证
 
-所有命令在仓库根目录执行。依赖：`typst`、`uv`（Python 依赖见根 `pyproject.toml`）；PDF 分发另需 `ossutil`（`ossutil config` 配置完成）。
+所有命令在仓库根目录执行。依赖：`typst`、`uv`（Python 依赖见根 `pyproject.toml`）。
 
 ## 一键任务
 
-`scripts/no-pwsh.ps1` 聚合了下列动作：无参出菜单，或 `-Task build|images|check|migrate|upload|publish|status`。日志写 `logs/`（已 gitignore）。
+`scripts/no-pwsh.ps1` 聚合了下列动作：无参出菜单，或 `-Task build|images|check|migrate|publish|status`。日志写 `logs/`（已 gitignore）。
 
 ## 编译
 
@@ -40,11 +40,10 @@ uv run scripts/check/check-typst-attachments.py --fix
 
 检查模式有命中退出码为 1，无命中为 0；`--fix` 只做可机械推导的替换，之后仍需用检查模式复核。
 
-## PDF 分发
+## PDF 归类
 
 ```powershell
 .\scripts\pdf\migrate-pdfs.ps1 -ListOnly     # 本地按 <学科>/<笔记>.pdf 归类
-.\scripts\pdf\upload-pdfs.ps1 -Yes           # 上传 oss://math-repo/math/main/
 ```
 
-PDF 与插图都不入 Git（见根 `.gitignore`），图片可随时由脚本重建。
+PDF 与插图都不入 Git（见根 `.gitignore`），图片可随时由脚本重建。对外发布走 WPS 文件夹分享，链接登记在站点数学索引（`math_notes` 表）。

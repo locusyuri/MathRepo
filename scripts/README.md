@@ -10,7 +10,7 @@
 | `images/` | 插图渲染 | 新增/修改绘图脚本后重建 `img/` |
 | `check/` | 静态校验 | 提交前检查 Typst 语法、交叉引用 |
 | `glossary/` | 全仓术语索引 | 从各笔记 Glossary 生成 README 的 Term Index |
-| `pdf/` | 产物分发 | 编译完 PDF 后本地归类或上传 OSS |
+| `pdf/` | 产物分发 | 编译完 PDF 后本地归类 |
 
 ## no-pwsh.ps1（任务聚合）
 
@@ -22,10 +22,10 @@
 .\scripts\no-pwsh.ps1 -Task build -Note "1.Analyse/Analyse Complexe"
 .\scripts\no-pwsh.ps1 -Task images -Overwrite
 .\scripts\no-pwsh.ps1 -Task check -Fix
-.\scripts\no-pwsh.ps1 -Task publish -Yes                 # 编译 → 归类 → 上传
+.\scripts\no-pwsh.ps1 -Task publish -Yes                 # 编译 → 归类
 ```
 
-任务：`build` / `images` / `check` / `migrate` / `upload` / `publish` / `status`。扩展方式是写一个 `Invoke-Xxx` 函数并在 `$Tasks` 里加一行。
+任务：`build` / `images` / `check` / `migrate` / `publish` / `status`。扩展方式是写一个 `Invoke-Xxx` 函数并在 `$Tasks` 里加一行。
 
 ## images/
 
@@ -75,14 +75,12 @@ uv run scripts/glossary/collect-glossaries.py --types def,thm,prop,lem,cor,ex --
 | 脚本 | 用途 |
 |---|---|
 | `migrate-pdfs.ps1` | 把各笔记 `initial.pdf` 按 `<学科>/<笔记>.pdf` 复制到本地目标目录（size + MD5 比对） |
-| `upload-pdfs.ps1` | 上传到 `oss://math-repo/math/main/`，仅传差异文件 |
 
 ```powershell
 .\scripts\pdf\migrate-pdfs.ps1 -ListOnly
-.\scripts\pdf\upload-pdfs.ps1 -Yes
 ```
 
-前置：PDF 分发需要 `ossutil` 已安装并 `ossutil config` 配置完成。
+PDF 对外发布走 WPS 文件夹分享，链接登记在站点数学索引（`math_notes` 表），仓库内不再保留 OSS 上传脚本。
 
 ## 不归本目录管
 

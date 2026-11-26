@@ -13,8 +13,7 @@
       images   重新生成插图（默认只补缺失，-Overwrite 全量覆盖）
       check    静态校验 Typst 附件（只报告，-Fix 自动修可机械项）
       migrate  PDF 按 <学科>/<笔记>.pdf 复制到本地目标目录
-      upload   PDF 上传到 oss://math-repo/math/main/
-      publish  编译 → 归类 → 上传（一键发布）
+      publish  编译 → 归类（一键出全套 PDF）
       status   查看笔记数、已编译数与 git 状态
 
     为什么合并成一个脚本而不是散着：仓库根、笔记枚举、日志目录、退出码语义它们全共用，
@@ -33,7 +32,7 @@
     check 任务写回可机械推导的替换（paren / brace）；macro 类仍只报告，需人工改写。
 
 .PARAMETER Yes
-    跳过二次确认，供脚本 / CI 调用。⛔ 对外动作（OSS 上传）仍会照常执行。
+    跳过二次确认，供脚本 / CI 调用。
 
 .EXAMPLE
     .\scripts\no-pwsh.ps1
@@ -53,7 +52,7 @@
 
 [CmdletBinding()]
 param(
-    [ValidateSet('build', 'images', 'check', 'migrate', 'upload', 'publish', 'status')]
+    [ValidateSet('build', 'images', 'check', 'migrate', 'publish', 'status')]
     [Alias('t')]
     [string]$Task,
 
@@ -83,8 +82,7 @@ $Tasks = [ordered]@{
     images  = @{ Title = '生成插图（默认只补缺失）';           Action = { Invoke-Images } }
     check   = @{ Title = '静态校验（只报告）';                 Action = { Invoke-Check } }
     migrate = @{ Title = 'PDF 本地归类';                       Action = { Invoke-Migrate } }
-    upload  = @{ Title = 'PDF 上传 OSS';                       Action = { Invoke-Upload } }
-    publish = @{ Title = '发布（编译 → 归类 → 上传）';         Action = { Invoke-Publish } }
+    publish = @{ Title = '出全套 PDF（编译 → 归类）';          Action = { Invoke-Publish } }
     status  = @{ Title = '查看仓库状态';                       Action = { Invoke-Status } }
 }
 
@@ -245,28 +243,19 @@ function Invoke-Migrate {
     if ($LASTEXITCODE -ne 0) { throw "PDF 归类失败（退出码 $LASTEXITCODE）" }
 }
 
-function Invoke-Upload {
-    $ps1 = Join-Path $RepoRoot 'scripts/pdf/upload-pdfs.ps1'
-    Write-Section '任务：PDF 上传 OSS'
-    if ($Yes -or $script:ChildAuto) { & $ps1 -Yes } else { & $ps1 }
-    if ($LASTEXITCODE -ne 0) { throw "PDF 上传失败（退出码 $LASTEXITCODE）" }
-    Write-Ok '上传完成'
-}
-
 function Invoke-Publish {
-    Write-Section '任务：发布（编译 → 归类 → 上传）'
-    if (-not (Confirm-Action '确认编译全部笔记并把 PDF 上传到 OSS？')) { Write-Note '已取消'; return }
+    Write-Section '任务：出全套 PDF（编译 → 归类）'
+    if (-not (Confirm-Action '确认编译全部笔记并归类 PDF？')) { Write-Note '已取消'; return }
 
     $script:ChildAuto = $true
     try {
         Invoke-Build
         Invoke-Migrate
-        Invoke-Upload
     }
     finally {
         $script:ChildAuto = $false
     }
-    Write-Ok '发布完成'
+    Write-Ok '完成'
 }
 
 function Get-ImageSummary {
