@@ -17,6 +17,7 @@
 
 # Build artifacts
 *.pdf
+output/
 
 # AI
 .qoder
