@@ -1115,26 +1115,41 @@ portrait.
 
 == Mathematical Expectation // 数学期望
 
-#definition(name: "Expectation of a Discrete Random Variable")[
-  Let $X$ be discrete with PMF $p(x)$. If $sum_x abs(x) p(x) < infinity$,
-  the *expectation* (or *mean*) of $X$ is
-  $
-    bb(E)[X] = sum_x x p(x).
-  $
-  If the series is not absolutely convergent, the expectation does not
-  exist.
-] <def:expectation-discrete>
+Expectation is the average of a random variable weighted by its law.
+The concept is stated once in full generality — as an integral against the underlying probability — and then specialised to the two elementary regimes in which this book computes, exactly as #link(<def:density>)[the general density definition] was followed by #link(<def:pmf-pdf>)[the PMF and PDF].
 
-#definition(name: "Expectation of a Continuous Random Variable")[
-  Let $X$ be continuous with PDF $f(x)$. If $integral_(-infinity)^infinity
-  abs(x) f(x) dif x < infinity$, the *expectation* of $X$ is
+#definition(name: "Expectation")[
+  Let $X$ be a random variable on $(Omega, cal(F), P)$.
+  If $integral_Omega abs(X) dif P < infinity$, the *expectation* (or *mean*, or *expected value*) of $X$ is
+  $
+    bb(E)[X] = integral_Omega X dif P,
+  $
+  the Lebesgue integral of $X$ against $P$.
+] <def:expectation>
+
+Read against the distribution measure, the same number is
+$
+  bb(E)[X] = integral_RR x dif mu_(X)(x),
+$
+so the expectation depends on the law of $X$ alone, not on the probability space on which $X$ is realised — the same invariance that #link(<def:distribution-measure>)[the distribution measure] already exhibited.
+The integral is the Lebesgue integral of the *Analyse Réelle* note; here only the two elementary evaluations below are used.
+
+The change of reference measure that produced the PMF and the PDF turns this single integral into the two formulas below.
+
+#definition(name: "Expectation: Elementary Forms")[
+  If $X$ is discrete with PMF $p(x)$ and $sum_x abs(x) p(x) < infinity$, then
+  $
+    bb(E)[X] = sum_x x p(x);
+  $
+  if $X$ is continuous with PDF $f(x)$ and $integral_(-infinity)^infinity abs(x) f(x) dif x < infinity$, then
   $
     bb(E)[X] = integral_(-infinity)^infinity x f(x) dif x.
   $
-] <def:expectation-continuous>
+] <def:expectation-elementary>
 
-The absolute-convergence requirement is essential: conditionally convergent
-series depend on summation order, which has no probabilistic meaning.
+In both regimes the general integral collapses to a familiar object: against the counting measure it is the sum, and against Lebesgue measure it is the ordinary improper integral of the continuous regime.
+
+The absolute-convergence requirement is essential: a conditionally convergent series depends on its summation order, which has no probabilistic meaning, and $integral_Omega abs(X) dif P < infinity$ is precisely the hypothesis under which the general integral is defined.
 
 #property(name: "Linearity of Expectation")[
   For any random variables $X, Y$ with finite expectations and constants
@@ -1155,6 +1170,8 @@ Linearity holds *without* any independence assumption — this is what makes exp
   — the expectation of $g(X)$ is computed directly from the distribution of
   $X$.
 ] <thm:lotus>
+
+The multivariate counterpart, which computes $bb(E)[g(X, Y)]$ from the joint law of $(X, Y)$, is #link(<thm:lotus-two>)[LOTUS for two variables] in the multivariate chapter.
 
 #property(name: "Markov's Inequality")[
   If $X >= 0$ a.s. and $a > 0$, then
@@ -1220,6 +1237,14 @@ bb(E)[X^2] - 2 mu bb(E)[X] + mu^2 = bb(E)[X^2] - mu^2$.
 
 Standardization recentres at $0$ and rescales the spread to $1$: by #link(<prop:variance-properties>)[the shift and scale rules of variance], $bb(E)[Z] = 0$ and $"Var"(Z) = 1$, while the shape of the distribution is untouched.
 It is the change of unit that makes variables with different locations and scales comparable — the common currency behind $z$-scores, and the reason one table of the standard normal CDF serves every normal variable (see #link(<thm:normal-standardization>)[standardization of the normal]).
+
+Powers of the standardized variable rescale in the same way: for every $n >= 1$ with $bb(E)[abs(X)^n] < infinity$,
+$
+  bb(E)[Z^n] = (bb(E)[(X - mu)^n]) / sigma^n = (mu_n') / sigma^n,
+$
+by #link(<prop:expectation-linearity>)[linearity] applied to $Z^n = (X - mu)^n \/ sigma^n$.
+The list $bb(E)[Z], bb(E)[Z^2], bb(E)[Z^3], dots$ is therefore the list of #link(<def:standardized-moments>)[standardized moments]: its first two entries are $0$ and $1$ for every variable with finite variance, and the later entries carry the shape alone — the third is #link(<def:skewness>)[skewness], and the fourth exceeds #link(<def:kurtosis>)[kurtosis] by $3$.
+For a symmetric law, $X - mu$ and $-(X - mu)$ have the same distribution, so every odd standardized moment vanishes.
 
 #theorem(name: "Chebyshev's Inequality")[
   If $"Var"(X) < infinity$, then for any $k > 0$,
@@ -1311,13 +1336,18 @@ direct corollary.
   supplement: [Fig.],
 ) <fig:skewness-kurtosis>
 
-The mean, variance, skewness, and kurtosis are the first four standardised
-moments — together they sketch the shape of a distribution: location,
-scale, asymmetry, and tail weight. Higher moments and the moment
-generating function, which encodes *all* moments in a single function, are
-the subject of #link(<def:mgf>)[the generating functions chapter]. First,
-however, the next chapter applies the tools just built to give the standard
-families their complete portraits — mean and variance included.
+#definition(name: "Standardized Moments")[
+  For $n >= 1$ with $bb(E)[abs(X)^n] < infinity$ and $sigma > 0$, the *$n$-th standardized moment* of $X$ is
+  $
+    nu_n = bb(E)[((X - mu) / sigma)^n] = (mu_n') / (sigma^n).
+  $
+] <def:standardized-moments>
+
+Dividing by the matching power of $sigma$ strips every moment of its unit: $nu_n$ is the $n$-th moment of #link(<def:standardization>)[the standardized variable] $Z$, as computed above, and therefore does not change when $X$ is shifted or rescaled.
+
+The mean, variance, skewness, and kurtosis are the first four #link(<def:standardized-moments>)[standardized moments] — location, scale, asymmetry, and tail weight — and together they sketch the shape of a distribution.
+Higher moments and the moment generating function, which encodes *all* moments in a single function, are the subject of #link(<def:mgf>)[the generating functions chapter].
+First, however, the next chapter applies the tools just built to give the standard families their complete portraits — mean and variance included.
 
 
 
@@ -2368,6 +2398,34 @@ As in #link(<def:pmf-pdf>)[the univariate elementary forms], the probability par
   Both sides are finite measures on $cal(B)(RR^n)$ that agree on the rectangles, a $pi$-system generating the Borel $sigma$-algebra, so the monotone class theorem extends the identity to every Borel region $D$.
 ]
 
+Expectations of functions of a vector are computed exactly as in one dimension: the joint law already averages over the pair, so the law of $g(X, Y)$ never has to be derived.
+
+#theorem(name: "LOTUS for Two Variables")[
+  Let $(X, Y)$ have joint PMF $p(x, y)$ (or joint PDF $f(x, y)$), and let $g: RR^2 -> RR$ be measurable with $bb(E)[abs(g(X, Y))] < infinity$.
+  Then
+  $
+    bb(E)[g(X, Y)] = sum_x sum_y g(x, y) p(x, y)
+    quad ("or" quad
+    integral_(-infinity)^infinity integral_(-infinity)^infinity g(x, y) f(x, y) dif x dif y).
+  $
+] <thm:lotus-two>
+
+#proof[
+  (Discrete case.) The pair takes countably many values, so $g(X, Y)$ does too, and grouping the joint PMF by the level sets of $g$,
+  $
+    bb(E)[g(X, Y)] = sum_z z P(g(X, Y) = z) = sum_z z sum_((x, y): g(x, y) = z) p(x, y) = sum_(x, y) g(x, y) p(x, y),
+  $
+  absolute convergence justifying the rearrangement.
+  (Continuous case.) For $g$ the indicator of a rectangle the identity is precisely the definition of the joint PDF; linearity extends it to simple functions, and monotone approximation extends it to every measurable $g$, the same limiting argument that carries #link(<prop:joint-pdf-properties>)[the joint PDF] from rectangles to Borel regions.
+]
+
+Two special cases are used constantly, and they differ in their hypotheses.
+
+- *(Sums, no independence.)* With $g(x, y) = x + y$ the double integral splits into two one-dimensional ones, which is #link(<prop:expectation-linearity>)[linearity] read from the joint density.
+- *(Products, independence needed.)* With $g(x, y) = x y$ the double integral factorises only when the joint density does, which is #link(<prop:product-expectation>)[the product rule for independent variables].
+
+The same formula governs a function of $n$ variables, with an $n$-fold sum or integral set over the joint law of the vector.
+
 === Common Joint Distributions // 常见联合分布
 
 
@@ -2607,7 +2665,7 @@ distribution of the other.
   The notation $bb(E)[Y|X]$, $bb(E)[Y|X=x]$ and $bb(E)[Y]$ look alike but live on different levels, and keeping the levels apart prevents most errors.
 
   - *A random variable is a function.* By #link(<def:random-variable>)[definition], $Y$ is a measurable map $Omega -> RR$; the symbol $Y$ abbreviates $omega |-> Y(omega)$, never a number.
-  - *An expectation is a number.* $bb(E)[Y]$ is one real number, obtained by averaging $Y$ against its law, as in #link(<def:expectation-discrete>)[the discrete] and #link(<def:expectation-continuous>)[continuous definitions].
+  - *An expectation is a number.* $bb(E)[Y]$ is one real number, obtained by averaging $Y$ against its law, as in #link(<def:expectation-elementary>)[the elementary forms] of the expectation.
   - *$bb(E)[Y|X=x]$ is also a number.* Fix $x$, replace the marginal law of $Y$ by the conditional law given $X = x$, and average exactly as before: the computation is that of an ordinary expectation, only the law has changed. The result depends on $x$ through the parameter of that law, nothing more.
   - *$bb(E)[Y|X]$ is a random variable.* Plugging the random point $X(omega)$ into the previous number gives the map $omega |-> bb(E)[Y|X=X(omega)]$, which is measurable with respect to the $sigma$-field generated by $X$, $sigma(X) = {X^(-1)(B) : B in cal(B)(RR)}$; equivalently $bb(E)[Y|X] = g(X)$ for the function $g(x) = bb(E)[Y|X=x]$ computed above.
 
@@ -2655,9 +2713,11 @@ distribution of the other.
 == Distributions of Functions of Several Random Variables // 多维随机变量函数的分布
 
 Given the joint distribution of several random variables, the distribution of a function of them — a sum, a product, a maximum — is the natural next question.
-The methods extend the univariate tools of #link(<thm:monotone-transform>)[the monotone transform] to higher dimensions.
+The methods extend the univariate tools of #link(<thm:monotone-transform>)[the monotone transform] to higher dimensions, and the section runs from the crudest device to the sharpest: enumeration for discrete vectors, product formulas for extremes, convolution for the arithmetic operations on independent variables, and a change of variables for a general differentiable map.
 
-For a *discrete* vector, the method is direct enumeration.
+=== The Discrete Case // 离散型
+
+For a *discrete* vector, the method is direct enumeration: list the values of $Z = g(X, Y)$ and add the joint probabilities of the pre-images.
 
 #example[
   Let $(X, Y)$ have joint PMF $p(i, j) = 1\/36$ on ${1, dots, 6}^2$ (two fair
@@ -2668,8 +2728,9 @@ For a *discrete* vector, the method is direct enumeration.
   For instance $P(Z = 7) = 6\/36 = 1\/6$ and $P(Z = 2) = P(Z = 12) = 1\/36$.
 ] <ex:discrete-sum>
 
-For *extreme values* of independent variables, simple product formulas
-apply.
+=== Maxima and Minima // 最值分布
+
+For *extreme values* of independent variables the CDF, not the density, is the right tool: the events "every $X_i <= z$" and "some $X_i <= z$" factorise through independence.
 
 #property(name: "Distributions of Maxima and Minima")[
   Let $X_1, dots, X_n$ be independent with CDFs $F_1, dots, F_n$.
@@ -2693,8 +2754,15 @@ apply.
   complement of "$X_i > z$ for all $i$".
 ]
 
-For *sums* of independent continuous variables, the integral form is the
-*convolution*.
+#example(name: "Largest and smallest of $n$ uniforms")[
+  Let $X_1, dots, X_n$ be i.i.d. $U(0, 1)$, so that $F(z) = z$ for $0 <= z <= 1$.
+  Then $F_(M_n)(z) = z^n$ and $F_(N_n)(z) = 1 - (1 - z)^n$ on the unit interval, with densities $n z^(n-1)$ and $n (1 - z)^(n-1)$.
+  As $n$ grows both laws crowd towards the nearest endpoint of the support, and they are mirror images of each other: $1 - M_n$ has the law of $N_n$.
+] <ex:uniform-extremes>
+
+=== Convolution and Arithmetic Operations // 卷积公式与四则运算
+
+For *sums* of independent continuous variables, the integral form is the *convolution*.
 
 #theorem(name: "Convolution Formula")[
   Let $X$ and $Y$ be independent continuous random variables with densities
@@ -2729,6 +2797,26 @@ For *sums* of independent continuous variables, the integral form is the
   This confirms the Gamma-to-Exponential connection of #link(<def:gamma-dist>)[the Gamma family]: $"Exp"(lambda) = "Ga"(1, lambda)$.
 ] <ex:exp-sum-gamma>
 
+The same conditioning idea yields the density of any arithmetic combination of two independent variables: hold one variable fixed, average over it, and collect the result.
+
+#tex-table(
+  ([Operation], [Density of $Z$]),
+  ([Sum $Z = X + Y$], [$integral_(-infinity)^infinity f_(X)(x) f_(Y)(z - x) dif x$]),
+  ([Difference $Z = X - Y$], [$integral_(-infinity)^infinity f_(X)(x) f_(Y)(x - z) dif x$]),
+  ([Product $Z = X Y$], [$integral_(-infinity)^infinity f_(X)(x) f_(Y)(z \/ x) dot 1 / abs(x) dif x$]),
+  ([Quotient $Z = Y \/ X$], [$integral_(-infinity)^infinity abs(x) f_(X)(x) f_(Y)(x z) dif x$]),
+) <tab:arithmetic-densities>
+
+The sum entry is #link(<thm:convolution>)[the convolution theorem].
+The difference is the same formula applied to $X$ and $-Y$, and the product and quotient entries are #link(<thm:jacobian-transform>)[the change of variables] applied to $(x, y) |-> (x, g(x, y))$, whose Jacobian contributes the factor $1 \/ abs(x)$ for the product and $abs(x)$ for the quotient.
+The product and quotient formulas presuppose $X != 0$ almost surely, so that $z \/ x$ is defined.
+
+Iterating the convolution gives the law of a sum of many independent variables: if $S_n = X_1 + dots + X_n$ has independent continuous summands, then $f_(S_n)$ is the $n$-fold convolution of $f_(X_1), dots, f_(X_n)$, and when the summands are identically distributed this is the $n$-fold convolution power of a single density.
+For discrete variables the convolution becomes a sum over the pre-images, as in #link(<ex:discrete-sum>)[the dice example]:
+$
+  P(X + Y = k) = sum_x p_(X)(x) p_(Y)(k - x).
+$
+
 Additivity is the property that lets the convolution be used once and then forgotten: the law of the sum is read off the parameters.
 
 #definition(name: "Additive Family of Distributions")[
@@ -2745,10 +2833,11 @@ For continuous families additivity is checked with #link(<thm:convolution>)[the 
     $
   - *Normal.* If $X ~ N(mu_1, sigma_1^2)$ and $Y ~ N(mu_2, sigma_2^2)$ are independent, then $X + Y ~ N(mu_1 + mu_2, sigma_1^2 + sigma_2^2)$: completing the square in #link(<thm:convolution>)[the convolution integral] yields this density, while the one-line proof via #link(<ex:normal-sum-mgf>)[moment generating functions] comes in the next chapter.
   - *Gamma, hence chi-squared.* If $X ~ "Ga"(alpha_1, lambda)$ and $Y ~ "Ga"(alpha_2, lambda)$ are independent, then $X + Y ~ "Ga"(alpha_1 + alpha_2, lambda)$, as computed in #link(<prop:chi-squared-moments>)[the chi-squared additivity proof]; with $lambda = 1 / 2$ this gives $chi^2 (n_1) + chi^2 (n_2) ~ chi^2 (n_1 + n_2)$.
-]
+] <ex:additive-families>
 
-For *general transformations* of a continuous random vector, the univariate
-monotone transform generalises to a multidimensional change of variables.
+=== General Transformations // 一般情形：变量变换法
+
+For *general transformations* of a continuous random vector, the univariate monotone transform generalises to a multidimensional change of variables.
 
 #theorem(name: "Multivariate Change of Variables")[
   Let $bold(X) = (X_1, dots, X_n)$ be a continuous random vector with joint
@@ -2775,24 +2864,42 @@ monotone transform generalises to a multidimensional change of variables.
   for every $D$ identifies the integrand.
 ]
 
-This is the $n$-dimensional generalisation of
-#link(<thm:monotone-transform>)[the monotone transform]; the factor
-$abs(h'(y))$ is replaced by $abs(J)$, the absolute Jacobian determinant.
+This is the $n$-dimensional generalisation of #link(<thm:monotone-transform>)[the monotone transform]: the factor $abs(h'(y))$ is replaced by $abs(J)$, the absolute Jacobian determinant.
+In two dimensions it is what supplies the product and quotient entries of #link(<tab:arithmetic-densities>)[the arithmetic table].
 
 == Covariance and Correlation // 协方差与相关系数
 
-Expectation and variance summarise one variable at a time; joint
-distributions invite a summary of how two variables *co-vary*. The mean
-vector and the covariance matrix collect these summaries for random
-vectors.
+Expectation and variance summarise one variable at a time; joint distributions invite a summary of how two variables *co-vary*.
+The section develops that summary in three steps: the covariance and its algebra, the correlation coefficient that normalises it, and the covariance matrix that collects all pairwise covariances of a random vector — the $n$-variable form of the same notion.
+
+=== Covariance // 协方差
 
 #definition(name: "Covariance")[
-  For random variables $X, Y$ with finite second moments, the *covariance*
-  is
+  For random variables $X, Y$ with finite second moments, the *covariance* is
   $
     "Cov"(X, Y) = bb(E)[(X - bb(E)[X])(Y - bb(E)[Y])] = bb(E)[X Y] - bb(E)[X] bb(E)[Y].
   $
 ] <def:covariance>
+
+The second expression is the computational form, obtained by expanding the product and using #link(<prop:expectation-linearity>)[linearity]: the constants $bb(E)[X]$ and $bb(E)[Y]$ factor out of the expectation.
+Covariance is a signed measure of joint variation — positive when the two variables tend to lie on the same side of their means, negative when they lie on opposite sides — and it carries the units of the product $X Y$.
+
+#property(name: "Properties of Covariance")[
+  - (symmetry) $"Cov"(X, Y) = "Cov"(Y, X)$;
+  - (bilinearity) $"Cov"(a X + b, c Y + d) = a c "Cov"(X, Y)$ for constants $a, b, c, d$;
+  - (self-covariance) $"Cov"(X, X) = "Var"(X)$;
+  - (additivity in each argument) $"Cov"(X + Y, Z) = "Cov"(X, Z) + "Cov"(Y, Z)$;
+  - (variance of a sum) $"Var"(X + Y) = "Var"(X) + "Var"(Y) + 2 ("Cov"(X, Y))$.
+] <prop:covariance-properties>
+
+#proof[
+  Each identity expands $bb(E)[(X - bb(E)[X])(Y - bb(E)[Y])]$ and then uses #link(<prop:expectation-linearity>)[linearity of expectation].
+  For bilinearity, note that centring is shift-invariant, $(X + b) - bb(E)[X + b] = X - bb(E)[X]$, which removes $b$ and $d$, while scaling pulls the factors $a$ and $c$ out of the expectation.
+  The last identity expands $(X + Y - bb(E)[X + Y])^2$ and collects the two squared terms and twice the cross term.
+]
+
+Covariances therefore obey the rules of a scalar product — bilinear and symmetric — with $"Cov"(X, X)$ as the square of a norm.
+Independence supplies the vanishing case that makes the algebra useful.
 
 #property(name: "Product Expectation for Independent Variables")[
   If $X$ and $Y$ are independent with $bb(E)[abs(X)], bb(E)[abs(Y)] < infinity$, then
@@ -2809,6 +2916,10 @@ vectors.
   $
   Approximation by simple functions extends the identity beyond the elementary regimes.
 ]
+
+=== Correlation Coefficient // 相关系数
+
+Dividing the covariance by the two standard deviations cancels the units and bounds the result.
 
 #definition(name: "Correlation Coefficient")[
   The *Pearson correlation coefficient* of $X$ and $Y$ with $"Var"(X), "Var"(Y) > 0$ is the normalised covariance
@@ -2852,6 +2963,18 @@ The probabilistic content is that the expectation of a product behaves like a sc
 Read in the same inner product space, $rho_(X Y)$ is the cosine of the angle between the centred variables $X - bb(E)[X]$ and $Y - bb(E)[Y]$.
 This is the geometric meaning of the coefficient: correlation measures alignment, not magnitude — which is why it is scale-free, and why $-1 <= rho_(X Y) <= 1$ is no more surprising than $abs(cos theta) <= 1$.
 
+Being an angle, $rho_(X Y)$ is unchanged by increasing affine changes of either variable and changes sign under decreasing ones: $rho_(a X + b, c Y + d) = "sign"(a c) rho_(X Y)$.
+
+=== Uncorrelatedness and Independence // 不相关与独立
+
+The extreme value $rho_(X Y) = 0$ has a name of its own, and its relation to independence is the main source of confusion between the two notions.
+
+#definition(name: "Uncorrelatedness")[
+  $X$ and $Y$ are *uncorrelated* if $"Cov"(X, Y) = 0$, equivalently if $bb(E)[X Y] = bb(E)[X] bb(E)[Y]$.
+] <def:uncorrelated>
+
+Independence implies uncorrelatedness; the converse fails outside the normal world, as the property and the example below record.
+
 #property(name: "Uncorrelatedness vs Independence")[
   - If $X$ and $Y$ are independent, then $"Cov"(X, Y) = 0$ (they are *uncorrelated*).
   - The converse is false in general: zero covariance does not imply independence.
@@ -2873,6 +2996,10 @@ This is the geometric meaning of the coefficient: correlation measures alignment
   Let $X ~ U(-1, 1)$ and $Y = X^2$.
   Then $"Cov"(X, Y) = bb(E)[X^3] - bb(E)[X] bb(E)[X^2] = 0 - 0 = 0$ (since $bb(E)[X^3] = 0$ by symmetry), yet $Y$ is a deterministic function of $X$ — far from independent.
 ]
+
+=== Covariance of a Random Vector // 随机向量的协方差结构
+
+For an $n$-dimensional vector the pairwise covariances are collected in a matrix, and #link(<prop:covariance-properties>)[the algebra of covariance] turns into matrix algebra.
 
 #definition(name: "Mean Vector and Covariance Matrix")[
   For a random vector $bold(X) = (X_1, dots, X_n)$:
@@ -2898,6 +3025,57 @@ This is the geometric meaning of the coefficient: correlation measures alignment
     bold(a)^"T" Sigma bold(a) = sum_(i, j) a_i a_j (bb(E)[X_i X_j] - bb(E)[X_i] bb(E)[X_j]) = bb(E)[(bold(a)^"T" bold(X))^2] - (bb(E)[bold(a)^"T" bold(X)])^2 = "Var"(bold(a)^"T" bold(X)) >= 0.
   $
 ]
+
+Pairwise covariances between two *different* vectors form a rectangular array, and covariance becomes a bilinear operation on vectors.
+
+#definition(name: "Cross-Covariance Matrix")[
+  For random vectors $bold(X) = (X_1, dots, X_n)$ and $bold(Y) = (Y_1, dots, Y_m)$ with finite second moments, the *cross-covariance matrix* is the $n times m$ matrix
+  $
+    Sigma_(bold(X) bold(Y)) = bb(E)[(bold(X) - bb(E)[bold(X])) (bold(Y) - bb(E)[bold(Y]))^"T"],
+  $
+  with entries $("Cov"(X_i, Y_j))_(i j)$.
+] <def:cross-covariance-matrix>
+
+For $bold(Y) = bold(X)$ the cross-covariance matrix reduces to #link(<def:mean-vector-covariance-matrix>)[the covariance matrix] $Sigma$, and in general $Sigma_(bold(Y) bold(X)) = Sigma_(bold(X) bold(Y))^"T"$.
+The bilinearity collected in #link(<prop:covariance-properties>)[the properties of covariance] now reads as a matrix identity.
+
+#property(name: "Covariance of Linear Combinations")[
+  Let $bold(X)$ and $bold(Y)$ have dimensions $n$ and $m$, and let $bold(A)$, $bold(B)$ be constant matrices of sizes $p times n$ and $q times m$.
+  Then
+  $
+    Sigma_(bold(A) bold(X), bold(B) bold(Y)) = bold(A) Sigma_(bold(X) bold(Y)) bold(B)^"T",
+  $
+  and, in particular, for $bold(a) in RR^n$,
+  $
+    "Var"(sum_(i=1)^n a_i X_i) = sum_(i=1)^n sum_(j=1)^n a_i a_j "Cov"(X_i, X_j) = bold(a)^"T" Sigma bold(a).
+  $
+] <prop:cov-linear-combinations>
+
+#proof[
+  The $(i, j)$ entry of the left-hand side is
+  $
+    "Cov"(sum_k A_(i k) X_k, sum_l B_(j l) Y_l) = sum_(k, l) A_(i k) B_(j l) "Cov"(X_k, Y_l)
+  $
+  by #link(<prop:covariance-properties>)[bilinearity], which is exactly the $(i, j)$ entry of $bold(A) Sigma_(bold(X) bold(Y)) bold(B)^"T"$.
+  The variance formula is the case $bold(Y) = bold(X)$ with $bold(A) = bold(B) = bold(a)^"T"$, using $Sigma^"T" = Sigma$.
+]
+
+Two consequences explain why the covariance matrix, and not the full joint law, is the working summary of a random vector.
+
+- Every linear combination of the components has variance $bold(a)^"T" Sigma bold(a)$: the matrix alone decides the dispersion of any weighted average.
+- Pairwise uncorrelatedness makes $Sigma$ diagonal, and then the variance of a sum splits as in #link(<prop:variance-properties>)[the variance properties].
+
+Correlations are collected in the same way, with the variances normalised away.
+
+#definition(name: "Correlation Matrix")[
+  For a random vector with $sigma_i > 0$ for every $i$, the *correlation matrix* is the $n times n$ matrix $bold(R)$ with entries
+  $
+    R_(i j) = rho_(X_i X_j) = (Sigma_(i j)) / (sigma_i sigma_j).
+  $
+] <def:correlation-matrix>
+
+In matrix form $bold(R) = bold(D)^(-1) Sigma bold(D)^(-1)$ with $bold(D) = "diag"(sigma_1, dots, sigma_n)$, so $bold(R)$ is the covariance matrix of the standardized vector $bold(D)^(-1) (bold(X) - bold(mu))$.
+Its diagonal is identically $1$, and by #link(<prop:correlation-range>)[the range of the correlation coefficient] every off-diagonal entry lies in $[-1, 1]$.
 
 == Multivariate Normal Distribution // 多元正态分布
 
@@ -4011,15 +4189,18 @@ closed-form moment estimators.
 //     - 混合型；两张示意图
 
 //   Section 3.2: 数学期望 (Mathematical Expectation)
-//     - 定义（离散 / 连续）；线性性；LOTUS
+//     - 一般定义（对 P 的 Lebesgue 积分，或对 μ_X 的积分）；初等形式（离散 / 连续）
+//     - 线性性；LOTUS（一元）
 //     - 马尔可夫不等式 (Markov's Inequality)
 //     - 常见分布的期望表
 
 //   Section 3.3: 方差与标准差 (Variance and Standard Deviation)
 //     - 定义与性质；切比雪夫不等式 (Chebyshev's Inequality)
+//     - 标准化变量 Z 与 E[Z^n] = μ_n' / σ^n（指向标准化矩）
 
 //   Section 3.4: 分布的其他特征数 (Other Characterization Numbers)
 //     - k 阶矩与中心矩
+//     - 标准化矩 ν_n = μ_n' / σ^n
 //     - 变异系数 (Coefficient of Variation)
 //     - 分位数与中位数 (Quantiles and Median)
 //     - 偏度系数 (Skewness)；峰度系数 (Kurtosis)
@@ -4055,6 +4236,7 @@ closed-form moment estimators.
 
 //   Section 5.1: 联合分布 (Joint Distributions)
 //     - 随机向量；联合分布函数 / 联合分布列 / 联合密度函数
+//     - 二元 LOTUS：E[g(X, Y)] 由联合分布直接计算（和 / 积两种特殊情形）
 
 //   Section 5.2: 边缘分布与独立性 (Marginal Distributions and Independence)
 //     - 边缘分布；随机变量间的独立性
@@ -4064,13 +4246,17 @@ closed-form moment estimators.
 //     - 条件数学期望；全期望公式（塔性质）；全方差公式
 
 //   Section 5.4: 多维随机变量函数的分布 (Distributions of Functions of Several RVs)
-//     - 最大值与最小值的分布
-//     - 卷积公式 (Convolution Formula)
-//     - 变量变换法 (Jacobian Method)
+//     - 离散型：直接枚举
+//     - 最值分布：极大 / 极小的 CDF 乘积公式；均匀分布最值示例
+//     - 卷积公式与四则运算：和（卷积）/ 差 / 积 / 商；n 重卷积；离散卷积；加法族
+//     - 一般情形：变量变换法 (Jacobian Method)
 
 //   Section 5.5: 协方差与相关系数 (Covariance and Correlation)
-//     - 协方差的定义与性质；相关系数；不相关与独立的关系
-//     - 随机向量的期望向量与协方差矩阵
+//     - 协方差：定义、计算式、双线性等性质；独立时的乘积期望
+//     - 相关系数：Cauchy–Schwarz、取值区间、几何意义、仿射不变性
+//     - 不相关与独立：定义、与独立的关系、反例
+//     - 随机向量的协方差结构：均值向量、协方差矩阵、半正定性、
+//       互协方差矩阵、线性组合的协方差与方差、相关矩阵
 
 //   Section 5.6: 多元正态分布 (Multivariate Normal Distribution)
 //     - 定义与几何（Mahalanobis 距离、椭球等高线）
